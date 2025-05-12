@@ -1,104 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LümiCoin - Your self-care just became a currency</title>
-  <meta name="description" content="LümiCoin transforms your daily self-care into a meaningful currency. Proof of Care. Power to You.">
+
+  <!-- SEO Meta Tags -->
+  <title>LümiCoin - Your self‑care just became a currency</title>
+  <meta name="description" content="LümiCoin transforms your daily self‑care into a meaningful currency. Proof of Care. Power to You.">
+
+  <!-- Google Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts Stylesheet -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Internal Stylesheet -->
   <style>
+    /* --- CSS Variables (Custom Properties) --- */
     :root {
+      /* Spacing Units */
       --base-unit: 8px;
-      --spacing-xs: calc(var(--base-unit) * 1);
-      --spacing-sm: calc(var(--base-unit) * 2);
-      --spacing-md: calc(var(--base-unit) * 3);
-      --spacing-lg: calc(var(--base-unit) * 4);
-      --spacing-xl: calc(var(--base-unit) * 5);
-      --spacing-2xl: calc(var(--base-unit) * 7);
-      --spacing-3xl: calc(var(--base-unit) * 10);
+      --spacing-xs: calc(var(--base-unit) * 1);  /* 8px */
+      --spacing-sm: calc(var(--base-unit) * 2);  /* 16px */
+      --spacing-md: calc(var(--base-unit) * 3);  /* 24px */
+      --spacing-lg: calc(var(--base-unit) * 4);  /* 32px */
+      --spacing-xl: calc(var(--base-unit) * 5);  /* 40px */
+      --spacing-2xl: calc(var(--base-unit) * 7); /* 56px */
+      --spacing-3xl: calc(var(--base-unit) * 10);/* 80px */
 
-      --bg-base: #FFF8F2;
-      --text-primary: #1A1A1A;
-      --text-secondary: #556172;
-      --accent-primary: #CB5907;
-      --accent-primary-light: #F28341;
-      --accent-primary-dark: #A94700;
-      --accent-peach: rgba(255, 197, 150, 0.2);
-      --white: #FFFFFF;
-      --light-gray: rgba(0, 0, 0, 0.04);
+      /* Color Palette */
+      --bg-base: #FFF8F2;                 /* Main background color */
+      --text-primary: #1A1A1A;            /* Primary text color */
+      --text-secondary: #556172;         /* Secondary text color */
+      --accent-primary: #CB5907;          /* Main accent color (orange) */
+      --accent-primary-light: #F28341;   /* Lighter accent */
+      --accent-primary-dark: #A94700;    /* Darker accent */
+      --accent-peach: rgba(255, 197, 150, .2); /* Light peach accent, used for glows */
+      --white: #FFFFFF;                   /* White */
+      --light-gray: rgba(0, 0, 0, .04);   /* Light gray for borders/backgrounds */
 
+      /* UI Elements */
       --border-radius-lg: 16px;
       --border-radius-md: 12px;
       --border-radius-sm: 8px;
 
-      --shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 16px rgba(0, 0, 0, 0.04);
-      --shadow-button: 0 4px 12px rgba(203, 89, 7, 0.2);
-      --shadow-button-hover: 0 6px 16px rgba(203, 89, 7, 0.3);
+      /* Shadows */
+      --shadow-soft: 0 2px 4px rgba(0, 0, 0, .04), 0 8px 16px rgba(0, 0, 0, .04); /* Soft shadow for cards/images */
+      --shadow-button: 0 4px 12px rgba(203, 89, 7, .2); /* Button shadow */
+      --shadow-button-hover: 0 6px 16px rgba(203, 89, 7, .3); /* Button hover shadow */
 
-      --transition-smooth: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      /* Transitions */
+      --transition-smooth: all .2s cubic-bezier(.25, .8, .25, 1); /* Smooth transition for interactions */
     }
 
+    /* --- Global Resets & Base Styles --- */
     * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      box-sizing: border-box; /* Modern box model */
     }
 
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: smooth; /* Smooth scrolling for anchor links */
     }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background-color: var(--bg-base);
+      font-family: 'Inter', system-ui, sans-serif; /* Primary font stack */
+      background: var(--bg-base);
       color: var(--text-primary);
       line-height: 1.7;
-      font-size: 19px;
-      letter-spacing: -0.01em;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-size: 19px; /* Slightly larger base font size */
+      letter-spacing: -.01em; /* Subtle negative letter spacing */
+      -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
+      -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
     }
 
+    /* --- Typography --- */
     h1, h2, h3, h4, h5 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Space Grotesk', sans-serif; /* Heading font */
       font-weight: 700;
       color: var(--accent-primary);
       line-height: 1.2;
-      letter-spacing: -0.025em;
+      letter-spacing: -.025em; /* Tighter letter spacing for headings */
     }
 
+    /* --- Layout --- */
     .container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-md);
+      max-width: 1240px; /* Standard container width */
+      margin: 0 auto; /* Center align */
+      padding: 0 var(--spacing-md); /* Horizontal padding */
     }
 
     .narrow {
-      max-width: 680px;
+      max-width: 680px; /* Narrower container for text content */
       margin: 0 auto;
     }
 
     p {
-      margin-bottom: var(--spacing-md);
+      margin-bottom: var(--spacing-md); /* Default paragraph spacing */
     }
     p:last-of-type {
-      margin-bottom: 0;
+      margin-bottom: 0; /* Remove margin from last paragraph in a block */
     }
 
     section {
-      padding: clamp(60px, 8vw, 100px) 0;
+      padding: clamp(60px, 8vw, 100px) 0; /* Responsive vertical padding for sections */
     }
 
+    /* --- Components: Hero Section --- */
     .hero {
-      padding-top: clamp(80px, 12vw, 120px);
-      padding-bottom: clamp(60px, 8vw, 100px);
+      padding-top: clamp(80px, 12vw, 120px); /* Responsive top padding */
+      padding-bottom: clamp(60px, 8vw, 100px); /* Responsive bottom padding */
       text-align: center;
-      position: relative;
-      overflow: hidden;
+      position: relative; /* Needed for pseudo-element positioning */
+      overflow: hidden; /* Prevent pseudo-element overflow */
     }
 
+    /* Hero background radial gradient effect */
     .hero::before {
       content: "";
       position: absolute;
@@ -106,57 +126,58 @@
       height: 160%;
       top: -30%;
       left: -30%;
-      background: radial-gradient(circle at center, rgba(255, 197, 150, 0.2), transparent 65%);
-      z-index: -1;
-      animation: pulse 12s infinite alternate ease-in-out;
+      background: radial-gradient(circle at center, var(--accent-peach), transparent 65%);
+      z-index: -1; /* Place behind content */
+      animation: pulse 12s infinite alternate ease-in-out; /* Subtle pulsing animation */
     }
 
+    /* Pulsing animation for hero background */
     @keyframes pulse {
-      0% { opacity: 0.7; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.03); }
+      0% {
+        opacity: .7;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.03);
+      }
     }
 
     .hero h1 {
-      font-size: clamp(36px, 5.5vw, 60px);
+      font-size: clamp(36px, 5.5vw, 60px); /* Responsive font size */
       margin-bottom: var(--spacing-md);
-      color: var(--accent-primary);
-      position: relative;
-      max-width: 15ch;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 15ch; /* Limit line length for readability */
+      margin-inline: auto; /* Center */
     }
 
     .hero h2 {
-      font-size: clamp(20px, 2.8vw, 26px);
-      font-weight: 500;
+      font-size: clamp(20px, 2.8vw, 26px); /* Responsive font size */
+      font-weight: 500; /* Slightly lighter than h1 */
       color: var(--text-primary);
       margin-bottom: var(--spacing-xl);
-      font-family: 'Inter', sans-serif;
-      opacity: 0.85;
-      max-width: 45ch;
-      margin-left: auto;
-      margin-right: auto;
+      opacity: .85;
+      max-width: 45ch; /* Limit line length */
+      margin-inline: auto; /* Center */
     }
 
     .hero-image-container {
       margin: var(--spacing-xl) auto var(--spacing-2xl);
-      max-width: 320px;
-      position: relative;
+      max-width: 320px; /* Control image size */
+      position: relative; /* For hover effects and pseudo-elements */
     }
 
     .hero-image {
       width: 100%;
-      height: auto;
-      border-radius: 20px;
+      border-radius: 20px; /* Custom border radius */
       box-shadow: var(--shadow-soft);
-      transform: translateY(0);
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: transform .4s cubic-bezier(.25, .8, .25, 1); /* Smooth lift effect */
     }
 
     .hero-image-container:hover .hero-image {
-      transform: translateY(-6px);
+      transform: translateY(-6px); /* Lift image on hover */
     }
 
+    /* Subtle shadow ellipse below the image */
     .hero-image-container::after {
       content: "";
       position: absolute;
@@ -165,36 +186,36 @@
       transform: translateX(-50%);
       width: 75%;
       height: 8px;
-      background: radial-gradient(ellipse at center, rgba(203, 89, 7, 0.15), transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(203, 89, 7, .15), transparent 70%);
       border-radius: 50%;
       z-index: -1;
-      opacity: 0.5;
+      opacity: .5;
       transition: var(--transition-smooth);
     }
 
     .hero-image-container:hover::after {
-      width: 85%;
-      opacity: 0.7;
+      width: 85%; /* Expand shadow on hover */
+      opacity: .7;
     }
 
+    /* --- Components: Buttons & Links --- */
     .btn {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent-primary-light), var(--accent-primary));
-      color: white;
-      font-family: 'Inter', sans-serif;
+      display: inline-block; /* Allows padding and margin */
+      background: linear-gradient(135deg, var(--accent-primary-light), var(--accent-primary)); /* Gradient background */
+      color: var(--white);
       font-weight: 600;
       font-size: 17px;
-      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl);
+      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl); /* Generous padding */
       border-radius: var(--border-radius-md);
-      text-decoration: none;
+      text-decoration: none; /* Remove underline */
       transition: var(--transition-smooth);
       box-shadow: var(--shadow-button);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      letter-spacing: 0.01em;
+      position: relative; /* For pseudo-element */
+      overflow: hidden; /* Keep pseudo-element contained */
+      letter-spacing: .01em; /* Subtle spacing */
     }
 
+    /* Subtle shine effect on hover */
     .btn::after {
       content: "";
       position: absolute;
@@ -202,38 +223,40 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: linear-gradient(rgba(255,255,255,0.15), transparent);
+      background: linear-gradient(rgba(255, 255, 255, .15), transparent);
       opacity: 0;
       transition: var(--transition-smooth);
     }
 
     .btn:hover {
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark));
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-button-hover);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark)); /* Darken gradient on hover */
+      transform: translateY(-2px); /* Slight lift on hover */
+      box-shadow: var(--shadow-button-hover); /* Enhance shadow on hover */
     }
 
     .btn:hover::after {
-      opacity: 1;
+      opacity: 1; /* Show shine effect on hover */
     }
 
+    /* Custom focus style for accessibility */
     .btn:focus-visible {
       outline: none;
       box-shadow: 0 0 0 3px var(--bg-base), 0 0 0 5px var(--accent-primary-light), var(--shadow-button);
     }
 
     .secondary-link {
-      display: inline-block;
+      display: inline-block; /* Allows margin-top */
       color: var(--text-secondary);
       text-decoration: none;
       margin-top: var(--spacing-sm);
       font-size: 15px;
       font-weight: 500;
+      position: relative; /* For pseudo-element underline */
+      padding-bottom: 2px; /* Space for underline */
       transition: var(--transition-smooth);
-      position: relative;
-      padding-bottom: 2px;
     }
 
+    /* Custom underline effect */
     .secondary-link::after {
       content: "";
       position: absolute;
@@ -241,82 +264,78 @@
       bottom: 0;
       width: 100%;
       height: 1px;
-      background-color: var(--text-secondary);
-      opacity: 0.7;
+      background: var(--text-secondary);
+      opacity: .7;
       transition: var(--transition-smooth);
     }
 
     .secondary-link:hover {
-      color: var(--accent-primary);
+      color: var(--accent-primary); /* Change text color on hover */
     }
-
     .secondary-link:hover::after {
-      background-color: var(--accent-primary);
+      background: var(--accent-primary); /* Change underline color on hover */
       opacity: 1;
     }
 
+    /* --- Components: Manifesto Section --- */
     .manifesto {
       padding-top: clamp(40px, 6vw, 80px);
       padding-bottom: clamp(60px, 8vw, 100px);
-      position: relative;
     }
 
     .manifesto-title {
       text-align: center;
-      font-size: clamp(30px, 4.5vw, 38px);
+      font-size: clamp(30px, 4.5vw, 38px); /* Responsive font size */
       margin-bottom: var(--spacing-2xl);
-      position: relative;
+      position: relative; /* For pseudo-element */
     }
 
+    /* Decorative underline for the manifesto title */
     .manifesto-title::after {
       content: "";
       position: absolute;
       width: 50px;
       height: 2.5px;
-      background-color: var(--accent-primary);
-      bottom: -12px;
+      background: var(--accent-primary);
+      bottom: -12px; /* Position below the text */
       left: 50%;
       transform: translateX(-50%);
       border-radius: 20px;
-      opacity: 0.6;
+      opacity: .6;
     }
 
     .manifesto-content {
-      font-family: 'Inter', system-ui, sans-serif;
+      text-align: center;
       font-size: 19px;
       line-height: 1.7;
-      text-align: center;
     }
 
     .manifesto-content p {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: 45ch;
+      margin-inline: auto; /* Center paragraphs */
+      max-width: 45ch; /* Limit line length for readability */
     }
 
     .manifesto-section {
-      margin-bottom: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl); /* Space between logical sections */
     }
 
-    .manifesto-section:last-child {
-      margin-bottom: 0;
-    }
-
+    /* Highlighted subheading style within the manifesto */
     .manifesto .highlight {
-      font-size: clamp(22px, 3vw, 28px);
-      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(22px, 3vw, 28px); /* Responsive font size */
+      font-family: 'Space Grotesk', sans-serif; /* Use heading font */
       font-weight: 700;
       color: var(--accent-primary);
-      margin-top: var(--spacing-xl);
-      margin-bottom: var(--spacing-md);
+      margin: var(--spacing-xl) 0 var(--spacing-md);
       line-height: 1.35;
     }
 
+    /* Styling for 'pain point' paragraphs */
     .pain {
       color: var(--text-secondary);
-      opacity: 0.9;
+      opacity: .9;
     }
 
+    /* Styling for 'solution' paragraphs (default text color) */
     .solution {
       color: var(--text-primary);
     }
@@ -327,62 +346,182 @@
     }
 
     .manifesto-closing p {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(20px, 3vw, 26px);
+      font-family: 'Space Grotesk', sans-serif; /* Use heading font */
+      font-size: clamp(20px, 3vw, 26px); /* Responsive font size */
       font-weight: 600;
       line-height: 1.45;
       margin-bottom: var(--spacing-sm);
-      color: var(--accent-primary-dark);
+      color: var(--accent-primary-dark); /* Use darker accent for closing */
     }
 
-    @media (max-width: 768px) {
+    /* --- Responsive Tweaks --- */
+    @media (max-width: 768px) { /* Styles for tablet and smaller screens */
       body {
+        font-size: 18px; /* Slightly smaller base font size */
+        line-height: 1.65;
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 8vw, 40px); /* Adjust responsive range */
+      }
+
+      .hero h2 {
+        font-size: clamp(18px, 5vw, 22px); /* Adjust responsive range */
+      }
+
+      .manifesto-content {
         font-size: 18px;
         line-height: 1.65;
       }
 
-      .hero h1 { font-size: clamp(32px, 8vw, 40px); }
-      .hero h2 { font-size: clamp(18px, 5vw, 22px); }
-      .manifesto-content { font-size: 18px; line-height: 1.65; }
-      .manifesto-content p { max-width: 90%; }
-      .manifesto .highlight { font-size: clamp(20px, 5vw, 26px); }
-      .manifesto-closing p { font-size: clamp(18px, 5vw, 22px); }
-      .btn { font-size: 16px; padding: var(--spacing-sm) var(--spacing-lg); }
-      .secondary-link { font-size: 14px; }
+      .manifesto-content p {
+        max-width: 90%; /* Allow slightly longer lines on mobile */
+      }
+
+      .manifesto .highlight {
+        font-size: clamp(20px, 5vw, 26px); /* Adjust responsive range */
+      }
+
+      .manifesto-closing p {
+        font-size: clamp(18px, 5vw, 22px); /* Adjust responsive range */
+      }
+
+      .btn {
+        font-size: 16px; /* Smaller button text */
+        padding: var(--spacing-sm) var(--spacing-lg); /* Adjust padding */
+      }
+
+      .secondary-link {
+        font-size: 14px; /* Smaller secondary link text */
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- ====== Hero Section ====== -->
   <section class="hero">
     <div class="container">
-      <h1>Your self-care just became a currency.</h1>
+      <!-- Main Headline -->
+      <h1>Your self‑care just became a currency.</h1>
+      <!-- Sub-headline / Tagline -->
       <h2>Proof of Care. Power to You.</h2>
+
+      <!-- Hero Image -->
       <div class="hero-image-container">
+        <!-- NOTE: Updated image source -->
         <img src="https://lumicoin.app/lumicoin-coin.png" alt="LümiCoin - Proof of Care visualization" class="hero-image">
       </div>
+
+      <!-- Call to Action Buttons -->
       <div>
-        <a href="https://testflight.apple.com/join/YOUR_CODE_HERE" class="btn" target="_blank" rel="noopener noreferrer">Download LümiCoin on the App Store</a>
+        <!-- Primary CTA: iOS TestFlight Link -->
+        <!-- TODO: Replace YOUR_CODE_HERE with actual TestFlight code -->
+        <a href="https://testflight.apple.com/join/YOUR_CODE_HERE" class="btn" target="_blank" rel="noopener noreferrer">Download LümiCoin on the App Store</a>
         <div>
+          <!-- Secondary CTA: Android Waitlist Link -->
+          <!-- TODO: Replace YOUR_WAITLIST_LINK_HERE with actual waitlist URL -->
           <a href="YOUR_WAITLIST_LINK_HERE" class="secondary-link" target="_blank" rel="noopener noreferrer">Join Android waitlist</a>
         </div>
       </div>
     </div>
   </section>
+  <!-- ====== End Hero Section ====== -->
 
+  <!-- ====== Manifesto Section ====== -->
   <section class="manifesto" id="manifesto">
+    <!-- Using .narrow container for better text readability -->
     <div class="container narrow">
+      <!-- Manifesto Title -->
       <h2 class="manifesto-title">The LümiCoin Manifesto</h2>
+
+      <!-- Manifesto Content Area -->
       <div class="manifesto-content">
-        <!-- full manifesto copy goes here – paste the entire block you've previously written -->
-        <!-- to save space, I can reinsert it if needed -->
+
+        <!-- Section 1: Introduction - The Quiet Effort -->
+        <div class="manifesto-section">
+          <p class="pain">For the ones trying quietly, every day.</p>
+          <p class="solution">You hydrate.<br>You move.<br>You rest instead of overwork.<br>You try—even when no one’s watching.<br>Even when the system doesn’t care back.</p>
+        </div>
+
+        <!-- Section 2: The Problem - Lack of Recognition -->
+        <h3 class="highlight">And what do you get?</h3>
+        <div class="manifesto-section">
+          <p class="pain">A green ring.<br>A silent chart.<br>An app that cheers while you're burning out.</p>
+          <p class="pain">Meanwhile…<br>No doctor sees your effort.<br>No system credits your prevention.<br>No insurer lowers your premium.<br>No one tells you: this matters.</p>
+        </div>
+
+        <!-- Section 3: Framing the Problem - Systemic Issue -->
+        <h3 class="highlight">The problem isn’t you.<br>It’s the system.</h3>
+        <div class="manifesto-section">
+          <p class="solution">Self‑care is hard enough already.<br>But when its value is invisible—<br>unmeasured by health systems,<br>unrewarded by markets,<br>unfelt by you—<br>of course it’s hard to keep going.</p>
+          <p class="solution">That’s not laziness.<br>That’s rational burnout.</p>
+        </div>
+
+        <!-- Section 4: Introducing the Solution - LümiCoin -->
+        <h3 class="highlight">So we built LümiCoin to change that.</h3>
+        <div class="manifesto-section">
+          <p class="solution">What if care had a currency?</p>
+          <p class="solution">You’ve been paying into your health account. Now, we give you the receipt.</p>
+          <p class="solution">Every night you sleep.<br>Every glass of water.<br>Every step you take.</p>
+          <p class="solution">It all earns you LümiCoins—<br>a new behavioral health currency backed by:<br>Real science (QALYs)<br>Real impact (clean water for others)<br>Real meaning (your health, your legacy)</p>
+          <p class="solution">No logging. No perfection. Just care.<br>For the first time, your care counts.</p>
+        </div>
+
+        <!-- Section 5: The Impact - Beyond Self -->
+        <h3 class="highlight">From one body to the world.</h3>
+        <div class="manifesto-section">
+          <p class="solution">Every 200 Coins you earn funds a day of clean water for someone else who profoundly needs it.</p>
+          <p class="solution">Your daily actions ripple outward—proof that taking care of yourself can literally take care of someone else.</p>
+          <p class="solution">This isn’t a wellness gimmick.<br>It’s a moral economy of care.</p>
+        </div>
+
+        <!-- Section 6: The Future Vision - Healthcare Integration -->
+        <h3 class="highlight">And someday, your doctor will care too.</h3>
+        <div class="manifesto-section">
+          <p class="solution">LümiCoins don’t just feel good—<br>they’re pegged to QALYs, the math health economists and insurers use to value care.</p>
+          <p class="solution">Today, those numbers live in models.<br>Tomorrow, they live in your pocket.</p>
+          <p class="solution">Coins = clinical‑grade proof that prevention is already happening—powered by you, every single day.</p>
+          <p class="solution">We’re building the bridge.<br>You’re laying the first bricks.</p>
+        </div>
+
+        <!-- Section 7: Positioning - Beyond Wellness App -->
+        <h3 class="highlight">This isn’t a wellness app. This is infrastructure.</h3>
+        <div class="manifesto-section">
+          <p class="solution">LümiCoin is a new operating system for prevention—built for:</p>
+          <!-- Using inline style for margin here for simplicity, could be a utility class -->
+          <p class="solution" style="margin-top:var(--spacing-lg);">💡 The burnout generation who still gives a damn<br>📱 The digital natives tired of fake points and broken loops<br>🌍 The quietly rebellious who know health is personal, political, and worth more than confetti</p>
+          <p class="solution" style="margin-top:var(--spacing-lg);">You don’t need another dashboard.<br>You need proof—that what you do matters. That it adds up.</p>
+        </div>
+
+        <!-- Section 8: The Core Value Proposition - Proof & Power -->
+        <h3 class="highlight">Proof of Care. Power to You.</h3>
+        <div class="manifesto-section">
+          <p class="solution">LümiCoin is for anyone who’s ever asked:</p>
+          <p class="pain" style="font-style:italic; margin-top:var(--spacing-lg);">“Why doesn’t anyone see how hard I’m trying?”<br>“Why doesn’t this count for something?”<br>“Why does my doctor ignore what my iPhone already knows?”</p>
+          <p class="solution" style="font-weight:600; margin-top:var(--spacing-lg);">Now they do.<br>Now it does.<br>Now you’re seen.</p>
+          <p class="solution" style="font-weight:600; margin-top:var(--spacing-lg);">For the first time in wellness history,<br>your self‑care earns something real.<br>There’s a point to your points.<br>There’s value in your effort.<br>There’s power in your care.</p>
+        </div>
+
+        <!-- Manifesto Closing Statement -->
+        <div class="manifesto-closing">
+          <p>Welcome to this generation’s defining health movement.</p>
+          <p>Welcome to a world where prevention finally pays off.</p>
+          <p>Welcome to the first Proof‑of‑Care currency.</p>
+          <p style="margin-top:var(--spacing-lg);">Welcome to LümiCoin.</p>
+        </div>
+
       </div>
+      <!-- End Manifesto Content Area -->
     </div>
   </section>
+  <!-- ====== End Manifesto Section ====== -->
 
-  <footer style="text-align: center; padding: var(--spacing-xl) 0; border-top: 1px solid var(--light-gray); margin-top: var(--spacing-xl);">
-    <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">© 2025 LümiCoin.</p>
+  <!-- ====== Footer ====== -->
+  <footer style="text-align:center; padding:var(--spacing-xl) 0; border-top:1px solid var(--light-gray); margin-top:var(--spacing-xl);">
+    <p style="font-size:14px; color:var(--text-secondary); margin:0;">© 2025 LümiCoin.</p>
   </footer>
+  <!-- ====== End Footer ====== -->
 
 </body>
 </html>
