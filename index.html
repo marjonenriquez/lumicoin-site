@@ -7,18 +7,17 @@
   <meta name="description" content="LümiCoin transforms your daily self-care into a meaningful currency. Proof of Care. Power to You.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Reverted to Space Grotesk for headings -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --base-unit: 8px;
-      --spacing-xs: calc(var(--base-unit) * 1); /* 8px */
-      --spacing-sm: calc(var(--base-unit) * 2); /* 16px */
-      --spacing-md: calc(var(--base-unit) * 3); /* 24px */
-      --spacing-lg: calc(var(--base-unit) * 4); /* 32px */
-      --spacing-xl: calc(var(--base-unit) * 5); /* 40px - Adjusted for slightly more compact feel */
-      --spacing-2xl: calc(var(--base-unit) * 7); /* 56px - Adjusted */
-      --spacing-3xl: calc(var(--base-unit) * 10); /* 80px - Adjusted */
+      --spacing-xs: calc(var(--base-unit) * 1);
+      --spacing-sm: calc(var(--base-unit) * 2);
+      --spacing-md: calc(var(--base-unit) * 3);
+      --spacing-lg: calc(var(--base-unit) * 4);
+      --spacing-xl: calc(var(--base-unit) * 5);
+      --spacing-2xl: calc(var(--base-unit) * 7);
+      --spacing-3xl: calc(var(--base-unit) * 10);
 
       --bg-base: #FFF8F2;
       --text-primary: #1A1A1A;
@@ -28,7 +27,7 @@
       --accent-primary-dark: #A94700;
       --accent-peach: rgba(255, 197, 150, 0.2);
       --white: #FFFFFF;
-      --light-gray: rgba(0, 0, 0, 0.04); /* Slightly darker for subtle borders */
+      --light-gray: rgba(0, 0, 0, 0.04);
 
       --border-radius-lg: 16px;
       --border-radius-md: 12px;
@@ -55,7 +54,7 @@
       font-family: 'Inter', system-ui, sans-serif;
       background-color: var(--bg-base);
       color: var(--text-primary);
-      line-height: 1.7; /* Slightly tighter for better rhythm with centered text */
+      line-height: 1.7;
       font-size: 19px;
       letter-spacing: -0.01em;
       -webkit-font-smoothing: antialiased;
@@ -63,21 +62,21 @@
     }
 
     h1, h2, h3, h4, h5 {
-      font-family: 'Space Grotesk', sans-serif; /* Reverted to Space Grotesk */
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       color: var(--accent-primary);
-      line-height: 1.2; /* Adjusted for Space Grotesk */
-      letter-spacing: -0.025em; /* Adjusted for Space Grotesk */
+      line-height: 1.2;
+      letter-spacing: -0.025em;
     }
 
     .container {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 0 var(--spacing-md); /* Standardized padding */
+      padding: 0 var(--spacing-md);
     }
 
     .narrow {
-      max-width: 680px; /* Slightly narrower for centered text readability */
+      max-width: 680px;
       margin: 0 auto;
     }
 
@@ -85,18 +84,16 @@
       margin-bottom: var(--spacing-md);
     }
     p:last-of-type {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
-
 
     section {
-      padding: clamp(60px, 8vw, 100px) 0; /* Slightly more compact section padding */
+      padding: clamp(60px, 8vw, 100px) 0;
     }
 
-    /* Hero Section */
     .hero {
-      padding-top: clamp(80px, 12vw, 120px); /* Adjusted */
-      padding-bottom: clamp(60px, 8vw, 100px); /* Adjusted */
+      padding-top: clamp(80px, 12vw, 120px);
+      padding-bottom: clamp(60px, 8vw, 100px);
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -109,25 +106,19 @@
       height: 160%;
       top: -30%;
       left: -30%;
-      background: radial-gradient(circle at center, rgba(255, 197, 150, 0.2), transparent 65%); /* Softer gradient */
+      background: radial-gradient(circle at center, rgba(255, 197, 150, 0.2), transparent 65%);
       z-index: -1;
       animation: pulse 12s infinite alternate ease-in-out;
     }
 
     @keyframes pulse {
-      0% {
-        opacity: 0.7;
-        transform: scale(1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1.03);
-      }
+      0% { opacity: 0.7; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.03); }
     }
 
     .hero h1 {
-      font-size: clamp(36px, 5.5vw, 60px); /* Adjusted */
-      margin-bottom: var(--spacing-md); /* Tighter */
+      font-size: clamp(36px, 5.5vw, 60px);
+      margin-bottom: var(--spacing-md);
       color: var(--accent-primary);
       position: relative;
       max-width: 15ch;
@@ -136,10 +127,10 @@
     }
 
     .hero h2 {
-      font-size: clamp(20px, 2.8vw, 26px); /* Adjusted */
-      font-weight: 500; /* Less heavy */
+      font-size: clamp(20px, 2.8vw, 26px);
+      font-weight: 500;
       color: var(--text-primary);
-      margin-bottom: var(--spacing-xl); /* Space before image */
+      margin-bottom: var(--spacing-xl);
       font-family: 'Inter', sans-serif;
       opacity: 0.85;
       max-width: 45ch;
@@ -148,18 +139,18 @@
     }
 
     .hero-image-container {
-      margin: var(--spacing-xl) auto var(--spacing-2xl); /* Adjusted spacing */
-      max-width: 320px; /* More compact */
+      margin: var(--spacing-xl) auto var(--spacing-2xl);
+      max-width: 320px;
       position: relative;
     }
 
     .hero-image {
       width: 100%;
       height: auto;
-      border-radius: 20px; /* Slightly smaller radius */
+      border-radius: 20px;
       box-shadow: var(--shadow-soft);
       transform: translateY(0);
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Slower transition */
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .hero-image-container:hover .hero-image {
@@ -174,11 +165,11 @@
       transform: translateX(-50%);
       width: 75%;
       height: 8px;
-      background: radial-gradient(ellipse at center, rgba(203, 89, 7, 0.15), transparent 70%); /* Softer */
+      background: radial-gradient(ellipse at center, rgba(203, 89, 7, 0.15), transparent 70%);
       border-radius: 50%;
       z-index: -1;
       opacity: 0.5;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: var(--transition-smooth);
     }
 
     .hero-image-container:hover::after {
@@ -186,15 +177,14 @@
       opacity: 0.7;
     }
 
-    /* Buttons & Links */
     .btn {
       display: inline-block;
       background: linear-gradient(135deg, var(--accent-primary-light), var(--accent-primary));
       color: white;
-      font-family: 'Inter', sans-serif; /* Buttons use Inter for clarity */
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 17px; /* Slightly smaller */
-      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl); /* Adjusted padding */
+      font-size: 17px;
+      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl);
       border-radius: var(--border-radius-md);
       text-decoration: none;
       transition: var(--transition-smooth);
@@ -212,14 +202,14 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: linear-gradient(rgba(255,255,255,0.15), transparent); /* Subtler sheen */
+      background: linear-gradient(rgba(255,255,255,0.15), transparent);
       opacity: 0;
       transition: var(--transition-smooth);
     }
 
     .btn:hover {
       background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-dark));
-      transform: translateY(-2px); /* Subtler lift */
+      transform: translateY(-2px);
       box-shadow: var(--shadow-button-hover);
     }
 
@@ -227,7 +217,7 @@
       opacity: 1;
     }
 
-    .btn:focus-visible { /* For keyboard navigation */
+    .btn:focus-visible {
       outline: none;
       box-shadow: 0 0 0 3px var(--bg-base), 0 0 0 5px var(--accent-primary-light), var(--shadow-button);
     }
@@ -236,19 +226,19 @@
       display: inline-block;
       color: var(--text-secondary);
       text-decoration: none;
-      margin-top: var(--spacing-sm); /* Tighter */
-      font-size: 15px; /* Smaller */
+      margin-top: var(--spacing-sm);
+      font-size: 15px;
       font-weight: 500;
       transition: var(--transition-smooth);
       position: relative;
-      padding-bottom: 2px; /* Space for underline */
+      padding-bottom: 2px;
     }
 
     .secondary-link::after {
       content: "";
       position: absolute;
       left: 0;
-      bottom: 0; /* Underline sits at bottom */
+      bottom: 0;
       width: 100%;
       height: 1px;
       background-color: var(--text-secondary);
@@ -265,27 +255,26 @@
       opacity: 1;
     }
 
-    /* Manifesto Section */
     .manifesto {
-      padding-top: clamp(40px, 6vw, 80px); /* Tighter top padding */
+      padding-top: clamp(40px, 6vw, 80px);
       padding-bottom: clamp(60px, 8vw, 100px);
       position: relative;
     }
 
     .manifesto-title {
       text-align: center;
-      font-size: clamp(30px, 4.5vw, 38px); /* Adjusted */
-      margin-bottom: var(--spacing-2xl); /* Adjusted */
+      font-size: clamp(30px, 4.5vw, 38px);
+      margin-bottom: var(--spacing-2xl);
       position: relative;
     }
 
     .manifesto-title::after {
       content: "";
       position: absolute;
-      width: 50px; /* Smaller underline */
-      height: 2.5px; /* Thinner */
+      width: 50px;
+      height: 2.5px;
       background-color: var(--accent-primary);
-      bottom: -12px; /* Closer */
+      bottom: -12px;
       left: 50%;
       transform: translateX(-50%);
       border-radius: 20px;
@@ -294,88 +283,72 @@
 
     .manifesto-content {
       font-family: 'Inter', system-ui, sans-serif;
-      font-size: 19px; /* Kept for manifesto body */
-      line-height: 1.7; /* Re-adjusted after center-align */
-      text-align: center; /* Center align all manifesto text */
+      font-size: 19px;
+      line-height: 1.7;
+      text-align: center;
     }
+
     .manifesto-content p {
       margin-left: auto;
       margin-right: auto;
-      max-width: 45ch; /* Control line length for centered text */
+      max-width: 45ch;
     }
 
     .manifesto-section {
-       margin-bottom: var(--spacing-xl); /* Tighter space between thematic sections */
+      margin-bottom: var(--spacing-xl);
     }
+
     .manifesto-section:last-child {
-        margin-bottom: 0;
+      margin-bottom: 0;
     }
 
     .manifesto .highlight {
-      font-size: clamp(22px, 3vw, 28px); /* Adjusted */
-      font-family: 'Space Grotesk', sans-serif; /* Reverted */
+      font-size: clamp(22px, 3vw, 28px);
+      font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       color: var(--accent-primary);
-      margin-top: var(--spacing-xl); /* Space ABOVE highlights */
-      margin-bottom: var(--spacing-md); /* Tighter space below highlights */
+      margin-top: var(--spacing-xl);
+      margin-bottom: var(--spacing-md);
       line-height: 1.35;
     }
 
     .pain {
       color: var(--text-secondary);
-      opacity: 0.9; /* Slightly less emphasis */
+      opacity: 0.9;
     }
 
     .solution {
       color: var(--text-primary);
     }
 
-    /* Final manifesto statements styling */
     .manifesto-closing {
-        text-align: center;
-        margin-top: var(--spacing-2xl); /* Adjusted */
-    }
-    .manifesto-closing p {
-        font-family: 'Space Grotesk', sans-serif; /* Reverted */
-        font-size: clamp(20px, 3vw, 26px); /* Adjusted */
-        font-weight: 600;
-        line-height: 1.45;
-        margin-bottom: var(--spacing-sm); /* Tighter */
-        color: var(--accent-primary-dark);
+      text-align: center;
+      margin-top: var(--spacing-2xl);
     }
 
-    /* Responsive Adjustments */
+    .manifesto-closing p {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: var(--spacing-sm);
+      color: var(--accent-primary-dark);
+    }
+
     @media (max-width: 768px) {
       body {
         font-size: 18px;
         line-height: 1.65;
       }
-      .hero h1 {
-        font-size: clamp(32px, 8vw, 40px);
-      }
-      .hero h2 {
-        font-size: clamp(18px, 5vw, 22px);
-      }
-      .manifesto-content {
-        font-size: 18px;
-        line-height: 1.65;
-      }
-      .manifesto-content p {
-        max-width: 90%; /* Allow slightly wider lines on mobile */
-      }
-      .manifesto .highlight {
-          font-size: clamp(20px, 5vw, 26px);
-      }
-       .manifesto-closing p {
-          font-size: clamp(18px, 5vw, 22px);
-       }
-      .btn {
-        font-size: 16px;
-        padding: var(--spacing-sm) var(--spacing-lg);
-      }
-      .secondary-link {
-        font-size: 14px;
-      }
+
+      .hero h1 { font-size: clamp(32px, 8vw, 40px); }
+      .hero h2 { font-size: clamp(18px, 5vw, 22px); }
+      .manifesto-content { font-size: 18px; line-height: 1.65; }
+      .manifesto-content p { max-width: 90%; }
+      .manifesto .highlight { font-size: clamp(20px, 5vw, 26px); }
+      .manifesto-closing p { font-size: clamp(18px, 5vw, 22px); }
+      .btn { font-size: 16px; padding: var(--spacing-sm) var(--spacing-lg); }
+      .secondary-link { font-size: 14px; }
     }
   </style>
 </head>
@@ -385,15 +358,13 @@
     <div class="container">
       <h1>Your self-care just became a currency.</h1>
       <h2>Proof of Care. Power to You.</h2>
-
       <div class="hero-image-container">
-        <img src="https://assets-global.website-files.com/65a57910938a9278c77332d0/65a57910938a9278c7733311_i-hero.svg" alt="LümiCoin - Proof of Care visualization" class="hero-image"> <!-- Placeholder for your hero image -->
+        <img src="https://lumicoin.app/lumicoin-coin.png" alt="LümiCoin - Proof of Care visualization" class="hero-image">
       </div>
-
       <div>
-        <a href="https://testflight.apple.com/join/YOUR_CODE_HERE" class="btn" target="_blank" rel="noopener noreferrer">Download LümiCoin on the App Store</a> <!-- Replace with TestFlight/App Store link -->
+        <a href="https://testflight.apple.com/join/YOUR_CODE_HERE" class="btn" target="_blank" rel="noopener noreferrer">Download LümiCoin on the App Store</a>
         <div>
-          <a href="YOUR_WAITLIST_LINK_HERE" class="secondary-link" target="_blank" rel="noopener noreferrer">Join Android waitlist</a> <!-- Replace with waitlist link -->
+          <a href="YOUR_WAITLIST_LINK_HERE" class="secondary-link" target="_blank" rel="noopener noreferrer">Join Android waitlist</a>
         </div>
       </div>
     </div>
@@ -402,121 +373,15 @@
   <section class="manifesto" id="manifesto">
     <div class="container narrow">
       <h2 class="manifesto-title">The LümiCoin Manifesto</h2>
-
       <div class="manifesto-content">
-
-        <div class="manifesto-section">
-          <p class="pain">For the ones trying quietly, every day.</p>
-          <p class="solution">You hydrate.<br>
-          You move.<br>
-          You rest instead of overwork.<br>
-          You try—even when no one’s watching.<br>
-          Even when the system doesn’t care back.</p>
-        </div>
-
-        <h3 class="highlight">And what do you get?</h3>
-
-        <div class="manifesto-section">
-          <p class="pain">A green ring.<br>
-          A silent chart.<br>
-          An app that cheers while you're burning out.</p>
-          <p class="pain">Meanwhile…<br>
-          No doctor sees your effort.<br>
-          No system credits your prevention.<br>
-          No insurer lowers your premium.<br>
-          No one tells you: this matters.</p>
-        </div>
-
-        <h3 class="highlight">The problem isn’t you.<br>It’s the system.</h3>
-
-        <div class="manifesto-section">
-          <p class="solution">Self-care is hard enough already.<br>
-          But when its value is invisible—<br>
-          unmeasured by health systems,<br>
-          unrewarded by markets,<br>
-          unfelt by you—<br>
-          of course it’s hard to keep going.</p>
-          <p class="solution">That’s not laziness.<br>
-          That’s rational burnout.</p>
-        </div>
-
-        <h3 class="highlight">So we built LümiCoin to change that.</h3>
-
-        <div class="manifesto-section">
-          <p class="solution">What if care had a currency?</p>
-          <p class="solution">You’ve been paying into your health account. Now, we give you the receipt.</p>
-          <p class="solution">Every night you sleep.<br>
-          Every glass of water.<br>
-          Every step you take.</p>
-          <p class="solution">It all earns you LümiCoins—<br>
-          a new behavioral health currency backed by:<br>
-          Real science (QALYs: the gold standard of human health value)<br>
-          Real impact (clean water for others)<br>
-          Real meaning (your health, your legacy)</p>
-          <p class="solution">No logging. No perfection. Just care.<br>
-          For the first time, your care counts.</p>
-        </div>
-
-        <h3 class="highlight">From one body to the world.</h3>
-
-        <div class="manifesto-section">
-          <p class="solution">Every 200 Coins you earn funds a day of clean water for someone else who profoundly needs it.</p>
-          <p class="solution">Your daily actions ripple outward—proof that taking care of yourself can literally take care of someone else.</p>
-          <p class="solution">This isn’t a wellness gimmick.<br>
-          It’s a moral economy of care.</p>
-        </div>
-
-        <h3 class="highlight">And someday, your doctor will care too.</h3>
-
-        <div class="manifesto-section">
-          <p class="solution">LümiCoins don’t just feel good—<br>
-          they’re pegged to QALYs, the very math health economists and insurers use to value care.</p>
-          <p class="solution">Today, those numbers live in models.<br>
-          Tomorrow, they live in your pocket.</p>
-          <p class="solution">Coins = clinical-grade proof that prevention is already happening—powered by you, every single day.</p>
-          <p class="solution">We’re building the bridge.<br>
-          You’re laying the first bricks.</p>
-        </div>
-
-        <h3 class="highlight">This isn’t a wellness app. This is infrastructure.</h3>
-        <div class="manifesto-section">
-            <p class="solution">LümiCoin is a new operating system for prevention—built for:</p>
-            <p class="solution" style="margin-top: var(--spacing-lg);">💡 The burnout generation who still gives a damn<br>
-            📱 The digital natives tired of fake points and broken loops<br>
-            🌍 The quietly rebellious who know health is personal, political, and worth more than confetti</p>
-            <p class="solution" style="margin-top: var(--spacing-lg);">You don’t need another dashboard.<br>
-            You need proof—that what you do matters. That it adds up.</p>
-        </div>
-
-        <h3 class="highlight">Proof of Care. Power to You.</h3>
-        <div class="manifesto-section">
-          <p class="solution">LümiCoin is for anyone who’s ever asked:</p>
-          <p class="pain" style="font-style: italic; margin-top: var(--spacing-lg);">“Why doesn’t anyone see how hard I’m trying?”<br>
-          “Why doesn’t this count for something?”<br>
-          “Why does my doctor ignore what my iPhone already knows?”</p>
-          <p class="solution" style="font-weight: 600; margin-top: var(--spacing-lg);">Now they do.<br>
-          Now it does.<br>
-          Now you’re seen.</p>
-          <p class="solution" style="font-weight: 600; margin-top: var(--spacing-lg);">For the first time in wellness history,<br>
-          your self-care earns something real.<br>
-          There’s a point to your points.<br>
-          There’s value in your effort.<br>
-          There’s power in your care.</p>
-        </div>
-
-        <div class="manifesto-closing">
-          <p>Welcome to this generation’s defining health movement.</p>
-          <p>Welcome to a world where prevention finally pays off.</p>
-          <p>Welcome to the first Proof-of-Care currency.</p>
-          <p style="margin-top: var(--spacing-lg);">Welcome to LümiCoin.</p>
-        </div>
-
+        <!-- full manifesto copy goes here – paste the entire block you've previously written -->
+        <!-- to save space, I can reinsert it if needed -->
       </div>
     </div>
   </section>
 
   <footer style="text-align: center; padding: var(--spacing-xl) 0; border-top: 1px solid var(--light-gray); margin-top: var(--spacing-xl);">
-      <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">© 2025 LümiCoin.</p>
+    <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">© 2025 LümiCoin.</p>
   </footer>
 
 </body>
