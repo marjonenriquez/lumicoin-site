@@ -143,21 +143,35 @@
       }
     }
 
-    .hero h1 {
+    .hero h1 { /* This is for "LümiCoin" */
       font-size: clamp(36px, 5.5vw, 60px); /* Responsive font size */
       margin-bottom: var(--spacing-md);
       max-width: 15ch; /* Limit line length for readability */
       margin-inline: auto; /* Center */
+      /* Inherits color: var(--accent-primary) and font-weight: 700 from global h1 styles */
     }
 
+    /* Style for the new H2 ("Your self-care just became a currency.") */
+    /* This should look like the *original* H1 */
     .hero h2 {
-      font-size: clamp(20px, 2.8vw, 26px); /* Responsive font size */
-      font-weight: 500; /* Slightly lighter than h1 */
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-xl);
-      opacity: .85;
-      max-width: 45ch; /* Limit line length */
-      margin-inline: auto; /* Center */
+      font-size: clamp(36px, 5.5vw, 60px); /* Copied from original .hero h1 */
+      margin-bottom: var(--spacing-md); /* Copied from original .hero h1 */
+      max-width: 15ch; /* Copied from original .hero h1 */
+      margin-inline: auto; /* Copied from original .hero h1 */
+      color: var(--accent-primary); /* Ensure it uses accent color like original h1 */
+      font-weight: 700; /* Ensure it's bold like original h1 */
+    }
+
+    /* Style for the new H3 ("Proof of Care. Power to You.") */
+    /* This should look like the *original* H2 */
+    .hero h3 {
+      font-size: clamp(20px, 2.8vw, 26px); /* Copied from original .hero h2 */
+      font-weight: 500; /* Copied from original .hero h2 */
+      color: var(--text-primary); /* Copied from original .hero h2 */
+      margin-bottom: var(--spacing-xl); /* Copied from original .hero h2 */
+      opacity: .85; /* Copied from original .hero h2 */
+      max-width: 45ch; /* Copied from original .hero h2 */
+      margin-inline: auto; /* Copied from original .hero h2 */
     }
 
     .hero-image-container {
@@ -365,7 +379,14 @@
         font-size: clamp(32px, 8vw, 40px); /* Adjust responsive range */
       }
 
+      /* Rule for "Your self-care just became a currency." on smaller screens */
       .hero h2 {
+        font-size: clamp(28px, 7vw, 36px); /* Subordinate to h1, larger than h3 */
+      }
+
+      /* Rule for "Proof of Care. Power to You." (now an h3) on smaller screens */
+      /* This was the original .hero h2 rule, now correctly targeting h3 */
+      .hero h3 {
         font-size: clamp(18px, 5vw, 22px); /* Adjust responsive range */
       }
 
@@ -403,9 +424,10 @@
   <section class="hero">
     <div class="container">
       <!-- Main Headline -->
-      <h1>Your self‑care just became a currency.</h1>
+      <h1>LümiCoin</h1>
+      <h2>Your self‑care just became a currency.</h2>
       <!-- Sub-headline / Tagline -->
-      <h2>Proof of Care. Power to You.</h2>
+      <h3>Proof of Care. Power to You.</h3>
 
       <!-- Hero Image -->
       <div class="hero-image-container">
