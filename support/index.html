@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Support & Feedback | LümiCoin</title>
   <meta name="description" content="Submit feedback, report bugs, or ask questions directly to the LümiCoin team.">
-  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
+  <!-- Make sure this path is correct relative to your site root -->
+  <link rel="icon" href="/lumicoin-coin.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Ensure this path is correct relative to the HTML file location -->
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -18,7 +20,8 @@
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="/lumicoin-logo.png" alt="LümiCoin Logo">
+        <!-- Make sure this path is correct -->
+        <img src="/lumicoin-coin.png" alt="LümiCoin Logo">
         <span class="logo-text">LümiCoin</span>
       </a>
       <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
@@ -35,7 +38,7 @@
           <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
-      <div class="nav-overlay"></div>
+      <div class="nav-overlay"></div> <!-- Added for mobile nav -->
     </div>
   </header>
 
@@ -101,21 +104,26 @@
   </footer>
   
   <script>
+    // Mobile Navigation Toggle
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     const navToggle = document.querySelector('.nav-toggle');
     const mainNav = document.getElementById('mainNav');
-    const navOverlay = document.querySelector('.nav-overlay');
+    const navOverlay = document.querySelector('.nav-overlay'); // Ensure this element exists if you use it
 
     function toggleNav() {
       const isOpen = mainNav.classList.contains('is-open');
       mainNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', !isOpen);
+      navToggle.setAttribute('aria-expanded', String(!isOpen)); // Use String() for boolean
       navToggle.classList.toggle('is-active');
-      if (navOverlay) navOverlay.style.display = isOpen ? 'none' : 'block';
+      if (navOverlay) { // Check if navOverlay exists
+        navOverlay.style.display = isOpen ? 'none' : 'block';
+      }
     }
 
-    navToggle.addEventListener('click', toggleNav);
-    if (navOverlay) {
+    if (navToggle) { // Check if navToggle exists
+        navToggle.addEventListener('click', toggleNav);
+    }
+    if (navOverlay) { // Check if navOverlay exists
       navOverlay.addEventListener('click', toggleNav);
     }
   </script>
@@ -132,15 +140,16 @@
       appId: "YOUR_APP_ID_HERE" // Replace
     };
 
-    // Check if placeholder values are still there
-    if (firebaseConfig.apiKey === "YOUR_API_KEY_HERE" || firebaseConfig.projectId === "YOUR_PROJECT_ID_HERE") {
-        console.warn("Firebase configuration is using placeholder values. Please update with your actual Firebase project details for the form to work.");
-    }
-    
     let db, collection, addDoc, serverTimestamp;
-    // Only attempt to initialize Firebase if config is not placeholder
-    if (firebaseConfig.apiKey !== "YOUR_API_KEY_HERE" && firebaseConfig.projectId !== "YOUR_PROJECT_ID_HERE") {
+
+    // Check if placeholder values are still there before initializing
+    const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY_HERE" && 
+                         firebaseConfig.projectId !== "YOUR_PROJECT_ID_HERE" &&
+                         firebaseConfig.appId !== "YOUR_APP_ID_HERE";
+
+    if (isConfigured) {
         try {
+            // Dynamically import Firebase modules
             const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js");
             const firestoreModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js");
             
@@ -149,67 +158,88 @@
             collection = firestoreModule.collection;
             addDoc = firestoreModule.addDoc;
             serverTimestamp = firestoreModule.serverTimestamp;
+            console.log("Firebase initialized successfully for support page.");
         } catch (error) {
             console.error("Firebase SDK could not be initialized. Ensure Firebase config is correct and network is available.", error);
+            // Optionally, display a message to the user in the formMessageContainer
+            // showMessage("Feedback system is temporarily unavailable. Please try again later.", "error");
         }
     } else {
-        console.warn("Firebase not initialized due to placeholder configuration values.");
+        console.warn("Firebase not initialized due to placeholder configuration values. Feedback form will not work.");
+        // Optionally, disable the form or show a permanent message if not configured
     }
-
 
     const feedbackForm = document.getElementById("feedbackForm");
     const submitButton = document.getElementById("submitButton");
-    const buttonTextSpan = submitButton.querySelector(".btn-text");
+    const buttonTextSpan = submitButton.querySelector(".btn-text"); // Ensure your button has <span class="btn-text">
     const formMessageContainer = document.getElementById("formMessageContainer");
 
-    feedbackForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!db) { 
-          showMessage("Feedback system is currently unavailable. Please check Firebase configuration or try again later.", "error");
-          return;
-      }
+    if (feedbackForm) { // Only add event listener if form exists
+        feedbackForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          
+          if (!db || !isConfigured) { // Check if Firebase is initialized
+              showMessage("Feedback system is currently unavailable. Please ensure Firebase is configured or try again later.", "error");
+              return;
+          }
 
-      formMessageContainer.innerHTML = "";
-      const originalButtonText = buttonTextSpan.textContent;
-      buttonTextSpan.innerHTML = `<span class="btn-spinner"></span>Submitting…`;
-      submitButton.disabled = true;
+          formMessageContainer.innerHTML = ""; // Clear previous messages
+          const originalButtonText = buttonTextSpan ? buttonTextSpan.textContent : "Send to Founder"; // Fallback if span not found
+          if (buttonTextSpan) {
+            buttonTextSpan.innerHTML = `<span class="btn-spinner" style="border-top-color: white; width: 0.8em; height: 0.8em;"></span>Submitting…`;
+          } else {
+            submitButton.innerHTML = `<span class="btn-spinner" style="border-top-color: white; width: 0.8em; height: 0.8em;"></span>Submitting…`;
+          }
+          submitButton.disabled = true;
 
-      const type = document.getElementById("feedbackType").value;
-      const email = document.getElementById("userEmail").value.trim();
-      const message = document.getElementById("feedbackMessage").value.trim();
+          const type = document.getElementById("feedbackType").value;
+          const email = document.getElementById("userEmail").value.trim();
+          const message = document.getElementById("feedbackMessage").value.trim();
 
-      if (!type || !message) {
-        showMessage("Please fill out all required fields.", "error");
-        buttonTextSpan.textContent = originalButtonText;
-        submitButton.disabled = false;
-        return;
-      }
+          if (!type || !message) {
+            showMessage("Please fill out all required fields (Category and Message).", "error");
+            if (buttonTextSpan) buttonTextSpan.textContent = originalButtonText;
+            else submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+            return;
+          }
 
-      const payload = {
-        type: type,
-        message: message,
-        email: email || null,
-        source: "web-support-page",
-        submittedAt: serverTimestamp(),
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      };
+          const payload = {
+            type: type,
+            message: message,
+            email: email || null, // Send null if empty, not an empty string
+            source: "web", // CORRECTED: Matches Firestore rule
+            submittedAt: serverTimestamp(), // Firestore handles this
+            // Optional extra fields (not enforced by current rules but good to have)
+            userAgent: navigator.userAgent || null,
+            pageUrl: window.location.href || null
+          };
 
-      try {
-        await addDoc(collection(db, "feedbackSubmissions"), payload); 
-        showMessage("Thank you! Your feedback has been submitted. We'll review it shortly.", "success");
-        feedbackForm.reset();
-      } catch (error) {
-        console.error("Error writing feedback to Firestore:", error);
-        showMessage(`Failed to send feedback: ${error.message}. Please try again or contact us directly.`, "error");
-      } finally {
-        buttonTextSpan.textContent = originalButtonText;
-        submitButton.disabled = false;
-      }
-    });
+          try {
+            // CORRECTED: Collection name is "feedback"
+            await addDoc(collection(db, "feedback"), payload); 
+            showMessage("Thank you! Your feedback has been submitted. We'll review it shortly.", "success");
+            feedbackForm.reset(); // Clear form on success
+          } catch (error) {
+            console.error("Error writing feedback to Firestore:", error);
+            showMessage(`Failed to send feedback: ${error.message}. Please try again or contact us directly.`, "error");
+          } finally {
+            if (buttonTextSpan) buttonTextSpan.textContent = originalButtonText;
+            else submitButton.textContent = originalButtonText;
+            submitButton.disabled = false;
+          }
+        });
+    } else {
+        console.warn("Feedback form not found on this page.");
+    }
+
 
     function showMessage(message, type) {
-      formMessageContainer.innerHTML = `<div class="form-message message-${type}">${message}</div>`;
+        if (formMessageContainer) {
+            formMessageContainer.innerHTML = `<div class="form-message message-${type}">${message}</div>`;
+        } else {
+            console.warn("formMessageContainer not found. Message not displayed:", message);
+        }
     }
   </script>
 </body>
