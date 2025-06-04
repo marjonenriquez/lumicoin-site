@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Support & Feedback | LümiCoin</title>
   <meta name="description" content="Submit feedback, report bugs, or ask questions directly to the LümiCoin team.">
-  <link rel="icon" href="lumicoin-logo.png" type="image/png">
+  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="lumicoin-logo.png" alt="LümiCoin Logo">
+        <img src="/lumicoin-logo.png" alt="LümiCoin Logo">
         <span class="logo-text">LümiCoin</span>
       </a>
       <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
@@ -29,10 +29,10 @@
       <nav class="main-nav" id="mainNav">
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="manifesto.html">Manifesto</a></li>
-          <li><a href="support.html" class="active">Support</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="/manifesto/">Manifesto</a></li>
+          <li><a href="/support/" class="active">Support</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
       <div class="nav-overlay"></div>
@@ -90,10 +90,10 @@
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
-          <li><a href="manifesto.html">Manifesto</a></li>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="terms.html">Terms</a></li>
-          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="/manifesto/">Manifesto</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
       <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
@@ -137,19 +137,23 @@
         console.warn("Firebase configuration is using placeholder values. Please update with your actual Firebase project details for the form to work.");
     }
     
-    // Dynamically import Firebase modules to avoid errors if not configured
     let db, collection, addDoc, serverTimestamp;
-    try {
-        const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js");
-        const firestoreModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js");
-        
-        const app = firebaseAppModule.initializeApp(firebaseConfig);
-        db = firestoreModule.getFirestore(app);
-        collection = firestoreModule.collection;
-        addDoc = firestoreModule.addDoc;
-        serverTimestamp = firestoreModule.serverTimestamp;
-    } catch (error) {
-        console.error("Firebase SDK could not be initialized. Ensure Firebase config is correct and network is available.", error);
+    // Only attempt to initialize Firebase if config is not placeholder
+    if (firebaseConfig.apiKey !== "YOUR_API_KEY_HERE" && firebaseConfig.projectId !== "YOUR_PROJECT_ID_HERE") {
+        try {
+            const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js");
+            const firestoreModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js");
+            
+            const app = firebaseAppModule.initializeApp(firebaseConfig);
+            db = firestoreModule.getFirestore(app);
+            collection = firestoreModule.collection;
+            addDoc = firestoreModule.addDoc;
+            serverTimestamp = firestoreModule.serverTimestamp;
+        } catch (error) {
+            console.error("Firebase SDK could not be initialized. Ensure Firebase config is correct and network is available.", error);
+        }
+    } else {
+        console.warn("Firebase not initialized due to placeholder configuration values.");
     }
 
 
@@ -160,8 +164,8 @@
 
     feedbackForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!db) { // Check if Firebase was initialized
-          showMessage("Feedback system is currently unavailable. Please try again later.", "error");
+      if (!db) { 
+          showMessage("Feedback system is currently unavailable. Please check Firebase configuration or try again later.", "error");
           return;
       }
 
@@ -192,7 +196,7 @@
       };
 
       try {
-        await addDoc(collection(db, "feedbackSubmissions"), payload); // Changed collection name
+        await addDoc(collection(db, "feedbackSubmissions"), payload); 
         showMessage("Thank you! Your feedback has been submitted. We'll review it shortly.", "success");
         feedbackForm.reset();
       } catch (error) {
