@@ -1,180 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Service | LümiCoin</title>
-  <meta name="description" content="LümiCoin Terms of Service: Understand the rules and guidelines for using our app and services." />
-  <link rel="icon" href="/lumicoin-coin.png" type="image/png">
+  <meta name="description" content="LümiCoin Terms of Service: Understand the rules and guidelines for using our app and services.">
+  <link rel="icon" href="lumicoin-logo.png" type="image/png">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ── Copy the same :root variables and base resets from support.html  ── */
-    :root {
-      --bg-base: #FFF8F2;
-      --text-primary: #1A1A1A;
-      --text-secondary: #556172;
-      --accent-primary: #CB5907;
-      --spacing-md: 24px;
-      --spacing-lg: 32px;
-      --spacing-xl: 40px;
-      --border-radius-sm: 8px;
-      /* … any other global vars you need … */
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 100%; }
-    body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-base);
-      color: var(--text-primary);
-      line-height: 1.7;
-      padding: var(--spacing-lg) var(--spacing-md);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    .main-content { flex: 1; }
-
-    h1, h2, h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      color: var(--accent-primary);
-      margin-bottom: var(--spacing-md);
-      line-height: 1.2;
-    }
-    h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); margin-bottom: var(--spacing-lg); }
-    h2 { font-size: clamp(1.25rem, 4vw, 1.5rem); margin-top: var(--spacing-xl); }
-    h3 { font-size: clamp(1.1rem, 3.5vw, 1.25rem); margin-top: var(--spacing-lg); color: var(--text-primary); font-weight: 600; }
-
-    p {
-      margin-bottom: var(--spacing-md);
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      max-width: 70ch;
-    }
-    ul, ol {
-      margin-left: var(--spacing-lg);
-      margin-bottom: var(--spacing-md);
-      color: var(--text-secondary);
-      padding-left: var(--spacing-sm);
-    }
-    li { margin-bottom: var(--spacing-xs); }
-    a {
-      color: var(--accent-primary);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    a:hover {
-      text-decoration: underline;
-      color: var(--accent-primary-dark);
-    }
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 var(--spacing-md);
-    }
-    .effective-date {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-xl);
-    }
-
-    /* Shared header/footer styles (same as support.html) */
-    .site-header, .site-footer-bottom { padding: var(--spacing-sm) 0; text-align: center; }
-    .site-header { border-bottom: 1px solid var(--light-gray); margin-bottom: var(--spacing-lg); }
-    .site-header .container, .site-footer-bottom .container { display: flex; justify-content: space-between; align-items: center; }
-    .logo-link { display: flex; align-items: center; font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; color: var(--accent-primary); font-weight: 600; }
-    .logo-link img { height: 32px; margin-right: var(--spacing-xs); }
-    .site-header nav a, .site-footer-bottom nav a { margin-left: var(--spacing-sm); font-size: 0.9rem; color: var(--text-secondary); }
-    .site-footer-bottom { border-top: 1px solid var(--light-gray); margin-top: auto; padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); font-size: 0.85rem; color: var(--text-secondary); }
-    .site-footer-bottom p { margin-bottom: 0; }
-    .site-footer-bottom nav { margin-top: var(--spacing-xs); }
-    @media (max-width: 600px) {
-      .site-header .container, .site-footer-bottom .container { flex-direction: column; }
-      .site-header nav, .site-footer-bottom nav { margin-top: var(--spacing-sm); }
-      .site-header nav a, .site-footer-bottom nav a { margin: 0 var(--spacing-xs); }
-      .site-footer-bottom p { margin-bottom: var(--spacing-xs); }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Shared header -->
+
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="/lumicoin-coin.png" alt="LümiCoin Logo" />
-        LümiCoin
+        <img src="lumicoin-logo.png" alt="LümiCoin Logo">
+        <span class="logo-text">LümiCoin</span>
       </a>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/support.html">Support</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="terms.html" class="active">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
       </nav>
+      <div class="nav-overlay"></div>
     </div>
   </header>
 
-  <main class="main-content">
-    <div class="container">
-      <h1>Terms of Service</h1>
-      <p class="effective-date"><strong>Last Updated:</strong> June 4, 2025</p>
+  <main>
+    <section class="page-section">
+      <div class="container-narrow text-content-page">
+        <h1 class="page-title">Terms of Service</h1>
+        <p class="effective-date"><strong>Last Updated:</strong> June 4, 2025</p>
 
-      <p>Welcome to LümiCoin! These Terms of Service (“Terms”) govern your access to and use of the LümiCoin mobile application (the “App”), website (lumicoin.app), and any related services (collectively, the “Service”) provided by LümiCoin (“we,” “us,” or “our”). Please read these Terms carefully.</p>
+        <p>Welcome to LümiCoin! These Terms of Service (“Terms”) govern your access to and use of the LümiCoin mobile application (the “App”), website (lumicoin.app), and any related services (collectively, the “Service”) provided by LümiCoin Inc. (“we,” “us,” or “our”). Please read these Terms carefully.</p>
 
-      <h2>1. Acceptance of Terms</h2>
-      <p>By creating an account, downloading the App, or using any part of the Service, you agree to be bound by these Terms and our Privacy Policy (available at <a href="/privacy.html">lumicoin.app/privacy</a>), which is incorporated herein by reference. If you do not agree to all of these Terms, do not use the Service.</p>
+        <h2>1. Acceptance of Terms</h2>
+        <p>By creating an account, downloading the App, accessing our website, or using any part of the Service, you agree to be bound by these Terms and our Privacy Policy (available at <a href="privacy.html">lumicoin.app/privacy</a>), which is incorporated herein by reference. If you do not agree to all of these Terms, do not use the Service.</p>
 
-      <h2>2. Eligibility</h2>
-      <p>You must be at least 18 years old, or the age of legal majority in your jurisdiction, to create an account and use the Service. By using the Service, you represent and warrant that you meet these eligibility requirements.</p>
+        <h2>2. Eligibility</h2>
+        <p>You must be at least 18 years old, or the age of legal majority in your jurisdiction, to create an account and use the Service. If you are under the age of 18, you may use the Service only with the involvement and consent of a parent or legal guardian. By using the Service, you represent and warrant that you meet these eligibility requirements.</p>
 
-      <h2>3. Account Registration and Security</h2>
-      <p>To use most features of the Service, you must register for an account. You agree to: (a) provide accurate, current, and complete information; (b) maintain the security of your password and accept all risks of unauthorized access to your account; and (c) promptly notify us if you discover or suspect any security breaches related to the Service.</p>
+        <h2>3. Account Registration and Security</h2>
+        <p>To use most features of the Service, you must register for an account. You agree to: (a) provide accurate, current, and complete information as prompted by any registration forms on the Service; (b) maintain and promptly update such information to keep it accurate, current, and complete; (c) maintain the security of your password and accept all risks of unauthorized access to your account and the information you provide to us; and (d) promptly notify us if you discover or otherwise suspect any security breaches related to the Service or your account.</p>
 
-      <h2>4. The LümiCoin Service</h2>
-      <p>LümiCoin is a behavioral health platform that aims to quantify and reward your self-care efforts. The Service allows you to connect your Apple HealthKit data (with your explicit permission) to track activities like steps, sleep, and hydration. Based on this data and our proprietary algorithms, you may earn “LümiCoins” or other forms of virtual rewards within the App.</p>
-      <p><strong>Important:</strong> LümiCoin is not a medical device or service. The information and rewards provided are for informational and motivational purposes only and should not be considered medical advice. Always consult with a qualified healthcare professional for any health concerns or before making any decisions related to your health or treatment.</p>
+        <h2>4. The LümiCoin Service</h2>
+        <p>LümiCoin is a behavioral health platform that aims to quantify and reward your self-care efforts. The Service allows you to connect your Apple HealthKit data (with your explicit permission) or other compatible health data sources to track activities like steps, sleep, hydration, and mindful minutes. Based on this data and our proprietary algorithms, you may earn “LümiCoins” or other forms of virtual rewards within the App.</p>
+        <p><strong>Important Disclaimer:</strong> LümiCoin is not a medical device or service. The information, insights, and rewards provided through the Service are for informational, motivational, and general wellness purposes only. They should not be considered medical advice, diagnosis, or treatment. Always consult with a qualified healthcare professional for any health concerns or before making any decisions related to your health, diet, or treatment. Do not disregard, avoid, or delay obtaining medical advice from a healthcare professional because of something you have read or seen on the Service. Reliance on any information provided by LümiCoin is solely at your own risk.</p>
 
-      <h2>5. User Conduct</h2>
-      <p>You agree not to misuse the Service or help anyone else to do so. This includes, but is not limited to: (a) attempting to manipulate data or earn rewards fraudulently; (b) interfering with the normal operation of the Service; (c) infringing on the intellectual property rights of others.</p>
+        <h2>5. User Conduct</h2>
+        <p>You agree not to misuse the Service or help anyone else to do so. You agree that you will not, directly or indirectly:</p>
+        <ul>
+            <li>Attempt to manipulate data, earn rewards fraudulently, or otherwise game the system.</li>
+            <li>Interfere with or disrupt the integrity or performance of the Service or the data contained therein.</li>
+            <li>Attempt to gain unauthorized access to the Service or its related systems or networks.</li>
+            <li>Use the Service for any illegal, unauthorized, or unethical purpose.</li>
+            <li>Infringe upon or violate our intellectual property rights or the intellectual property rights of others.</li>
+            <li>Transmit any worms, viruses, or any code of a destructive nature.</li>
+        </ul>
 
-      <h2>6. Intellectual Property</h2>
-      <p>The Service and its original content, features, and functionality are and will remain the exclusive property of LümiCoin and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.</p>
+        <h2>6. Intellectual Property Rights</h2>
+        <p>The Service and its original content (excluding User Content), features, and functionality are and will remain the exclusive property of LümiCoin Inc. and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent. "LümiCoin," the LümiCoin logo, and any other LümiCoin product or service names, logos or slogans are trademarks of LümiCoin Inc. and may not be copied, imitated or used, in whole or in part, without our prior written permission.</p>
 
-      <h2>7. Data Privacy</h2>
-      <p>Our collection and use of personal information, including HealthKit data, is described in our <a href="/privacy.html">Privacy Policy</a>. By using the Service, you consent to such collection and use.</p>
+        <h2>7. Data Privacy</h2>
+        <p>Our collection, use, and sharing of personal information, including HealthKit data (where applicable), is described in our <a href="privacy.html">Privacy Policy</a>. By using the Service, you acknowledge that you have read the Privacy Policy and consent to such collection, use, and sharing as described therein.</p>
+        
+        <h2>8. LümiCoins and Rewards</h2>
+        <p>LümiCoins are virtual items with no monetary value and are not redeemable for cash or any cash equivalent from us or any other party. We may, in our sole discretion, offer opportunities to use LümiCoins for certain in-app features, benefits, or to facilitate contributions to third-party charitable organizations. The availability, exchange rates, and conditions for using LümiCoins are subject to change at our sole discretion without notice. We reserve the right to manage, regulate, control, modify, or eliminate LümiCoins as we see fit, and we shall have no liability to you or any third party for the exercise of such rights.</p>
 
-      <h2>8. Disclaimers and Limitation of Liability</h2>
-      <p>THE SERVICE IS PROVIDED “AS IS” AND “AS AVAILABLE” WITHOUT WARRANTIES OF ANY KIND. WE DISCLAIM ALL WARRANTIES, WHETHER EXPRESS OR IMPLIED, INCLUDING THE WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT WILL LÜMICOIN BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES.</p>
+        <h2>9. Disclaimers and Limitation of Liability</h2>
+        <p>THE SERVICE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE, THAT DEFECTS WILL BE CORRECTED, OR THAT THE SERVICE OR THE SERVERS THAT MAKE IT AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS.</p>
+        <p>IN NO EVENT WILL LÜMICOIN INC., ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES) ARISING OUT OF OR RELATING TO YOUR ACCESS TO OR USE OF, OR YOUR INABILITY TO ACCESS OR USE, THE SERVICE OR ANY MATERIALS OR CONTENT ON THE SERVICE, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), STATUTE, OR ANY OTHER LEGAL THEORY, AND WHETHER OR NOT WE HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+        <p>OUR TOTAL LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THE USE OF OR ANY INABILITY TO USE ANY PORTION OF THE SERVICE OR OTHERWISE ARISING OUT OF THESE TERMS, WHETHER IN CONTRACT, TORT, OR OTHERWISE, IS LIMITED TO THE GREATER OF (A) THE AMOUNT YOU HAVE PAID TO LÜMICOIN FOR ACCESS TO AND USE OF THE SERVICE IN THE 12 MONTHS PRIOR TO THE EVENT OR CIRCUMSTANCE GIVING RISE TO SUCH CLAIMS OR (B) ONE HUNDRED U.S. DOLLARS ($100).</p>
 
-      <h2>9. Changes to Terms</h2>
-      <p>We reserve the right to modify these Terms at any time. If we make changes, we will provide notice, such as by updating the “Last Updated” date above and/or notifying you through the App. Your continued use of the Service after any such changes constitutes your acceptance of the new Terms.</p>
+        <h2>10. Changes to Terms</h2>
+        <p>We reserve the right to modify these Terms at any time. If we make changes that we believe are material, we will provide you with notice, such as by updating the “Last Updated” date at the top of these Terms, sending an email, or providing a notice through the Service. Your continued use of the Service after any such changes constitutes your acceptance of the new Terms. If you do not agree to any changes, you must stop using the Service.</p>
 
-      <h2>10. Governing Law</h2>
-      <p>These Terms shall be governed by the laws of the State of New York, without regard to its conflict of law principles.</p>
+        <h2>11. Governing Law and Dispute Resolution</h2>
+        <p>These Terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law principles. Any dispute arising from or relating to the subject matter of these Terms shall be finally settled by arbitration in New York County, New York, in English, in accordance with the Streamlined Arbitration Rules and Procedures of Judicial Arbitration and Mediation Services, Inc. ("JAMS") then in effect.</p>
 
-      <h2>11. Contact Us</h2>
-      <p>If you have any questions about these Terms, please contact us at <a href="mailto:legal@lumicoin.app">legal@lumicoin.app</a>.</p>
+        <h2>12. Contact Us</h2>
+        <p>If you have any questions about these Terms, please contact us at <a href="mailto:legal@lumicoin.app">legal@lumicoin.app</a>.</p>
 
-      <p><a href="/">← Back to home</a></p>
-    </div>
+        <a href="/" class="back-link">← Back to Home</a>
+      </div>
+    </section>
   </main>
 
-  <!-- Shared footer -->
-  <footer class="site-footer-bottom">
+  <footer class="site-footer">
     <div class="container">
-      <p>© <span id="currentYear"></span> LümiCoin. All rights reserved.</p>
       <nav>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/support.html">Support</a>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
       </nav>
+      <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
     </div>
   </footer>
-  <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function toggleNav() {
+      const isOpen = mainNav.classList.contains('is-open');
+      mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', !isOpen);
+      navToggle.classList.toggle('is-active');
+      if (navOverlay) navOverlay.style.display = isOpen ? 'none' : 'block';
+    }
+
+    navToggle.addEventListener('click', toggleNav);
+    if (navOverlay) {
+      navOverlay.addEventListener('click', toggleNav);
+    }
+  </script>
 </body>
 </html>
