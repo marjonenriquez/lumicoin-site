@@ -1,118 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Support & Feedback | LümiCoin</title>
-  <meta name="description" content="Submit feedback, report bugs, or ask questions directly to the LümiCoin team." />
-  <link rel="icon" href="/lumicoin-coin.png" type="image/png">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Submit feedback, report bugs, or ask questions directly to the LümiCoin team.">
+  <link rel="icon" href="lumicoin-logo.png" type="image/png">
 
-  <style>
-    /* ── Copy/Paste the CSS from the prior “superlean & polished” example, which includes: */
-    /* – :root variables (colors, spacing, fonts, shadows) */
-    /* – Global resets + body styles, .container, h1/h2, p, a, etc. */
-    /* – .site-header / .site-footer-bottom styles */
-    /* – form, label, select, input, textarea, .btn, spinner, message-success/error styles */
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Shared header -->
+
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="/lumicoin-coin.png" alt="LümiCoin Logo" />
-        LümiCoin
+        <img src="lumicoin-logo.png" alt="LümiCoin Logo">
+        <span class="logo-text">LümiCoin</span>
       </a>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/support.html">Support</a>
+      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="support.html" class="active">Support</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
       </nav>
+      <div class="nav-overlay"></div>
     </div>
   </header>
 
-  <main class="main-content">
-    <div class="container">
-      <h1>Support & Feedback</h1>
-      <p>Have a question, a bug to report, or a feature idea? We're all ears! Your input is invaluable in helping us make LümiCoin the best it can be.</p>
-      <p>Please fill out the form below, and our founder will personally review your submission.</p>
+  <main>
+    <section class="page-section support-page">
+      <div class="container-narrow">
+        <h1 class="page-title">Support & Feedback</h1>
+        <p class="page-subtitle">Have a question, bug report, or feature idea? We're all ears! Your input is invaluable in helping us make LümiCoin the best it can be. Our founder personally reviews every submission.</p>
 
-      <form id="feedbackForm">
-        <label for="feedbackType">What's this about?</label>
-        <select id="feedbackType" name="feedbackType" required>
-          <option value="" disabled selected>Choose a category…</option>
-          <option value="General Feedback">General Feedback</option>
-          <option value="Bug Report">Bug Report</option>
-          <option value="Feature Request">Feature Request</option>
-          <option value="Question">Question</option>
-          <option value="Partnership Inquiry">Partnership Inquiry</option>
-          <option value="Other">Other</option>
-        </select>
+        <div class="form-container">
+          <form id="feedbackForm">
+            <div class="form-group">
+              <label for="feedbackType">What's this about?</label>
+              <select id="feedbackType" name="feedbackType" required>
+                <option value="" disabled selected>Choose a category…</option>
+                <option value="General Feedback">💬 General Feedback</option>
+                <option value="Bug Report">🐛 Bug Report</option>
+                <option value="Feature Request">✨ Feature Request</option>
+                <option value="Question">❓ Question</option>
+                <option value="Partnership Inquiry">🤝 Partnership Inquiry</option>
+                <option value="Other">📋 Other</option>
+              </select>
+            </div>
 
-        <label for="userEmail">Your Email (optional, so we can reply if needed)</label>
-        <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com" />
+            <div class="form-group">
+              <label for="userEmail">Your Email <span class="label-optional">(optional, for replies)</span></label>
+              <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com">
+            </div>
 
-        <label for="feedbackMessage">Your Message</label>
-        <textarea id="feedbackMessage" name="feedbackMessage" rows="7" placeholder="Please describe your issue or suggestion in detail…" required></textarea>
+            <div class="form-group">
+              <label for="feedbackMessage">Your Message</label>
+              <textarea id="feedbackMessage" name="feedbackMessage" rows="7" placeholder="Please describe your issue or suggestion in detail…" required></textarea>
+            </div>
 
-        <button type="submit" class="btn" id="submitButton">
-          <span class="btn-text">Send to Founder</span>
-        </button>
+            <button type="submit" class="btn" id="submitButton" style="width: 100%;">
+              <span class="btn-text">Send to Founder</span>
+            </button>
 
-        <div id="formMessageContainer"></div>
-      </form>
+            <div id="formMessageContainer" style="margin-top: var(--spacing-md);"></div>
+          </form>
+        </div>
 
-      <div class="app-submission-note">
-        <p><strong>Using the LümiCoin app?</strong> For the best support experience, please submit feedback via the app (Settings > Feedback & Support). This automatically includes helpful diagnostic information like your app version and User ID.</p>
+        <div class="app-submission-note">
+          <p><strong>Using the LümiCoin app?</strong> For the best support experience, please submit feedback via the app (Settings > Feedback & Support). This automatically includes helpful diagnostic information.</p>
+        </div>
       </div>
-    </div>
+    </section>
   </main>
 
-  <!-- Shared footer -->
-  <footer class="site-footer-bottom">
+  <footer class="site-footer">
     <div class="container">
-      <p>© <span id="currentYear"></span> LümiCoin. All rights reserved.</p>
       <nav>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Service</a>
-        <a href="/support.html">Support</a>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="manifesto.html">Manifesto</a></li>
+          <li><a href="support.html">Support</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
       </nav>
+      <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
     </div>
   </footer>
-  <script>document.getElementById('currentYear').textContent = new Date().getFullYear();</script>
+  
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    const navToggle = document.querySelector('.nav-toggle');
+    const mainNav = document.getElementById('mainNav');
+    const navOverlay = document.querySelector('.nav-overlay');
 
-  <!-- Modular Firebase v9 SDK -->
+    function toggleNav() {
+      const isOpen = mainNav.classList.contains('is-open');
+      mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', !isOpen);
+      navToggle.classList.toggle('is-active');
+      if (navOverlay) navOverlay.style.display = isOpen ? 'none' : 'block';
+    }
+
+    navToggle.addEventListener('click', toggleNav);
+    if (navOverlay) {
+      navOverlay.addEventListener('click', toggleNav);
+    }
+  </script>
+
+  <!-- Firebase SDK and form logic -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
+    // IMPORTANT: Replace with your actual Firebase configuration
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "YOUR_API_KEY_HERE", // Replace
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com", // Replace
+      projectId: "YOUR_PROJECT_ID_HERE", // Replace
+      storageBucket: "YOUR_PROJECT_ID.appspot.com", // Replace
+      messagingSenderId: "YOUR_SENDER_ID_HERE", // Replace
+      appId: "YOUR_APP_ID_HERE" // Replace
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    // Check if placeholder values are still there
+    if (firebaseConfig.apiKey === "YOUR_API_KEY_HERE" || firebaseConfig.projectId === "YOUR_PROJECT_ID_HERE") {
+        console.warn("Firebase configuration is using placeholder values. Please update with your actual Firebase project details for the form to work.");
+    }
+    
+    // Dynamically import Firebase modules to avoid errors if not configured
+    let db, collection, addDoc, serverTimestamp;
+    try {
+        const firebaseAppModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js");
+        const firestoreModule = await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js");
+        
+        const app = firebaseAppModule.initializeApp(firebaseConfig);
+        db = firestoreModule.getFirestore(app);
+        collection = firestoreModule.collection;
+        addDoc = firestoreModule.addDoc;
+        serverTimestamp = firestoreModule.serverTimestamp;
+    } catch (error) {
+        console.error("Firebase SDK could not be initialized. Ensure Firebase config is correct and network is available.", error);
+    }
+
 
     const feedbackForm = document.getElementById("feedbackForm");
     const submitButton = document.getElementById("submitButton");
-    const buttonText = submitButton.querySelector(".btn-text");
+    const buttonTextSpan = submitButton.querySelector(".btn-text");
     const formMessageContainer = document.getElementById("formMessageContainer");
 
     feedbackForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (!db) { // Check if Firebase was initialized
+          showMessage("Feedback system is currently unavailable. Please try again later.", "error");
+          return;
+      }
+
       formMessageContainer.innerHTML = "";
-      const originalButtonText = buttonText.textContent;
-      buttonText.innerHTML = `<span class="btn-spinner"></span>Submitting…`;
+      const originalButtonText = buttonTextSpan.textContent;
+      buttonTextSpan.innerHTML = `<span class="btn-spinner"></span>Submitting…`;
       submitButton.disabled = true;
 
       const type = document.getElementById("feedbackType").value;
@@ -121,7 +176,7 @@
 
       if (!type || !message) {
         showMessage("Please fill out all required fields.", "error");
-        buttonText.textContent = originalButtonText;
+        buttonTextSpan.textContent = originalButtonText;
         submitButton.disabled = false;
         return;
       }
@@ -130,19 +185,21 @@
         type: type,
         message: message,
         email: email || null,
-        source: "web",
-        submittedAt: serverTimestamp()
+        source: "web-support-page",
+        submittedAt: serverTimestamp(),
+        userAgent: navigator.userAgent,
+        url: window.location.href
       };
 
       try {
-        await addDoc(collection(db, "feedback"), payload);
+        await addDoc(collection(db, "feedbackSubmissions"), payload); // Changed collection name
         showMessage("Thank you! Your feedback has been submitted. We'll review it shortly.", "success");
         feedbackForm.reset();
       } catch (error) {
         console.error("Error writing feedback to Firestore:", error);
-        showMessage(`Failed to send feedback: ${error.message}. Please try again.`, "error");
+        showMessage(`Failed to send feedback: ${error.message}. Please try again or contact us directly.`, "error");
       } finally {
-        buttonText.textContent = originalButtonText;
+        buttonTextSpan.textContent = originalButtonText;
         submitButton.disabled = false;
       }
     });
