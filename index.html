@@ -286,8 +286,15 @@ Here’s the final, fully integrated HTML—production-ready, world-class stylin
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
     // Replace with your actual Firebase config
-    const firebaseConfig = {/* … */};
-
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA",
+      authDomain: "lumi-qp.firebaseapp.com",
+      projectId: "lumi-qp",
+      storageBucket: "lumi-qp.appspot.com",
+      messagingSenderId: "474751581743",
+      appId: "1:474751581743:web:8384b16bb6e4351ce090da",
+      measurementId: "G-LS5E61FTYM"
+    };
     try {
       const app = initializeApp(firebaseConfig);
       const db  = getFirestore(app);
