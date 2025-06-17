@@ -1,17 +1,65 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LümiCoin - One Health Score. Real-World Impact.</title>
-  <meta name="description" content="LümiCoin transforms your daily self‑care into a meaningful currency. Proof of Care. Power to You.">
+  <meta name="description" content="LümiCoin transforms your daily self-care into a meaningful currency. Proof of Care. Power to You.">
   <link rel="icon" href="/lumicoin-logo.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="/style.css">
+
+  <!-- Modal styles -->
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .modal-content {
+      background: var(--white);
+      max-width: 400px;
+      margin: 10% auto;
+      padding: var(--spacing-lg);
+      border-radius: var(--border-radius-md);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: var(--spacing-sm);
+      right: var(--spacing-sm);
+      font-size: 1.5rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+    #waitlist-form input {
+      width: 100%;
+      padding: var(--spacing-sm);
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius-sm);
+    }
+    #waitlist-form button {
+      width: 100%;
+    }
+    #waitlist-message {
+      margin-top: var(--spacing-sm);
+      font-size: 0.9rem;
+      min-height: 1.2em;
+    }
+    #waitlist-message.success { color: var(--success); }
+    #waitlist-message.error   { color: var(--error);   }
+  </style>
 </head>
 <body>
 
@@ -42,29 +90,34 @@
   <main>
     <section class="hero-section">
       <div class="container">
-        <h1>Your self‑care just became a currency.</h1>
+        <h1>Your self-care just became a currency.</h1>
         <p class="subtitle">Proof of Care. Power to You. LümiCoin transforms daily healthy actions into measurable value, tangible impact, and future resilience.</p>
 
         <div class="hero-image-container">
-          <img src="/lumicoin-coin.png" alt="LümiCoin - Proof of Care visualization" class="hero-image">
+          <img src="/lumicoin-coin.png" alt="LümiCoin – Proof of Care visualization" class="hero-image">
         </div>
 
         <div class="hero-cta-buttons">
-          <a href="https://testflight.apple.com/join/YOUR_CODE_HERE" class="btn" target="_blank" rel="noopener noreferrer">Download on the App Store</a>
-          <a href="YOUR_WAITLIST_LINK_HERE" class="secondary-link" target="_blank" rel="noopener noreferrer">Join Android waitlist</a>
+          <a href="https://apps.apple.com/us/app/l%C3%BCmicoin/id6744044814"
+             class="btn" target="_blank" rel="noopener noreferrer">
+            Download on the App Store
+          </a>
+          <a href="#" id="openWaitlistModal" class="secondary-link">
+            Join Android waitlist
+          </a>
         </div>
       </div>
     </section>
 
     <section class="page-section value-prop-section">
-        <div class="container">
-            <h2>Why LümiCoin?</h2>
-            <div class="value-prop-item">
-                <p>Current wellness solutions often fail. Motivation fades, progress feels invisible, and self-care isn't recognized by the systems that matter.</p>
-                <p>LümiCoin changes this by making your care count—for you, for others, and for the future of health.</p>
-                <a href="/manifesto/" class="btn" style="margin-top: var(--spacing-lg);">Read Our Manifesto</a>
-            </div>
+      <div class="container">
+        <h2>Why LümiCoin?</h2>
+        <div class="value-prop-item">
+          <p>Current wellness solutions often fail. Motivation fades, progress feels invisible, and self-care isn’t recognized by the systems that matter.</p>
+          <p>LümiCoin changes this by making your care count—for you, for others, and for the future of health.</p>
+          <a href="/manifesto/" class="btn" style="margin-top: var(--spacing-lg);">Read Our Manifesto</a>
         </div>
+      </div>
     </section>
   </main>
 
@@ -82,25 +135,120 @@
       <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
     </div>
   </footer>
-  
+
+  <!-- Android Waitlist Modal -->
+  <div id="androidWaitlistModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="waitlist-title">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="waitlist-title">Join Android waitlist</h2>
+      <p>Be the first to know when LümiCoin launches on Android!</p>
+      <form id="waitlist-form">
+        <input type="email" id="waitlist-email" name="email"
+               placeholder="you@example.com" required autocomplete="email">
+        <button type="submit" class="btn">Join waitlist</button>
+        <div id="waitlist-message"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Core scripts -->
   <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
-    const navToggle = document.querySelector('.nav-toggle');
-    const mainNav = document.getElementById('mainNav');
+    const navToggle  = document.querySelector('.nav-toggle');
+    const mainNav    = document.getElementById('mainNav');
     const navOverlay = document.querySelector('.nav-overlay');
 
     function toggleNav() {
-      const isOpen = mainNav.classList.contains('is-open');
-      mainNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', !isOpen);
+      const open = mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', open);
       navToggle.classList.toggle('is-active');
-      if (navOverlay) navOverlay.style.display = isOpen ? 'none' : 'block';
+      if (navOverlay) navOverlay.style.display = open ? 'block' : 'none';
     }
 
     navToggle.addEventListener('click', toggleNav);
-    if (navOverlay) {
-      navOverlay.addEventListener('click', toggleNav);
-    }
+    if (navOverlay) navOverlay.addEventListener('click', toggleNav);
   </script>
+
+  <!-- Firebase + modal logic -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp }
+      from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+    // TODO: replace with your Firebase config
+    const firebaseConfig = {
+      apiKey:            'YOUR_API_KEY',
+      authDomain:        'YOUR_PROJECT_ID.firebaseapp.com',
+      projectId:         'YOUR_PROJECT_ID',
+      storageBucket:     'YOUR_PROJECT_ID.appspot.com',
+      messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
+      appId:             'YOUR_APP_ID'
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    const openBtn    = document.getElementById('openWaitlistModal');
+    const modal      = document.getElementById('androidWaitlistModal');
+    const closeBtn   = modal.querySelector('.modal-close');
+    const form       = document.getElementById('waitlist-form');
+    const emailInput = document.getElementById('waitlist-email');
+    const msg        = document.getElementById('waitlist-message');
+    const submitBtn  = form.querySelector('button[type="submit"]');
+
+    function toggleModal(show) {
+      modal.style.display        = show ? 'block' : 'none';
+      modal.setAttribute('aria-hidden', show ? 'false' : 'true');
+      if (show) emailInput.focus();
+      else {
+        form.reset();
+        msg.textContent = '';
+        msg.className   = '';
+      }
+    }
+
+    openBtn.addEventListener('click', e => { e.preventDefault(); toggleModal(true); });
+    closeBtn.addEventListener('click', () => toggleModal(false));
+    modal.addEventListener('click', e => { if (e.target === modal) toggleModal(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleModal(false); });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = emailInput.value.trim().toLowerCase();
+      const re    = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if (!email) {
+        msg.textContent = 'Please enter your email address.';
+        msg.className   = 'error';
+        emailInput.focus();
+        return;
+      }
+      if (!re.test(email)) {
+        msg.textContent = 'Please enter a valid email.';
+        msg.className   = 'error';
+        emailInput.focus();
+        return;
+      }
+      msg.textContent = 'Submitting…';
+      msg.className   = '';
+      submitBtn.disabled = true;
+      try {
+        await addDoc(collection(db, 'androidWaitlist'), {
+          email,
+          submittedAt: serverTimestamp()
+        });
+        msg.textContent = '✅ You’re on the list!';
+        msg.className   = 'success';
+        setTimeout(() => toggleModal(false), 2500);
+      } catch (err) {
+        console.error(err);
+        msg.textContent = 'Error – please try again later.';
+        msg.className   = 'error';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
 </body>
 </html>
+```
