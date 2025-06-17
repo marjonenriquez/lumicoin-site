@@ -263,7 +263,7 @@
     
     .why-section h2 {
       font-size: clamp(2rem, 5vw, 2.75rem);
-      margin-bottom: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl); /* Space below "Why LümiCoin?" title */
       color: var(--accent-primary);
       position: relative;
     }
@@ -271,7 +271,8 @@
     .why-lead {
       font-size: clamp(1.125rem, 3vw, 1.25rem);
       max-width: 55ch;
-      margin: 0 auto var(--spacing-2xl);
+      /* MODIFIED: Increased bottom margin for more space below this paragraph on desktop */
+      margin: 0 auto var(--spacing-3xl); 
       color: var(--text-primary);
       line-height: 1.6;
       font-weight: 400;
@@ -279,20 +280,21 @@
     
     .why-features.vertical {
       list-style: none;
-      margin: 0 auto var(--spacing-2xl);
+      margin: 0 auto var(--spacing-2xl); /* Bottom margin for space below list block */
       padding: 0;
       max-width: 56ch;
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-2xl);
+      /* MODIFIED: Reduced gap between individual feature list items (li) on desktop */
+      gap: var(--spacing-lg); 
       text-align: left;
     }
     
     .why-features.vertical li {
       display: flex;
       align-items: flex-start;
-      gap: var(--spacing-lg);
-      padding: var(--spacing-lg);
+      gap: var(--spacing-lg); /* Space between icon and text inside each item */
+      padding: var(--spacing-lg); /* Padding inside each item's card */
       background: var(--white);
       border-radius: var(--border-radius-md);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -307,9 +309,9 @@
     }
     
     .why-icon {
-      font-size: 1.5rem;
+      font-size: 1.5rem; /* Icon size */
       color: var(--accent-primary);
-      margin-top: 2px;
+      margin-top: 2px; /* Fine-tune vertical alignment of icon */
       flex-shrink: 0;
       width: 28px;
       height: 28px;
@@ -318,14 +320,14 @@
       justify-content: center;
       background: var(--accent-peach);
       border-radius: 50%;
-      font-weight: 700;
+      font-weight: 700; /* For checkmark if it's text */
     }
     
     .why-title {
       display: block;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: var(--spacing-xs);
+      margin-bottom: var(--spacing-xs); /* Space below title, before description */
       font-size: 1.125rem;
       line-height: 1.3;
     }
@@ -338,8 +340,8 @@
       line-height: 1.5;
     }
     
-    .why-section .btn {
-      margin-top: var(--spacing-xl);
+    .why-section .btn { /* Button "Read Our Manifesto" */
+      margin-top: var(--spacing-xl); /* Space above this button */
       padding: var(--spacing-md) var(--spacing-2xl);
     }
 
@@ -365,9 +367,14 @@
         font-size: 1rem;
       }
       
+      /* MODIFIED: Responsive adjustments for "Why" section's lead paragraph */
+      .why-lead {
+         margin: 0 auto var(--spacing-2xl); /* Reduce bottom margin on small screens */
+      }
+
       .why-features.vertical {
-        max-width: 100%;
-        gap: var(--spacing-xl);
+        max-width: 100%; 
+        gap: var(--spacing-xl); /* Keeps the 40px gap on smaller screens */
       }
       
       .why-features.vertical li {
@@ -378,7 +385,7 @@
       .why-icon {
         width: 24px;
         height: 24px;
-        font-size: 1.25rem;
+        font-size: 1.25rem; /* Smaller icon on mobile */
       }
       
       .why-title {
@@ -559,7 +566,7 @@
   <!-- Android Waitlist Modal -->
   <div id="androidWaitlistModal" class="modal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="waitlist-title">
-      <button class="modal-close" aria-label="Close">&times;</button>
+      <button class="modal-close" aria-label="Close">×</button>
       <h2 id="waitlist-title">Join Android waitlist</h2>
       <p>Be the first to know when LümiCoin launches on Android!</p>
       <form id="waitlist-form">
@@ -597,7 +604,7 @@
 
     // Firebase config
     const firebaseConfig = {
-      apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA",
+      apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA", // This is a placeholder, replace with your actual API key if needed
       authDomain: "lumi-qp.firebaseapp.com",
       projectId: "lumi-qp",
       storageBucket: "lumi-qp.appspot.com",
@@ -662,7 +669,7 @@
           email,
           submittedAt: serverTimestamp()
         });
-        msg.textContent = '✅ You're on the list!';
+        msg.textContent = '✅ You\'re on the list!';
         msg.className   = 'success';
         setTimeout(() => toggleModal(false), 2500);
       } catch (err) {
