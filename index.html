@@ -268,11 +268,11 @@
       position: relative;
     }
     
-    .why-lead {
+    /* MODIFIED: Increased specificity to p.why-lead to override p:last-of-type */
+    p.why-lead {
       font-size: clamp(1.125rem, 3vw, 1.25rem);
       max-width: 55ch;
-      /* MODIFIED: Increased bottom margin for more space below this paragraph on desktop */
-      margin: 0 auto var(--spacing-3xl); 
+      margin: 0 auto var(--spacing-3xl); /* Increased bottom margin for more space on desktop */
       color: var(--text-primary);
       line-height: 1.6;
       font-weight: 400;
@@ -285,16 +285,15 @@
       max-width: 56ch;
       display: flex;
       flex-direction: column;
-      /* MODIFIED: Reduced gap between individual feature list items (li) on desktop */
-      gap: var(--spacing-lg); 
+      gap: var(--spacing-lg); /* Reduced gap between individual feature list items on desktop */
       text-align: left;
     }
     
     .why-features.vertical li {
       display: flex;
       align-items: flex-start;
-      gap: var(--spacing-lg); /* Space between icon and text inside each item */
-      padding: var(--spacing-lg); /* Padding inside each item's card */
+      gap: var(--spacing-lg); 
+      padding: var(--spacing-lg); 
       background: var(--white);
       border-radius: var(--border-radius-md);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -309,9 +308,9 @@
     }
     
     .why-icon {
-      font-size: 1.5rem; /* Icon size */
+      font-size: 1.5rem; 
       color: var(--accent-primary);
-      margin-top: 2px; /* Fine-tune vertical alignment of icon */
+      margin-top: 2px; 
       flex-shrink: 0;
       width: 28px;
       height: 28px;
@@ -320,14 +319,14 @@
       justify-content: center;
       background: var(--accent-peach);
       border-radius: 50%;
-      font-weight: 700; /* For checkmark if it's text */
+      font-weight: 700; 
     }
     
     .why-title {
       display: block;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: var(--spacing-xs); /* Space below title, before description */
+      margin-bottom: var(--spacing-xs); 
       font-size: 1.125rem;
       line-height: 1.3;
     }
@@ -340,8 +339,8 @@
       line-height: 1.5;
     }
     
-    .why-section .btn { /* Button "Read Our Manifesto" */
-      margin-top: var(--spacing-xl); /* Space above this button */
+    .why-section .btn { 
+      margin-top: var(--spacing-xl); 
       padding: var(--spacing-md) var(--spacing-2xl);
     }
 
@@ -367,14 +366,14 @@
         font-size: 1rem;
       }
       
-      /* MODIFIED: Responsive adjustments for "Why" section's lead paragraph */
-      .why-lead {
+      /* MODIFIED: Increased specificity for responsive .why-lead */
+      p.why-lead {
          margin: 0 auto var(--spacing-2xl); /* Reduce bottom margin on small screens */
       }
 
       .why-features.vertical {
         max-width: 100%; 
-        gap: var(--spacing-xl); /* Keeps the 40px gap on smaller screens */
+        gap: var(--spacing-xl); 
       }
       
       .why-features.vertical li {
@@ -385,7 +384,7 @@
       .why-icon {
         width: 24px;
         height: 24px;
-        font-size: 1.25rem; /* Smaller icon on mobile */
+        font-size: 1.25rem; 
       }
       
       .why-title {
