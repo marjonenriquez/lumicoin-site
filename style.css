@@ -735,3 +735,59 @@ input::placeholder, textarea::placeholder {
 @media (min-width: 769px) {
   .nav-toggle { display: none; }
 }
+
+/* --- “Why LümiCoin?” Section --- */
+.why-section {
+  text-align: center;
+  border-top: 1px solid var(--light-gray);
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+}
+
+.why-section h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--accent-primary);
+}
+
+.why-lead {
+  font-size: 1.125rem;
+  max-width: 50ch;
+  margin: 0 auto var(--spacing-xl);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.why-features {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 60ch;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: var(--spacing-md);
+}
+
+.why-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding-left: var(--spacing-lg);
+  position: relative;
+}
+
+.why-features li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  font-size: 1.1rem;
+  color: var(--accent-primary);
+}
+
+.why-features strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
