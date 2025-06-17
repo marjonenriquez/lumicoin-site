@@ -1,92 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LümiCoin – Your Self-Care is Now a Currency</title>
-  <meta name="description" content="LümiCoin turns every healthy action into measurable value, real-time impact, and future resilience."/>
-  <link rel="icon" href="/lumicoin-logo.png" type="image/png"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LümiCoin - One Health Score. Real-World Impact.</title>
+  <meta name="description" content="LümiCoin transforms your daily self-care into a meaningful currency. Proof of Care. Power to You.">
+  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="/style.css"/>
-
-  <!-- Extra component styles -->
+  <!-- Modal styles -->
   <style>
-    /* Benefit grid */
-    .benefits-grid {
-      display: grid;
-      gap: var(--spacing-lg);
-    }
-    @media (min-width: 768px) {
-      .benefits-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    .benefit-item {
-      background: var(--white);
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-      transition: var(--transition);
-      border: 1px solid var(--light-gray);
-    }
-    .benefit-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
-    }
-
-    /* How-it-works list */
-    .how-it-works-list {
-      list-style: none;
-      counter-reset: step;
-      margin-top: var(--spacing-lg);
-      padding-left: 0;
-    }
-    .how-it-works-list li {
-      position: relative;
-      padding-left: calc(var(--spacing-lg) * 2);
-      margin-bottom: var(--spacing-md);
-    }
-    .how-it-works-list li::before {
-      counter-increment: step;
-      content: counter(step);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: var(--spacing-lg);
-      height: var(--spacing-lg);
-      background: var(--accent-primary);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-    }
-    .how-it-works-list li strong {
-      color: var(--accent-primary);
-    }
-
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      padding: var(--spacing-lg);
     }
-    .modal[aria-hidden="false"] { display: flex; }
     .modal-content {
       background: var(--white);
       max-width: 400px;
-      width: 100%;
+      margin: 10% auto;
       padding: var(--spacing-lg);
       border-radius: var(--border-radius-md);
       box-shadow: var(--shadow-soft);
@@ -97,160 +35,96 @@
       position: absolute;
       top: var(--spacing-sm);
       right: var(--spacing-sm);
-      background: none;
-      border: none;
       font-size: 1.5rem;
+      border: none;
+      background: none;
       cursor: pointer;
       color: var(--text-secondary);
     }
-    .modal input {
+    #waitlist-form input {
       width: 100%;
       padding: var(--spacing-sm);
       margin-bottom: var(--spacing-md);
       border: 1px solid var(--light-gray);
       border-radius: var(--border-radius-sm);
     }
-    .modal .btn {
+    #waitlist-form button {
       width: 100%;
     }
-    .modal-message {
+    #waitlist-message {
       margin-top: var(--spacing-sm);
       font-size: 0.9rem;
       min-height: 1.2em;
     }
-    .modal-message.success { color: var(--success); }
-    .modal-message.error   { color: var(--error); }
+    #waitlist-message.success { color: var(--success); }
+    #waitlist-message.error   { color: var(--error);   }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="/lumicoin-logo.png" alt="LümiCoin Logo" height="36"/>
+        <img src="/lumicoin-logo.png" alt="LümiCoin Logo">
         <span class="logo-text">LümiCoin</span>
       </a>
-      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
       <nav class="main-nav" id="mainNav">
         <ul>
-          <li><a href="#home" class="active">Home</a></li>
-          <li><a href="#why">Why</a></li>
-          <li><a href="#how">How</a></li>
-          <li><a href="#benefits">Benefits</a></li>
-          <li><a href="#subscription">Subscribe</a></li>
+          <li><a href="/" class="active">Home</a></li>
+          <li><a href="/manifesto/">Manifesto</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
       <div class="nav-overlay"></div>
     </div>
   </header>
 
-  <!-- Main content -->
   <main>
-
-    <!-- Hero -->
-    <section id="home" class="hero-section">
-      <div class="container text-align-center">
-        <h1>Your self-care is now a currency</h1>
-        <p class="subtitle">
-          Proof of Care. Power to You.<br/>
-          LümiCoin turns every healthy action into measurable value, real-time impact, and future resilience.
-        </p>
-        <div class="hero-visual">💧</div>
-        <div class="hero-cta-buttons">
-          <a href="https://apps.apple.com/app/id123456789" class="btn">Download on the App Store</a>
-          <a href="#" id="openWaitlistModal" class="btn btn-secondary">Join Android waitlist</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why -->
-    <section id="why" class="page-section">
-      <div class="container container-narrow text-align-center">
-        <h2>Feel burnt out, but still care deeply?</h2>
-        <p class="subtitle" style="margin-bottom: var(--spacing-lg);">
-          The world can feel heavy… but your small acts still matter.
-        </p>
-        <p>
-          Traditional wellness apps often miss the mark. Motivation wanes, progress feels abstract, and self-care goes unrecognized by the systems that matter.
-        </p>
-        <p>
-          LümiCoin makes every step, sip, and hour of sleep count—turning daily habits into better health for you and clean water for communities in need.
-        </p>
-        <a href="/manifesto/" class="btn" style="margin-top: var(--spacing-lg);">Read Our Manifesto</a>
-      </div>
-    </section>
-
-    <!-- Benefits -->
-    <section id="benefits" class="page-section" style="background: var(--surface-subtle);">
+    <section class="hero-section">
       <div class="container">
-        <h2 class="text-align-center" style="margin-bottom: var(--spacing-xl);">Self-Care That Gives Back</h2>
-        <div class="benefits-grid">
-          <div class="benefit-item">
-            <h3>One Simple Score</h3>
-            <p>No confusing charts—just one intuitive number that rises as you care for yourself.</p>
-          </div>
-          <div class="benefit-item">
-            <h3>Instant Social Impact</h3>
-            <p>Every 200 Coins funds a day of clean water for families in Gaza, in partnership with UNICEF.</p>
-          </div>
-          <div class="benefit-item">
-            <h3>Gamified Motivation</h3>
-            <p>Hit 5 Coins to lock your streak, or reach 10 Coins to double tomorrow’s impact.</p>
-          </div>
-          <div class="benefit-item">
-            <h3>Ethical & Ad-Free</h3>
-            <p>Premium-only at $7.99/month with a 7-day free trial. No ads; your data stays yours.</p>
-          </div>
+        <h1>Your self-care just became a currency.</h1>
+        <p class="subtitle">Proof of Care. Power to You. LümiCoin transforms daily healthy actions into measurable value, tangible impact, and future resilience.</p>
+
+        <div class="hero-image-container">
+          <img src="/lumicoin-coin.png" alt="LümiCoin – Proof of Care visualization" class="hero-image">
+        </div>
+
+        <div class="hero-cta-buttons">
+          <a href="https://apps.apple.com/us/app/l%C3%BCmicoin/id6744044814"
+             class="btn" target="_blank" rel="noopener noreferrer">
+            Download on the App Store
+          </a>
+          <a href="#" id="openWaitlistModal" class="secondary-link">
+            Join Android waitlist
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- How It Works -->
-    <section id="how" class="page-section">
-      <div class="container container-narrow">
-        <h2 class="text-align-center" style="margin-bottom: var(--spacing-xl);">How It Works</h2>
-        <ol class="how-it-works-list">
-          <li><strong>Connect:</strong> Sync automatically with Apple Health in one tap.</li>
-          <li><strong>Earn:</strong> Collect LümiCoins by moving, sleeping, hydrating, and more.</li>
-          <li><strong>Give:</strong> 200 Coins funds a full day of water for families in Gaza.</li>
-          <li><strong>Grow:</strong> Keep your streak or unlock Impact Boosts to double your giving.</li>
-        </ol>
+    <section class="page-section value-prop-section">
+      <div class="container">
+        <h2>Why LümiCoin?</h2>
+        <div class="value-prop-item">
+          <p>Current wellness solutions often fail. Motivation fades, progress feels invisible, and self-care isn’t recognized by the systems that matter.</p>
+          <p>LümiCoin changes this by making your care count—for you, for others, and for the future of health.</p>
+          <a href="/manifesto/" class="btn" style="margin-top: var(--spacing-lg);">Read Our Manifesto</a>
+        </div>
       </div>
     </section>
-
-    <!-- Subscription -->
-    <section id="subscription" class="page-section" style="background: var(--surface-subtle);">
-      <div class="container container-narrow text-align-center">
-        <h2>Transparent Subscription</h2>
-        <p>$7.99 per month • 7-day free trial • Cancel anytime via Apple ID settings</p>
-        <p style="margin-top: var(--spacing-sm); font-weight: 500; color: var(--text-primary);">
-          Your past impact remains recorded, even if you pause. Every subscription funds more clean water.
-        </p>
-      </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="page-section">
-      <div class="container container-narrow text-align-center">
-        <h2 style="margin-bottom: var(--spacing-md);">Care for yourself. Care for the world.</h2>
-        <p class="subtitle" style="margin-bottom: var(--spacing-lg);">Because what you do every day truly matters.</p>
-        <a href="https://apps.apple.com/app/id123456789" class="btn">Download on the App Store</a>
-      </div>
-    </section>
-
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container text-align-center">
+    <div class="container">
       <nav>
-        <ul class="footer-nav">
-          <li><a href="#home">Home</a></li>
+        <ul>
+          <li><a href="/">Home</a></li>
           <li><a href="/manifesto/">Manifesto</a></li>
           <li><a href="/support/">Support</a></li>
           <li><a href="/terms/">Terms</a></li>
@@ -263,26 +137,44 @@
 
   <!-- Android Waitlist Modal -->
   <div id="androidWaitlistModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close">×</button>
-      <h2>Join Android Waitlist</h2>
-      <p>Be the first to know when LümiCoin arrives on Android!</p>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="waitlist-title">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h2 id="waitlist-title">Join Android waitlist</h2>
+      <p>Be the first to know when LümiCoin launches on Android!</p>
       <form id="waitlist-form">
-        <input type="email" id="waitlist-email" placeholder="you@example.com" required/>
+        <input type="email" id="waitlist-email" name="email"
+               placeholder="you@example.com" required autocomplete="email">
         <button type="submit" class="btn">Join waitlist</button>
-        <div id="waitlist-message" class="modal-message"></div>
+        <div id="waitlist-message"></div>
       </form>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Core scripts -->
+  <script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    const navToggle  = document.querySelector('.nav-toggle');
+    const mainNav    = document.getElementById('mainNav');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function toggleNav() {
+      const open = mainNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', open);
+      navToggle.classList.toggle('is-active');
+      if (navOverlay) navOverlay.style.display = open ? 'block' : 'none';
+    }
+
+    navToggle.addEventListener('click', toggleNav);
+    if (navOverlay) navOverlay.addEventListener('click', toggleNav);
+  </script>
+
+  <!-- Firebase + modal logic -->
   <script type="module">
-    // Firebase + Modal Logic
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getFirestore, collection, addDoc, serverTimestamp }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    // Replace with your actual Firebase config
+    // TODO: replace with your Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA",
       authDomain: "lumi-qp.firebaseapp.com",
@@ -291,95 +183,71 @@
       messagingSenderId: "474751581743",
       appId: "1:474751581743:web:8384b16bb6e4351ce090da",
       measurementId: "G-LS5E61FTYM"
-    };
-    try {
-      const app = initializeApp(firebaseConfig);
-      const db  = getFirestore(app);
+};
 
-      const openBtn    = document.getElementById('openWaitlistModal');
-      const modal      = document.getElementById('androidWaitlistModal');
-      const closeBtn   = modal.querySelector('.modal-close');
-      const form       = document.getElementById('waitlist-form');
-      const emailInput = document.getElementById('waitlist-email');
-      const msg        = document.getElementById('waitlist-message');
-      const submitBtn  = form.querySelector('button[type="submit"]');
-      let prevFocus;
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
 
-      function toggleModal(show) {
-        if (show) {
-          prevFocus = document.activeElement;
-          modal.setAttribute('aria-hidden', 'false');
-          modal.style.display = 'flex';
-          emailInput.focus();
-          form.reset();
-          msg.textContent = '';
-          submitBtn.disabled = false;
-        } else {
-          modal.setAttribute('aria-hidden', 'true');
-          modal.style.display = 'none';
-          if (prevFocus) prevFocus.focus();
-        }
+    const openBtn    = document.getElementById('openWaitlistModal');
+    const modal      = document.getElementById('androidWaitlistModal');
+    const closeBtn   = modal.querySelector('.modal-close');
+    const form       = document.getElementById('waitlist-form');
+    const emailInput = document.getElementById('waitlist-email');
+    const msg        = document.getElementById('waitlist-message');
+    const submitBtn  = form.querySelector('button[type="submit"]');
+
+    function toggleModal(show) {
+      modal.style.display        = show ? 'block' : 'none';
+      modal.setAttribute('aria-hidden', show ? 'false' : 'true');
+      if (show) emailInput.focus();
+      else {
+        form.reset();
+        msg.textContent = '';
+        msg.className   = '';
       }
-
-      openBtn.addEventListener('click', e => { e.preventDefault(); toggleModal(true); });
-      closeBtn.addEventListener('click', () => toggleModal(false));
-      modal.addEventListener('click', e => { if (e.target === modal) toggleModal(false); });
-      modal.addEventListener('keydown', e => { if (e.key==='Escape') toggleModal(false); });
-
-      form.addEventListener('submit', async e => {
-        e.preventDefault();
-        const email = emailInput.value.trim().toLowerCase();
-        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        if (!valid) {
-          msg.textContent = 'Please enter a valid email.';
-          msg.className = 'modal-message error';
-          return;
-        }
-        msg.textContent = 'Submitting…';
-        msg.className = 'modal-message';
-        submitBtn.disabled = true;
-        try {
-          await addDoc(collection(db, 'androidWaitlist'), { email, submittedAt: serverTimestamp() });
-          msg.textContent = '✅ You’re on the list!';
-          msg.className = 'modal-message success';
-          setTimeout(() => toggleModal(false), 2000);
-        } catch {
-          msg.textContent = 'Submission failed; please try again.';
-          msg.className = 'modal-message error';
-          submitBtn.disabled = false;
-        }
-      });
-    } catch (err) {
-      console.error('Firebase init failed:', err);
-      document.getElementById('openWaitlistModal').style.display = 'none';
     }
-  </script>
-  <script>
-    // Year, nav toggle, smooth scroll, header blur
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-    const navToggle  = document.querySelector('.nav-toggle');
-    const mainNav    = document.getElementById('mainNav');
-    const navOverlay = document.querySelector('.nav-overlay');
-    function toggleNav() {
-      const open = mainNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(open));
-      navOverlay.style.display = open ? 'block' : 'none';
-      document.body.style.overflow = open ? 'hidden' : '';
-    }
-    navToggle.addEventListener('click', toggleNav);
-    navOverlay.addEventListener('click', toggleNav);
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const tgt = document.querySelector(a.getAttribute('href'));
-        if (tgt) { e.preventDefault(); tgt.scrollIntoView({ behavior: 'smooth' }); }
-      });
-    });
-    window.addEventListener('scroll', () => {
-      const hdr = document.querySelector('.site-header');
-      hdr.style.background = window.scrollY>80
-        ? 'rgba(255,248,242,0.98)'
-        : 'rgba(255,248,242,0.95)';
+
+    openBtn.addEventListener('click', e => { e.preventDefault(); toggleModal(true); });
+    closeBtn.addEventListener('click', () => toggleModal(false));
+    modal.addEventListener('click', e => { if (e.target === modal) toggleModal(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleModal(false); });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = emailInput.value.trim().toLowerCase();
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) {
+        msg.textContent = 'Please enter your email address.';
+        msg.className   = 'error';
+        emailInput.focus();
+        return;
+      }
+      if (!re.test(email)) {
+        msg.textContent = 'Please enter a valid email.';
+        msg.className   = 'error';
+        emailInput.focus();
+        return;
+      }
+      msg.textContent = 'Submitting…';
+      msg.className   = '';
+      submitBtn.disabled = true;
+      try {
+        await addDoc(collection(db, 'androidWaitlist'), {
+          email,
+          submittedAt: serverTimestamp()
+        });
+        msg.textContent = '✅ You’re on the list!';
+        msg.className   = 'success';
+        setTimeout(() => toggleModal(false), 2500);
+      } catch (err) {
+        console.error(err);
+        msg.textContent = 'Error – please try again later.';
+        msg.className   = 'error';
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   </script>
+
 </body>
 </html>
