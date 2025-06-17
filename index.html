@@ -12,52 +12,443 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 
-  <!-- Modal styles -->
+  <!-- Enhanced modal and page styles -->
   <style>
+    /* Modal enhancements */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(26, 26, 26, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 1000;
+      animation: fadeIn 0.3s ease-out;
     }
+    
     .modal-content {
       background: var(--white);
-      max-width: 400px;
-      margin: 10% auto;
-      padding: var(--spacing-lg);
-      border-radius: var(--border-radius-md);
-      box-shadow: var(--shadow-soft);
+      max-width: 420px;
+      margin: 15vh auto 0;
+      padding: var(--spacing-2xl);
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
       position: relative;
       text-align: center;
+      transform: translateY(20px);
+      animation: slideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
+    
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+      }
+    }
+    
     .modal-close {
       position: absolute;
-      top: var(--spacing-sm);
-      right: var(--spacing-sm);
-      font-size: 1.5rem;
+      top: var(--spacing-md);
+      right: var(--spacing-md);
+      width: 32px;
+      height: 32px;
+      font-size: 1.25rem;
       border: none;
-      background: none;
+      background: var(--light-gray);
       cursor: pointer;
       color: var(--text-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition-smooth);
     }
+    
+    .modal-close:hover {
+      background: var(--accent-peach);
+      color: var(--accent-primary);
+      transform: scale(1.05);
+    }
+    
+    .modal h2 {
+      font-size: 1.75rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--accent-primary);
+    }
+    
+    .modal p {
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing-xl);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    
+    #waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+    
     #waitlist-form input {
       width: 100%;
-      padding: var(--spacing-sm);
-      margin-bottom: var(--spacing-md);
-      border: 1px solid var(--light-gray);
+      padding: var(--spacing-md);
+      border: 2px solid var(--light-gray);
       border-radius: var(--border-radius-sm);
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      transition: var(--transition-smooth);
+      background: var(--surface-subtle);
     }
+    
+    #waitlist-form input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: var(--shadow-input-focus);
+      background: var(--white);
+      outline: none;
+    }
+    
     #waitlist-form button {
       width: 100%;
+      padding: var(--spacing-md) var(--spacing-lg);
+      font-size: 1rem;
+      font-weight: 600;
     }
+    
     #waitlist-message {
-      margin-top: var(--spacing-sm);
+      margin-top: var(--spacing-md);
       font-size: 0.9rem;
+      font-weight: 500;
       min-height: 1.2em;
+      padding: var(--spacing-sm);
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition-smooth);
     }
-    #waitlist-message.success { color: var(--success); }
-    #waitlist-message.error   { color: var(--error);   }
+    
+    #waitlist-message.success { 
+      color: var(--success); 
+      background: var(--success-light);
+    }
+    
+    #waitlist-message.error { 
+      color: var(--error); 
+      background: var(--error-light);
+    }
+
+    /* Enhanced hero section */
+    .hero-section {
+      padding-top: clamp(60px, 10vw, 120px);
+      padding-bottom: clamp(80px, 12vw, 140px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      top: -10%;
+      left: -10%;
+      background: radial-gradient(circle at 50% 40%, var(--accent-peach), transparent 70%);
+      z-index: -1;
+      animation: gentlePulse 8s infinite alternate ease-in-out;
+      opacity: 0.6;
+    }
+    
+    @keyframes gentlePulse {
+      0% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+      100% { opacity: 0.7; transform: scale(1.05) rotate(1deg); }
+    }
+    
+    .hero-section h1 {
+      font-size: clamp(2.75rem, 7vw, 4rem);
+      margin-bottom: var(--spacing-lg);
+      max-width: 20ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero-section .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      opacity: 0.9;
+      margin-bottom: var(--spacing-2xl);
+      max-width: 52ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.55;
+    }
+    
+    .hero-image-container {
+      margin: var(--spacing-2xl) auto;
+      max-width: 300px;
+      position: relative;
+      filter: drop-shadow(0 20px 40px rgba(203, 89, 7, 0.15));
+    }
+    
+    .hero-image {
+      width: 100%;
+      border-radius: var(--border-radius-lg);
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .hero-image-container:hover .hero-image {
+      transform: translateY(-8px) scale(1.02) rotate(1deg);
+    }
+    
+    .hero-image-container::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 20px;
+      background: radial-gradient(ellipse at center, rgba(203, 89, 7, 0.2), transparent 70%);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.5;
+      transition: var(--transition-smooth);
+    }
+    
+    .hero-image-container:hover::after {
+      width: 70%;
+      opacity: 0.7;
+      bottom: -24px;
+    }
+    
+    .hero-cta-buttons {
+      margin-top: var(--spacing-2xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+    
+    .hero-cta-buttons .btn {
+      min-width: 280px;
+      padding: calc(var(--spacing-md) + 2px) var(--spacing-xl);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    
+    .hero-cta-buttons .secondary-link {
+      font-size: 1rem;
+      margin-top: var(--spacing-sm);
+    }
+
+    /* Enhanced why section */
+    .why-section {
+      background: linear-gradient(135deg, var(--surface-subtle), var(--white));
+      border-top: 1px solid var(--light-gray);
+      padding: clamp(80px, 12vw, 120px) 0;
+      text-align: center;
+      position: relative;
+    }
+    
+    .why-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+    }
+    
+    .why-section h2 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      margin-bottom: var(--spacing-xl);
+      color: var(--accent-primary);
+      position: relative;
+    }
+    
+    .why-lead {
+      font-size: clamp(1.125rem, 3vw, 1.25rem);
+      max-width: 55ch;
+      margin: 0 auto var(--spacing-2xl);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    
+    .why-features.vertical {
+      list-style: none;
+      margin: 0 auto var(--spacing-2xl);
+      padding: 0;
+      max-width: 56ch;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-2xl);
+      text-align: left;
+    }
+    
+    .why-features.vertical li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-lg);
+      padding: var(--spacing-lg);
+      background: var(--white);
+      border-radius: var(--border-radius-md);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: var(--transition-smooth);
+      border: 1px solid rgba(203, 89, 7, 0.1);
+    }
+    
+    .why-features.vertical li:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-color: rgba(203, 89, 7, 0.2);
+    }
+    
+    .why-icon {
+      font-size: 1.5rem;
+      color: var(--accent-primary);
+      margin-top: 2px;
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-peach);
+      border-radius: 50%;
+      font-weight: 700;
+    }
+    
+    .why-title {
+      display: block;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-xs);
+      font-size: 1.125rem;
+      line-height: 1.3;
+    }
+    
+    .why-desc {
+      display: block;
+      color: var(--text-secondary);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    
+    .why-section .btn {
+      margin-top: var(--spacing-xl);
+      padding: var(--spacing-md) var(--spacing-2xl);
+    }
+
+    /* Enhanced responsive design */
+    @media (max-width: 768px) {
+      .modal-content {
+        margin: 10vh auto 0;
+        padding: var(--spacing-xl);
+        max-width: 90vw;
+      }
+      
+      .hero-section {
+        padding-top: clamp(40px, 8vw, 80px);
+        padding-bottom: clamp(60px, 10vw, 100px);
+      }
+      
+      .hero-image-container {
+        max-width: 260px;
+      }
+      
+      .hero-cta-buttons .btn {
+        min-width: 90%;
+        font-size: 1rem;
+      }
+      
+      .why-features.vertical {
+        max-width: 100%;
+        gap: var(--spacing-xl);
+      }
+      
+      .why-features.vertical li {
+        padding: var(--spacing-md);
+        gap: var(--spacing-md);
+      }
+      
+      .why-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 1.25rem;
+      }
+      
+      .why-title {
+        font-size: 1.05rem;
+      }
+      
+      .why-desc {
+        font-size: 0.95rem;
+      }
+    }
+    
+    @media (min-width: 769px) {
+      .hero-cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--spacing-xl);
+      }
+      
+      .hero-cta-buttons .secondary-link {
+        margin-top: 0;
+        align-self: center;
+      }
+    }
+
+    /* Micro-interactions and polish */
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    /* Smooth loading animation */
+    .hero-section, .why-section {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .why-features.vertical li {
+      animation: fadeInUp 0.6s ease-out;
+      animation-fill-mode: both;
+    }
+    
+    .why-features.vertical li:nth-child(1) { animation-delay: 0.1s; }
+    .why-features.vertical li:nth-child(2) { animation-delay: 0.2s; }
+    .why-features.vertical li:nth-child(3) { animation-delay: 0.3s; }
+    .why-features.vertical li:nth-child(4) { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
@@ -90,7 +481,7 @@
     <section class="hero-section">
       <div class="container">
         <h1>Self-care that gives back.</h1>
-        <p class="subtitle">LümiCoin turns your healthy habits—like steps, sleep, and drinking water—into real-life impact for you and for others. Every day you care for yourself, you help fund clean water for someone in need. </p>
+        <p class="subtitle">LümiCoin turns your healthy habits—like steps, sleep, and drinking water—into real-life impact for you and for others. Every day you care for yourself, you help fund clean water for someone in need.</p>
 
         <div class="hero-image-container">
           <img src="/lumicoin-coin.png" alt="LümiCoin – Proof of Care visualization" class="hero-image">
@@ -108,47 +499,47 @@
       </div>
     </section>
 
-<section class="page-section why-section">
-  <div class="container">
-    <h2>Why LümiCoin?</h2>
-    <p class="why-lead">
-      Self-care feels hard when the world feels heavy. But with LümiCoin, your small daily habits—like steps,
-      sleep, and hydration—turn into real hope for you and clean water for someone else.
-    </p>
-    <ul class="why-features vertical">
-      <li>
-        <span class="why-icon">✔</span>
-        <div>
-          <span class="why-title">Feel burnt out, but want to make a difference?</span>
-          <span class="why-desc">Every healthy action helps you and supports others in need.</span>
-        </div>
-      </li>
-      <li>
-        <span class="why-icon">✔</span>
-        <div>
-          <span class="why-title">One simple health score.</span>
-          <span class="why-desc">No confusing stats—just real progress you can see.</span>
-        </div>
-      </li>
-      <li>
-        <span class="why-icon">✔</span>
-        <div>
-          <span class="why-title">Instant impact.</span>
-          <span class="why-desc">Watch your Coins fund clean water for families in crisis, powered by UNICEF.</span>
-        </div>
-      </li>
-      <li>
-        <span class="why-icon">✔</span>
-        <div>
-          <span class="why-title">Modern, ethical wellness.</span>
-          <span class="why-desc">Premium-only, ad-free, and privacy-first. Your data stays yours.</span>
-        </div>
-      </li>
-    </ul>
-    <a href="/manifesto/" class="btn" style="margin-top: var(--spacing-xl);">Read Our Manifesto</a>
-  </div>
-</section>
-
+    <section class="page-section why-section">
+      <div class="container">
+        <h2>Why LümiCoin?</h2>
+        <p class="why-lead">
+          Self-care feels hard when the world feels heavy. But with LümiCoin, your small daily habits—like steps,
+          sleep, and hydration—turn into real hope for you and clean water for someone else.
+        </p>
+        <ul class="why-features vertical">
+          <li>
+            <span class="why-icon">✓</span>
+            <div>
+              <span class="why-title">Feel burnt out, but want to make a difference?</span>
+              <span class="why-desc">Every healthy action helps you and supports others in need.</span>
+            </div>
+          </li>
+          <li>
+            <span class="why-icon">✓</span>
+            <div>
+              <span class="why-title">One simple health score.</span>
+              <span class="why-desc">No confusing stats—just real progress you can see.</span>
+            </div>
+          </li>
+          <li>
+            <span class="why-icon">✓</span>
+            <div>
+              <span class="why-title">Instant impact.</span>
+              <span class="why-desc">Watch your Coins fund clean water for families in crisis, powered by UNICEF.</span>
+            </div>
+          </li>
+          <li>
+            <span class="why-icon">✓</span>
+            <div>
+              <span class="why-title">Modern, ethical wellness.</span>
+              <span class="why-desc">Premium-only, ad-free, and privacy-first. Your data stays yours.</span>
+            </div>
+          </li>
+        </ul>
+        <a href="/manifesto/" class="btn">Read Our Manifesto</a>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
     <div class="container">
@@ -204,7 +595,7 @@
     import { getFirestore, collection, addDoc, serverTimestamp }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    // TODO: replace with your Firebase config
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA",
       authDomain: "lumi-qp.firebaseapp.com",
@@ -213,7 +604,7 @@
       messagingSenderId: "474751581743",
       appId: "1:474751581743:web:8384b16bb6e4351ce090da",
       measurementId: "G-LS5E61FTYM"
-};
+    };
 
     const app = initializeApp(firebaseConfig);
     const db  = getFirestore(app);
@@ -229,8 +620,9 @@
     function toggleModal(show) {
       modal.style.display        = show ? 'block' : 'none';
       modal.setAttribute('aria-hidden', show ? 'false' : 'true');
-      if (show) emailInput.focus();
-      else {
+      if (show) {
+        setTimeout(() => emailInput.focus(), 100);
+      } else {
         form.reset();
         msg.textContent = '';
         msg.className   = '';
@@ -246,27 +638,31 @@
       e.preventDefault();
       const email = emailInput.value.trim().toLowerCase();
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
       if (!email) {
         msg.textContent = 'Please enter your email address.';
         msg.className   = 'error';
         emailInput.focus();
         return;
       }
+      
       if (!re.test(email)) {
         msg.textContent = 'Please enter a valid email.';
         msg.className   = 'error';
         emailInput.focus();
         return;
       }
+      
       msg.textContent = 'Submitting…';
       msg.className   = '';
       submitBtn.disabled = true;
+      
       try {
         await addDoc(collection(db, 'androidWaitlist'), {
           email,
           submittedAt: serverTimestamp()
         });
-        msg.textContent = '✅ You’re on the list!';
+        msg.textContent = '✅ You're on the list!';
         msg.className   = 'success';
         setTimeout(() => toggleModal(false), 2500);
       } catch (err) {
