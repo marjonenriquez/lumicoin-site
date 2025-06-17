@@ -757,37 +757,45 @@ input::placeholder, textarea::placeholder {
   line-height: 1.6;
 }
 
-.why-features {
+.why-features.vertical {
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 60ch;
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: var(--spacing-md);
+  max-width: 48ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  align-items: flex-start;
 }
 
-.why-features li {
+.why-features.vertical li {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-sm);
-  padding-left: var(--spacing-lg);
-  position: relative;
+  gap: var(--spacing-md);
+  font-size: 1.09rem;
 }
 
-.why-features li::before {
-  content: "✔";
-  position: absolute;
-  left: 0;
-  top: 0.2em;
-  font-size: 1.1rem;
+.why-icon {
+  font-size: 1.4rem;
   color: var(--accent-primary);
+  margin-top: 3px;
+  flex-shrink: 0;
 }
 
-.why-features strong {
+.why-title {
   display: block;
-  font-weight: 600;
-  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
   color: var(--text-primary);
+  margin-bottom: 4px;
+  font-size: 1.1em;
 }
+
+.why-desc {
+  display: block;
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 1em;
+  margin-bottom: 2px;
+}
+
 
