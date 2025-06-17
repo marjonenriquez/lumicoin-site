@@ -762,10 +762,9 @@ input::placeholder, textarea::placeholder {
   position: relative;
 }
 
-.why-lead {
+p.why-lead { 
   font-size: clamp(1.125rem, 3vw, 1.25rem);
   max-width: 55ch;
-  /* MODIFIED: Increased bottom margin for more space above the feature list */
   margin: 0 auto var(--spacing-3xl); /* Was var(--spacing-2xl) */
   color: var(--text-primary);
   line-height: 1.6;
