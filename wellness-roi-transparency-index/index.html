@@ -1,533 +1,1428 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellness ROI Transparency Index | LümiCoin</title>
-    <meta name="description" content="The industry's first independent accountability system for corporate wellness platforms. An audit-grade analysis of ROI claims from 20+ top vendors.">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --primary-color: #cb5907;
-            --primary-light: #e79138;
-            --bg-light: #fefdf9;
-            --bg-medium: #fbf9f4;
-            --bg-dark: #f5f1ea;
-            --text-dark: #3d352d;
-            --text-medium: #5c4f43;
-            --text-light: #8f8071;
-            --success-color: #16a34a;
-            --pending-color: #d97706;
-            --progress-color: #2563eb;
-        }
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Wellness ROI Transparency Index | LümiCoin</title>
+  <meta
+    name="description"
+    content="The industry's first independent accountability system for corporate wellness platforms. An audit-grade analysis of ROI claims from 20+ top vendors."
+  />
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-light);
-            color: var(--text-medium);
-            line-height: 1.6;
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        body.modal-open { overflow: hidden; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-        .hero { background: var(--bg-medium); border-bottom: 1px solid rgba(0, 0, 0, 0.07); padding: 80px 20px 60px; }
-        .header { text-align: center; margin-bottom: 50px; }
-        .logo-badge { display: inline-block; background: #fff8f2; border: 1px solid var(--primary-light); padding: 8px 20px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--primary-color); margin-bottom: 24px; }
-        h1 { font-size: 3.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 20px; letter-spacing: -1px; }
-        .subtitle { font-size: 1.25rem; color: var(--text-light); max-width: 900px; margin: 0 auto 40px; line-height: 1.7; font-weight: 400; }
-        .mission-statement { background: #fffaf6; border-left: 4px solid var(--primary-color); padding: 24px 32px; border-radius: 8px; max-width: 1000px; margin: 0 auto 50px; font-size: 1.1rem; color: var(--text-dark); line-height: 1.8; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .stat-card { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.07); border-radius: 12px; padding: 28px 24px; text-align: center; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .stat-card:hover { border-color: rgba(203, 89, 7, 0.4); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); }
-        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-light); margin-bottom: 8px; font-weight: 600; }
-        .stat-value { font-size: 2.75rem; font-weight: 700; color: var(--primary-color); font-variant-numeric: tabular-nums; }
-        .stat-sublabel { font-size: 0.75rem; color: #a99a8c; margin-top: 4px; }
-        .main-content { padding: 80px 0; }
-        .filter-bar { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; justify-content: center; }
-        .filter-btn { padding: 10px 24px; background: #fff8f2; border: 1px solid var(--bg-dark); border-radius: 24px; color: var(--text-light); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.25s ease; font-family: inherit; }
-        .filter-btn:hover, .filter-btn.active { background: #fbeadb; border-color: var(--primary-light); color: var(--primary-color); }
-        .legend-box { background: #fffaf6; border: 1px solid var(--bg-dark); border-radius: 12px; padding: 24px 32px; margin-bottom: 40px; max-width: 1100px; margin-left: auto; margin-right: auto; }
-        .legend-box h3 { font-size: 1rem; font-weight: 600; color: var(--primary-color); margin-bottom: 16px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
-        .legend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; font-size: 0.85rem; }
-        .legend-item { text-align: center; }
-        .legend-item .stars { justify-content: center; font-size: 1rem; margin-bottom: 4px; }
-        .legend-item-label { color: var(--text-medium); line-height: 1.4; font-weight: 600; }
-        .legend-item-desc { color: var(--text-light); line-height: 1.4; font-size: 0.8rem; }
-        .table-wrapper { background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.07); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08); }
-        .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-        thead { background: #fdf6ef; }
-        th { padding: 20px 16px; text-align: left; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--primary-color); border-bottom: 2px solid var(--bg-dark); white-space: nowrap; }
-        tbody tr.data-row { cursor: pointer; border-bottom: 1px solid var(--bg-dark); transition: background-color 0.2s ease; }
-        tbody tr.data-row:last-of-type { border-bottom: none; }
-        tbody tr.data-row:hover { background: #fefcf8; }
-        tbody tr.data-row.expanded { background: #fdf6ef; }
-        td { padding: 20px 16px; font-size: 0.9rem; vertical-align: middle; }
-        tr.detail-row { display: none; }
-        td.detail-cell { padding: 0; }
-        .detail-content { background: var(--bg-medium); padding: 0 40px; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .detail-content p { font-size: 0.95rem; line-height: 1.8; color: var(--text-medium); max-width: 900px; }
-        .detail-content strong { color: var(--text-dark); font-weight: 600; }
-        .expand-icon { display: inline-block; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); margin-right: 8px; color: var(--text-light); }
-        tr.expanded .expand-icon { transform: rotate(90deg); }
-        .platform-cell { display: flex; align-items: center; gap: 16px; min-width: 220px; }
-        .platform-icon { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--bg-light); font-size: 0.9rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(203, 89, 7, 0.2); }
-        .platform-name { font-weight: 600; color: var(--text-dark); font-size: 0.95rem; margin-bottom: 4px; }
-        .platform-category { font-size: 0.75rem; color: var(--text-light); font-weight: 500; }
-        .stars { display: flex; gap: 3px; font-size: 1.1rem; }
-        .star { color: var(--primary-light); }
-        .star.empty { color: var(--bg-dark); }
-        .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-        .badge.pending { background: rgba(217, 119, 6, 0.1); color: var(--pending-color); border: 1px solid rgba(217, 119, 6, 0.3); animation: glow 2s ease-in-out infinite; }
-        .badge.progress { background: rgba(37, 99, 235, 0.1); color: var(--progress-color); border: 1px solid rgba(37, 99, 235, 0.3); }
-        .badge.not-verified { background: var(--bg-dark); color: var(--text-light); border: 1px solid #ede6da; }
-        .footer-section { background: var(--bg-medium); border-top: 1px solid rgba(0, 0, 0, 0.07); padding: 80px 20px; margin-top: 80px; }
-        .cta-box { max-width: 800px; margin: 0 auto; text-align: center; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 16px; padding: 48px 40px; }
-        .cta-title { font-size: 1.75rem; font-weight: 700; color: var(--primary-color); margin-bottom: 16px; }
-        .cta-text { font-size: 1.05rem; color: var(--text-medium); margin-bottom: 32px; line-height: 1.7; }
-        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 14px 32px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.3s ease; display: inline-block; cursor: pointer; border: none; font-family: inherit; }
-        .btn-primary { background: var(--primary-color); color: var(--bg-light); box-shadow: 0 4px 16px rgba(203, 89, 7, 0.2); }
-        .btn-primary:hover { transform: translateY(-2px); background: var(--primary-light); box-shadow: 0 6px 24px rgba(203, 89, 7, 0.3); }
-        .btn-secondary { background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); }
-        .btn-secondary:hover { background: #fff8f2; }
-        .disclaimer { text-align: center; margin-top: 40px; font-size: 0.85rem; color: var(--text-light); max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
-        .disclaimer a { color: var(--primary-color); text-decoration: none; }
-        .disclaimer a:hover { text-decoration: underline; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(30, 25, 20, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; animation: fadeIn 0.3s ease-out; align-items: center; justify-content: center; }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--bg-light); border-radius: 16px; width: 90%; max-width: 900px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); position: relative; animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .modal-header { padding: 32px 40px 24px; border-bottom: 1px solid var(--bg-dark); flex-shrink: 0; }
-        .modal-header h2 { font-size: 1.75rem; font-weight: 700; color: var(--primary-color); margin-bottom: 8px; }
-        .modal-header p { font-size: 0.95rem; color: var(--text-medium); }
-        .modal-body { padding: 8px 40px 32px; overflow-y: auto; flex-grow: 1; }
-        .modal-body::-webkit-scrollbar { width: 8px; }
-        .modal-body::-webkit-scrollbar-track { background: var(--bg-dark); border-radius: 4px; }
-        .modal-body::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
-        .modal-body::-webkit-scrollbar-thumb:hover { background: var(--primary-color); }
-        .modal-body h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-dark); margin-top: 32px; margin-bottom: 16px; border-left: 3px solid var(--primary-color); padding-left: 12px; }
-        .modal-body h4 { font-size: 1.1rem; font-weight: 600; color: var(--primary-color); margin-top: 24px; margin-bottom: 12px; }
-        .modal-body p, .modal-body li { font-size: 0.95rem; line-height: 1.7; color: var(--text-medium); margin-bottom: 16px; }
-        .modal-body ul { list-style: none; padding-left: 0; }
-        .modal-body li { padding-left: 24px; position: relative; }
-        .modal-body li::before { content: '•'; position: absolute; left: 0; color: var(--primary-color); font-weight: 700; font-size: 1.2rem; line-height: 1; }
-        .modal-body sup { font-size: 0.65em; vertical-align: super; line-height: 0; }
-        .references-list { list-style: none; padding-left: 0; counter-reset: ref-counter; }
-        .references-list li { counter-increment: ref-counter; padding-left: 3em; text-indent: -3em; margin-bottom: 1em; font-size: 0.85rem; color: var(--text-light); }
-        .references-list li::before { content: counter(ref-counter) ". "; font-weight: 600; color: var(--text-medium); padding-right: 0.5em; }
-        .modal-body strong { color: var(--text-dark); }
-        .modal-body code { background: var(--bg-dark); padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; }
-        .close-modal { position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border: none; background: #fff8f2; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--text-light); transition: all 0.2s ease; line-height: 1; }
-        .close-modal:hover { background: #fbeadb; color: var(--primary-color); transform: rotate(90deg); }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-        @media (max-width: 1024px) { h1 { font-size: 2.5rem; } .subtitle { font-size: 1.1rem; } th, td { padding: 16px 12px; font-size: 0.85rem; } .legend-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { h1 { font-size: 2rem; } .subtitle { font-size: 1rem; } .hero { padding: 40px 16px 32px; } .main-content { padding: 40px 0; } .stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; } .stat-value { font-size: 2.25rem; } .table-container { overflow-x: auto; } table { min-width: 900px; } .cta-box { padding: 32px 24px; } .cta-buttons { flex-direction: column; } .modal-content { width: 95%; margin: 10% auto; } .legend-grid { grid-template-columns: repeat(2, 1fr); } }
-    </style>
+    :root {
+      --primary-color: #cb5907;
+      --primary-light: #e79138;
+      --bg-light: #fefdf9;
+      --bg-medium: #fbf9f4;
+      --bg-dark: #f5f1ea;
+      --text-dark: #3d352d;
+      --text-medium: #5c4f43;
+      --text-light: #8f8071;
+      --success-color: #16a34a;
+      --pending-color: #d97706;
+      --progress-color: #2563eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: var(--bg-light);
+      color: var(--text-medium);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      background: var(--bg-medium);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+      padding: 80px 20px 60px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .logo-badge {
+      display: inline-block;
+      background: #fff8f2;
+      border: 1px solid var(--primary-light);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary-color);
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      max-width: 900px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .mission-statement {
+      background: #fffaf6;
+      border-left: 4px solid var(--primary-color);
+      padding: 24px 32px;
+      border-radius: 8px;
+      max-width: 1000px;
+      margin: 0 auto 50px;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      line-height: 1.8;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .stat-card:hover {
+      border-color: rgba(203, 89, 7, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .stat-value {
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-sublabel {
+      font-size: 0.75rem;
+      color: #a99a8c;
+      margin-top: 4px;
+    }
+
+    .main-content {
+      padding: 80px 0;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 10px 24px;
+      background: #fff8f2;
+      border: 1px solid var(--bg-dark);
+      border-radius: 24px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #fbeadb;
+      border-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+
+    .table-wrapper {
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    thead {
+      background: #fdf6ef;
+    }
+    th {
+      padding: 20px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--bg-dark);
+      white-space: nowrap;
+    }
+    tbody tr.data-row {
+      cursor: pointer;
+      border-bottom: 1px solid var(--bg-dark);
+      transition: background-color 0.2s ease;
+    }
+    tbody tr.data-row:last-of-type {
+      border-bottom: none;
+    }
+    tbody tr.data-row:hover {
+      background: #fefcf8;
+    }
+    tbody tr.data-row.expanded {
+      background: #fdf6ef;
+    }
+    td {
+      padding: 20px 16px;
+      font-size: 0.9rem;
+      vertical-align: middle;
+    }
+
+    tr.detail-row {
+      display: none;
+    }
+    td.detail-cell {
+      padding: 0;
+    }
+    .detail-content {
+      background: var(--bg-medium);
+      padding: 0 40px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .detail-content p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-medium);
+      max-width: 900px;
+    }
+    .detail-content strong {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .expand-icon {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-right: 8px;
+      color: var(--text-light);
+    }
+    tr.expanded .expand-icon {
+      transform: rotate(90deg);
+    }
+
+    .platform-cell {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 220px;
+    }
+    .platform-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(
+        135deg,
+        var(--primary-light) 0%,
+        var(--primary-color) 100%
+      );
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--bg-light);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(203, 89, 7, 0.2);
+    }
+    .platform-name {
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .platform-category {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+      font-size: 1.1rem;
+    }
+    .star {
+      color: var(--primary-light);
+    }
+    .star.empty {
+      color: var(--bg-dark);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .badge.pending {
+      background: rgba(217, 119, 6, 0.1);
+      color: var(--pending-color);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      animation: glow 2s ease-in-out infinite;
+    }
+    .badge.progress {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--progress-color);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+    }
+    .badge.not-verified {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      border: 1px solid #ede6da;
+    }
+
+    .legend-box {
+      background: #fffaf6;
+      border: 1px solid var(--bg-dark);
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin: 40px auto 0;
+      max-width: 1100px;
+    }
+    .legend-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      font-size: 0.85rem;
+    }
+    .legend-item {
+      text-align: center;
+    }
+    .legend-item .stars {
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .legend-item-label {
+      color: var(--text-medium);
+      line-height: 1.4;
+      font-weight: 600;
+    }
+    .legend-item-desc {
+      color: var(--text-light);
+      line-height: 1.4;
+      font-size: 0.8rem;
+    }
+
+    .footer-section {
+      background: var(--bg-medium);
+      border-top: 1px solid rgba(0, 0, 0, 0.07);
+      padding: 80px 20px;
+      margin-top: 80px;
+    }
+    .cta-box {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      padding: 48px 40px;
+    }
+    .cta-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+    }
+    .cta-text {
+      font-size: 1.05rem;
+      color: var(--text-medium);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--primary-color);
+      color: var(--bg-light);
+      box-shadow: 0 4px 16px rgba(203, 89, 7, 0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: var(--primary-light);
+      box-shadow: 0 6px 24px rgba(203, 89, 7, 0.3);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+    .btn-secondary:hover {
+      background: #fff8f2;
+    }
+
+    .disclaimer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .disclaimer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    .disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 25, 20, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      animation: fadeIn 0.3s ease-out;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--bg-light);
+      border-radius: 16px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .modal-header {
+      padding: 32px 40px 24px;
+      border-bottom: 1px solid var(--bg-dark);
+      flex-shrink: 0;
+    }
+    .modal-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+    }
+    .modal-header p {
+      font-size: 0.95rem;
+      color: var(--text-medium);
+    }
+    .modal-body {
+      padding: 8px 40px 32px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+    .modal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+    .modal-body::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+      border-radius: 4px;
+    }
+    .modal-body::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 4px;
+    }
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-color);
+    }
+    .modal-body h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-top: 32px;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--primary-color);
+      padding-left: 12px;
+    }
+    .modal-body h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    .modal-body p,
+    .modal-body li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-medium);
+      margin-bottom: 16px;
+    }
+    .modal-body ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .modal-body li {
+      padding-left: 24px;
+      position: relative;
+    }
+    .modal-body li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .modal-body sup {
+      font-size: 0.65em;
+      vertical-align: super;
+      line-height: 0;
+    }
+    .references-list {
+      list-style: none;
+      padding-left: 0;
+      counter-reset: ref-counter;
+    }
+    .references-list li {
+      counter-increment: ref-counter;
+      padding-left: 3em;
+      text-indent: -3em;
+      margin-bottom: 1em;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      word-break: break-word;
+    }
+    .references-list li::before {
+      content: counter(ref-counter) ". ";
+      font-weight: 600;
+      color: var(--text-medium);
+      padding-right: 0.5em;
+    }
+    .modal-body strong {
+      color: var(--text-dark);
+    }
+    .modal-body code {
+      background: var(--bg-dark);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 0.85rem;
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: #fff8f2;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--text-light);
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+    .close-modal:hover {
+      background: #fbeadb;
+      color: var(--primary-color);
+      transform: rotate(90deg);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes glow {
+      0%,
+      100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .subtitle {
+        font-size: 1.1rem;
+      }
+      th,
+      td {
+        padding: 16px 12px;
+        font-size: 0.85rem;
+      }
+      .legend-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+      .hero {
+        padding: 40px 16px 32px;
+      }
+      .main-content {
+        padding: 40px 0;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .stat-value {
+        font-size: 2.25rem;
+      }
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        min-width: 900px;
+      }
+      .cta-box {
+        padding: 32px 24px;
+      }
+      .cta-buttons {
+        flex-direction: column;
+      }
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+      }
+      .legend-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="container">
-            <div class="header">
-                <div class="logo-badge">LümiCoin Research</div>
-                <h1>Wellness ROI Transparency Index</h1>
-                <p class="subtitle">The industry's first independent accountability system for corporate wellness platforms. An audit-grade analysis of ROI claims from 20+ top vendors.</p>
-            </div>
+  <div class="hero">
+    <div class="container">
+      <div class="header">
+        <div class="logo-badge">LümiCoin Research</div>
+        <h1>Wellness ROI Transparency Index</h1>
+        <p class="subtitle">
+          The industry's first independent accountability system for corporate
+          wellness platforms. An audit-grade analysis of ROI claims from 20+ top
+          vendors.
+        </p>
+      </div>
 
-            <div class="mission-statement">
-                <strong>Our Mission:</strong> To end the era of unmeasurable wellness spending. 94% of CFOs cannot prove ROI on their wellness investments. This Index tracks which platforms can verifiably demonstrate their financial impact—and which cannot.
-            </div>
+      <div class="mission-statement">
+        <strong>Our Mission:</strong> To end the era of unmeasurable wellness
+        spending. 94% of CFOs cannot prove ROI on their wellness investments.
+        This Index tracks which platforms can verifiably demonstrate their
+        financial impact… and which cannot.
+      </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Annual Wellness Spend</div>
-                    <div class="stat-value">$34.2B</div>
-                    <div class="stat-sublabel">U.S. Employers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Platforms Tracked</div>
-                    <div class="stat-value">20</div>
-                     <div class="stat-sublabel">Including Major Payers</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">CFOs Without Proof</div>
-                    <div class="stat-value">94%</div>
-                    <div class="stat-sublabel">Cannot Prove ROI</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">5-Star Platforms</div>
-                    <div class="stat-value">0</div>
-                    <div class="stat-sublabel">First Movers Wanted</div>
-                </div>
-            </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Annual Wellness Spend</div>
+          <div class="stat-value">$34.2B</div>
+          <div class="stat-sublabel">U.S. Employers</div>
         </div>
-    </div>
-
-    <div class="main-content">
-        <div class="container">
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All Platforms</button>
-                <button class="filter-btn" data-filter="Enterprise Suite">Enterprise Suites</button>
-                <button class="filter-btn" data-filter="Modular Platform">Modular Platforms</button>
-                <button class="filter-btn" data-filter="Insurer Program">Insurer Programs</button>
-                <button class="filter-btn" data-filter="LSA Platform">LSA Platforms</button>
-                <button class="filter-btn" data-filter="4stars">★★★★ Only</button>
-            </div>
-            
-            <div class="legend-box">
-                <h3>Understanding LümiStars</h3>
-                <div class="legend-grid">
-                    <div class="legend-item">
-                        <div class="stars"><span class="star">★</span><span class="star empty">★★★★</span></div>
-                        <div class="legend-item-label">Engagement</div>
-                        <div class="legend-item-desc">Tracks participation only</div>
-                    </div>
-                    <div class="legend-item">
-                        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star empty">★★★</span></div>
-                        <div class="legend-item-label">Behavioral</div>
-                        <div class="legend-item-desc">Measures activity changes</div>
-                    </div>
-                    <div class="legend-item">
-                        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★★</span></div>
-                        <div class="legend-item-label">Modeled ROI</div>
-                        <div class="legend-item-desc">Internal correlations</div>
-                    </div>
-                    <div class="legend-item">
-                        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
-                        <div class="legend-item-label">Validated ROI</div>
-                        <div class="legend-item-desc">Independent audits</div>
-                    </div>
-                    <div class="legend-item">
-                        <div class="stars" style="color: var(--success-color);">★★★★★</div>
-                        <div class="legend-item-label" style="color: var(--success-color);">Causal & Auditable ROI</div>
-                        <div class="legend-item-desc">Cryptographic proof</div>
-                    </div>
-                </div>
-                 <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-light);">
-                    <a href="#" class="js-modal-trigger" data-modal-id="methodologyModal" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">View full methodology →</a>
-                </p>
-            </div>
-
-            <div class="table-wrapper">
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Platform / Program</th>
-                                <th>Category</th>
-                                <th>LümiStars</th>
-                                <th>Verification Status</th>
-                                <th>Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody id="platform-table-body">
-                            <!-- Data Rows will be dynamically populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-label">Platforms Tracked</div>
+          <div class="stat-value">20</div>
+          <div class="stat-sublabel">Including Major Payers</div>
         </div>
-    </div>
-
-    <div class="footer-section">
-        <div class="container">
-            <div class="cta-box">
-                <div class="cta-title">The Path to 5-Star Verification</div>
-                <p class="cta-text">Be the first platform to achieve ★★★★★ status. Offer your customers Causal & Auditable ROI with cryptographically-signed Proof-of-Health Certificates and become the new industry standard.</p>
-                <div class="cta-buttons">
-                    <a href="mailto:partnerships@lumicoin.app?subject=5-Star Verification Inquiry" class="btn btn-primary">Achieve 5-Star Status</a>
-                    <button class="btn btn-secondary js-modal-trigger" data-modal-id="reportModal">Read Full Report</button>
-                </div>
-            </div>
-            <div class="disclaimer">
-                <p><strong>Disclaimer:</strong> The Wellness ROI Transparency Index is a research initiative by LümiCoin, Inc., intended to serve as a public utility for the benefits industry. All information is provided for educational purposes and is based on publicly available data as of the last update. Ratings represent our good-faith analysis based on our published methodology. Vendors are encouraged to <a href="mailto:partnerships@lumicoin.app?subject=Index Correction Request">contact us</a> to provide updated information or begin the verification process. LümiCoin, Inc. is not liable for any business decisions made based on this index.</p>
-                <p style="margin-top: 16px;">Last Updated: October 28, 2025 | Next Update: January 2026</p>
-            </div>
+        <div class="stat-card">
+          <div class="stat-label">CFOs Without Proof</div>
+          <div class="stat-value">94%</div>
+          <div class="stat-sublabel">Cannot Prove ROI</div>
         </div>
-    </div>
-
-    <!-- Methodology Modal -->
-    <div id="methodologyModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2>LümiStars Methodology</h2>
-                    <p>An Evidence-Based Framework for Wellness ROI</p>
-                </div>
-                <button class="close-modal" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <h3>Our Guiding Principle</h3>
-                <p>The LümiStars rating system provides a clear, evidence-based hierarchy for evaluating the ROI claims of corporate wellness platforms. Our methodology is grounded in the principles outlined in the <strong>General Theory of Biological Capital</strong>, which prioritizes causal, auditable, and scientifically-grounded proof over correlational or self-reported metrics. We believe that in a market spending over $34 billion annually, employers deserve to know what works.</p>
-                <h3>The Hierarchy of Evidence</h3>
-                <p>Our 5-star system reflects a progression from measuring simple inputs to verifying finance-grade outcomes. Each level represents a significant increase in the quality and credibility of the evidence provided.</p>
-                <h4>⭐ 1 Star: Engagement & Utilization Metrics</h4>
-                <p><strong>Definition:</strong> Platforms at this level measure *inputs* and *participation*. Metrics include user logins, content views, challenge sign-ups, or fund utilization (for LSA platforms).
-                <br><strong>Analysis:</strong> While engagement is a necessary first step, it is not a measure of value creation. It demonstrates program usage but provides no evidence that this usage leads to positive health outcomes or financial returns. It answers "if" but not "so what."</p>
-                <h4>⭐⭐ 2 Stars: Behavioral Metrics</h4>
-                <p><strong>Definition:</strong> These platforms measure quantifiable changes in health *behaviors*. Metrics include average daily steps, active minutes, or sleep duration. In our framework, this is a measure of "Biological Labor."
-                <br><strong>Analysis:</strong> This is a significant improvement over simple engagement. It provides evidence of behavior change, a leading indicator of potential health improvements. However, it still lacks a direct, auditable link to financial value or validated health outcomes like risk reduction.</p>
-                <h4>⭐⭐⭐ 3 Stars: Modeled or Internal ROI</h4>
-                <p><strong>Definition:</strong> Platforms at this level use internal, proprietary models to correlate behavioral data with financial outcomes. They self-report an ROI figure based on their own analysis.
-                <br><strong>Analysis:</strong> This demonstrates an understanding of the need for financial proof. However, because the methodology is a "black box" and not verified by a neutral third party, it lacks the scientific and financial rigor required for full credibility. The claims are not independently auditable.</p>
-                <h4>⭐⭐⭐⭐ 4 Stars: Third-Party Validated ROI</h4>
-                <p><strong>Definition:</strong> This is the current industry gold standard. Platforms at this level have commissioned an independent, third-party entity (such as an actuarial firm like Wakely, or a research institution like the RAND Corporation) to conduct a formal study. These studies typically use historical claims data to validate population-level cost savings.
-                <br><strong>Analysis:</strong> This level represents a high degree of rigor. However, its primary limitations are that it is:
-                <ul>
-                    <li><strong>Retrospective:</strong> Analysis is done annually, looking backward.</li>
-                    <li><strong>Correlational:</strong> It shows that engaged populations have lower costs but struggles to prove direct causality due to selection bias.</li>
-                    <li><strong>Population-Level:</strong> It cannot attribute value creation to specific individuals or actions.</li>
-                </ul>
-                </p>
-                <h4>⭐⭐⭐⭐⭐ 5 Stars: Causal & Auditable ROI</h4>
-                <p><strong>Definition:</strong> The highest possible standard of proof, representing a paradigm shift from correlation to causation. Platforms at this level provide a real-time, auditable ledger of health value creation at the individual level. To achieve this, a platform must meet three non-negotiable criteria:
-                <ul>
-                     <li><strong>Individual-Level Proof:</strong> The system must verify the specific health value created by *each individual employee*.</li>
-                    <li><strong>Causal Linkage:</strong> The methodology must be grounded in a scientifically defensible, causal link between a verifiable biomarker improvement (like <code>VO₂max</code>) and a universal unit of economic value (like the <code>QALY</code>).</li>
-                    <li><strong>Cryptographic Auditability:</strong> Each verified outcome must be recorded as a tamper-evident, cryptographically-signed "receipt" of health (like a <code>Proof-of-Health Certificate</code>), allowing for full transparency and third-party validation by a CFO or auditor.</li>
-                </ul>
-                </p>
-                <br>
-                <h3>The Audacious Challenge</h3>
-                <p>Currently, no platform on the market publicly meets the 5-star standard. The LümiCoin protocol provides the infrastructure to enable any platform to achieve this. However, we are committed to recognizing any methodology that meets these rigorous criteria. **If a platform believes they have a competing or superior framework for delivering Causal & Auditable ROI, we welcome them to submit their evidence for review.** The standard is the goal, regardless of the provider.</p>
-            </div>
+        <div class="stat-card">
+          <div class="stat-label">5-Star Platforms</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sublabel">First Movers Wanted</div>
         </div>
+      </div>
     </div>
-    
-    <div id="reportModal" class="modal-overlay">
-        <div class="modal-content">
-             <div class="modal-header">
-                <div>
-                    <h2>Investigative Analysis</h2>
-                    <p>The ROI Transparency Crisis in Corporate Wellness</p>
-                </div>
-                <button class="close-modal" aria-label="Close modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <!-- Content will be injected by JavaScript -->
-            </div>
+  </div>
+
+  <div class="main-content">
+    <div class="container">
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Platforms</button>
+        <button class="filter-btn" data-filter="Enterprise Suite">
+          Enterprise Suites
+        </button>
+        <button class="filter-btn" data-filter="Modular Platform">
+          Modular Platforms
+        </button>
+        <button class="filter-btn" data-filter="Insurer Program">
+          Insurer Programs
+        </button>
+        <button class="filter-btn" data-filter="LSA Platform">LSA Platforms</button>
+        <button class="filter-btn" data-filter="4stars">★★★★ Only</button>
+      </div>
+
+      <div class="table-wrapper">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform / Program</th>
+                <th>Category</th>
+                <th>LümiStars</th>
+                <th>Verification Status</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody id="platform-table-body"></tbody>
+          </table>
         </div>
+      </div>
+
+      <div class="legend-box">
+        <h3>Understanding LümiStars</h3>
+        <div class="legend-grid">
+          <div class="legend-item">
+            <div class="stars">
+              <span class="star">★</span><span class="star empty">★★★★</span>
+            </div>
+            <div class="legend-item-label">Engagement</div>
+            <div class="legend-item-desc">Tracks participation only</div>
+          </div>
+          <div class="legend-item">
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star empty">★★★</span>
+            </div>
+            <div class="legend-item-label">Behavioral</div>
+            <div class="legend-item-desc">Measures activity changes</div>
+          </div>
+          <div class="legend-item">
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span><span class="star empty">★★</span>
+            </div>
+            <div class="legend-item-label">Modeled ROI</div>
+            <div class="legend-item-desc">Internal correlations</div>
+          </div>
+          <div class="legend-item">
+            <div class="stars">
+              <span class="star">★</span><span class="star">★</span
+              ><span class="star">★</span><span class="star">★</span
+              ><span class="star empty">★</span>
+            </div>
+            <div class="legend-item-label">Validated ROI</div>
+            <div class="legend-item-desc">Independent audits</div>
+          </div>
+          <div class="legend-item">
+            <div class="stars" style="color: var(--success-color)">★★★★★</div>
+            <div
+              class="legend-item-label"
+              style="color: var(--success-color)"
+            >
+              Causal &amp; Auditable ROI
+            </div>
+            <div class="legend-item-desc">Cryptographic proof</div>
+          </div>
+        </div>
+        <p
+          style="
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--text-light);
+          "
+        >
+          <a
+            href="#"
+            class="js-modal-trigger"
+            data-modal-id="methodologyModal"
+            style="
+              color: var(--primary-color);
+              text-decoration: none;
+              font-weight: 600;
+            "
+            >View full methodology →</a
+          >
+        </p>
+      </div>
     </div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const platformData = [
-                 { id: 'personify', name: 'Personify Health', category: 'Enterprise Suite', stars: 4, status: 'Not Verified', statusClass: 'not-verified', icon: 'PH', description: `Personify Health represents the current apex of wellness ROI transparency, having subjected its outcomes to rigorous independent scrutiny through multiple validation pathways. The platform earned Validation Institute certification backed by an unprecedented $100,000 guarantee—essentially putting financial skin in the game behind its claims of cost savings and clinical improvements.<sup>1</sup> Most significantly, an independent actuarial study conducted by Wakely Consulting Group analyzed claims data from over 100,000 members and documented 23% lower healthcare costs among engaged participants compared to matched controls.<sup>1</sup> This multi-layered validation approach establishes Personify as the gold standard in an industry plagued by unsubstantiated claims. However, even this exemplary transparency operates at the population level using retrospective claims analysis, leaving open questions about causation versus correlation and lacking the individual-level, real-time verification that would represent true proof of value creation.` },
-                { id: 'vitality', name: 'Vitality Group', category: 'Enterprise Suite', stars: 4, status: 'Not Verified', statusClass: 'not-verified', icon: 'VG', description: `Vitality Group has constructed perhaps the most comprehensive independent validation infrastructure in the corporate wellness industry, earning four stars through multiple converging lines of external evidence.<sup>2</sup> The cornerstone is the Vitality Impact Study, which underwent independent review by actuaries at Arbital Health—a neutral third party.<sup>2</sup> Reinforcing this foundation, RAND Europe conducted an extensive peer-reviewed study examining over 400,000 members across three countries, documenting a sustained 34% increase in physical activity levels.<sup>2</sup> This dual validation—actuarial and academic—provides exceptional credibility. Yet even Vitality's rigorous methodology encounters the fundamental limitations of retrospective, correlational analysis: the studies document associations but cannot definitively isolate causation from self-selection bias.` },
-                { id: 'webmd', name: 'WebMD Health Services', category: 'Enterprise Suite', stars: 3, status: 'Not Verified', statusClass: 'not-verified', icon: 'WM', description: `WebMD Health Services occupies an ambiguous middle ground, promoting sophisticated analytics while conspicuously avoiding independent validation.<sup>3</sup> The platform markets "rigorous and transparent" risk reduction analytics and offers proprietary ROI calculators.<sup>3</sup> However, this investigation uncovered no evidence of external actuarial review or third-party certification validating these internal models.<sup>3</sup> For employers, this creates a "black box" problem: without independent verification, CFOs cannot distinguish genuine predictive accuracy from optimistic vendor modeling.` },
-                { id: 'wellhub', name: 'Wellhub (Gympass)', category: 'Access Network', stars: 3, status: 'Not Verified', statusClass: 'not-verified', icon: 'WH', description: `Wellhub has published one of the most aggressive ROI claims in the modular space—an internal study asserting 21-35% healthcare cost reductions.<sup>4</sup> The methodology appears sophisticated, but the critical transparency failure is the absence of any named external auditor.<sup>4</sup> This self-published research asks employers to trust Wellhub's own analysis of its effectiveness—a fundamental conflict of interest that undermines credibility. Without external validation, Wellhub's impressive claimed returns remain unverifiable assertions.` },
-                { id: 'humana', name: 'Humana Go365', category: 'Insurer Program', stars: 3, status: 'Not Verified', statusClass: 'not-verified', icon: 'HU', description: `As an integrated insurer-wellness program, Humana Go365 leverages direct access to claims data to produce detailed internal analyses claiming 22% lower costs for engaged members.<sup>5</sup> However, despite this sophistication, the publicly available studies remain internally produced without an independent external audit.<sup>5</sup> This creates a fundamental attribution problem: are participants healthier because the program worked, or were healthier individuals more likely to engage? Without external validation, Go365 remains in the tier of sophisticated but ultimately self-validated ROI modeling.` },
-                { id: 'yumuuv', name: 'YuMuuv', category: 'Modular Platform', stars: 2, status: 'Not Verified', statusClass: 'not-verified', icon: 'YM', description: `YuMuuv distinguishes itself with exceptional operational transparency, publishing over 50 detailed case studies that document behavioral change.<sup>6</sup> This openness creates credibility around what YuMuuv can prove: significant improvements in participation and activity levels.<sup>6</sup> However, this transparency hits a ceiling, as the platform presents no financial modeling or independent validation connecting these behaviors to cost savings.<sup>6</sup> This positions YuMuuv as a highly transparent behavioral platform, but unable to answer a CFO's bottom-line question about financial return.` },
-                { id: 'wellable', name: 'Wellable', category: 'Modular Platform', stars: 2, status: 'Verification Pending ⏳', statusClass: 'pending', icon: 'WB', description: `Wellable has invested significantly in ROI education, publishing comprehensive primers, calculators, and implementation guides designed to help employers measure wellness program value.⁷ This educational approach demonstrates understanding of employer pain points around justification and measurement.⁷ The platform's case studies document behavioral improvements—increased physical activity, higher participation in health screenings, improved health risk assessment scores—representing genuine value in employee health behavior change.⁷ However, Wellable's public evidence stops at the behavioral tier without advancing to financial modeling or, critically, independent claims-linked validation.⁷ The ROI calculators and frameworks they provide are essentially templates for employers to populate with their own assumptions and estimates rather than validated models based on Wellable's actual performance data across multiple deployments. This creates an evidence gap: while Wellable demonstrates competence in behavioral change and provides tools for employers to estimate value, it offers no verifiable proof that these behavioral improvements translate to healthcare cost reduction or productivity gains, justifying a two-star rating focused squarely on documented behavior change without financial validation.` },
-                { id: 'movespring', name: 'MoveSpring', category: 'Modular Platform', stars: 2, status: 'In Review', statusClass: 'progress', icon: 'MS', description: `MoveSpring operates primarily as a challenge-based engagement platform, focusing on team competitions, step tracking, and gamified physical activity goals.⁸ Acquired by Reward Gateway in March 2022, the platform was integrated into Reward Gateway's comprehensive employee engagement suite.⁸ The platform's public materials emphasize participation metrics and challenge completion rates—measuring the success of individual campaigns rather than longitudinal health improvement.⁸ MoveSpring does provide educational content on "how to measure wellness ROI" and frameworks for thinking about program value, but these are generic industry guidance rather than MoveSpring-specific validation.⁸ The evidence base consists primarily of utilization data showing employees enjoy and participate in challenges, with some behavioral metrics like average steps or active participants over campaign duration. What's conspicuously absent is any internal financial modeling connecting this engagement to cost outcomes, any longitudinal tracking of sustained behavior change beyond individual challenges, or any independent validation of health or financial impact.⁸ This challenge-focused model may generate valuable team-building and morale benefits—real but difficult-to-quantify forms of value—but provides insufficient evidence for CFOs seeking defensible financial ROI, resulting in a two-star rating for documented engagement and short-term behavioral response without proof of sustained change or economic impact.` },
-                { id: 'gojoe', name: 'GoJoe', category: 'Modular Platform', stars: 2, status: 'Not Verified', statusClass: 'not-verified', icon: 'GJ', description: `GoJoe emphasizes social connectivity and team-based wellness challenges, positioning community and peer support as core engagement mechanisms.⁹ Founded in the UK and grown from an annual reunion event among "ordinary joes," the platform has evolved into a global consumer-grade wellness app trusted by major employers including PwC, Deloitte, and NatWest.⁹ GoJoe has partnered with Stanford University on data science research examining the connection between physical activity, social engagement, and mental wellbeing.⁹ The platform's case studies highlight participation metrics, user satisfaction, and engagement with social features—representing genuine value in the employee experience and cultural dimensions of wellness.⁹ User surveys show 94.1% found GoJoe more inclusive and engaging than alternative corporate products, and 82% felt more socially connected after using the platform.⁹ However, the public evidence base remains focused on behavioral engagement and qualitative benefits: case narratives emphasize team cohesion and morale rather than quantified health metrics, and there's no evidence of internal financial modeling or external validation connecting social engagement to health outcomes or cost savings.⁹ This pattern—strong on experience and culture, weak on financial measurement—reflects a strategic choice to emphasize wellness program benefits that traditional ROI frameworks struggle to capture. While team building and social support may drive real but hard-to-quantify value, the absence of validated health or financial outcomes limits GoJoe to a two-star rating acknowledging behavioral engagement without proof of economic return.` },
-                { id: 'vantagefit', name: 'Vantage Fit', category: 'Modular Platform', stars: 2, status: 'Not Verified', statusClass: 'not-verified', icon: 'VF', description: `Vantage Fit positions itself as a corporate fitness platform with comprehensive KPI dashboards and behavioral tracking across multiple health dimensions including activity, nutrition, sleep, and wellness challenges.¹⁰ The platform's strength lies in its measurement infrastructure—providing employers with detailed analytics on employee participation patterns, activity trends, and habit formation.¹⁰ Public materials include guidance on wellness ROI metrics and frameworks for tracking program effectiveness.¹⁰ However, the evidence base remains firmly in the behavioral measurement tier: the platform documents what employees do within the app but presents no internal modeling connecting these behaviors to financial outcomes and no independent studies validating health risk reduction or cost savings.¹⁰ The dashboard analytics, while potentially valuable for program management, measure inputs and activities rather than validated outputs and outcomes. This common pattern among modular platforms reflects a fundamental structural limitation: without access to employer health claims data or partnership with an entity that has such access, behavioral platforms cannot move beyond activity measurement to financial validation regardless of their tracking sophistication, justifying Vantage Fit's two-star rating for behavioral metrics without financial or independent validation.` },
-                { id: 'incentfit', name: 'IncentFit', category: 'Modular Platform', stars: 2, status: 'In Review', statusClass: 'progress', icon: 'IF', description: `IncentFit focuses on the incentive infrastructure layer of wellness programs, providing tools for employers to structure and manage financial rewards for health-related behaviors.¹¹ The platform offers ROI calculators and utilization tracking that measure incentive distribution, participation in rewarded activities, and completion rates for targeted behaviors.¹¹ Their published guidance materials demonstrate understanding of wellness economics and provide frameworks for estimating program value.¹¹ However, IncentFit's evidence base centers on incentive mechanics and participation rather than health outcomes: they can prove employees claim rewards for completing activities but cannot prove these incentivized activities drive sustained behavior change, health improvement, or financial return.¹¹ The calculators they provide rely on employer-supplied assumptions about the value of incentivized behaviors rather than validated IncentFit performance data. This creates a verification gap common to incentive platforms: while financial rewards demonstrably increase participation in specific activities (a behavioral response), the critical questions about whether incentivized participation creates lasting change and whether that change produces financial value remain unanswered, supporting a two-star rating for documented behavioral response to incentives without validation of downstream outcomes or economic impact.` },
-                { id: 'forma', name: 'Forma', category: 'LSA Platform', stars: 2, status: 'Not Verified', statusClass: 'not-verified', icon: 'FM', description: `Forma operates in the lifestyle spending account category but differentiates through sophisticated benefits design tools including an ROI calculator and research on the perceived value of benefits using conjoint analysis.¹² This positions Forma slightly above pure utilization-focused LSA platforms by attempting to quantify employee valuation of benefit flexibility.¹² The platform's materials include some wellness-adjacent framing around activity tracking and health-related spending options.¹² However, the fundamental limitation of LSA platforms applies: the ROI measurement focuses on employee satisfaction, perceived value, and utilization rates rather than health outcomes or medical cost reduction.¹² Forma's value proposition is benefit optimization and employee choice—legitimate value drivers in total rewards strategy—but these operate in a different domain than health-driven wellness ROI. The conjoint studies measure what employees value in benefits design, not whether those benefits improve health or reduce costs.¹² This justifies a two-star rating recognizing behavioral framing and sophisticated value measurement while acknowledging the absence of health-specific outcomes or financial ROI validation, positioning Forma at the top of the LSA category without crossing into health outcomes territory.` },
-                { id: 'uhc', name: 'UnitedHealthcare Motion/Rewards', category: 'Insurer Program', stars: 2, status: 'Not Verified', statusClass: 'not-verified', icon: 'UH', description: `UnitedHealthcare operates device-tracked behavioral incentive programs that reward members for achieving frequency, intensity, and tenacity (F.I.T.) goals in physical activity.¹³ The programs leverage wearable device data to verify activity completion and distribute financial incentives, creating a direct behavior-to-reward mechanism.¹³ UnitedHealthcare has published internal estimates suggesting participants save an average of $222 annually, but these figures represent internal modeling without independent actuarial validation.¹³ As a major payer with comprehensive claims access, UnitedHealthcare has the data infrastructure to conduct rigorous validation but has not published external third-party studies specifically validating these behavioral incentive programs' financial impact.¹³ The device-tracking approach provides verified behavioral data—actual measured activity rather than self-reported participation—which is methodologically stronger than many platforms. However, user reviews note device synchronization issues and reward fulfillment challenges, suggesting implementation friction that may limit real-world effectiveness.¹³ The combination of verified behavioral tracking with internal but unvalidated financial estimates, plus operational challenges, supports a two-star rating for behavioral metrics without independent ROI proof.` },
-                { id: 'burnalong', name: 'Burnalong', category: 'Content Platform', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'BA', description: `Burnalong functions primarily as a content platform providing access to instructor-led fitness, wellness, and mental health classes through streaming video.¹⁴ The platform's value proposition centers on content variety, accessibility, and engagement—measuring success through utilization metrics like class views, session completions, and user satisfaction scores.¹⁴ Public materials emphasize engagement narratives and content consumption without advancing to behavioral change measurement or health outcomes.¹⁴ There is no evidence of tracking whether class participation translates to sustained fitness improvement, no internal modeling of financial impact, and no independent validation of health or cost outcomes.¹⁴ This content-consumption model faces a fundamental measurement challenge: watching a fitness class or mindfulness session may provide immediate value but doesn't inherently prove behavior change, health improvement, or financial return. Burnalong's one-star rating reflects its positioning as a benefits amenity focused on access and engagement rather than measurable outcomes—a legitimate role in wellness portfolios but operating at the most basic tier of ROI transparency without evidence of behavioral impact or economic value beyond employee satisfaction with content availability.` },
-                { id: 'compt', name: 'Compt', category: 'LSA Platform', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'CP', description: `Compt provides lifestyle spending account infrastructure enabling employers to offer flexible benefit stipends for employee-selected perks including fitness, wellness, professional development, and lifestyle expenses.¹⁵ The platform's ROI framing focuses on utilization rates, employee satisfaction, and perceived value of benefit flexibility—administrative and experience metrics rather than health outcomes.¹⁵ Compt's educational materials discuss total rewards strategy and benefit optimization but do not claim or measure health-related ROI.¹⁵ This reflects the fundamental nature of LSA platforms: they optimize benefit delivery and employee choice without driving specific health behaviors or outcomes.¹⁵ The value proposition is legitimate—benefit flexibility and employee empowerment—but operates in a different domain than health improvement or medical cost reduction. For employers, LSAs represent a strategic choice to prioritize employee autonomy and satisfaction over directed health outcomes, accepting that measurement will focus on administrative efficiency and utilization rather than health impact.¹⁵ Compt's one-star rating acknowledges this positioning as a benefits delivery mechanism without health-specific measurement, outcomes tracking, or financial ROI validation related to employee health.` },
-                { id: 'benepass', name: 'Benepass', category: 'LSA Platform', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'BP', description: `Benepass operates as a comprehensive benefits administration platform with LSA capabilities, focusing on streamlined spending for health, wellness, and lifestyle benefits.¹⁶ The platform's ROI content centers on administrative efficiency, spending validation through data and receipts, and employee experience with benefit access.¹⁶ Public materials provide frameworks for calculating LSA ROI based on utilization and satisfaction but do not advance to health outcomes measurement.¹⁶ Like other LSA platforms, Benepass measures whether employees use allocated funds and whether the administrative process is efficient, but cannot measure whether that spending drives health improvement or cost savings.¹⁶ The platform's value lies in benefit delivery optimization and compliance management—important administrative functions—but these operate outside the health outcomes and financial ROI domain that wellness programs target.¹⁶ For organizations prioritizing employee choice and satisfaction in benefits over directed health improvement, this represents appropriate value delivery, but the measurement framework remains at the utilization level without health-specific validation.¹⁶ Benepass's one-star rating reflects its core function as benefits infrastructure rather than health intervention, with corresponding measurement focused on administrative success rather than health or financial outcomes.` },
-                { id: 'espresa', name: 'Espresa', category: 'LSA Platform', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'ES', description: `Espresa provides a comprehensive culture benefits platform with its LSA Plus solution, combining lifestyle spending accounts, wellness programs, rewards and recognition, and employee resource group (ERG) support in a unified experience.¹⁷ The platform emphasizes employee experience, choice, and total wellbeing through flexible benefit stipends that employees can allocate across wellness, professional development, family care, and lifestyle categories.¹⁷ Espresa's global infrastructure supports benefits delivery in all languages and currencies with zero markups on marketplace purchases.¹⁷ The platform's metrics focus on utilization of benefit options, employee satisfaction scores with program flexibility, engagement with rewards and recognition features, and administrative efficiency in managing diverse benefit categories.¹⁷ Public materials position Espresa in the employee experience and total rewards space rather than health outcomes measurement or medical cost reduction.¹⁷ There is no evidence of health-specific ROI validation, behavioral health tracking beyond benefit redemption patterns, or financial modeling connecting platform usage to healthcare cost savings.¹⁷ This reflects Espresa's strategic positioning as a culture and recognition tool that includes wellness as one component of a broader benefits ecosystem—a legitimate category in human capital management but fundamentally different from wellness programs designed primarily to improve health and reduce medical costs.¹⁷ For employers seeking to enhance employee experience, satisfaction, and recognition culture through benefits flexibility, Espresa may deliver value, but that value is measured through engagement and experience metrics rather than health outcomes or financial return.¹⁷ The one-star rating acknowledges Espresa's focus on utilization and experience metrics without health-specific outcomes or ROI validation.` },
-                { id: 'joon', name: 'JOON', category: 'LSA Platform', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'JO', description: `JOON operates as a lifestyle spending account platform with distinctive card-connected technology, enabling flexible benefit allocations across categories including wellness, fitness, mental health, family care, and professional development.¹⁸ The platform differentiates itself through its "Set It and Benefit" approach, allowing employees to connect personal credit cards and bank accounts for automatic reimbursement approval when purchases are made at eligible merchants.¹⁸ JOON's evidence base centers on utilization tracking—measuring how employees allocate and spend benefit dollars across the 10,000+ eligible merchants in their network—and administrative efficiency in managing diverse benefit categories without restrictive marketplace portals.¹⁸ The platform emphasizes benefit flexibility and employee choice, with materials focusing on implementation ease (30-minute setup workshops) and fair pricing based on actual platform usage rather than headcount.¹⁸ Like other LSA platforms, JOON's value proposition focuses on employee empowerment through choice and satisfaction with benefit options rather than directed health improvement.¹⁸ There is no public evidence of tracking whether spending in wellness categories drives measurable health behavior change, no internal modeling connecting benefit utilization to health outcomes or medical cost reduction, and no independent validation of healthcare cost impact.¹⁸ This reflects the core LSA model where measurement appropriately focuses on administrative success, spending activation, and employee satisfaction rather than health outcomes the platform is not designed to directly drive.¹⁸ JOON's one-star rating acknowledges its function as benefits delivery infrastructure with corresponding utilization-focused measurement, operating in a different category than health-focused wellness interventions despite including wellness as a prominent spending option.` },
-                { id: 'ambetter', name: 'Ambetter My Health Pays', category: 'Insurer Program', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'AM', description: `Ambetter operates a straightforward task-completion rewards program where members earn restricted-use prepaid card credits for completing preventive health actions like annual checkups, health risk assessments, or dental cleanings.¹⁹ The program measures completion rates and reward distribution but presents no published ROI methodology examining whether incentivized preventive care drives health improvement or cost reduction beyond the immediate service utilization.¹⁹ While preventive care completion is valuable—and there is general medical evidence supporting screening and prevention—Ambetter publishes no program-specific analysis connecting My Health Pays participation to better health outcomes or medical cost savings.¹⁹ This represents the most basic tier of wellness intervention: incentivizing known-beneficial activities without measuring program effectiveness or financial impact.¹⁹ The limitations are both methodological and strategic: as an ACA marketplace insurer, Ambetter may lack the longitudinal member relationships and data infrastructure to conduct rigorous outcomes analysis, and the program's simple task-reward structure doesn't lend itself to sophisticated measurement.¹⁹ The one-star rating reflects measurement limited to task completion and reward distribution without validation of downstream health or financial outcomes, positioning My Health Pays as a member benefit rather than a proven health improvement intervention.` },
-                { id: 'aetna', name: 'Aetna Better Health', category: 'Medicaid Program', stars: 1, status: 'Not Verified', statusClass: 'not-verified', icon: 'AE', description: `Aetna Better Health operates state-specific Medicaid managed care plans with Healthy Behaviors Incentive Programs that reward members for completing preventive visits, health screenings, and participation in disease management programs.²⁰ Program documentation describes task-based incentives—typically prepaid gift cards—for specific completed activities.²⁰ However, publicly available materials present no program-specific ROI evidence or outcomes analysis examining whether these incentives drive better health results or cost savings beyond immediate service utilization.²⁰ The broader health services research literature shows mixed results for Medicaid incentive programs, with some studies finding modest improvements in preventive care uptake but challenges with sustained engagement and measurable health outcomes.²⁰ Aetna Better Health's specific programs operate in this context without published validation of their individual effectiveness. The one-star rating reflects measurement limited to task completion and incentive distribution without outcomes validation—a pattern common across Medicaid managed care incentive programs where the focus is driving immediate preventive service utilization rather than longitudinal health improvement or financial ROI, acknowledging the structural challenges of measuring long-term outcomes in populations with high turnover and complex health and social needs.` },
-            ];
+  <div class="footer-section">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-title">The Path to 5-Star Verification</div>
+        <p class="cta-text">
+          Be the first platform to achieve ★★★★★ status. Offer your customers
+          Causal &amp; Auditable ROI with cryptographically-signed
+          Proof-of-Health Certificates and become the new industry standard.
+        </p>
+        <div class="cta-buttons">
+          <a
+            href="mailto:partnerships@lumicoin.app?subject=5-Star Verification Inquiry"
+            class="btn btn-primary"
+            >Achieve 5-Star Status</a
+          >
+          <button class="btn btn-secondary js-modal-trigger" data-modal-id="reportModal">
+            Read Full Report
+          </button>
+        </div>
+      </div>
+      <div class="disclaimer">
+        <p>
+          <strong>Disclaimer:</strong> The Wellness ROI Transparency Index is a
+          research initiative by LümiCoin, Inc., intended to serve as a public
+          utility for the benefits industry. All information is provided for
+          educational purposes and is based on publicly available data as of the
+          last update. Ratings represent our good-faith analysis based on our
+          published methodology. Vendors are encouraged to
+          <a
+            href="mailto:partnerships@lumicoin.app?subject=Index Correction Request"
+            >contact us</a
+          >
+          to provide updated information or begin the verification process.
+          LümiCoin, Inc. is not liable for any business decisions made based on
+          this index.
+        </p>
+        <p style="margin-top: 16px">
+          Last Updated: October 28, 2025 | Next Update: January 2026
+        </p>
+      </div>
+    </div>
+  </div>
 
-            const tableBody = document.getElementById('platform-table-body');
-            const reportModalBody = document.querySelector('#reportModal .modal-body');
+  <!-- Methodology Modal -->
+  <div id="methodologyModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="methodologyTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 id="methodologyTitle">LümiStars Methodology</h2>
+          <p>An Evidence-Based Framework for Wellness ROI</p>
+        </div>
+        <button class="close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>Our Guiding Principle</h3>
+        <p>
+          The LümiStars rating system provides a clear, evidence-based hierarchy
+          for evaluating the ROI claims of corporate wellness platforms. Our
+          methodology is grounded in the principles outlined in the
+          <strong>General Theory of Biological Capital</strong>, which
+          prioritizes causal, auditable, and scientifically grounded proof over
+          correlational or self-reported metrics. We believe that in a market
+          spending over $34 billion annually, employers deserve to know what
+          works.
+        </p>
 
-            // Generate Table and Report Content
-            let reportHTML = '';
-            platformData.forEach(p => {
-                // Main Data Row
-                const dataRow = document.createElement('tr');
-                dataRow.classList.add('data-row');
-                dataRow.dataset.category = p.category;
-                dataRow.dataset.stars = p.stars;
-                
-                let starsHTML = '';
-                for (let i = 1; i <= 5; i++) {
-                    starsHTML += `<span class="star ${i > p.stars ? 'empty' : ''}">★</span>`;
-                }
+        <h3>The Hierarchy of Evidence</h3>
+        <p>
+          Our 5-star system reflects a progression from measuring simple inputs
+          to verifying finance-grade outcomes. Each level represents a
+          significant increase in the quality and credibility of the evidence
+          provided.
+        </p>
 
-                dataRow.innerHTML = `
-                    <td>
-                        <div class="platform-cell">
-                            <span class="expand-icon">▶</span>
-                            <div class="platform-icon">${p.icon}</div>
-                            <div class="platform-details">
-                                <div class="platform-name">${p.name}</div>
-                                <div class="platform-category">${p.category}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>${p.category}</td>
-                    <td><div class="stars">${starsHTML}</div></td>
-                    <td><span class="badge ${p.statusClass}">${p.status}</span></td>
-                    <td style="color: #8f8071; font-size: 0.85rem;">Oct 2025</td>
-                `;
-                tableBody.appendChild(dataRow);
+        <h4>⭐ 1 Star: Engagement &amp; Utilization Metrics</h4>
+        <p>
+          <strong>Definition:</strong> Platforms at this level measure
+          <em>inputs</em> and <em>participation</em>. Metrics include user
+          logins, content views, challenge sign-ups, or fund utilization (for
+          LSA platforms).<br /><strong>Analysis:</strong> While engagement is a
+          necessary first step, it is not a measure of value creation. It
+          demonstrates program usage but provides no evidence that this usage
+          leads to positive health outcomes or financial returns. It answers
+          "if" but not "so what."
+        </p>
 
-                // Detail Row (hidden by default)
-                const detailRow = document.createElement('tr');
-                detailRow.classList.add('detail-row');
-                detailRow.innerHTML = `
-                    <td colspan="5" class="detail-cell">
-                        <div class="detail-content">
-                            <p>${p.description}</p>
-                        </div>
-                    </td>
-                `;
-                tableBody.appendChild(detailRow);
+        <h4>⭐⭐ 2 Stars: Behavioral Metrics</h4>
+        <p>
+          <strong>Definition:</strong> These platforms measure quantifiable
+          changes in health <em>behaviors</em>. Metrics include average daily
+          steps, active minutes, or sleep duration. In our framework, this is a
+          measure of "Biological Labor." <br /><strong>Analysis:</strong> This
+          is a significant improvement over simple engagement. It provides
+          evidence of behavior change, a leading indicator of potential health
+          improvements. However, it still lacks a direct, auditable link to
+          financial value or validated health outcomes like risk reduction.
+        </p>
 
-                // Add to full report modal
-                reportHTML += `<h3>${p.name} (${'★'.repeat(p.stars)}${'<span class="star empty">★</span>'.repeat(5-p.stars)})</h3><p>${p.description}</p>`;
-            });
-            
-            reportHTML += `
-                <h3>References</h3>
-                <ol class="references-list">
-                    <li>Validation Institute. (2025). *Personify Health Validation Certifications*. Retrieved from https://validationinstitute.com</li>
-                    <li>RAND Europe. (2018). *Incentives and Physical Activity: Assessment of Vitality's Active Rewards with Apple Watch Benefit* (Research Report RR-2870). RAND Corporation. Retrieved from https://www.rand.org/pubs/research_reports/RR2870.html</li>
-                    <li>WebMD Health Services. (2025). *Health and Wellbeing Solutions Platform*. Retrieved from https://www.webmdhealthservices.com</li>
-                    <li>Wellhub. (2025). *Return on Wellness Investment Study*. Retrieved from https://wellhub.com/en-us/resources</li>
-                    <li>Humana. (2025). *Go365 Wellness and Rewards Program: Outcomes Analysis*. Retrieved from https://www.humana.com/go365</li>
-                    <li>YuMuuv. (2025). *Corporate Wellness Case Studies and ROI Analysis Resources*. Retrieved from https://yumuuv.com/case-studies</li>
-                    <li>Wellable. (2025). *Workplace Wellness ROI Calculator and Measurement Resources*. Retrieved from https://www.wellable.co/resources</li>
-                    <li>Reward Gateway. (2022, March 22). *Reward Gateway Acquires MoveSpring* [Press Release]. Retrieved from https://www.businesswire.com/news/home/20220322005255/en/Reward-Gateway-Acquires-MoveSpring</li>
-                    <li>GoJoe. (2025). *Employee Wellness Platform and Case Studies*. Retrieved from https://www.gojoe.com/us</li>
-                    <li>Vantage Fit. (2025). *Corporate Wellness Platform KPI and Analytics Dashboard*. Retrieved from https://www.vantagefit.io</li>
-                    <li>IncentFit. (2025). *Wellness Incentives ROI Calculation Resources*. Retrieved from https://www.incentfit.com/wellness-word</li>
-                    <li>Forma. (2025). *Life Benefits ROI Calculator and Value Assessment Research*. Retrieved from https://www.joinforma.com/life-benefits-roi-calculator</li>
-                    <li>UnitedHealthcare. (2025). *Motion Program and Member Rewards Overview*. Retrieved from https://www.uhc.com/member-resources</li>
-                    <li>Burnalong. (2025). *On-Demand Wellness Content Platform*. Retrieved from https://www.burnalong.com</li>
-                    <li>Compt. (2025). *Lifestyle Spending Account Platform and Resources*. Retrieved from https://www.compt.io/resources</li>
-                    <li>Benepass. (2025). *LSA Administration Platform and ROI Resources*. Retrieved from https://www.getbenepass.com</li>
-                    <li>Espresa. (2025). *LSA Plus: Lifestyle Spending Accounts, Wellbeing, Recognition, and Community Platform*. Retrieved from https://www.espresa.com/product/lsa-plus</li>
-                    <li>JOON. (2025). *Card-Connected Lifestyle Spending Account Platform*. Retrieved from https://joon.io</li>
-                    <li>Ambetter Health. (2025). *My Health Pays Rewards Program*. Retrieved from https://www.ambetterhealth.com/programs-savings</li>
-                    <li>Aetna Better Health. (2025). *Healthy Behaviors Incentive Programs*. State-specific program documentation retrieved from https://www.aetnabetterhealth.com</li>
-                </ol>
-            `;
-            reportModalBody.innerHTML = reportHTML;
-            
-            // Re-select all triggers and rows after dynamic generation
-            const modalTriggers = document.querySelectorAll('.js-modal-trigger');
-            const modals = document.querySelectorAll('.modal-overlay');
-            const closeButtons = document.querySelectorAll('.close-modal');
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const dataRows = document.querySelectorAll('tbody tr.data-row');
+        <h4>⭐⭐⭐ 3 Stars: Modeled or Internal ROI</h4>
+        <p>
+          <strong>Definition:</strong> Platforms at this level use internal,
+          proprietary models to correlate behavioral data with financial
+          outcomes. They self-report an ROI figure based on their own analysis.
+          <br /><strong>Analysis:</strong> This demonstrates an understanding of
+          the need for financial proof. However, because the methodology is a
+          "black box" and not verified by a neutral third party, it lacks the
+          scientific and financial rigor required for full credibility. The
+          claims are not independently auditable.
+        </p>
 
-            // Modal Logic
-            const openModal = (modalId) => {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.add('active');
-                    document.body.classList.add('modal-open');
-                }
-            };
+        <h4>⭐⭐⭐⭐ 4 Stars: Third-Party Validated ROI</h4>
+        <p>
+          <strong>Definition:</strong> This is the current industry gold
+          standard. Platforms at this level have commissioned an independent,
+          third-party entity (such as an actuarial firm like Wakely, or a
+          research institution like the RAND Corporation) to conduct a formal
+          study. These studies typically use historical claims data to validate
+          population-level cost savings. <br /><strong>Analysis:</strong> This
+          level represents a high degree of rigor. However, its primary
+          limitations are that it is:
+        </p>
+        <ul>
+          <li><strong>Retrospective:</strong> Analysis is done annually, looking backward.</li>
+          <li><strong>Correlational:</strong> It shows that engaged populations have lower costs but struggles to prove direct causation due to selection bias.</li>
+          <li><strong>Population-Level:</strong> It cannot attribute value creation to specific individuals or actions.</li>
+        </ul>
 
-            const closeModal = () => {
-                modals.forEach(modal => modal.classList.remove('active'));
-                document.body.classList.remove('modal-open');
-            };
+        <h4>⭐⭐⭐⭐⭐ 5 Stars: Causal &amp; Auditable ROI</h4>
+        <p>
+          <strong>Definition:</strong> The highest possible standard of proof,
+          representing a shift from correlation to causation. Platforms at this
+          level provide a real-time, auditable ledger of health value creation
+          at the individual level. To achieve this, a platform must meet three
+          non-negotiable criteria:
+        </p>
+        <ul>
+          <li>
+            <strong>Individual-Level Proof:</strong> The system must verify the
+            specific health value created by <em>each individual employee</em>.
+          </li>
+          <li>
+            <strong>Causal Linkage:</strong> The methodology must be grounded in
+            a scientifically defensible, causal link between a verifiable
+            biomarker improvement (like <code>VO₂max</code>) and a universal
+            unit of economic value (like the <code>QALY</code>).
+          </li>
+          <li>
+            <strong>Cryptographic Auditability:</strong> Each verified outcome
+            must be recorded as a tamper-evident, cryptographically signed
+            "receipt" of health (like a <code>Proof-of-Health Certificate</code>),
+            allowing for full transparency and third-party validation by a CFO
+            or auditor.
+          </li>
+        </ul>
 
-            modalTriggers.forEach(trigger => {
-                trigger.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const modalId = trigger.dataset.modalId;
-                    openModal(modalId);
-                });
-            });
+        <br />
+        <h3>The Audacious Challenge</h3>
+        <p>
+          Currently, no platform on the market publicly meets the 5-star
+          standard. The LümiCoin protocol provides the infrastructure to enable
+          any platform to achieve this. However, we are committed to recognizing
+          any methodology that meets these rigorous criteria. <strong>If a
+          platform believes they have a competing or superior framework for
+          delivering Causal &amp; Auditable ROI, we welcome them to submit their
+          evidence for review.</strong> The standard is the goal, regardless of
+          the provider.
+        </p>
+      </div>
+    </div>
+  </div>
 
-            closeButtons.forEach(button => {
-                button.addEventListener('click', closeModal);
-            });
+  <!-- Full Report Modal -->
+  <div id="reportModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 id="reportTitle">Investigative Analysis</h2>
+          <p>The ROI Transparency Crisis in Corporate Wellness</p>
+        </div>
+        <button class="close-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body"><!-- injected by JS --></div>
+    </div>
+  </div>
 
-            modals.forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-            });
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const platformData = [
+        {
+          id: "personify",
+          name: "Personify Health",
+          category: "Enterprise Suite",
+          stars: 4,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "PH",
+          description: `Personify Health represents the current apex of wellness ROI transparency, having subjected its outcomes to rigorous independent scrutiny through multiple validation pathways.<sup>1</sup> The platform earned Validation Institute certification backed by a $100,000 guarantee. An independent actuarial study by Wakely Consulting Group analyzed claims data from over 100,000 members and documented 23% lower healthcare costs among engaged participants compared to matched controls.<sup>1</sup> This establishes Personify as a gold standard in a market plagued by unsubstantiated claims… yet it remains population-level and retrospective, leaving open questions about causation versus correlation and lacking individual-level, real-time verification.`
+        },
+        {
+          id: "vitality",
+          name: "Vitality Group",
+          category: "Enterprise Suite",
+          stars: 4,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "VG",
+          description: `Vitality has constructed comprehensive independent validation, earning four stars through converging external evidence.<sup>2</sup> The Vitality Impact Study underwent independent actuarial review by Arbital Health, and RAND Europe examined 400,000+ members across three countries, documenting a sustained 34% increase in activity.<sup>2</sup> Despite rigor, these remain retrospective and correlational, not individual-level causal proof.`
+        },
+        {
+          id: "webmd",
+          name: "WebMD Health Services",
+          category: "Enterprise Suite",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "WM",
+          description: `WebMD promotes "rigorous and transparent" risk reduction analytics and proprietary ROI calculators, but no evidence of external actuarial validation was found.<sup>3</sup> Without independent verification, CFOs face a black-box problem: sophisticated internal models with uncertain external credibility.`
+        },
+        {
+          id: "wellhub",
+          name: "Wellhub (Gympass)",
+          category: "Access Network",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "WH",
+          description: `Wellhub published an internal study asserting 21–35% healthcare cost reductions.<sup>4</sup> Methodology appears sophisticated, but no named external auditor.<sup>4</sup> Strong claims remain self-validated and therefore not independently verifiable.`
+        },
+        {
+          id: "humana",
+          name: "Humana Go365",
+          category: "Insurer Program",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "HU",
+          description: `Humana leverages claims access to produce detailed internal analyses claiming ~22% lower costs for engaged members.<sup>5</sup> However, studies are internally produced without external audit, leaving attribution and selection bias concerns unresolved.`
+        },
+        {
+          id: "yumuuv",
+          name: "YuMuuv",
+          category: "Modular Platform",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "YM",
+          description: `YuMuuv publishes 50+ case studies documenting behavioral change and participation gains.<sup>6</sup> Transparency is excellent for behavior, but no financial modeling or independent validation connects behavior to cost outcomes.`
+        },
+        {
+          id: "wellable",
+          name: "Wellable",
+          category: "Modular Platform",
+          stars: 2,
+          status: "Verification Pending ⏳",
+          statusClass: "pending",
+          icon: "WB",
+          description: `Wellable invests in ROI education—primers, calculators, guides—to help employers measure perceived value, plus case studies of behavioral improvements (activity, screenings, HRA scores).⁷ Public evidence stops at behavior without claims-linked validation.⁷ Calculators are templates populated by employer assumptions, not validated multi-deployment outcomes. Result: strong behavioral documentation, no verified financial impact.`
+        },
+        {
+          id: "movespring",
+          name: "MoveSpring",
+          category: "Modular Platform",
+          stars: 2,
+          status: "In Review",
+          statusClass: "progress",
+          icon: "MS",
+          description: `MoveSpring centers on challenge-based engagement and was acquired by Reward Gateway (Mar 2022).⁸ Public materials emphasize participation and short-term behaviors, not longitudinal outcomes or independent ROI validation.`
+        },
+        {
+          id: "gojoe",
+          name: "GoJoe",
+          category: "Modular Platform",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "GJ",
+          description: `GoJoe emphasizes social connectivity and team challenges; partners include PwC, Deloitte, NatWest.⁹ Case studies highlight inclusion and social connection benefits.⁹ Evidence focuses on behavioral engagement and qualitative value, not verified financial outcomes.`
+        },
+        {
+          id: "vantagefit",
+          name: "Vantage Fit",
+          category: "Modular Platform",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "VF",
+          description: `Vantage Fit offers KPI dashboards across activity, sleep, and challenges.¹⁰ Strong measurement infrastructure for behaviors, but no claims-based modeling or independent ROI validation is published.`
+        },
+        {
+          id: "incentfit",
+          name: "IncentFit",
+          category: "Modular Platform",
+          stars: 2,
+          status: "In Review",
+          statusClass: "progress",
+          icon: "IF",
+          description: `IncentFit provides incentive infrastructure and calculators.¹¹ Evidence focuses on participation in incentivized actions; lacks proof of sustained behavior change, health outcomes, or independent financial validation.`
+        },
+        {
+          id: "forma",
+          name: "Forma",
+          category: "LSA Platform",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "FM",
+          description: `Forma differentiates via benefits design tools and conjoint-based value measurement.¹² Value measured as perceived benefit flexibility, not health outcomes or medical cost reduction—appropriate for LSA, outside wellness ROI proof.`
+        },
+        {
+          id: "uhc",
+          name: "UnitedHealthcare Motion/Rewards",
+          category: "Insurer Program",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "UH",
+          description: `Device-verified behavioral incentives with internal savings estimates (~$222).¹³ No external validation specific to these programs. Verified behavior ≠ verified ROI without independent actuarial analysis.`
+        },
+        {
+          id: "burnalong",
+          name: "Burnalong",
+          category: "Content Platform",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "BA",
+          description: `Content streaming for fitness and wellbeing.¹⁴ Measures utilization (views, completions) rather than behavior change, outcomes, or cost reduction.`
+        },
+        {
+          id: "compt",
+          name: "Compt",
+          category: "LSA Platform",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "CP",
+          description: `LSA infrastructure for flexible stipends.¹⁵ Metrics: utilization, satisfaction, admin efficiency—legitimate HR value, but not health outcomes or ROI validation.`
+        },
+        {
+          id: "benepass",
+          name: "Benepass",
+          category: "LSA Platform",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "BP",
+          description: `Benefits administration with LSA.¹⁶ ROI framed as utilization and admin efficiency; no health outcomes or independent financial validation.`
+        },
+        {
+          id: "espresa",
+          name: "Espresa",
+          category: "LSA Platform",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "ES",
+          description: `Culture benefits + LSA Plus.¹⁷ Focus on global delivery, ERG support, recognition, and experience metrics—outside claims-validated health ROI.`
+        },
+        {
+          id: "joon",
+          name: "JOON",
+          category: "LSA Platform",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "JO",
+          description: `Card-connected LSA with flexible merchant approvals.¹⁸ Measures spending activation and user experience; no published health outcomes or ROI validation.`
+        },
+        {
+          id: "ambetter",
+          name: "Ambetter My Health Pays",
+          category: "Insurer Program",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "AM",
+          description: `Task-completion rewards for preventive care.¹⁹ Measures completions and reward distribution; no program-specific outcomes or ROI validation published.`
+        },
+        {
+          id: "aetna",
+          name: "Aetna Better Health",
+          category: "Medicaid Program",
+          stars: 1,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "AE",
+          description: `State-specific Medicaid incentives for screenings and disease management.²⁰ Public docs show task-based incentives; outcomes and ROI validation not published.`
+        }
+      ];
 
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
-            
-            // Filter Logic
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const filterValue = btn.getAttribute('data-filter');
-                    
-                    dataRows.forEach(row => {
-                        const category = row.getAttribute('data-category');
-                        const stars = parseInt(row.getAttribute('data-stars'));
-                        let showRow = false;
-                        
-                        if (filterValue === 'all') {
-                            showRow = true;
-                        } else if (filterValue === '4stars') {
-                            if (stars === 4) showRow = true;
-                        } else {
-                            if (category === filterValue) showRow = true;
-                        }
-                        
-                        row.style.display = showRow ? 'table-row' : 'none';
-                        const detailRow = row.nextElementSibling;
-                        if (detailRow && detailRow.classList.contains('detail-row')) {
-                            row.classList.remove('expanded');
-                            detailRow.style.display = 'none';
-                            const detailContent = detailRow.querySelector('.detail-content');
-                            if(detailContent) detailContent.style.maxHeight = '0px';
-                        }
-                    });
-                });
-            });
-            
-            // Expandable Row Logic
-            dataRows.forEach(row => {
-                row.addEventListener('click', function() {
-                    const wasExpanded = this.classList.contains('expanded');
-                    
-                    // Close all other rows first
-                    dataRows.forEach(r => {
-                        r.classList.remove('expanded');
-                        const dr = r.nextElementSibling;
-                        if (dr && dr.classList.contains('detail-row')) {
-                            dr.style.display = 'none';
-                            const dc = dr.querySelector('.detail-content');
-                            if(dc) dc.style.maxHeight = '0px';
-                        }
-                    });
+      const tableBody = document.getElementById("platform-table-body");
+      const reportModalBody = document.querySelector("#reportModal .modal-body");
 
-                    // If it wasn't already open, open it
-                    if (!wasExpanded) {
-                        this.classList.add('expanded');
-                        const detailRow = this.nextElementSibling;
-                        const detailContent = detailRow.querySelector('.detail-content');
-                        if (detailRow && detailContent) {
-                            detailRow.style.display = 'table-row';
-                             setTimeout(() => {
-                               detailContent.style.maxHeight = detailContent.scrollHeight + "px";
-                            }, 10);
-                        }
-                    }
-                });
-            });
+      // Build table rows + details; build report modal content
+      let reportHTML = "";
+      platformData.forEach((p) => {
+        const dataRow = document.createElement("tr");
+        dataRow.classList.add("data-row");
+        dataRow.dataset.category = p.category;
+        dataRow.dataset.stars = p.stars;
+
+        let starsHTML = "";
+        for (let i = 1; i <= 5; i++) {
+          starsHTML += `<span class="star ${i > p.stars ? "empty" : ""}">★</span>`;
+        }
+
+        dataRow.innerHTML = `
+          <td>
+            <div class="platform-cell">
+              <span class="expand-icon" aria-hidden="true">▶</span>
+              <div class="platform-icon" aria-hidden="true">${p.icon}</div>
+              <div class="platform-details">
+                <div class="platform-name">${p.name}</div>
+                <div class="platform-category">${p.category}</div>
+              </div>
+            </div>
+          </td>
+          <td>${p.category}</td>
+          <td><div class="stars">${starsHTML}</div></td>
+          <td><span class="badge ${p.statusClass}">${p.status}</span></td>
+          <td style="color:#8f8071;font-size:0.85rem;">Oct 2025</td>
+        `;
+        tableBody.appendChild(dataRow);
+
+        const detailRow = document.createElement("tr");
+        detailRow.classList.add("detail-row");
+        detailRow.innerHTML = `
+          <td colspan="5" class="detail-cell">
+            <div class="detail-content">
+              <p>${p.description}</p>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(detailRow);
+
+        reportHTML += `<h3>${p.name} (${`★`.repeat(
+          p.stars
+        )}${`<span class="star empty">★</span>`.repeat(5 - p.stars)})</h3><p>${p.description}</p>`;
+      });
+
+      reportHTML += `
+        <h3>References</h3>
+        <ol class="references-list">
+          <li>Validation Institute. (2025). <em>Personify Health Validation Certifications</em>. https://validationinstitute.com</li>
+          <li>RAND Europe. (2018). <em>Incentives and Physical Activity: Assessment of Vitality's Active Rewards with Apple Watch Benefit</em> (RR-2870). https://www.rand.org/pubs/research_reports/RR2870.html</li>
+          <li>WebMD Health Services. (2025). <em>Health and Wellbeing Solutions Platform</em>. https://www.webmdhealthservices.com</li>
+          <li>Wellhub. (2025). <em>Return on Wellness Investment Study</em>. https://wellhub.com/en-us/resources</li>
+          <li>Humana. (2025). <em>Go365: Outcomes Analysis</em>. https://www.humana.com/go365</li>
+          <li>YuMuuv. (2025). <em>Case Studies</em>. https://yumuuv.com/case-studies</li>
+          <li>Wellable. (2025). <em>Workplace Wellness ROI Resources</em>. https://www.wellable.co/resources</li>
+          <li>Reward Gateway. (2022, Mar 22). <em>Acquires MoveSpring</em>. https://www.businesswire.com/news/home/20220322005255/en/Reward-Gateway-Acquires-MoveSpring</li>
+          <li>GoJoe. (2025). <em>Platform & Case Studies</em>. https://www.gojoe.com/us</li>
+          <li>Vantage Fit. (2025). <em>Corporate Wellness KPI Dashboard</em>. https://www.vantagefit.io</li>
+          <li>IncentFit. (2025). <em>Incentives ROI Resources</em>. https://www.incentfit.com/wellness-word</li>
+          <li>Forma. (2025). <em>Life Benefits ROI Calculator</em>. https://www.joinforma.com/life-benefits-roi-calculator</li>
+          <li>UnitedHealthcare. (2025). <em>Member Rewards/Motion</em>. https://www.uhc.com/member-resources</li>
+          <li>Burnalong. (2025). <em>On-Demand Wellness</em>. https://www.burnalong.com</li>
+          <li>Compt. (2025). <em>LSA Platform</em>. https://www.compt.io/resources</li>
+          <li>Benepass. (2025). <em>LSA Resources</em>. https://www.getbenepass.com</li>
+          <li>Espresa. (2025). <em>LSA Plus</em>. https://www.espresa.com/product/lsa-plus</li>
+          <li>JOON. (2025). <em>Card-Connected LSA</em>. https://joon.io</li>
+          <li>Ambetter Health. (2025). <em>My Health Pays</em>. https://www.ambetterhealth.com/programs-savings</li>
+          <li>Aetna Better Health. (2025). <em>Healthy Behaviors Incentives</em>. https://www.aetnabetterhealth.com</li>
+        </ol>
+      `;
+      reportModalBody.innerHTML = reportHTML;
+
+      // Modal logic
+      const modalTriggers = document.querySelectorAll(".js-modal-trigger");
+      const modals = document.querySelectorAll(".modal-overlay");
+      const closeButtons = document.querySelectorAll(".close-modal");
+
+      const openModal = (modalId) => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.classList.add("active");
+          document.body.classList.add("modal-open");
+        }
+      };
+      const closeModal = () => {
+        modals.forEach((m) => m.classList.remove("active"));
+        document.body.classList.remove("modal-open");
+      };
+
+      modalTriggers.forEach((t) => {
+        t.addEventListener("click", (e) => {
+          e.preventDefault();
+          openModal(t.dataset.modalId);
         });
-    </script>
+      });
+      closeButtons.forEach((b) => b.addEventListener("click", closeModal));
+      modals.forEach((m) =>
+        m.addEventListener("click", (e) => {
+          if (e.target === m) closeModal();
+        })
+      );
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+
+      // Filter logic
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const dataRows = document.querySelectorAll("tbody tr.data-row");
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const filterValue = btn.getAttribute("data-filter");
+
+          dataRows.forEach((row) => {
+            const category = row.getAttribute("data-category");
+            const stars = parseInt(row.getAttribute("data-stars"));
+            let showRow = false;
+
+            if (filterValue === "all") showRow = true;
+            else if (filterValue === "4stars") showRow = stars === 4;
+            else showRow = category === filterValue;
+
+            row.style.display = showRow ? "table-row" : "none";
+
+            const detailRow = row.nextElementSibling;
+            if (detailRow && detailRow.classList.contains("detail-row")) {
+              row.classList.remove("expanded");
+              detailRow.style.display = "none";
+              const detailContent = detailRow.querySelector(".detail-content");
+              if (detailContent) detailContent.style.maxHeight = "0px";
+            }
+          });
+        });
+      });
+
+      // Expandable rows
+      dataRows.forEach((row) => {
+        row.addEventListener("click", function () {
+          const wasExpanded = this.classList.contains("expanded");
+
+          // Close all
+          dataRows.forEach((r) => {
+            r.classList.remove("expanded");
+            const dr = r.nextElementSibling;
+            if (dr && dr.classList.contains("detail-row")) {
+              dr.style.display = "none";
+              const dc = dr.querySelector(".detail-content");
+              if (dc) dc.style.maxHeight = "0px";
+            }
+          });
+
+          // Open if not previously open
+          if (!wasExpanded) {
+            this.classList.add("expanded");
+            const detailRow = this.nextElementSibling;
+            const detailContent = detailRow.querySelector(".detail-content");
+            if (detailRow && detailContent) {
+              detailRow.style.display = "table-row";
+              setTimeout(() => {
+                detailContent.style.maxHeight =
+                  detailContent.scrollHeight + "px";
+              }, 10);
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
