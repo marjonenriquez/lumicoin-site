@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LümiCoin - One Health Score. Real-World Impact.</title>
-  <meta name="description" content="LümiCoin transforms your daily self-care into a meaningful currency. Proof of Care. Power to You.">
+  <title>LümiCoin - The Accountability System for Wellness ROI</title>
+  <meta name="description" content="LümiCoin is building the financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, Health Dividend API, and consumer app for verifiable health value.">
   <link rel="icon" href="/lumicoin-logo.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,39 +12,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 
-  <!-- Enhanced modal and page styles -->
   <style>
-    /* Modal enhancements */
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(26, 26, 26, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(26, 26, 26, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       animation: fadeIn 0.3s ease-out;
     }
-    
     .modal-content {
       background: var(--white);
       max-width: 420px;
       margin: 15vh auto 0;
       padding: var(--spacing-2xl);
       border-radius: var(--border-radius-lg);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
       position: relative;
       text-align: center;
       transform: translateY(20px);
       animation: slideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
-    
-    @keyframes slideUp {
-      to {
-        transform: translateY(0);
-      }
-    }
-    
+    @keyframes slideUp { to { transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal-close {
       position: absolute;
       top: var(--spacing-md);
@@ -62,32 +55,14 @@
       justify-content: center;
       transition: var(--transition-smooth);
     }
-    
     .modal-close:hover {
       background: var(--accent-peach);
       color: var(--accent-primary);
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
-    
-    .modal h2 {
-      font-size: 1.75rem;
-      margin-bottom: var(--spacing-sm);
-      color: var(--accent-primary);
-    }
-    
-    .modal p {
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-xl);
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    
-    #waitlist-form {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-md);
-    }
-    
+    .modal h2 { font-size: 1.75rem; margin-bottom: var(--spacing-sm); color: var(--accent-primary); }
+    .modal p { color: var(--text-secondary); margin-bottom: var(--spacing-xl); font-size: 1rem; line-height: 1.5; }
+    #waitlist-form { display: flex; flex-direction: column; gap: var(--spacing-md); }
     #waitlist-form input {
       width: 100%;
       padding: var(--spacing-md);
@@ -98,160 +73,98 @@
       transition: var(--transition-smooth);
       background: var(--surface-subtle);
     }
-    
-    #waitlist-form input:focus {
-      border-color: var(--accent-primary);
-      box-shadow: var(--shadow-input-focus);
-      background: var(--white);
-      outline: none;
-    }
-    
-    #waitlist-form button {
-      width: 100%;
-      padding: var(--spacing-md) var(--spacing-lg);
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    
-    #waitlist-message {
-      margin-top: var(--spacing-md);
-      font-size: 0.9rem;
-      font-weight: 500;
-      min-height: 1.2em;
-      padding: var(--spacing-sm);
-      border-radius: var(--border-radius-sm);
-      transition: var(--transition-smooth);
-    }
-    
-    #waitlist-message.success { 
-      color: var(--success); 
-      background: var(--success-light);
-    }
-    
-    #waitlist-message.error { 
-      color: var(--error); 
-      background: var(--error-light);
-    }
+    #waitlist-form input:focus { border-color: var(--accent-primary); box-shadow: var(--shadow-input-focus); background: var(--white); outline: none; }
+    #waitlist-form button { width: 100%; padding: var(--spacing-md) var(--spacing-lg); font-size: 1rem; font-weight: 600; }
+    #waitlist-message { margin-top: var(--spacing-md); font-size: 0.9rem; font-weight: 500; min-height: 1.2em; padding: var(--spacing-sm); border-radius: var(--border-radius-sm); transition: var(--transition-smooth); }
+    #waitlist-message.success { color: var(--success); background: var(--success-light); }
+    #waitlist-message.error { color: var(--error); background: var(--error-light); }
 
-    /* Enhanced hero section */
+    /* Hero */
     .hero-section {
-      padding-top: clamp(60px, 10vw, 120px);
-      padding-bottom: clamp(80px, 12vw, 140px);
+      padding: clamp(70px, 10vw, 130px) 0 clamp(90px, 12vw, 150px);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-    
     .hero-section::before {
       content: "";
       position: absolute;
-      width: 120%;
-      height: 120%;
-      top: -10%;
-      left: -10%;
-      background: radial-gradient(circle at 50% 40%, var(--accent-peach), transparent 70%);
+      width: 125%;
+      height: 125%;
+      top: -12%;
+      left: -12%;
+      background: radial-gradient(circle at 50% 38%, var(--accent-peach), transparent 68%);
       z-index: -1;
-      animation: gentlePulse 8s infinite alternate ease-in-out;
-      opacity: 0.6;
+      animation: gentlePulse 10s infinite alternate ease-in-out;
+      opacity: 0.65;
     }
-    
     @keyframes gentlePulse {
-      0% { opacity: 0.4; transform: scale(1) rotate(0deg); }
-      100% { opacity: 0.7; transform: scale(1.05) rotate(1deg); }
+      0% { opacity: 0.5; transform: scale(1) rotate(-0.5deg); }
+      100% { opacity: 0.75; transform: scale(1.06) rotate(0.8deg); }
     }
-    
     .hero-section h1 {
-      font-size: clamp(2.75rem, 7vw, 4rem);
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
       margin-bottom: var(--spacing-lg);
       max-width: 20ch;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
     }
-    
     .hero-section .subtitle {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(1.125rem, 3.5vw, 1.375rem);
+      font-size: clamp(1.15rem, 3.5vw, 1.4rem);
       font-weight: 400;
       color: var(--text-primary);
-      opacity: 0.9;
+      opacity: 0.92;
       margin-bottom: var(--spacing-2xl);
-      max-width: 52ch;
+      max-width: 58ch;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.55;
+      line-height: 1.6;
     }
-    
-    .hero-image-container {
-      margin: var(--spacing-2xl) auto;
-      max-width: 300px;
-      position: relative;
-      filter: drop-shadow(0 20px 40px rgba(203, 89, 7, 0.15));
-    }
-    
-    .hero-image {
-      width: 100%;
-      border-radius: var(--border-radius-lg);
-      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    
-    .hero-image-container:hover .hero-image {
-      transform: translateY(-8px) scale(1.02) rotate(1deg);
-    }
-    
-    .hero-image-container::after {
-      content: "";
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 20px;
-      background: radial-gradient(ellipse at center, rgba(203, 89, 7, 0.2), transparent 70%);
-      border-radius: 50%;
-      z-index: -1;
-      opacity: 0.5;
-      transition: var(--transition-smooth);
-    }
-    
-    .hero-image-container:hover::after {
-      width: 70%;
-      opacity: 0.7;
-      bottom: -24px;
-    }
-    
     .hero-cta-buttons {
       margin-top: var(--spacing-2xl);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--spacing-lg);
+      gap: var(--spacing-md);
     }
-    
     .hero-cta-buttons .btn {
       min-width: 280px;
-      padding: calc(var(--spacing-md) + 2px) var(--spacing-xl);
+      padding: calc(var(--spacing-md) + 3px) calc(var(--spacing-xl) + 4px);
       font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: 0.01em;
     }
-    
-    .hero-cta-buttons .secondary-link {
-      font-size: 1rem;
-      margin-top: var(--spacing-sm);
+    .btn.btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent-primary);
+      color: var(--accent-primary);
+      box-shadow: none;
     }
+    .btn.btn-secondary:hover { background: var(--accent-peach); box-shadow: var(--shadow-button); transform: translateY(-2px); }
+    .app-cta-group {
+      margin-top: var(--spacing-2xl);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-lg);
+      flex-wrap: wrap;
+    }
+    .app-cta-group .app-store-link { display: inline-block; transition: var(--transition-smooth); }
+    .app-cta-group .app-store-link:hover { transform: scale(1.05); }
+    .app-cta-group .secondary-link { font-size: 0.95rem; }
 
-    /* Enhanced why section */
-    .why-section {
-      background: linear-gradient(135deg, var(--surface-subtle), var(--white));
-      border-top: 1px solid var(--light-gray);
-      padding: clamp(80px, 12vw, 120px) 0;
+    /* Index Feature Section */
+    .index-section {
+      background: var(--white);
       text-align: center;
+      border-top: 1px solid var(--light-gray);
+      padding: clamp(90px, 12vw, 130px) 0;
       position: relative;
     }
-    
-    .why-section::before {
+    .index-section::before {
       content: "";
       position: absolute;
       top: 0;
@@ -259,203 +172,108 @@
       right: 0;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+      opacity: 0.6;
     }
-    
-    .why-section h2 {
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      margin-bottom: var(--spacing-xl); /* Space below "Why LümiCoin?" title */
-      color: var(--accent-primary);
-      position: relative;
-    }
-    
-    /* MODIFIED: Increased specificity to p.why-lead to override p:last-of-type */
-    p.why-lead {
-      font-size: clamp(1.125rem, 3vw, 1.25rem);
-      max-width: 55ch;
-      margin: 0 auto var(--spacing-3xl); /* Increased bottom margin for more space on desktop */
+    .index-section h2 { color: var(--accent-primary); font-size: clamp(2.3rem, 5.5vw, 3rem); margin-bottom: var(--spacing-md); }
+    .index-section .tagline {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      font-weight: 500;
       color: var(--text-primary);
-      line-height: 1.6;
-      font-weight: 400;
+      margin-bottom: var(--spacing-lg);
+      font-family: 'Space Grotesk', sans-serif;
     }
-    
-    .why-features.vertical {
-      list-style: none;
-      margin: 0 auto var(--spacing-2xl); /* Bottom margin for space below list block */
-      padding: 0;
-      max-width: 56ch;
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-lg); /* Reduced gap between individual feature list items on desktop */
-      text-align: left;
-    }
-    
-    .why-features.vertical li {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--spacing-lg); 
-      padding: var(--spacing-lg); 
-      background: var(--white);
-      border-radius: var(--border-radius-md);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: var(--transition-smooth);
-      border: 1px solid rgba(203, 89, 7, 0.1);
-    }
-    
-    .why-features.vertical li:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      border-color: rgba(203, 89, 7, 0.2);
-    }
-    
-    .why-icon {
-      font-size: 1.5rem; 
-      color: var(--accent-primary);
-      margin-top: 2px; 
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent-peach);
-      border-radius: 50%;
-      font-weight: 700; 
-    }
-    
-    .why-title {
-      display: block;
-      font-weight: 700;
+    .index-section .lead {
+      font-size: clamp(1.1rem, 3vw, 1.25rem);
+      max-width: 64ch;
+      margin: 0 auto var(--spacing-2xl);
       color: var(--text-primary);
-      margin-bottom: var(--spacing-xs); 
-      font-size: 1.125rem;
-      line-height: 1.3;
+      line-height: 1.65;
     }
+    .index-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-2xl); align-items: start; margin-top: var(--spacing-xl); }
+    .index-content { text-align: left; }
+    .index-content p { font-size: 1.05rem; line-height: 1.7; margin-bottom: var(--spacing-lg); }
+    .index-visual { background: var(--surface-subtle); border: 1px solid var(--light-gray); border-radius: var(--border-radius-lg); padding: var(--spacing-xl); box-shadow: var(--shadow-soft); }
+    .lumistars-graphic h4 { text-align: center; font-size: 1.05rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin: 0 0 var(--spacing-lg); }
+    .lumistars-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--spacing-md); }
+    .lumistars-item { display: flex; gap: var(--spacing-md); align-items: center; background: var(--white); padding: var(--spacing-sm) var(--spacing-md); border-radius: var(--border-radius-sm); border: 1px solid var(--light-gray); transition: var(--transition-smooth); }
+    .lumistars-item:hover { border-color: rgba(203, 89, 7, 0.3); transform: translateX(4px); }
+    .lumistars-item .stars { width: 110px; letter-spacing: 0.12em; font-size: 1.2rem; color: var(--accent-primary); flex-shrink: 0; }
+    .lumistars-item .stars .empty { color: #e5e7eb; opacity: 0.8; }
+    .lumistars-item .label { font-weight: 600; color: var(--text-primary); font-size: 0.95rem; }
     
-    .why-desc {
-      display: block;
-      color: var(--text-secondary);
-      font-weight: 400;
-      font-size: 1rem;
-      line-height: 1.5;
+    /* NEW: Image Section */
+    .image-feature-section {
+      padding: clamp(60px, 10vw, 100px) 0;
+      background: var(--bg-base);
     }
-    
-    .why-section .btn { 
-      margin-top: var(--spacing-xl); 
-      padding: var(--spacing-md) var(--spacing-2xl);
+    .image-feature-container {
+      max-width: 900px; /* Controls max width of image */
+      margin: 0 auto;
+      text-align: center;
     }
-
-    /* Enhanced responsive design */
-    @media (max-width: 768px) {
-      .modal-content {
-        margin: 10vh auto 0;
-        padding: var(--spacing-xl);
-        max-width: 90vw;
-      }
-      
-      .hero-section {
-        padding-top: clamp(40px, 8vw, 80px);
-        padding-bottom: clamp(60px, 10vw, 100px);
-      }
-      
-      .hero-image-container {
-        max-width: 260px;
-      }
-      
-      .hero-cta-buttons .btn {
-        min-width: 90%;
-        font-size: 1rem;
-      }
-      
-      /* MODIFIED: Increased specificity for responsive .why-lead */
-      p.why-lead {
-         margin: 0 auto var(--spacing-2xl); /* Reduce bottom margin on small screens */
-      }
-
-      .why-features.vertical {
-        max-width: 100%; 
-        gap: var(--spacing-xl); 
-      }
-      
-      .why-features.vertical li {
-        padding: var(--spacing-md);
-        gap: var(--spacing-md);
-      }
-      
-      .why-icon {
-        width: 24px;
-        height: 24px;
-        font-size: 1.25rem; 
-      }
-      
-      .why-title {
-        font-size: 1.05rem;
-      }
-      
-      .why-desc {
-        font-size: 0.95rem;
-      }
-    }
-    
-    @media (min-width: 769px) {
-      .hero-cta-buttons {
-        flex-direction: row;
-        justify-content: center;
-        gap: var(--spacing-xl);
-      }
-      
-      .hero-cta-buttons .secondary-link {
-        margin-top: 0;
-        align-self: center;
-      }
-    }
-
-    /* Micro-interactions and polish */
-    .btn {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .image-feature-container img {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.6s ease;
+      border-radius: var(--border-radius-lg);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin-bottom: var(--spacing-lg);
     }
-    
-    .btn:hover::before {
-      left: 100%;
+    .image-feature-container p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    /* Ecosystem Section */
+    .ecosystem-section { background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%); padding: clamp(90px, 12vw, 130px) 0; position: relative; }
+    .ecosystem-section::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent); opacity: 0.5; }
+    .ecosystem-section h2 { text-align: center; color: var(--accent-primary); font-size: clamp(2.3rem, 5.5vw, 3rem); margin: 0 0 var(--spacing-lg); }
+    .ecosystem-lead { text-align: center; max-width: 68ch; margin: 0 auto var(--spacing-3xl); font-size: clamp(1.125rem, 3vw, 1.3rem); line-height: 1.65; color: var(--text-primary); }
+    .ecosystem-grid { display: grid; gap: var(--spacing-xl); grid-template-columns: 1fr; }
+    .ecosystem-card { background: var(--white); border: 1px solid var(--light-gray); border-radius: var(--border-radius-lg); padding: var(--spacing-xl); transition: var(--transition-smooth); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); }
+    .ecosystem-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1); border-color: rgba(203, 89, 7, 0.25); }
+    .card-header { display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-md); }
+    .card-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--border-radius-md); background: var(--accent-peach); color: var(--accent-primary); font-size: 1.5rem; flex-shrink: 0; }
+    .ecosystem-card h3 { margin: 0; color: var(--text-primary); font-size: 1.4rem; }
+    .ecosystem-card p { margin: 0 0 var(--spacing-lg); color: var(--text-secondary); line-height: 1.6; }
+    .card-link { font-weight: 600; display: inline-block; transition: var(--transition-smooth); }
+    .card-link:hover { color: var(--accent-primary-dark); }
+
+    /* Button enhancements & Animations */
+    .btn { position: relative; overflow: hidden; }
+    .btn::before { content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent); transition: left 0.6s ease; }
+    .btn:hover::before { left: 100%; }
+    .hero-section, .index-section, .ecosystem-section, .image-feature-section { animation: fadeInUp 0.9s ease-out; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    .ecosystem-card, .lumistars-item { animation: fadeInUp 0.7s ease-out both; }
+    .ecosystem-grid .ecosystem-card:nth-child(1) { animation-delay: 0.1s; }
+    .ecosystem-grid .ecosystem-card:nth-child(2) { animation-delay: 0.2s; }
+    .ecosystem-grid .ecosystem-card:nth-child(3) { animation-delay: 0.3s; }
+    .lumistars-list .lumistars-item:nth-child(1) { animation-delay: 0.1s; }
+    .lumistars-list .lumistars-item:nth-child(2) { animation-delay: 0.15s; }
+    .lumistars-list .lumistars-item:nth-child(3) { animation-delay: 0.2s; }
+    .lumistars-list .lumistars-item:nth-child(4) { animation-delay: 0.25s; }
+    .lumistars-list .lumistars-item:nth-child(5) { animation-delay: 0.3s; }
     
-    /* Smooth loading animation */
-    .hero-section, .why-section {
-      animation: fadeInUp 0.8s ease-out;
+    /* Responsive Grids */
+    @media (min-width: 769px) {
+      .hero-cta-buttons { flex-direction: row; justify-content: center; gap: var(--spacing-xl); }
     }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @media (min-width: 992px) {
+      .index-grid { grid-template-columns: 1.15fr 1fr; gap: var(--spacing-3xl); }
+      .ecosystem-grid { grid-template-columns: repeat(3, 1fr); }
     }
-    
-    .why-features.vertical li {
-      animation: fadeInUp 0.6s ease-out;
-      animation-fill-mode: both;
+    @media (max-width: 991px) {
+      .index-content { text-align: center; }
+      .index-content p { margin-left: auto; margin-right: auto; }
     }
-    
-    .why-features.vertical li:nth-child(1) { animation-delay: 0.1s; }
-    .why-features.vertical li:nth-child(2) { animation-delay: 0.2s; }
-    .why-features.vertical li:nth-child(3) { animation-delay: 0.3s; }
-    .why-features.vertical li:nth-child(4) { animation-delay: 0.4s; }
+    @media (max-width: 768px) {
+      .modal-content { margin: 10vh auto 0; padding: var(--spacing-xl); max-width: 90vw; }
+      .hero-cta-buttons .btn { min-width: 90%; font-size: 1rem; }
+    }
   </style>
+
 </head>
 <body>
 
@@ -473,10 +291,10 @@
       <nav class="main-nav" id="mainNav">
         <ul>
           <li><a href="/" class="active">Home</a></li>
+          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
+          <li><a href="#ecosystem">Ecosystem</a></li>
           <li><a href="/manifesto/">Manifesto</a></li>
           <li><a href="/support/">Support</a></li>
-          <li><a href="/terms/">Terms</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
       <div class="nav-overlay"></div>
@@ -486,63 +304,107 @@
   <main>
     <section class="hero-section">
       <div class="container">
-        <h1>Self-care that gives back.</h1>
-        <p class="subtitle">LümiCoin turns your healthy habits—like steps, sleep, and drinking water—into real-life impact for you and for others. Every day you care for yourself, you help fund clean water for someone in need.</p>
-
-        <div class="hero-image-container">
-          <img src="/lumicoin-coin.png" alt="LümiCoin – Proof of Care visualization" class="hero-image">
+        <h1>The Accountability System for Wellness ROI</h1>
+        <p class="subtitle">LümiCoin is a new economic operating system for health. We provide the infrastructure to make the value of prevention visible, verifiable, and transactable for everyone.</p>
+        
+        <div class="hero-cta-buttons">
+          <a href="/wellness-roi-transparency-index/" class="btn">Explore The Index</a>
+          <a href="#ecosystem" class="btn btn-secondary">Learn About the Protocol</a>
         </div>
 
-        <div class="hero-cta-buttons">
-          <a href="https://apps.apple.com/us/app/l%C3%BCmicoin/id6744044814"
-             class="btn" target="_blank" rel="noopener noreferrer">
-            Download on the App Store
+        <div class="app-cta-group">
+          <a href="https://apps.apple.com/us/app/l%C3%BCmicoin/id6744044814" class="app-store-link" target="_blank" rel="noopener noreferrer">
+            <img src="https://tools.applemediaservices.com/api/v1/default/en-us/black/app-store-button.svg" alt="Download on the App Store" height="44">
           </a>
-          <a href="#" id="openWaitlistModal" class="secondary-link">
-            Join Android waitlist
-          </a>
+          <a href="#" id="openWaitlistModal" class="secondary-link">Join Android waitlist</a>
         </div>
       </div>
     </section>
 
-    <section class="page-section why-section">
+    <section class="page-section index-section">
       <div class="container">
-        <h2>Why LümiCoin?</h2>
-        <p class="why-lead">
-          Self-care feels hard when the world feels heavy. But with LümiCoin, your small daily habits—like steps,
-          sleep, and hydration—turn into real hope for you and clean water for someone else.
-        </p>
-        <ul class="why-features vertical">
-          <li>
-            <span class="why-icon">✓</span>
-            <div>
-              <span class="why-title">Feel burnt out, but want to make a difference?</span>
-              <span class="why-desc">Every healthy action helps you and supports others in need.</span>
+        <h2>The Wellness ROI Transparency Index</h2>
+        <p class="tagline">The First Independent Standard for Wellness Value</p>
+        <p class="lead">In the $34B corporate wellness market, 94% of CFOs cannot prove ROI. We are ending the era of unmeasurable spending with an independent standard for verifying financial impact.</p>
+        
+        <div class="index-grid">
+          <div class="index-content">
+            <p>The Index grades wellness platforms using our proprietary <strong>LümiStars methodology</strong>. This is a hierarchy of evidence that separates marketing claims from measurable outcomes.</p>
+            <p>From simple engagement metrics to the new gold standard of <strong>Causal & Auditable ROI</strong>, we provide the clarity that CFOs and benefits leaders need to make sound investments in their people.</p>
+            <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings & Methodology</a>
+          </div>
+          
+          <div class="index-visual">
+            <div class="lumistars-graphic">
+              <h4>The LümiStars Hierarchy</h4>
+              <ul class="lumistars-list">
+                <li class="lumistars-item">
+                  <div class="stars">★<span class="empty">★★★★</span></div>
+                  <div class="label">Engagement</div>
+                </li>
+                <li class="lumistars-item">
+                  <div class="stars">★★<span class="empty">★★★</span></div>
+                  <div class="label">Behavioral</div>
+                </li>
+                <li class="lumistars-item">
+                  <div class="stars">★★★<span class="empty">★★</span></div>
+                  <div class="label">Modeled ROI</div>
+                </li>
+                <li class="lumistars-item">
+                  <div class="stars">★★★★<span class="empty">★</span></div>
+                  <div class="label">Validated ROI</div>
+                </li>
+                <li class="lumistars-item">
+                  <div class="stars">★★★★★</div>
+                  <div class="label">Causal & Auditable ROI</div>
+                </li>
+              </ul>
             </div>
-          </li>
-          <li>
-            <span class="why-icon">✓</span>
-            <div>
-              <span class="why-title">One simple health score.</span>
-              <span class="why-desc">No confusing stats—just real progress you can see.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section image-feature-section">
+        <div class="container image-feature-container">
+            <img src="happypeople.png" alt="Diverse groups of people enjoying healthy and happy lives.">
+            <p>Behind our technology and research is a simple goal: to build a world where the daily work of staying healthy is recognized, rewarded, and creates a ripple effect of well-being for everyone.</p>
+        </div>
+    </section>
+
+    <section id="ecosystem" class="page-section ecosystem-section">
+      <div class="container">
+        <h2>The LümiCoin Ecosystem</h2>
+        <p class="ecosystem-lead">The current system profits from sickness. We are building the infrastructure to make health a compensated asset. Our ecosystem makes this value visible and transactable.</p>
+        
+        <div class="ecosystem-grid">
+          <div class="ecosystem-card">
+            <div class="card-header">
+              <div class="card-icon">📱</div>
+              <h3>The App</h3>
             </div>
-          </li>
-          <li>
-            <span class="why-icon">✓</span>
-            <div>
-              <span class="why-title">Instant impact.</span>
-              <span class="why-desc">Watch your Coins fund clean water for families in crisis, powered by UNICEF.</span>
+            <p>Your proof engine. The LümiCoin app transforms your daily health habits into a verifiable asset with real-world impact. Currently live on the iOS App Store.</p>
+            <a href="https://apps.apple.com/us/app/l%C3%BCmicoin/id6744044814" class="card-link" target="_blank" rel="noopener noreferrer">Download on the App Store →</a>
+          </div>
+          
+          <div class="ecosystem-card">
+            <div class="card-header">
+              <div class="card-icon">📊</div>
+              <h3>The Research</h3>
             </div>
-          </li>
-          <li>
-            <span class="why-icon">✓</span>
-            <div>
-              <span class="why-title">Modern, ethical wellness.</span>
-              <span class="why-desc">Premium-only, ad-free, and privacy-first. Your data stays yours.</span>
+            <p>Our independent research, led by the Transparency Index, provides the public standards needed to bring accountability to the entire wellness industry.</p>
+            <a href="/wellness-roi-transparency-index/" class="card-link">Explore the Index →</a>
+          </div>
+          
+          <div class="ecosystem-card">
+            <div class="card-header">
+              <div class="card-icon">⚡</div>
+              <h3>The API</h3>
             </div>
-          </li>
-        </ul>
-        <a href="/manifesto/" class="btn">Read Our Manifesto</a>
+            <p>The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal & Auditable ROI, the new gold standard for healthcare value.</p>
+            <a href="mailto:partnerships@lumicoin.app" class="card-link">Partner With Us →</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -552,6 +414,7 @@
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
+          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
           <li><a href="/manifesto/">Manifesto</a></li>
           <li><a href="/support/">Support</a></li>
           <li><a href="/terms/">Terms</a></li>
@@ -562,7 +425,6 @@
     </div>
   </footer>
 
-  <!-- Android Waitlist Modal -->
   <div id="androidWaitlistModal" class="modal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="waitlist-title">
       <button class="modal-close" aria-label="Close">×</button>
@@ -577,7 +439,6 @@
     </div>
   </div>
 
-  <!-- Core scripts -->
   <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     const navToggle  = document.querySelector('.nav-toggle');
@@ -593,17 +454,23 @@
 
     navToggle.addEventListener('click', toggleNav);
     if (navOverlay) navOverlay.addEventListener('click', toggleNav);
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
 
-  <!-- Firebase + modal logic -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getFirestore, collection, addDoc, serverTimestamp }
       from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-    // Firebase config
     const firebaseConfig = {
-      apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA", // This is a placeholder, replace with your actual API key if needed
+      apiKey: "AIzaSyBVPscqU52s78PneWpDRxk9K-5cmfj0eA",
       authDomain: "lumi-qp.firebaseapp.com",
       projectId: "lumi-qp",
       storageBucket: "lumi-qp.appspot.com",
@@ -624,14 +491,14 @@
     const submitBtn  = form.querySelector('button[type="submit"]');
 
     function toggleModal(show) {
-      modal.style.display        = show ? 'block' : 'none';
+      modal.style.display = show ? 'block' : 'none';
       modal.setAttribute('aria-hidden', show ? 'false' : 'true');
       if (show) {
         setTimeout(() => emailInput.focus(), 100);
       } else {
         form.reset();
         msg.textContent = '';
-        msg.className   = '';
+        msg.className = '';
       }
     }
 
@@ -645,22 +512,15 @@
       const email = emailInput.value.trim().toLowerCase();
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
-      if (!email) {
-        msg.textContent = 'Please enter your email address.';
-        msg.className   = 'error';
-        emailInput.focus();
-        return;
-      }
-      
-      if (!re.test(email)) {
+      if (!email || !re.test(email)) {
         msg.textContent = 'Please enter a valid email.';
-        msg.className   = 'error';
+        msg.className = 'error';
         emailInput.focus();
         return;
       }
       
       msg.textContent = 'Submitting…';
-      msg.className   = '';
+      msg.className = '';
       submitBtn.disabled = true;
       
       try {
@@ -669,12 +529,12 @@
           submittedAt: serverTimestamp()
         });
         msg.textContent = '✅ You\'re on the list!';
-        msg.className   = 'success';
+        msg.className = 'success';
         setTimeout(() => toggleModal(false), 2500);
       } catch (err) {
         console.error(err);
         msg.textContent = 'Error – please try again later.';
-        msg.className   = 'error';
+        msg.className = 'error';
       } finally {
         submitBtn.disabled = false;
       }
