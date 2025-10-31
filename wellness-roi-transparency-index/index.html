@@ -239,11 +239,20 @@
       transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
         padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    tr.data-row.expanded + tr.detail-row .detail-content {
+      padding: 24px 40px;
+    }
     .detail-content p {
       font-size: calc(0.95rem + 1pt);
       line-height: 1.8;
       color: var(--text-medium);
       max-width: 900px;
+      overflow-wrap: break-word;
+    }
+    .detail-content sup {
+      vertical-align: super;
+      font-size: 0.75em;
+      line-height: 0;
     }
     .detail-content strong {
       color: var(--text-dark);
