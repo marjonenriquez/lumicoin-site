@@ -71,7 +71,7 @@
       border: 1px solid var(--primary-light);
       padding: 8px 20px;
       border-radius: 30px;
-      font-size: 0.75rem;
+      font-size: calc(0.75rem + 1pt);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1.5px;
@@ -79,14 +79,14 @@
       margin-bottom: 24px;
     }
     h1 {
-      font-size: 3.5rem;
+      font-size: calc(3.5rem + 1pt);
       font-weight: 700;
       color: var(--primary-color);
       margin-bottom: 20px;
       letter-spacing: -1px;
     }
     .subtitle {
-      font-size: 1.25rem;
+      font-size: calc(1.25rem + 1pt);
       color: var(--text-light);
       max-width: 900px;
       margin: 0 auto 40px;
@@ -101,7 +101,7 @@
       border-radius: 8px;
       max-width: 1000px;
       margin: 0 auto 50px;
-      font-size: 1.1rem;
+      font-size: calc(1.1rem + 1pt);
       color: var(--primary-color);
       line-height: 1.8;
       font-family: "Space Grotesk", sans-serif;
@@ -128,7 +128,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
     .stat-label {
-      font-size: 0.8rem;
+      font-size: calc(0.8rem + 1pt);
       text-transform: uppercase;
       letter-spacing: 1.2px;
       color: var(--text-light);
@@ -136,13 +136,13 @@
       font-weight: 600;
     }
     .stat-value {
-      font-size: 2.75rem;
+      font-size: calc(2.75rem + 1pt);
       font-weight: 700;
       color: var(--primary-color);
       font-variant-numeric: tabular-nums;
     }
     .stat-sublabel {
-      font-size: 0.75rem;
+      font-size: calc(0.75rem + 1pt);
       color: #a99a8c;
       margin-top: 4px;
     }
@@ -163,7 +163,7 @@
       border: 1px solid var(--bg-dark);
       border-radius: 24px;
       color: var(--text-light);
-      font-size: 0.85rem;
+      font-size: calc(0.85rem + 1pt);
       font-weight: 500;
       cursor: pointer;
       transition: all 0.25s ease;
@@ -198,7 +198,7 @@
       padding: 20px 16px;
       text-align: left;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: calc(0.8rem + 1pt);
       text-transform: uppercase;
       letter-spacing: 1.2px;
       color: var(--primary-color);
@@ -221,7 +221,7 @@
     }
     td {
       padding: 20px 16px;
-      font-size: 0.9rem;
+      font-size: calc(0.9rem + 1pt);
       vertical-align: middle;
     }
 
@@ -240,7 +240,7 @@
         padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .detail-content p {
-      font-size: 0.95rem;
+      font-size: calc(0.95rem + 1pt);
       line-height: 1.8;
       color: var(--text-medium);
       max-width: 900px;
@@ -280,18 +280,18 @@
       justify-content: center;
       font-weight: 700;
       color: var(--bg-light);
-      font-size: 0.9rem;
+      font-size: calc(0.9rem + 1pt);
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(203, 89, 7, 0.2);
     }
     .platform-name {
       font-weight: 600;
       color: var(--text-dark);
-      font-size: 0.95rem;
+      font-size: calc(0.95rem + 1pt);
       margin-bottom: 4px;
     }
     .platform-category {
-      font-size: 0.75rem;
+      font-size: calc(0.75rem + 1pt);
       color: var(--text-light);
       font-weight: 500;
     }
@@ -299,7 +299,7 @@
     .stars {
       display: flex;
       gap: 3px;
-      font-size: 1.1rem;
+      font-size: calc(1.1rem + 1pt);
     }
     .star {
       color: var(--primary-light);
@@ -314,7 +314,7 @@
       gap: 6px;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.75rem;
+      font-size: calc(0.75rem + 1pt);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -327,9 +327,9 @@
       animation: glow 2s ease-in-out infinite;
     }
     .badge.progress {
-      background: rgba(37, 99, 235, 0.1);
-      color: var(--progress-color);
-      border: 1px solid rgba(37, 99, 235, 0.3);
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--success-color);
+      border: 1px solid rgba(22, 163, 74, 0.3);
     }
     .badge.not-verified {
       background: var(--bg-dark);
@@ -346,7 +346,7 @@
       max-width: 1100px;
     }
     .legend-box h3 {
-      font-size: 1rem;
+      font-size: calc(1rem + 1pt);
       font-weight: 600;
       color: var(--primary-color);
       margin-bottom: 16px;
@@ -358,14 +358,14 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 16px;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem + 1pt);
     }
     .legend-item {
       text-align: center;
     }
     .legend-item .stars {
       justify-content: center;
-      font-size: 1rem;
+      font-size: calc(1rem + 1pt);
       margin-bottom: 4px;
     }
     .legend-item-label {
@@ -376,7 +376,7 @@
     .legend-item-desc {
       color: var(--text-light);
       line-height: 1.4;
-      font-size: 0.8rem;
+      font-size: calc(0.8rem + 1pt);
     }
 
     .footer-section {
@@ -395,13 +395,13 @@
       padding: 48px 40px;
     }
     .cta-title {
-      font-size: 1.75rem;
+      font-size: calc(1.75rem + 1pt);
       font-weight: 700;
       color: var(--primary-color);
       margin-bottom: 16px;
     }
     .cta-text {
-      font-size: 1.05rem;
+      font-size: calc(1.05rem + 1pt);
       color: var(--text-medium);
       margin-bottom: 32px;
       line-height: 1.7;
@@ -415,7 +415,7 @@
     .btn {
       padding: 14px 32px;
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: calc(0.95rem + 1pt);
       font-weight: 600;
       text-decoration: none;
       transition: all 0.3s ease;
@@ -446,7 +446,7 @@
     .disclaimer {
       text-align: center;
       margin-top: 40px;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem + 1pt);
       color: var(--text-light);
       max-width: 800px;
       margin-left: auto;
@@ -497,13 +497,13 @@
       flex-shrink: 0;
     }
     .modal-header h2 {
-      font-size: 1.75rem;
+      font-size: calc(1.75rem + 1pt);
       font-weight: 700;
       color: var(--primary-color);
       margin-bottom: 8px;
     }
     .modal-header p {
-      font-size: 0.95rem;
+      font-size: calc(0.95rem + 1pt);
       color: var(--text-medium);
     }
     .modal-body {
@@ -526,7 +526,7 @@
       background: var(--primary-color);
     }
     .modal-body h3 {
-      font-size: 1.25rem;
+      font-size: calc(1.25rem + 1pt);
       font-weight: 600;
       color: var(--text-dark);
       margin-top: 32px;
@@ -535,7 +535,7 @@
       padding-left: 12px;
     }
     .modal-body h4 {
-      font-size: 1.1rem;
+      font-size: calc(1.1rem + 1pt);
       font-weight: 600;
       color: var(--primary-color);
       margin-top: 24px;
@@ -543,7 +543,7 @@
     }
     .modal-body p,
     .modal-body li {
-      font-size: 0.95rem;
+      font-size: calc(0.95rem + 1pt);
       line-height: 1.7;
       color: var(--text-medium);
       margin-bottom: 16px;
@@ -562,7 +562,7 @@
       left: 0;
       color: var(--primary-color);
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: calc(1.2rem + 1pt);
       line-height: 1;
     }
     .modal-body sup {
@@ -580,7 +580,7 @@
       padding-left: 3em;
       text-indent: -3em;
       margin-bottom: 1em;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem + 1pt);
       color: var(--text-light);
       word-break: break-word;
     }
@@ -598,7 +598,7 @@
       padding: 2px 6px;
       border-radius: 4px;
       font-family: "SF Mono", "Fira Code", monospace;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem + 1pt);
     }
     .close-modal {
       position: absolute;
@@ -613,7 +613,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: calc(1.8rem + 1pt);
       color: var(--text-light);
       transition: all 0.2s ease;
       line-height: 1;
@@ -654,15 +654,15 @@
 
     @media (max-width: 1024px) {
       h1 {
-        font-size: 2.5rem;
+        font-size: calc(2.5rem + 1pt);
       }
       .subtitle {
-        font-size: 1.1rem;
+        font-size: calc(1.1rem + 1pt);
       }
       th,
       td {
         padding: 16px 12px;
-        font-size: 0.85rem;
+        font-size: calc(0.85rem + 1pt);
       }
       .legend-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -670,10 +670,10 @@
     }
     @media (max-width: 768px) {
       h1 {
-        font-size: 2rem;
+        font-size: calc(2rem + 1pt);
       }
       .subtitle {
-        font-size: 1rem;
+        font-size: calc(1rem + 1pt);
       }
       .hero {
         padding: 40px 16px 32px;
@@ -686,7 +686,7 @@
         gap: 12px;
       }
       .stat-value {
-        font-size: 2.25rem;
+        font-size: calc(2.25rem + 1pt);
       }
       .table-container {
         overflow-x: auto;
@@ -839,7 +839,7 @@
           style="
             text-align: center;
             margin-top: 20px;
-            font-size: 0.8rem;
+            font-size: calc(0.8rem + 1pt);
             color: var(--text-light);
           "
         >
@@ -1279,7 +1279,7 @@
           <td>${p.category}</td>
           <td><div class="stars">${starsHTML}</div></td>
           <td><span class="badge ${p.statusClass}">${p.status}</span></td>
-          <td style="color:#8f8071;font-size:0.85rem;">Oct 2025</td>
+          <td style="color:#8f8071;font-size:calc(0.85rem + 1pt);">Oct 2025</td>
         `;
         tableBody.appendChild(dataRow);
 
