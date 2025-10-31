@@ -24,6 +24,7 @@
       --text-medium: #5c4f43;
       --text-light: #8f8071;
       --success-color: #16a34a;
+      --danger-color: #dc2626;
       --pending-color: #d97706;
       --progress-color: #2563eb;
     }
@@ -293,6 +294,14 @@
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(203, 89, 7, 0.2);
     }
+    .platform-icon.progress {
+      background: linear-gradient(135deg, #4ade80 0%, var(--success-color) 100%);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+    }
+    .platform-icon.not-verified {
+      background: linear-gradient(135deg, #f87171 0%, var(--danger-color) 100%);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
     .platform-name {
       font-weight: 600;
       color: var(--text-dark);
@@ -341,9 +350,9 @@
       border: 1px solid rgba(22, 163, 74, 0.3);
     }
     .badge.not-verified {
-      background: var(--bg-dark);
-      color: var(--text-light);
-      border: 1px solid #ede6da;
+      background: rgba(220, 38, 38, 0.1);
+      color: var(--danger-color);
+      border: 1px solid rgba(220, 38, 38, 0.3);
     }
 
     .legend-box {
@@ -1298,7 +1307,7 @@
           <td>
             <div class="platform-cell">
               <span class="expand-icon" aria-hidden="true">▶</span>
-              <div class="platform-icon" aria-hidden="true">${p.icon}</div>
+              <div class="platform-icon ${p.statusClass}" aria-hidden="true">${p.icon}</div>
               <div class="platform-details">
                 <div class="platform-name">${p.name}</div>
                 <div class="platform-category">${p.location}</div>
