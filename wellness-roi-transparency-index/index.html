@@ -298,10 +298,6 @@
       background: linear-gradient(135deg, #4ade80 0%, var(--success-color) 100%);
       box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
     }
-    .platform-icon.not-verified {
-      background: linear-gradient(135deg, #f87171 0%, var(--danger-color) 100%);
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
     .platform-name {
       font-weight: 600;
       color: var(--text-dark);
@@ -1236,8 +1232,8 @@
           category: "LSA Platform",
           location: "New York, NY, USA",
           stars: 1,
-          status: "Active Discussions",
-          statusClass: "progress",
+          status: "Not Verified",
+          statusClass: "not-verified",
           icon: "BP",
           description: `Benefits administration with LSA.¹⁶ ROI framed as utilization and admin efficiency; no health outcomes or independent financial validation.`
         },
@@ -1302,12 +1298,15 @@
         for (let i = 1; i <= 5; i++) {
           starsHTML += `<span class="star ${i > p.stars ? "empty" : ""}">★</span>`;
         }
+        
+        // Determine the class for the icon based on status
+        const iconClass = p.statusClass === 'progress' ? 'progress' : '';
 
         dataRow.innerHTML = `
           <td>
             <div class="platform-cell">
               <span class="expand-icon" aria-hidden="true">▶</span>
-              <div class="platform-icon ${p.statusClass}" aria-hidden="true">${p.icon}</div>
+              <div class="platform-icon ${iconClass}" aria-hidden="true">${p.icon}</div>
               <div class="platform-details">
                 <div class="platform-name">${p.name}</div>
                 <div class="platform-category">${p.location}</div>
