@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BioCapital Dashboard</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root{
+      /* Brand + semantic */
+      --brand:#CB5907;
+      --good:#10B981;
+      --warn:#F59E0B;
+      --bad:#EF4444;
+
+      /* Neutrals */
+      --bg:#FFF8F2;
+      --surface:#FFFFFF;
+      --text:#1A1A1A;
+      --muted:#666;
+      --muted-2:#8B8B8B;
+      --border:#EFE7E0;
+
+      /* Shape + shadow */
+      --radius-lg:16px;
+      --radius-xl:20px;
+      --shadow-sm:0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md:0 6px 18px rgba(0,0,0,0.08);
+      --shadow-lg:0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+    body{
+      font-family:"Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 480px at -10% 8%, #FFF1E7 0%, transparent 55%),
+        radial-gradient(1100px 520px at 92% -8%, #FFE7D3 0%, transparent 60%),
+        var(--bg);
+      min-height:100vh;
+      line-height:1.5;
+      padding:2rem 1.25rem;
+      letter-spacing:0.1px;
+    }
+
+    .container{max-width:1200px;margin:0 auto}
+
+    /* Header */
+    .main-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:1.5rem;
+    }
+    .header-left{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+    h1{
+      font-size:clamp(1.9rem,2.8vw,2.4rem);
+      font-weight:700;
+      color:var(--brand);
+      letter-spacing:0.2px;
+      margin:0;
+    }
+    .sync{
+      display:inline-flex;align-items:center;gap:.5rem;
+      margin-top:.35rem; padding:.2rem .6rem;
+      font-size:.85rem;color:var(--muted);
+      background:rgba(255,255,255,0.7);
+      border:1px solid var(--border);
+      border-radius:999px;box-shadow:var(--shadow-sm);
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:linear-gradient(#34D399,#059669);
+      box-shadow:0 0 0 2px rgba(16,185,129,0.15);
+      animation:pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(0.85);opacity:.75}}
+
+    /* Tabs (top right) */
+    .tabs{
+      position:relative;display:flex;gap:0;
+      background:#fff;border:1px solid var(--border);border-radius:999px;
+      box-shadow:var(--shadow-sm);padding:4px;width:fit-content;
+    }
+    .tab{
+      position:relative;z-index:1;padding:.6rem 1.25rem;cursor:pointer;
+      font-weight:600;color:#4a4a4a;border-radius:999px;user-select:none;
+      transition:color .25s ease, transform .2s ease;
+    }
+    .tab:hover{color:#1f1f1f;transform:translateY(-1px)}
+    .tab.active{color:#000}
+    .tab-indicator{
+      position:absolute;inset:4px auto 4px 4px;width:0;border-radius:999px;
+      background:linear-gradient(180deg,#FCEFE4,#FFE6D2);
+      box-shadow:inset 0 0 0 1px #F3D8C6, var(--shadow-sm);
+      transition:transform .25s cubic-bezier(.2,.8,.2,1), width .25s cubic-bezier(.2,.8,.2,1);
+    }
+    
+    /* Highlights row */
+    .highlights{
+      display:flex;
+      justify-content:center;
+      gap:1rem;
+      margin-top:.5rem;          /* tad of space above the 3-card row */
+      margin-bottom:2rem;
+      flex-wrap:wrap;
+    }
+    .highlights::after{          /* clean divider before the main 4-card section */
+      content:"";
+      flex-basis:100%;
+      height:1px;
+      background:var(--border);
+      margin:1rem 0 0;           /* equidistant feel vs. grid’s top gap */
+    }
+    .highlight-card{
+      background:linear-gradient(180deg,#fff,#FFF5EB);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:1rem 1.1rem;
+      box-shadow:var(--shadow-md);
+      text-align:center;
+      flex: 0 1 260px;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .highlight-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:rgba(203,89,7,0.22)}
+    .highlight-label{
+      font-size:.95rem;
+      color:#444;
+    }
+    .highlight-value{
+      font-size:2rem;            /* larger middle numbers */
+      font-weight:800;
+      color:var(--brand);
+      letter-spacing:-0.02em;
+    }
+    .highlight-value.good{ color: var(--good); }
+    .highlight-value.warn{ color: var(--warn); }
+    .highlight-sub{
+      font-size:.85rem;
+      color:#777;
+    }
+
+    /* Content grid */
+    .content{display:none;animation:fadeIn .28s ease forwards}
+    .content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .grid{display:grid;gap:1.1rem;grid-template-columns:repeat(12,1fr)}
+    .grid > .card{grid-column:span 6}
+    @media (max-width: 1024px){.grid > .card{grid-column:span 12}}
+
+    /* Card */
+    .card{
+      position:relative;background:rgba(255,255,255,0.95);
+      backdrop-filter:saturate(1.05) blur(2px);
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      padding:1.15rem 1.15rem .95rem;
+      box-shadow:var(--shadow-md);
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      display: flex; flex-direction: column;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(203,89,7,0.22)}
+
+    .card-header{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.25rem;
+    }
+    .card-title{font-size:1.03rem;font-weight:600;color:#141414;letter-spacing:.1px}
+
+    .info{position:relative;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+      width:22px;height:22px;border-radius:999px;background:#F4F4F4;color:#555;font-size:.8rem;font-weight:700;cursor:help;
+      border:1px solid #EAEAEA;transition: background .2s ease, transform .2s ease;}
+    .info::before{content:"?";line-height:1}
+    .info:hover{transform:scale(1.06);background:#eaeaea}
+    .tooltip{
+      position:absolute;top:calc(100% + .5rem);right:0;z-index:10;width:min(340px,80vw);
+      background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-lg);
+      border-radius:12px;padding:.9rem;color:#1a1a1a;font-size:.9rem;font-weight:400;line-height:1.55;
+      opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .15s ease, transform .15s ease;
+    }
+    .tooltip strong{color:var(--brand);font-weight:600}
+    .tooltip::after{content:"";position:absolute;top:-6px;right:12px;width:10px;height:10px;background:#fff;
+      border-left:1px solid var(--border);border-top:1px solid var(--border);transform:rotate(45deg)}
+    .info:hover .tooltip{opacity:1;transform:translateY(0)}
+
+    .metric-label{font-size:.9rem;color:var(--muted);margin:.25rem 0 .45rem;font-style:italic}
+
+    .hero{
+      font-size:clamp(2.1rem,3.6vw,2.6rem);
+      font-weight:700;text-align:center;margin:.35rem 0 .25rem;letter-spacing:.2px;
+      color:transparent;background:linear-gradient(180deg,var(--brand), #c24d00);
+      -webkit-background-clip:text;background-clip:text;
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+    }
+    .hero.good{background:linear-gradient(180deg,var(--good), #059669);-webkit-background-clip:text;background-clip:text}
+    .hero.warn{background:linear-gradient(180deg,var(--warn), #C2410C);-webkit-background-clip:text;background-clip:text}
+    .hero.bad{background:linear-gradient(180deg,var(--bad), #B91C1C);-webkit-background-clip:text;background-clip:text}
+    
+    .confidence-badge{
+        display: inline-block; padding: .3rem .7rem; font-size: .75rem; font-weight: 600;
+        border-radius: 999px; letter-spacing: 0.2px;
+        background: #FEF3C7; color: #92400E;
+    }
+
+    .chart{height:230px;margin-top:.35rem;position:relative;overflow:hidden}
+
+    .stats{display:grid;grid-template-columns:1fr auto;gap:.45rem .7rem;align-items:center;margin:.55rem 0 .15rem;font-size:.95rem}
+    .stat{display:contents}
+    .stat-label{color:#383838;font-weight:500}
+    .stat-value{font-weight:600;color:var(--brand)}
+    .stat-value.good{color:var(--good)}
+    .stat-value.warn{color:var(--warn)}
+    .stat-value.bad{color:var(--bad)}
+    
+    .callout{
+      margin-top:.7rem;padding:.7rem .85rem;background:linear-gradient(180deg,#FFFAF2,#FFF3E4);
+      border:1px solid #FFE1C6;border-radius:12px;font-size:.9rem;color:#5a4d43;display:flex;gap:.5rem;
+    }
+    .callout strong{color:var(--brand);font-weight:600}
+    
+    .deviation-stat{
+      margin-top: auto; padding-top: .75rem; border-top: 1px solid var(--border);
+      font-size: .85rem; color: var(--muted-2); text-align: center;
+    }
+
+    /* Heatmap + locked state */
+    .heatmap{
+      display:grid;
+      grid-template-columns:80px repeat(7, 1fr);
+      gap:6px;margin-top:.25rem;
+    }
+    .heatmap .h-colhead{font-size:.8rem;color:#444;text-align:center}
+    .heatmap .h-rowhead{font-size:.85rem;color:#444;display:flex;align-items:center;justify-content:flex-start;padding-left:.25rem}
+    .cell{
+      position:relative;height:32px;border-radius:8px;border:1px solid #F1E9E2;box-shadow:var(--shadow-sm);
+      background:#faf7f3;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
+    }
+    .cell:hover{
+      transform:scale(1.08) translateY(-2px);
+      box-shadow:var(--shadow-lg);
+      border-color:var(--brand);
+      z-index: 2;
+    }
+    
+    .cell-tooltip{
+      position:absolute; bottom:calc(100% + 6px); left:50%;
+      transform:translateX(-50%) translateY(4px);
+      background:rgba(26,26,26,0.92); color:#fff;
+      padding:.45rem .75rem; border-radius:6px;
+      font-size:.8rem; white-space:nowrap;
+      opacity:0; pointer-events:none;
+      transition:opacity .15s ease, transform .15s ease;
+      z-index:20; /* float above */
+    }
+    .cell:hover .cell-tooltip{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .cell.locked {
+      background-image: repeating-linear-gradient(-45deg, #F0EBE6, #F0EBE6 4px, #F8F5F2 4px, #F8F5F2 8px);
+      cursor: not-allowed;
+      position: relative;
+      overflow: visible; /* allow tooltip to escape; was hidden */
+    }
+    .cell.locked::before{
+      content: "🔒";
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size:12px;
+      opacity:.9;
+    }
+    .cell.locked:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+      border-color: #F1E9E2;
+    }
+    .cell.locked .cell-tooltip {
+      width: 260px;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Horizontal scroll wrapper for heatmap on small screens */
+    .heatmap-scroller{
+      width:100%;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .legend{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:#555;margin-top:.6rem;justify-content:flex-end}
+    .swatch{width:70px;height:10px;border-radius:999px;background:linear-gradient(90deg,#E8F7F0,#FDE8C5,#FAD2D0);border:1px solid #E9E2DA}
+
+    @media (max-width:768px){
+      body{padding:1.2rem .9rem}
+      .main-header{flex-direction:column; align-items:flex-start; gap: 1rem;}
+      .highlights{flex-direction:column; gap:.75rem; margin-top:.6rem; margin-bottom:1.4rem}
+      .highlight-card{flex:1 1 100%}          /* full-width highlight cards on mobile */
+      .tabs{width:100%;justify-content:space-between}
+      .tab{flex:1;text-align:center;padding:.6rem .5rem}
+      .tooltip{right:auto;left:50%;transform:translate(-50%,-4px)}
+      .info:hover .tooltip{transform:translate(-50%,0)}
+      .grid{gap:.85rem}
+      .card{padding:1rem}
+      .hero{font-size:clamp(1.7rem,6.5vw,2.2rem)}
+      .chart{height:200px}
+      .heatmap{grid-template-columns:60px repeat(7, 1fr); min-width:620px}  /* enable horizontal scroll instead of squish */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="main-header">
+      <div class="header-left">
+        <h1>BioCapital Dashboard</h1>
+        <div class="sync"><span class="dot"></span> Syncing from WellApp • 100 employees • 2 hrs ago</div>
+      </div>
+      <div class="tabs" id="tabs">
+        <div class="tab active" data-lens="ceo">CEO View</div>
+        <div class="tab" data-lens="cfo">CFO View</div>
+        <div class="tab" data-lens="chro">CHRO View</div>
+        <div class="tab-indicator" id="tabIndicator"></div>
+      </div>
+    </header>
+
+    <div class="highlights">
+      <div class="highlight-card">
+        <div class="highlight-label">Projected ΔROI in 1 year</div>
+        <div class="highlight-value">+1.4×</div>
+        <div class="highlight-sub">Target ROI 2.4:1</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Activation rate</div>
+        <div class="highlight-value warn">47%</div>
+        <div class="highlight-sub">47 of 100 employees</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-label">Total social impact</div>
+        <div class="highlight-value good">$21,000</div>
+        <div class="highlight-sub">$1,000 per QALY</div>
+      </div>
+    </div>
+
+    <!-- CEO -->
+    <div id="ceo" class="content active">
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Healthy Life Years Gained</div>
+              <div class="info"><div class="tooltip"><strong>Why this matters:</strong> Each Quality-Adjusted Life Year (QALY) gained predicts ~$50K in economic value through improved productivity and reduced health costs.</div></div>
+            </div>
+            <div class="metric-label">QALYs from activity, CRF (VO₂max), recovery</div>
+            <div class="hero good">+28 Years</div>
+            <div class="chart"><canvas id="healthyYearsCEO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">This Quarter</span><span class="stat-value good">+4.2 Years</span></div>
+              <div class="stat"><span class="stat-label">Per Employee Avg</span><span class="stat-value">+102 Days</span></div>
+            </div>
+            <div class="callout"><strong>Value:</strong> ~$1.4M actuarial benefit at $50K/QALY equivalent.</div>
+          </div>
+          <div class="deviation-stat"><strong>-2.0 years</strong> below annual goal of 30 years</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Variability Heatmap (HRV & Sleep)</div>
+              <div class="info"><div class="tooltip"><strong>How to read:</strong> Green is stable & consistent (good). Red is volatile & inconsistent (watch). High volatility often precedes burnout or illness.</div></div>
+            </div>
+            <div class="metric-label">Team-level volatility index by day (normalized 0–100)</div>
+
+            <!-- Scroll wrapper for mobile -->
+            <div class="heatmap-scroller">
+              <div class="heatmap" id="heatmap"><!-- injected by JS --></div>
+            </div>
+
+            <div class="legend"><span>Stable</span><span class="swatch"></span><span>Volatile</span></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Teams Flagged</span><span class="stat-value warn">2 (Sales, Ops)</span></div>
+              <div class="stat"><span class="stat-label">Overall Trend</span><span class="stat-value good">Improving</span></div>
+            </div>
+            <div class="callout"><strong>Early signal:</strong> Address Sales recovery hygiene now to prevent burnout.</div>
+          </div>
+          <div class="deviation-stat">Company volatility is <strong>+12% higher</strong> than target</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Absenteeism Forecast</div>
+              <div class="info"><div class="tooltip"><strong>Model:</strong> Fitness, activity, and recovery trends predict expected days lost. We track this against your industry baseline to quantify risk reduction.</div></div>
+            </div>
+            <div class="metric-label">Expected days lost per employee per quarter</div>
+            <div class="hero good">Low Risk</div>
+            <div class="chart"><canvas id="absenteeismCEO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Expected Days Lost</span><span class="stat-value good">4.8 / emp / qtr</span></div>
+              <div class="stat"><span class="stat-label">vs Baseline</span><span class="stat-value good">−18%</span></div>
+            </div>
+            <div class="callout"><strong>Savings:</strong> ~$42K/quarter in avoided productivity losses.</div>
+          </div>
+          <div class="deviation-stat">Actual absenteeism is <strong>4% better</strong> than forecast</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Recovery Consistency Score</div>
+              <div class="info"><div class="tooltip"><strong>Rule of thumb:</strong> Less than 45 min nightly sleep timing variance supports better cognition, mood, and immune function, reducing sick days.</div></div>
+            </div>
+            <div class="metric-label">Sleep timing variance & duration stability</div>
+            <div class="hero warn">76 / 100</div>
+            <div class="chart"><canvas id="sleepHealthCEO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Pattern Stability</span><span class="stat-value warn">82%</span></div>
+              <div class="stat"><span class="stat-label">Avg Duration</span><span class="stat-value">7.2 hrs</span></div>
+            </div>
+            <div class="callout"><strong>Move to 85:</strong> A quick lever for presenteeism gains.</div>
+          </div>
+          <div class="deviation-stat"><strong>+6 points</strong> above tech industry average of 70</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CFO -->
+    <div id="cfo" class="content">
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Projected ROI Timeline</div>
+              <div class="info"><div class="tooltip"><strong>Confidence Gate:</strong> ≥50% employee activation is required for high-confidence financial projections. Below this, models are directional.</div></div>
+            </div>
+            <div class="metric-label">Avoided costs + productivity gains vs. program cost</div>
+            <div class="hero">4.2 : 1 <span class="confidence-badge">Moderate Confidence</span></div>
+            <div class="chart"><canvas id="projectedROICFO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Year 1</span><span class="stat-value">2.4:1 ($240K)</span></div>
+              <div class="stat"><span class="stat-label">Year 3</span><span class="stat-value good">4.2:1 ($840K)</span></div>
+              <div class="stat"><span class="stat-label">Year 5</span><span class="stat-value good">5.8:1 ($1.45M)</span></div>
+            </div>
+            <div class="callout"><strong>Path to “High”:</strong> +3% activation (3 more people) crosses the threshold.</div>
+          </div>
+          <div class="deviation-stat">Year 1 ROI is tracking <strong>8% ahead</strong> of initial projections</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Productivity Loss Prevention</div>
+              <div class="info"><div class="tooltip"><strong>The Hidden Drain:</strong> Presenteeism—working while sick or unfocused—costs businesses more than absenteeism. This metric tracks the value recovered from fewer impaired days.</div></div>
+            </div>
+            <div class="metric-label">Value from fewer impaired days (Presenteeism)</div>
+            <div class="hero">$487K / yr</div>
+            <div class="chart"><canvas id="presenteeismCFO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">From Recovery</span><span class="stat-value">$312K</span></div>
+              <div class="stat"><span class="stat-label">From Activity</span><span class="stat-value">$175K</span></div>
+            </div>
+            <div class="callout"><strong>Lift:</strong> Each +10% in key metrics ≈ +$62K/year.</div>
+          </div>
+          <div class="deviation-stat"><strong>$37K (8%) short</strong> of the $524K annual prevention goal</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Medical Claims Risk Trajectory</div>
+              <div class="info"><div class="tooltip"><strong>Directional Impact:</strong> Better cardiorespiratory fitness (CRF) is a leading indicator of lower long-term health risks, shifting the population risk mix down over time.</div></div>
+            </div>
+            <div class="metric-label">Chronic risk proxy from CRF distribution</div>
+            <div class="hero good">Declining</div>
+            <div class="chart"><canvas id="claimsRiskCFO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">YoY Risk Change</span><span class="stat-value good">−12%</span></div>
+              <div class="stat"><span class="stat-label">High-Risk Share</span><span class="stat-value good">23% → 18%</span></div>
+            </div>
+            <div class="callout"><strong>Impact:</strong> ~$180K avoided claims annually.</div>
+          </div>
+          <div class="deviation-stat">Risk reduction is <strong>20% faster</strong> than the modeled -10% YoY rate</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Wellness Spend Efficiency</div>
+              <div class="info"><div class="tooltip"><strong>Definition:</strong> Measures the health outcomes (QALYs) generated per dollar spent, highlighting high-yield programs and justifying budget allocation.</div></div>
+            </div>
+            <div class="metric-label">Budget allocation → measurable value</div>
+            <div class="hero good">92%</div>
+            <div class="chart"><canvas id="spendEfficiencyCFO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Budget Used</span><span class="stat-value">$46K / mo</span></div>
+              <div class="stat"><span class="stat-label">Value Generated</span><span class="stat-value good">$127K / mo</span></div>
+            </div>
+            <div class="callout"><strong>Reallocate:</strong> Shift 8% from low-yield to fitness programs.</div>
+          </div>
+          <div class="deviation-stat"><strong>3 points shy</strong> of the 95% efficiency target</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHRO -->
+    <div id="chro" class="content">
+      <div class="grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Employee Activation</div>
+              <div class="info"><div class="tooltip"><strong>Privacy-Safe:</strong> Activation is voluntary and all data is aggregated and anonymized. Reaching 50% unlocks high-confidence financial models.</div></div>
+            </div>
+            <div class="metric-label">% employees syncing (wearables or phone)</div>
+            <div class="hero warn">47% <span class="confidence-badge">Moderate Confidence</span></div>
+            <div class="chart"><canvas id="activationCHRO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">With Wearables</span><span class="stat-value">28% (28)</span></div>
+              <div class="stat"><span class="stat-label">Mobile-Only</span><span class="stat-value">19% (19)</span></div>
+              <div class="stat"><span class="stat-label">Target (High-Conf)</span><span class="stat-value warn">50% (+3)</span></div>
+            </div>
+            <div class="callout"><strong>Nudge:</strong> 3 more activations crosses the confidence gate.</div>
+          </div>
+          <div class="deviation-stat">Activation rate is <strong>3% below</strong> the 50% target</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Social Impact Generated</div>
+              <div class="info"><div class="tooltip"><strong>Prosocial Flywheel:</strong> Employee health gains trigger company donations to employee-voted charities, boosting participation and purpose.</div></div>
+            </div>
+            <div class="metric-label">Donations triggered by health gains</div>
+            <div class="hero good">$42,000</div>
+            <div class="chart"><canvas id="charityDonationCHRO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">QALYs</span><span class="stat-value good">42 (YTD)</span></div>
+              <div class="stat"><span class="stat-label">Rate</span><span class="stat-value">$1,000 / QALY</span></div>
+              <div class="stat"><span class="stat-label">Cause</span><span class="stat-value">SDG-3</span></div>
+            </div>
+            <div class="callout"><strong>Story:</strong> ~84 life-saving treatments funded this year.</div>
+          </div>
+          <div class="deviation-stat"><strong>On track</strong> to meet the $50,000 annual donation goal</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Retention Risk Forecast</div>
+              <div class="info"><div class="tooltip"><strong>Leading Indicators:</strong> Trends in autonomic balance (HRV) and rest patterns, combined with engagement data, can predict turnover risk.</div></div>
+            </div>
+            <div class="metric-label">Turnover risk (lower is better)</div>
+            <div class="hero good">Low Risk</div>
+            <div class="chart"><canvas id="retentionRiskCHRO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">High-Risk Employees</span><span class="stat-value good">8 (8%)</span></div>
+              <div class="stat"><span class="stat-label">Predicted Turnover</span><span class="stat-value good">7% vs 12%</span></div>
+            </div>
+            <div class="callout"><strong>Save:</strong> ~$470K in avoided hiring/training annually.</div>
+          </div>
+          <div class="deviation-stat">Predicted turnover is <strong>1 point lower</strong> than 8% target</div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <div class="card-title">Fitness Distribution Shift</div>
+              <div class="info"><div class="tooltip"><strong>Population Health:</strong> Moving employees from "Low" to "Average" fitness reduces absence and chronic disease risk across the entire workforce.</div></div>
+            </div>
+            <div class="metric-label">VO₂max categories (workforce mix)</div>
+            <div class="hero good">Improving</div>
+            <div class="chart"><canvas id="fitnessDistCHRO"></canvas></div>
+            <div class="stats">
+              <div class="stat"><span class="stat-label">Low Fitness</span><span class="stat-value good">18% (↓ from 30%)</span></div>
+              <div class="stat"><span class="stat-label">High Fitness</span><span class="stat-value good">28% (↑ from 22%)</span></div>
+            </div>
+            <div class="callout"><strong>Effect:</strong> ~$96K absenteeism savings + better work ability.</div>
+          </div>
+          <div class="deviation-stat">Share of 'Low Fitness' employees is <strong>2% below</strong> the 20% goal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+    Chart.defaults.color = '#5D5D5D';
+    Chart.defaults.elements.line.borderWidth = 2;
+    Chart.defaults.elements.point.radius = 0;
+    Chart.defaults.plugins.legend.display = false;
+    Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.92)';
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    const indicator = document.getElementById('tabIndicator');
+    const tabsRoot = document.getElementById('tabs');
+
+    function positionIndicator(el){
+      const r = tabsRoot.getBoundingClientRect();
+      const e = el.getBoundingClientRect();
+      const left = e.left - r.left + tabsRoot.scrollLeft;
+      indicator.style.width = e.width + 'px';
+      indicator.style.transform = `translateX(${left}px)`;
+    }
+    tabs.forEach(tab=>{
+      tab.addEventListener('click', ()=>{
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        contents.forEach(c=>c.classList.remove('active'));
+        document.getElementById(tab.dataset.lens).classList.add('active');
+        positionIndicator(tab);
+      });
+    });
+    function repositionActiveTab(){ positionIndicator(document.querySelector('.tab.active')); }
+    window.addEventListener('resize', repositionActiveTab);
+    window.addEventListener('orientationchange', repositionActiveTab);
+    window.addEventListener('load', repositionActiveTab);
+
+    function chart(id, type, labels, data, color){
+      const colors = {
+        brand:{border:'#CB5907', fill:'rgba(203,89,7,.12)'},
+        good:{border:'#10B981', fill:'rgba(16,185,129,.12)'},
+        warn:{border:'#F59E0B', fill:'rgba(245,158,11,.12)'},
+        bad:{border:'#EF4444', fill:'rgba(239,68,68,.12)'}
+      };
+      const c = colors[color] || colors.brand;
+      new Chart(document.getElementById(id), {
+        type, data:{labels, datasets:[{
+          data, borderColor: c.border,
+          backgroundColor: type==='line' ? c.fill : (Array.isArray(data) ? data.map(()=>c.border) : c.border),
+          fill: type==='line', tension: 0.35
+        }]},
+        options:{ responsive:true, maintainAspectRatio:false,
+          scales: (type==='pie'||type==='doughnut') ? {} : {
+            x:{grid:{display:false}, ticks:{maxTicksLimit:6}},
+            y:{grid:{color:'rgba(0,0,0,0.06)'}, beginAtZero:true, ticks:{maxTicksLimit:5}}
+          }
+        }
+      });
+    }
+
+    /* CEO charts */
+    chart('healthyYearsCEO', 'bar', ['Q1','Q2','Q3','Q4'], [6, 7, 8, 7], 'good');
+    chart('absenteeismCEO', 'line', ['Q1','Q2','Q3','Q4'], [5.8,5.2,4.8,4.6], 'good');
+    chart('sleepHealthCEO', 'line', ['W1','W2','W3','W4'], [72,74,76,76], 'warn');
+    
+    /* CFO charts */
+    chart('projectedROICFO','bar',['Y1','Y3','Y5'],[2.4,4.2,5.8],'good');
+    chart('presenteeismCFO','bar',['Recovery','Activity','Other'],[312,175,95],'brand');
+    chart('claimsRiskCFO','line',['Q1','Q2','Q3','Q4'],[23,21,19,18],'good');
+    chart('spendEfficiencyCFO','line',['Jan','Feb','Mar','Apr'],[87,89,91,92],'good');
+
+    /* CHRO charts */
+    new Chart(document.getElementById('activationCHRO'), {
+      type:'doughnut', data:{ labels:['With Wearables','Mobile-Only'], datasets:[
+        { data:[47,53], backgroundColor:['#10B981','#F1E5DB'], borderColor:'#fff', borderWidth:2, hoverOffset:6, weight:0.7 },
+        { data:[28,19,53], backgroundColor:['#10B981','#CB5907','#FDE0C8'], borderColor:'#fff', borderWidth:2, hoverOffset:6, weight:0.3 }
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false, cutout:'58%', plugins:{legend:{display:false}} }
+    });
+    chart('charityDonationCHRO','bar',['Q1','Q2','Q3','Q4'],[8,11,12,11],'good');
+    chart('retentionRiskCHRO','line',['Q1','Q2','Q3','Q4'],[12,10,8,7],'good');
+    chart('fitnessDistCHRO','bar',['Low','Medium','High'],[18,54,28],'good');
+
+    /* Heatmap Generation (with locked-row dynamic tooltip) */
+    const heatmapRoot = document.getElementById('heatmap');
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const teams = ['Sales','Ops','Eng','CX','Marketing','G&A'];
+
+    /* Volatility values for unlocked teams (0–100). Leave Marketing empty (locked). */
+    const values = [
+      [68,72,75,70,66,48,35], 
+      [61,64,69,65,60,44,31], 
+      [28,22,25,24,21,18,16], 
+      [42,48,46,44,40,30,22],
+      [],                               // Marketing is locked (n < 5)
+      [35,32,34,33,29,24,20]
+    ];
+
+    /* Activation counts for each team; lock rule is n < 5 */
+    const teamActivation = {
+      Sales: 12, Ops: 9, Eng: 24, CX: 7,
+      Marketing: 2,                       // shows “n = 2 < 5 … activate 3 more…”
+      'G&A': 6
+    };
+
+    // column heads (blank corner cell then days)
+    heatmapRoot.appendChild(document.createElement('div'));
+    days.forEach(d=>{
+      const h = document.createElement('div');
+      h.className='h-colhead';
+      h.textContent=d;
+      heatmapRoot.appendChild(h);
+    });
+
+    function colorFor(v){
+      const h = 140 - (122 * (v/100));
+      const l = 92 - (22 * (v/100));
+      return `hsl(${h}, 65%, ${l}%)`;
+    }
+
+    teams.forEach((t, i)=>{
+      const rh = document.createElement('div');
+      rh.className = 'h-rowhead';
+      rh.textContent = t;
+      heatmapRoot.appendChild(rh);
+
+      const n = teamActivation[t] ?? 0;
+      const needs = Math.max(0, 5 - n);
+      const locked = n < 5;
+
+      if (locked) {
+        for (let j = 0; j < 7; j++) {
+          const c = document.createElement('div');
+          c.className = 'cell locked';
+          const tooltip = document.createElement('span');
+          tooltip.className = 'cell-tooltip';
+          tooltip.textContent = `Data locked (n = ${n} < 5). Activate ${needs} more to unlock insights for ${t}.`;
+          c.appendChild(tooltip);
+          heatmapRoot.appendChild(c);
+        }
+      } else {
+        values[i].forEach((v, j)=>{
+          const c = document.createElement('div');
+          c.className = 'cell';
+          c.style.background = colorFor(v);
+          const tooltip = document.createElement('span');
+          tooltip.className = 'cell-tooltip';
+          tooltip.textContent = `${t} • ${days[j]} — Volatility: ${v}`;
+          c.appendChild(tooltip);
+          heatmapRoot.appendChild(c);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
