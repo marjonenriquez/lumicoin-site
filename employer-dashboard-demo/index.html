@@ -93,6 +93,7 @@
       position:relative;display:flex;gap:0;
       background:#fff;border:1px solid var(--border);border-radius:999px;
       box-shadow:var(--shadow-sm);padding:4px;width:fit-content;
+      transition: opacity 0.2s ease;
     }
     .tab{
       position:relative;z-index:1;
@@ -119,6 +120,8 @@
       margin-top:.5rem;
       margin-bottom: 2.5rem;
       flex-wrap:wrap;
+      transition: opacity 0.2s ease, transform 0.2s ease, max-height 0.3s ease;
+      max-height: 500px; /* for transition */
     }
     .highlights::after{
       content:"";
@@ -126,6 +129,7 @@
       height:1px;
       background:var(--border);
       margin: 2rem 0 0.5rem;
+      transition: opacity 0.2s ease;
     }
     .highlight-card{
       background:linear-gradient(180deg,#fff,#FFF5EB);
@@ -136,17 +140,26 @@
       text-align:center;
       flex: 0 1 260px;
       transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      cursor:pointer; /* clickable */
+      cursor: pointer;
     }
     .highlight-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:rgba(203,89,7,0.22)}
-    .highlight-label{font-size:.95rem;color:#444;}
+    .highlight-label{
+      font-size:.95rem;
+      color:#444;
+    }
     .highlight-value{
-      font-size:2rem;font-weight:800;color:var(--brand);
-      letter-spacing:-0.02em;margin: 0.1rem 0 0.2rem;
+      font-size:2rem;
+      font-weight:800;
+      color:var(--brand);
+      letter-spacing:-0.02em;
+      margin: 0.1rem 0 0.2rem;
     }
     .highlight-value.good{ color: var(--good); }
     .highlight-value.warn{ color: var(--warn); }
-    .highlight-sub{font-size:.85rem;color:#777;}
+    .highlight-sub{
+      font-size:.85rem;
+      color:#777;
+    }
 
     /* Content grid */
     .content{display:none;animation:fadeIn .28s ease forwards}
@@ -166,7 +179,7 @@
       border-radius:var(--radius-xl);
       padding: 1.25rem;
       box-shadow:var(--shadow-md);
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, opacity 0.2s ease;
       display: flex; flex-direction: column;
     }
     .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(203,89,7,0.22)}
@@ -175,18 +188,20 @@
       display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;
       margin-bottom: .5rem;
     }
-    .card-title{font-size:1.15rem; font-weight:600;color:#141414;letter-spacing:.1px}
+    .card-title{font-size:1.1rem;font-weight:600;color:#141414;letter-spacing:.1px}
 
     .info{
-      position:relative; z-index: 10; flex-shrink:0;
-      display:inline-flex;align-items:center;justify-content:center;
+      position:relative;
+      z-index: 10;
+      flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
       width:22px;height:22px;border-radius:999px;background:#F4F4F4;color:#555;font-size:.8rem;font-weight:700;cursor:help;
       border:1px solid #EAEAEA;transition: background .2s ease, transform .2s ease;}
     .info::before{content:"?";line-height:1}
     .info:hover{transform:scale(1.06);background:#eaeaea}
     
     .tooltip{
-      position:absolute;top:calc(100% + .5rem);right:0; z-index:100;
+      position:absolute;top:calc(100% + .5rem);right:0;
+      z-index:100;
       width:min(340px,80vw);
       background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-lg);
       border-radius:12px;padding:.9rem;color:#1a1a1a;font-size:.9rem;font-weight:400;line-height:1.55;
@@ -197,11 +212,15 @@
       border-left:1px solid var(--border);border-top:1px solid var(--border);transform:rotate(45deg)}
     .info:hover .tooltip{opacity:1;transform:translateY(0)}
 
-    .metric-label{font-size:.9rem;color:var(--muted);margin:.25rem 0 .5rem;font-style:italic}
+    .metric-label{font-size:.9rem;color:var(--muted);
+      margin:.25rem 0 .5rem;
+      font-style:italic}
 
     .hero{
-      font-size:clamp(2.1rem,3.6vw,2.6rem); font-weight:700;text-align:center;
-      margin: .5rem 0; letter-spacing:.2px;
+      font-size:clamp(2.1rem,3.6vw,2.6rem);
+      font-weight:700;text-align:center;
+      margin: .5rem 0;
+      letter-spacing:.2px;
       color:transparent;background:linear-gradient(180deg,var(--brand), #c24d00);
       -webkit-background-clip:text;background-clip:text;
       display: flex; align-items: center; justify-content: center; gap: .75rem;
@@ -211,15 +230,21 @@
     .hero.bad{background:linear-gradient(180deg,var(--bad), #B91C1C);-webkit-background-clip:text;background-clip:text}
     
     .confidence-badge{
-      display: inline-block; padding: .3rem .7rem; font-size: .75rem; font-weight: 600;
-      border-radius: 999px; letter-spacing: 0.2px;
-      background: #FEF3C7; color: #92400E;
+        display: inline-block; padding: .3rem .7rem; font-size: .75rem; font-weight: 600;
+        border-radius: 999px; letter-spacing: 0.2px;
+        background: #FEF3C7; color: #92400E;
     }
 
-    .chart{height:230px; margin-top: .75rem; position:relative;overflow:hidden; z-index: 0;}
+    .chart{
+      height:230px;
+      margin-top: .75rem;
+      position:relative;overflow:hidden;
+      z-index: 0;
+    }
 
     .stats{display:grid;grid-template-columns:1fr auto;gap:.45rem .7rem;align-items:center;
-      margin: .75rem 0 .25rem; font-size:.95rem}
+      margin: .75rem 0 .25rem;
+      font-size:.95rem}
     .stat{display:contents}
     .stat-label{color:#383838;font-weight:500}
     .stat-value{font-weight:600;color:var(--brand)}
@@ -228,28 +253,39 @@
     .stat-value.bad{color:var(--bad)}
     
     .callout{
-      margin-top: .85rem; padding:.7rem .85rem;background:linear-gradient(180deg,#FFFAF2,#FFF3E4);
+      margin-top: .85rem;
+      padding:.7rem .85rem;background:linear-gradient(180deg,#FFFAF2,#FFF3E4);
       border:1px solid #FFE1C6;border-radius:12px;font-size:.9rem;color:#5a4d43;display:flex;gap:.5rem;
     }
     .callout strong{color:var(--brand);font-weight:600}
     
     .deviation-stat{
-      margin-top: auto; padding-top: .85rem; border-top: 1px solid var(--border);
+      margin-top: auto; 
+      padding-top: .85rem;
+      border-top: 1px solid var(--border);
       font-size: .85rem; color: var(--muted-2); text-align: center;
     }
 
     /* Heatmap + locked state */
     .heatmap{
-      display:grid; grid-template-columns:80px repeat(7, 1fr);
+      display:grid;
+      grid-template-columns:80px repeat(7, 1fr);
       gap:6px;margin-top:.25rem;
     }
     .heatmap .h-colhead{font-size:.8rem;color:#444;text-align:center}
     .heatmap .h-rowhead{font-size:.85rem;color:#444;display:flex;align-items:center;justify-content:flex-start;padding-left:.25rem}
     .cell{
       position:relative;height:32px;border-radius:8px;border:1px solid #F1E9E2;box-shadow:var(--shadow-sm);
-      background:#faf7f3; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease; cursor:pointer;
+      background:#faf7f3;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      cursor:pointer;
     }
-    .cell:hover{transform:scale(1.08) translateY(-2px); box-shadow:var(--shadow-lg); border-color:var(--brand); z-index: 2;}
+    .cell:hover{
+      transform:scale(1.08) translateY(-2px);
+      box-shadow:var(--shadow-lg);
+      border-color:var(--brand);
+      z-index: 2;
+    }
     
     .cell-tooltip{
       position:absolute; bottom:calc(100% + 6px); left:50%;
@@ -257,26 +293,98 @@
       background:rgba(26,26,26,0.92); color:#fff;
       padding:.45rem .75rem; border-radius:6px;
       font-size:.8rem; white-space:nowrap;
-      opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease; z-index:100;
+      opacity:0; pointer-events:none;
+      transition:opacity .15s ease, transform .15s ease;
+      z-index:100;
     }
-    .cell:hover .cell-tooltip{opacity:1; transform: translateX(-50%) translateY(0);}
+    .cell:hover .cell-tooltip{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+    }
 
     .cell.locked {
       background-image: repeating-linear-gradient(-45deg, #F0EBE6, #F0EBE6 4px, #F8F5F2 4px, #F8F5F2 8px);
-      cursor: not-allowed; position: relative; overflow: visible;
+      cursor: not-allowed;
+      position: relative;
+      overflow: visible;
     }
     .cell.locked::before{
-      content: "🔒"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      font-size:12px; opacity:.9;
+      content: "🔒";
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size:12px;
+      opacity:.9;
     }
-    .cell.locked:hover {transform: none; box-shadow: var(--shadow-sm); border-color: #F1E9E2;}
-    .cell.locked .cell-tooltip {width: 260px; white-space: normal; text-align: center; line-height: 1.4;}
+    .cell.locked:hover {
+      transform: none;
+      box-shadow: var(--shadow-sm);
+      border-color: #F1E9E2;
+    }
+    .cell.locked .cell-tooltip {
+      width: 260px;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.4;
+    }
 
     /* Horizontal scroll wrapper for heatmap on small screens */
-    .heatmap-scroller{width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+    .heatmap-scroller{
+      width:100%;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
 
     .legend{display:flex;align-items:center;gap:.4rem;font-size:.8rem;color:#555;margin-top:.6rem;justify-content:flex-end}
     .swatch{width:70px;height:10px;border-radius:999px;background:linear-gradient(90deg,#E8F7F0,#FDE8C5,#FAD2D0);border:1px solid #E9E2DA}
+    
+    /* -- FILTER VIEW STYLES -- */
+    .back-to-dash {
+      display: none;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: var(--brand);
+      text-decoration: none;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--border);
+      padding: .5rem 1rem;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      align-self: flex-start;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.2s ease;
+    }
+    .back-to-dash:hover {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+    
+    .container.is-filtered .tabs,
+    .container.is-filtered .highlights,
+    .container.is-filtered .highlights::after {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .container.is-filtered .highlights {
+        max-height: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+    .container.is-filtered .content { display: none !important; }
+    .container.is-filtered .content.is-lone-visible { display: block !important; }
+    .container.is-filtered .card {
+      display: none;
+    }
+    .container.is-filtered .card.is-lone-visible {
+      display: flex;
+      grid-column: span 12;
+      animation: fadeIn .28s ease forwards;
+    }
+    .container.is-filtered .back-to-dash {
+      display: inline-flex;
+      opacity: 1;
+    }
 
     @media (max-width:768px){
       body{padding:1.2rem .9rem}
@@ -296,7 +404,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="container">
     <header class="main-header">
       <div class="header-left">
         <h1>BioCapital Dashboard</h1>
@@ -310,19 +418,20 @@
       </div>
     </header>
 
-    <!-- Highlight cards (now clickable, mapped to specific modules) -->
+    <a href="#" class="back-to-dash" id="backToDashBtn">← Back to Dashboard</a>
+
     <div class="highlights">
-      <div class="highlight-card" data-target-lens="cfo" data-target-card="cardProjectedROI">
+      <div class="highlight-card" data-target-card="roi-card">
         <div class="highlight-label">Projected ΔROI in 1 year</div>
         <div class="highlight-value">+1.4×</div>
         <div class="highlight-sub">Target ROI 2.4:1</div>
       </div>
-      <div class="highlight-card" data-target-lens="chro" data-target-card="cardActivation">
+      <div class="highlight-card" data-target-card="activation-card">
         <div class="highlight-label">Activation rate</div>
         <div class="highlight-value warn">47%</div>
         <div class="highlight-sub">47 of 100 employees</div>
       </div>
-      <div class="highlight-card" data-target-lens="chro" data-target-card="cardSocialImpact">
+      <div class="highlight-card" data-target-card="social-impact-card">
         <div class="highlight-label">Total social impact</div>
         <div class="highlight-value good">$21,000</div>
         <div class="highlight-sub">$1,000 per QALY</div>
@@ -332,7 +441,7 @@
     <!-- CEO -->
     <div id="ceo" class="content active">
       <div class="grid">
-        <div class="card" id="cardHealthyYears">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Healthy Life Years Gained</div>
@@ -350,7 +459,7 @@
           <div class="deviation-stat"><strong>-2.0 years</strong> below annual goal of 30 years</div>
         </div>
 
-        <div class="card" id="cardVariability">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Variability Heatmap (HRV & Sleep)</div>
@@ -373,7 +482,7 @@
           <div class="deviation-stat">Company volatility is <strong>+12% higher</strong> than target</div>
         </div>
 
-        <div class="card" id="cardAbsenteeism">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Absenteeism Forecast</div>
@@ -391,7 +500,7 @@
           <div class="deviation-stat">Actual absenteeism is <strong>4% better</strong> than forecast</div>
         </div>
 
-        <div class="card" id="cardRecoveryConsistency">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Recovery Consistency Score</div>
@@ -414,7 +523,7 @@
     <!-- CFO -->
     <div id="cfo" class="content">
       <div class="grid">
-        <div class="card" id="cardProjectedROI">
+        <div class="card" id="roi-card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Projected ROI Timeline</div>
@@ -433,7 +542,7 @@
           <div class="deviation-stat">Year 1 ROI is tracking <strong>8% ahead</strong> of initial projections</div>
         </div>
 
-        <div class="card" id="cardPresenteeism">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Productivity Loss Prevention</div>
@@ -451,7 +560,7 @@
           <div class="deviation-stat"><strong>$37K (8%) short</strong> of the $524K annual prevention goal</div>
         </div>
 
-        <div class="card" id="cardClaimsRisk">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Medical Claims Risk Trajectory</div>
@@ -469,7 +578,7 @@
           <div class="deviation-stat">Risk reduction is <strong>20% faster</strong> than the modeled -10% YoY rate</div>
         </div>
 
-        <div class="card" id="cardSpendEfficiency">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Wellness Spend Efficiency</div>
@@ -492,8 +601,7 @@
     <!-- CHRO -->
     <div id="chro" class="content">
       <div class="grid">
-        <!-- Moved Social Impact to top-left per request -->
-        <div class="card" id="cardSocialImpact">
+        <div class="card" id="social-impact-card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Social Impact Generated</div>
@@ -511,8 +619,7 @@
           </div>
           <div class="deviation-stat"><strong>On track</strong> to meet the $50,000 annual donation goal</div>
         </div>
-
-        <div class="card" id="cardActivation">
+        <div class="card" id="activation-card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Employee Activation</div>
@@ -531,7 +638,7 @@
           <div class="deviation-stat">Activation rate is <strong>3% below</strong> the 50% target</div>
         </div>
 
-        <div class="card" id="cardRetentionRisk">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Retention Risk Forecast</div>
@@ -549,7 +656,7 @@
           <div class="deviation-stat">Predicted turnover is <strong>1 point lower</strong> than 8% target</div>
         </div>
 
-        <div class="card" id="cardFitnessDist">
+        <div class="card">
           <div class="card-content">
             <div class="card-header">
               <div class="card-title">Fitness Distribution Shift</div>
@@ -571,6 +678,17 @@
   </div>
 
   <script>
+    // --- DOM ELEMENTS ---
+    const container = document.getElementById('container');
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    const indicator = document.getElementById('tabIndicator');
+    const tabsRoot = document.getElementById('tabs');
+    const highlightCards = document.querySelectorAll('.highlight-card');
+    const backToDashBtn = document.getElementById('backToDashBtn');
+    let lastActiveTab = document.querySelector('.tab.active');
+
+    // --- CHART DEFAULTS ---
     Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
     Chart.defaults.color = '#5D5D5D';
     Chart.defaults.elements.line.borderWidth = 2;
@@ -579,13 +697,10 @@
     Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.92)';
     Chart.defaults.plugins.tooltip.padding = 10;
     Chart.defaults.plugins.tooltip.cornerRadius = 8;
-
-    const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.content');
-    const indicator = document.getElementById('tabIndicator');
-    const tabsRoot = document.getElementById('tabs');
-
+    
+    // --- UI FUNCTIONS ---
     function positionIndicator(el){
+      if (!el) return;
       const r = tabsRoot.getBoundingClientRect();
       const e = el.getBoundingClientRect();
       const left = e.left - r.left + tabsRoot.scrollLeft;
@@ -593,54 +708,74 @@
       indicator.style.transform = `translateX(${left}px)`;
     }
 
-    function activateLens(lens){
-      tabs.forEach(t=>{
-        t.classList.toggle('active', t.dataset.lens === lens);
-      });
-      contents.forEach(c=>{
-        c.classList.toggle('active', c.id === lens);
-      });
-      const tabEl = document.querySelector(`.tab[data-lens="${lens}"]`);
-      if (tabEl) positionIndicator(tabEl);
+    function resetDashboardView() {
+      container.classList.remove('is-filtered');
+      
+      // Clean up any lone visible cards
+      const loneCard = document.querySelector('.card.is-lone-visible');
+      if (loneCard) {
+        loneCard.classList.remove('is-lone-visible');
+        loneCard.closest('.content').classList.remove('is-lone-visible');
+      }
+      
+      // Restore the last active tab state
+      if (lastActiveTab) {
+        lastActiveTab.click();
+      } else {
+        tabs[0].click(); // fallback to the first tab
+      }
     }
 
-    function clearFilters(){
-      document.querySelectorAll('.content.filtered').forEach(section=>{
-        section.classList.remove('filtered');
-        section.querySelectorAll('.card').forEach(card=>{ card.style.display = ''; });
-      });
-    }
-
+    // --- EVENT LISTENERS ---
     tabs.forEach(tab=>{
       tab.addEventListener('click', ()=>{
-        clearFilters();                    // tab switch resets any highlight filter
-        activateLens(tab.dataset.lens);
+        if (container.classList.contains('is-filtered')) {
+            resetDashboardView();
+        }
+        
+        lastActiveTab = tab; // Store the last clicked tab
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        contents.forEach(c=>c.classList.remove('active'));
+        document.getElementById(tab.dataset.lens).classList.add('active');
+        positionIndicator(tab);
       });
     });
 
-    function focusCard(lensId, cardId){
-      clearFilters();
-      activateLens(lensId);
-      const section = document.getElementById(lensId);
-      if(!section) return;
-      section.classList.add('filtered');
-      section.querySelectorAll('.card').forEach(card=>{
-        card.style.display = (card.id === cardId) ? '' : 'none';
-      });
-      // optional scroll into view for smaller screens
-      document.getElementById(cardId)?.scrollIntoView({behavior:'smooth', block:'start'});
-    }
+    highlightCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const targetId = card.dataset.targetCard;
+            const targetCard = document.getElementById(targetId);
 
-    // Highlight → module mapping
-    document.querySelectorAll('.highlight-card').forEach(h=>{
-      h.addEventListener('click', ()=>{
-        const lens = h.dataset.targetLens;
-        const card = h.dataset.targetCard;
-        focusCard(lens, card);
-      });
+            if (targetCard) {
+                lastActiveTab = document.querySelector('.tab.active'); // Save state before filtering
+                container.classList.add('is-filtered');
+                
+                // Show the correct parent content and the specific card
+                targetCard.closest('.content').classList.add('is-lone-visible');
+                targetCard.classList.add('is-lone-visible');
+
+                // Visually deselect tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                indicator.style.width = '0';
+            }
+        });
     });
 
+    backToDashBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetDashboardView();
+    });
+
+    function repositionActiveTab(){ positionIndicator(document.querySelector('.tab.active')); }
+    window.addEventListener('resize', repositionActiveTab);
+    window.addEventListener('orientationchange', repositionActiveTab);
+    window.addEventListener('load', repositionActiveTab);
+
+    // --- CHARTING FUNCTION ---
     function chart(id, type, labels, data, color){
+      const el = document.getElementById(id);
+      if (!el) return;
       const colors = {
         brand:{border:'#CB5907', fill:'rgba(203,89,7,.12)'},
         good:{border:'#10B981', fill:'rgba(16,185,129,.12)'},
@@ -648,7 +783,7 @@
         bad:{border:'#EF4444', fill:'rgba(239,68,68,.12)'}
       };
       const c = colors[color] || colors.brand;
-      new Chart(document.getElementById(id), {
+      new Chart(el, {
         type, data:{labels, datasets:[{
           data, borderColor: c.border,
           backgroundColor: type==='line' ? c.fill : (Array.isArray(data) ? data.map(()=>c.border) : c.border),
@@ -686,82 +821,51 @@
     chart('retentionRiskCHRO','line',['Q1','Q2','Q3','Q4'],[12,10,8,7],'good');
     chart('fitnessDistCHRO','bar',['Low','Medium','High'],[18,54,28],'good');
 
-    /* Heatmap Generation (with locked-row dynamic tooltip) */
+    /* Heatmap Generation */
     const heatmapRoot = document.getElementById('heatmap');
     const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     const teams = ['Sales','Ops','Eng','CX','Marketing','G&A'];
-
-    /* Volatility values for unlocked teams (0–100). Leave Marketing empty (locked). */
     const values = [
-      [68,72,75,70,66,48,35], 
-      [61,64,69,65,60,44,31], 
-      [28,22,25,24,21,18,16], 
-      [42,48,46,44,40,30,22],
-      [],                               // Marketing is locked (n < 5)
-      [35,32,34,33,29,24,20]
+      [68,72,75,70,66,48,35], [61,64,69,65,60,44,31], [28,22,25,24,21,18,16], 
+      [42,48,46,44,40,30,22], [], [35,32,34,33,29,24,20]
     ];
-
-    /* Activation counts for each team; lock rule is n < 5 */
     const teamActivation = {
-      Sales: 12, Ops: 9, Eng: 24, CX: 7,
-      Marketing: 2,                       // shows “n = 2 < 5 … activate 3 more…”
-      'G&A': 6
+      Sales: 12, Ops: 9, Eng: 24, CX: 7, Marketing: 2, 'G&A': 6
     };
 
-    // column heads (blank corner cell then days)
     heatmapRoot.appendChild(document.createElement('div'));
     days.forEach(d=>{
       const h = document.createElement('div');
-      h.className='h-colhead';
-      h.textContent=d;
-      heatmapRoot.appendChild(h);
+      h.className='h-colhead'; h.textContent=d; heatmapRoot.appendChild(h);
     });
 
     function colorFor(v){
-      const h = 140 - (122 * (v/100));
-      const l = 92 - (22 * (v/100));
+      const h = 140 - (122 * (v/100)); const l = 92 - (22 * (v/100));
       return `hsl(${h}, 65%, ${l}%)`;
     }
 
     teams.forEach((t, i)=>{
       const rh = document.createElement('div');
-      rh.className = 'h-rowhead';
-      rh.textContent = t;
-      heatmapRoot.appendChild(rh);
-
+      rh.className = 'h-rowhead'; rh.textContent = t; heatmapRoot.appendChild(rh);
       const n = teamActivation[t] ?? 0;
       const needs = Math.max(0, 5 - n);
       const locked = n < 5;
-
       if (locked) {
         for (let j = 0; j < 7; j++) {
-          const c = document.createElement('div');
-          c.className = 'cell locked';
-          const tooltip = document.createElement('span');
-          tooltip.className = 'cell-tooltip';
+          const c = document.createElement('div'); c.className = 'cell locked';
+          const tooltip = document.createElement('span'); tooltip.className = 'cell-tooltip';
           tooltip.textContent = `Data locked (n = ${n} < 5). Activate ${needs} more to unlock insights for ${t}.`;
-          c.appendChild(tooltip);
-          heatmapRoot.appendChild(c);
+          c.appendChild(tooltip); heatmapRoot.appendChild(c);
         }
       } else {
         values[i].forEach((v, j)=>{
-          const c = document.createElement('div');
-          c.className = 'cell';
-          c.style.background = colorFor(v);
-          const tooltip = document.createElement('span');
-          tooltip.className = 'cell-tooltip';
+          const c = document.createElement('div'); c.className = 'cell'; c.style.background = colorFor(v);
+          const tooltip = document.createElement('span'); tooltip.className = 'cell-tooltip';
           tooltip.textContent = `${t} • ${days[j]} — Volatility: ${v}`;
-          c.appendChild(tooltip);
-          heatmapRoot.appendChild(c);
+          c.appendChild(tooltip); heatmapRoot.appendChild(c);
         });
       }
     });
-
-    // On load, position tab indicator
-    function repositionActiveTab(){ positionIndicator(document.querySelector('.tab.active')); }
-    window.addEventListener('resize', repositionActiveTab);
-    window.addEventListener('orientationchange', repositionActiveTab);
-    window.addEventListener('load', repositionActiveTab);
   </script>
 </body>
 </html>
