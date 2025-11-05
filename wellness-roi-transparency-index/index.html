@@ -9,7 +9,7 @@
   <title>Wellness ROI Transparency Index | LümiCoin</title>
   <meta
     name="description"
-    content="The industry's first independent accountability system for corporate wellness platforms. An audit-grade analysis of ROI claims from 20+ top vendors."
+    content="The industry's first independent accountability system for corporate wellness platforms. An audit-grade analysis of ROI claims from 30+ top vendors."
   />
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
@@ -728,7 +728,7 @@
         <h1>Wellness ROI Transparency Index</h1>
         <p class="subtitle">
           The industry's first independent accountability system for corporate
-          wellness platforms. An audit-grade analysis of ROI claims from 20+ top
+          wellness platforms. An audit-grade analysis of ROI claims from 30+ top
           vendors.
         </p>
       </div>
@@ -748,8 +748,8 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">Platforms Tracked</div>
-          <div class="stat-value">20</div>
-          <div class="stat-sublabel">Including Major Payers</div>
+          <div class="stat-value">30</div>
+          <div class="stat-sublabel">Including Major Payers & PEOs</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">CFOs Without Proof</div>
@@ -772,6 +772,7 @@
         <button class="filter-btn" data-filter="Enterprise Suite">
           Enterprise Suites
         </button>
+        <button class="filter-btn" data-filter="PEO">PEOs</button>
         <button class="filter-btn" data-filter="Modular Platform">
           Modular Platforms
         </button>
@@ -906,7 +907,7 @@
           this index.
         </p>
         <p style="margin-top: 16px">
-          Last Updated: October 28, 2025 | Next Update: January 2026
+          Last Updated: November 5, 2025 | Next Update: February 2026
         </p>
       </div>
     </div>
@@ -1057,6 +1058,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const platformData = [
+        // 4-Star Platforms
         {
           id: "personify",
           name: "Personify Health",
@@ -1066,7 +1068,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "PH",
-          description: `Personify Health represents the current apex of wellness ROI transparency, having subjected its outcomes to rigorous independent scrutiny through multiple validation pathways.<sup>1</sup> The platform earned Validation Institute certification backed by a $100,000 guarantee. An independent actuarial study by Wakely Consulting Group analyzed claims data from over 100,000 members and documented 23% lower healthcare costs among engaged participants compared to matched controls.<sup>1</sup> This establishes Personify as a gold standard in a market plagued by unsubstantiated claims… yet it remains population-level and retrospective, leaving open questions about causation versus correlation and lacking individual-level, real-time verification.`
+          description: `Personify Health represents the current apex of wellness ROI transparency through rigorous independent scrutiny. The platform earned Validation Institute certification backed by a $100,000 guarantee. Most significantly, an independent actuarial study by Wakely Consulting Group analyzed claims data from over 100,000 members and documented 23% lower healthcare costs among engaged participants compared to matched controls.<sup>3</sup> This multi-layered validation establishes Personify as the gold standard, though it remains population-level and retrospective.`
         },
         {
           id: "vitality",
@@ -1077,7 +1079,41 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "VG",
-          description: `Vitality has constructed comprehensive independent validation, earning four stars through converging external evidence.<sup>2</sup> The Vitality Impact Study underwent independent actuarial review by Arbital Health, and RAND Europe examined 400,000+ members across three countries, documenting a sustained 34% increase in activity.<sup>2</sup> Despite rigor, these remain retrospective and correlational, not individual-level causal proof.`
+          description: `Vitality has constructed a comprehensive independent validation infrastructure. The Vitality Impact Study underwent independent review by actuaries at Arbital Health. Reinforcing this, RAND Europe conducted an extensive peer-reviewed study examining over 400,000 members across three countries, documenting a sustained 34% increase in physical activity levels linked to program engagement.<sup>4</sup> This dual validation provides exceptional credibility, yet still relies on retrospective, correlational analysis.`
+        },
+        // 3-Star Platforms
+        {
+          id: "insperity",
+          name: "Insperity",
+          category: "PEO",
+          location: "Houston, TX, USA",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "IN",
+          description: `Insperity provides extensive wellness program guidance and promotes a Value on Investment (VOI) framework emphasizing broader organizational rewards, like productivity and retention. A Forrester study validates Insperity's overall HR solution at 77% ROI.<sup>5</sup> However, this addresses total PEO services, not isolated wellness outcomes, and lacks wellness-specific ROI calculators or independent validation.`
+        },
+        {
+          id: "trinet",
+          name: "TriNet",
+          category: "PEO",
+          location: "Dublin, CA, USA",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "TN",
+          description: `TriNet provides internal ROI estimation tools and wellness stipend guidance. Its ROI calculator for HR software enables employers to estimate potential savings from overall PEO services, with wellness included.<sup>6</sup> This moves toward modeled ROI, but the calculator relies on employer-supplied assumptions and generic benchmarks, not TriNet-specific, audited wellness outcomes data.`
+        },
+        {
+          id: "rippling",
+          name: "Rippling PEO",
+          category: "PEO",
+          location: "San Francisco, CA, USA",
+          stars: 3,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "RP",
+          description: `Rippling possesses the strongest technical foundation for wellness ROI verification. Its unified data model for HR, IT, and Finance creates unprecedented opportunities to correlate wellness participation with business outcomes.<sup>7</sup> The platform's native Stipends framework and robust REST API ecosystem make it verification-ready, though it has not yet published any wellness outcomes studies.`
         },
         {
           id: "webmd",
@@ -1088,7 +1124,7 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "WM",
-          description: `WebMD promotes "rigorous and transparent" risk reduction analytics and proprietary ROI calculators, but no evidence of external actuarial validation was found.<sup>3</sup> Without independent verification, CFOs face a black-box problem: sophisticated internal models with uncertain external credibility.`
+          description: `WebMD Health Services promotes "rigorous and transparent" risk reduction analytics and proprietary ROI calculators.<sup>8</sup> However, investigation uncovered no evidence of external actuarial review or third-party certification validating these internal models. This creates a "black box" problem: the analytics may be robust, but without independent verification, CFOs cannot distinguish genuine accuracy from optimistic vendor modeling.`
         },
         {
           id: "wellhub",
@@ -1099,7 +1135,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "WH",
-          description: `Wellhub published an internal study asserting 21–35% healthcare cost reductions.<sup>4</sup> Methodology appears sophisticated, but no named external auditor.<sup>4</sup> Strong claims remain self-validated and therefore not independently verifiable.`
+          description: `Wellhub published an internal study asserting 21–35% healthcare cost reductions. The methodology appears sophisticated, using comparative analysis of healthcare utilization.<sup>9</sup> However, the critical transparency failure is the absence of any named external auditor or independent validator. This self-published research asks employers to trust Wellhub's own analysis of its own effectiveness.`
         },
         {
           id: "humana",
@@ -1110,7 +1146,52 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "HU",
-          description: `Humana leverages claims access to produce detailed internal analyses claiming ~22% lower costs for engaged members.<sup>5</sup> However, studies are internally produced without external audit, leaving attribution and selection bias concerns unresolved.`
+          description: `Humana Go365 leverages direct access to claims data to produce detailed internal ROI analyses claiming 22% lower costs for engaged members.<sup>10</sup> Despite Humana's actuarial sophistication, the publicly available studies remain internally produced without independent external audit. This creates an attribution problem, as it's unclear if the program drove change or if healthier members simply engaged more.`
+        },
+        {
+            id: "gapartners",
+            name: "G&A Partners",
+            category: "PEO",
+            location: "Houston, TX, USA",
+            stars: 3,
+            status: "Not Verified",
+            statusClass: "not-verified",
+            icon: "GA",
+            description: `G&A Partners provides unusually comprehensive EAP and wellness services, including medical bill negotiation, financial counseling, and grief support.<sup>11</sup> The platform's materials explain what is offered and provide conceptual frameworks for wellness value, but publish no internal ROI models linking these services to financial outcomes or independent validation studies.`
+        },
+        // 2-Star Platforms
+        {
+          id: "adp",
+          name: "ADP TotalSource",
+          category: "PEO",
+          location: "Roseland, NJ, USA",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "AD",
+          description: `ADP TotalSource provides robust behavioral enablement infrastructure, including comprehensive health benefits, EAP, and Health Advocate™ service.<sup>12</sup> Its resources focus on program access and utilization. Despite exceptional API infrastructure making it verification-ready, published materials present no actuarial studies or independent audits linking wellness participation to cost reduction.`
+        },
+        {
+          id: "paychex",
+          name: "Paychex PEO",
+          category: "PEO",
+          location: "Rochester, NY, USA",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "PY",
+          description: `Paychex provides practical ROI education, particularly for financial wellness, with guides on tracking reduced absenteeism and turnover.<sup>13</sup> However, its impressive ROI figures represent total PEO value (payroll, compliance, etc.) rather than isolating wellness program contributions to health outcomes or medical cost savings. The frameworks are educational tools, not independent validation.`
+        },
+        {
+          id: "justworks",
+          name: "Justworks",
+          category: "PEO",
+          location: "New York, NY, USA",
+          stars: 2,
+          status: "Not Verified",
+          statusClass: "not-verified",
+          icon: "JW",
+          description: `Justworks serves the SMB market with straightforward benefits administration, including mental health and fertility add-ons. Its new Partner API enables integration.<sup>14</sup> However, wellness content is descriptive, explaining available benefits without advancing to measuring behavioral change, health outcomes, or financial returns. The focus is on benefits access and simplicity.`
         },
         {
           id: "yumuuv",
@@ -1121,7 +1202,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "YM",
-          description: `YuMuuv publishes 50+ case studies documenting behavioral change and participation gains.<sup>6</sup> Transparency is excellent for behavior, but no financial modeling or independent validation connects behavior to cost outcomes.`
+          description: `YuMuuv distinguishes itself through exceptional transparency, publishing over 50 detailed case studies documenting behavioral metrics like increased activity levels.<sup>15</sup> Its ROI guidance honestly acknowledges the subjective nature of wellness ROI. The platform provides excellent behavioral measurement but presents no internal financial modeling or independent claims-linked validation.`
         },
         {
           id: "wellable",
@@ -1132,7 +1213,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "WB",
-          description: `Wellable invests in ROI education—primers, calculators, guides—to help employers measure perceived value, plus case studies of behavioral improvements (activity, screenings, HRA scores).⁷ Public evidence stops at behavior without claims-linked validation.⁷ Calculators are templates populated by employer assumptions, not validated multi-deployment outcomes. Result: strong behavioral documentation, no verified financial impact.`
+          description: `Wellable focuses on ROI education and the broader Value of Investment (VOI) framework, capturing intangibles like morale and culture.<sup>16</sup> Its calculators estimate perceived value using participation data and employee surveys, not verified claims outcomes. Case studies illustrate behavioral improvements but stop short of linking them to actuarial financial outcomes.`
         },
         {
           id: "movespring",
@@ -1143,7 +1224,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "MS",
-          description: `MoveSpring centers on challenge-based engagement and was acquired by Reward Gateway (Mar 2022).⁸ Public materials emphasize participation and short-term behaviors, not longitudinal outcomes or independent ROI validation.`
+          description: `MoveSpring is a challenge-based engagement platform acquired by Reward Gateway.<sup>17</sup> Its public materials emphasize participation metrics and challenge completion rates. While it provides generic educational content on wellness ROI, it lacks MoveSpring-specific validation, internal financial modeling, or longitudinal tracking of behavior change beyond individual campaigns.`
         },
         {
           id: "gojoe",
@@ -1154,7 +1235,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "GJ",
-          description: `GoJoe emphasizes social connectivity and team challenges; partners include PwC, Deloitte, NatWest.⁹ Case studies highlight inclusion and social connection benefits.⁹ Evidence focuses on behavioral engagement and qualitative value, not verified financial outcomes.`
+          description: `GoJoe emphasizes social connectivity through team challenges and has partnered with Stanford University on data science research.<sup>18</sup> Case studies highlight participation and social connection benefits. The evidence focuses on behavioral engagement and qualitative value rather than quantified health metrics, with no financial ROI validation.`
         },
         {
           id: "vantagefit",
@@ -1165,7 +1246,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "VF",
-          description: `Vantage Fit offers KPI dashboards across activity, sleep, and challenges.¹⁰ Strong measurement infrastructure for behaviors, but no claims-based modeling or independent ROI validation is published.`
+          description: `Vantage Fit offers KPI dashboards for activity, sleep, and challenges, providing a strong measurement infrastructure for behaviors.<sup>19</sup> However, the evidence remains at the behavioral tier, documenting what employees do within the app but presenting no internal modeling or independent studies validating health risk reduction or cost savings.`
         },
         {
           id: "incentfit",
@@ -1176,7 +1257,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "IF",
-          description: `IncentFit provides incentive infrastructure and calculators.¹¹ Evidence focuses on participation in incentivized actions; lacks proof of sustained behavior change, health outcomes, or independent financial validation.`
+          description: `IncentFit provides incentive infrastructure and ROI calculators that track utilization.<sup>20</sup> It can prove employees claim rewards for completing activities, but cannot prove these actions drive sustained behavior change or financial return. The calculators rely on employer-supplied assumptions, creating a verification gap.`
         },
         {
           id: "forma",
@@ -1187,19 +1268,42 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "FM",
-          description: `Forma differentiates via benefits design tools and conjoint-based value measurement.¹² Value measured as perceived benefit flexibility, not health outcomes or medical cost reduction—appropriate for LSA, outside wellness ROI proof.`
+          description: `Forma differentiates via benefits design tools and conjoint analysis to quantify the perceived value of benefit flexibility.<sup>21</sup> This is a sophisticated approach to value measurement, but it focuses on employee satisfaction and benefit optimization rather than health outcomes or medical cost reduction.`
         },
         {
           id: "uhc",
-          name: "UnitedHealthcare Motion/Rewards",
+          name: "UnitedHealthcare Motion",
           category: "Insurer Program",
           location: "Eden Prairie, MN, USA",
           stars: 2,
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "UH",
-          description: `Device-verified behavioral incentives with internal savings estimates (~$222).¹³ No external validation specific to these programs. Verified behavior ≠ verified ROI without independent actuarial analysis.`
+          description: `UnitedHealthcare operates device-tracked incentive programs that reward members for achieving F.I.T. activity goals. It has published internal savings estimates of ~$222 per participant.<sup>22</sup> However, these figures are from internal modeling, and no independent actuarial validation specific to these programs has been published.`
         },
+        {
+            id: "vensure",
+            name: "Vensure",
+            category: "PEO",
+            location: "Chandler, AZ, USA",
+            stars: 2,
+            status: "Not Verified",
+            statusClass: "not-verified",
+            icon: "VE",
+            description: `Vensure aggregates multiple acquired PEOs to offer a broad benefits marketplace including EAP and telehealth.<sup>23</sup> Public-facing resources describe available benefits but do not advance to behavioral tracking, outcomes measurement, or ROI analysis. No wellness ROI tools or case studies are evident.`
+        },
+        {
+            id: "engagepeo",
+            name: "Engage PEO",
+            category: "PEO",
+            location: "Hollywood, FL, USA",
+            stars: 2,
+            status: "Not Verified",
+            statusClass: "not-verified",
+            icon: "EP",
+            description: `Engage PEO's attorney-led model prioritizes compliance and legal risk management over wellness innovation. While standard EAP and wellness options are available, resources emphasize legal protection.<sup>24</sup> Its ROI analysis focuses on the general value of PEOs (27.2%) rather than specific wellness outcomes.`
+        },
+        // 1-Star Platforms
         {
           id: "burnalong",
           name: "Burnalong",
@@ -1209,7 +1313,7 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "BA",
-          description: `Content streaming for fitness and wellbeing.¹⁴ Measures utilization (views, completions) rather than behavior change, outcomes, or cost reduction.`
+          description: `Burnalong is a content platform providing access to streaming fitness and wellness classes. Its value is measured by utilization metrics like class views and session completions.<sup>25</sup> There is no evidence of tracking whether participation translates to sustained behavior change, health improvement, or financial return.`
         },
         {
           id: "compt",
@@ -1220,7 +1324,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "CP",
-          description: `LSA infrastructure for flexible stipends.¹⁵ Metrics: utilization, satisfaction, admin efficiency—legitimate HR value, but not health outcomes or ROI validation.`
+          description: `Compt provides LSA infrastructure for flexible stipends. Its ROI framing focuses on utilization rates, employee satisfaction, and the perceived value of benefit flexibility.<sup>26</sup> This is a legitimate HR value proposition but does not involve health outcomes measurement or health-related ROI.`
         },
         {
           id: "benepass",
@@ -1231,7 +1335,7 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "BP",
-          description: `Benefits administration with LSA.¹⁶ ROI framed as utilization and admin efficiency; no health outcomes or independent financial validation.`
+          description: `Benepass is a benefits administration platform with LSA capabilities. Its ROI content centers on administrative efficiency and spending validation.<sup>27</sup> It measures whether employees use funds and if the process is efficient, but not whether that spending drives health improvement or cost savings.`
         },
         {
           id: "espresa",
@@ -1242,7 +1346,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "ES",
-          description: `Culture benefits + LSA Plus.¹⁷ Focus on global delivery, ERG support, recognition, and experience metrics—outside claims-validated health ROI.`
+          description: `Espresa provides a culture benefits platform with its LSA Plus solution. Its metrics focus on utilization of benefit options, employee satisfaction, and administrative efficiency.<sup>28</sup> There is no evidence of health-specific ROI validation or behavioral health tracking beyond benefit redemption patterns.`
         },
         {
           id: "joon",
@@ -1253,7 +1357,7 @@
           status: "Active Discussions",
           statusClass: "progress",
           icon: "JO",
-          description: `Card-connected LSA with flexible merchant approvals.¹⁸ Measures spending activation and user experience; no published health outcomes or ROI validation.`
+          description: `JOON is a card-connected LSA platform. Its evidence base centers on utilization tracking—measuring how employees allocate and spend benefit dollars.<sup>29</sup> The value proposition focuses on employee empowerment and satisfaction rather than directed health improvement, with no published health outcomes evidence.`
         },
         {
           id: "ambetter",
@@ -1264,7 +1368,7 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "AM",
-          description: `Task-completion rewards for preventive care.¹⁹ Measures completions and reward distribution; no program-specific outcomes or ROI validation published.`
+          description: `Ambetter operates a straightforward task-completion rewards program. It measures completion rates and reward distribution but presents no published ROI methodology examining whether incentivized care drives health improvement or cost reduction.<sup>30</sup> Measurement is limited to participation.`
         },
         {
           id: "aetna",
@@ -1275,12 +1379,31 @@
           status: "Not Verified",
           statusClass: "not-verified",
           icon: "AE",
-          description: `State-specific Medicaid incentives for screenings and disease management.²⁰ Public docs show task-based incentives; outcomes and ROI validation not published.`
+          description: `Aetna Better Health operates state-specific Medicaid incentive programs. Program documentation describes task-based rewards for preventive visits and screenings.<sup>31</sup> Public materials present no program-specific ROI evidence or outcomes analysis. Measurement is limited to task completion.`
+        },
+        {
+            id: "coadvantage",
+            name: "CoAdvantage",
+            category: "PEO",
+            location: "Tampa, FL, USA",
+            stars: 1,
+            status: "Not Verified",
+            statusClass: "not-verified",
+            icon: "CA",
+            description: `CoAdvantage operates a proprietary benefits platform (CoAdQuantum) but maintains minimal public wellness-specific transparency.<sup>32</sup> Public materials emphasize platform capabilities rather than wellness outcomes. No wellness-specific ROI resources, case studies, or measurement tools are evident.`
         }
       ];
 
       const tableBody = document.getElementById("platform-table-body");
       const reportModalBody = document.querySelector("#reportModal .modal-body");
+
+      // Sort data by stars (desc) and then name (asc)
+      platformData.sort((a, b) => {
+        if (b.stars !== a.stars) {
+          return b.stars - a.stars;
+        }
+        return a.name.localeCompare(b.name);
+      });
 
       // Build table rows + details; build report modal content
       let reportHTML = "";
@@ -1309,7 +1432,7 @@
           <td>${p.category}</td>
           <td><div class="stars">${starsHTML}</div></td>
           <td><span class="badge ${p.statusClass}">${p.status}</span></td>
-          <td style="color:#8f8071;font-size:calc(0.85rem + 1pt);">Oct 2025</td>
+          <td style="color:#8f8071;font-size:calc(0.85rem + 1pt);">Nov 2025</td>
         `;
         tableBody.appendChild(dataRow);
 
@@ -1332,26 +1455,39 @@
       reportHTML += `
         <h3>References</h3>
         <ol class="references-list">
-          <li>Validation Institute. (2025). <em>Personify Health Validation Certifications</em>. https://validationinstitute.com</li>
-          <li>RAND Europe. (2018). <em>Incentives and Physical Activity: Assessment of Vitality's Active Rewards with Apple Watch Benefit</em> (RR-2870). https://www.rand.org/pubs/research_reports/RR2870.html</li>
-          <li>WebMD Health Services. (2025). <em>Health and Wellbeing Solutions Platform</em>. https://www.webmdhealthservices.com</li>
-          <li>Wellhub. (2025). <em>Return on Wellness Investment Study</em>. https://wellhub.com/en-us/resources</li>
-          <li>Humana. (2025). <em>Go365: Outcomes Analysis</em>. https://www.humana.com/go365</li>
-          <li>YuMuuv. (2025). <em>Case Studies</em>. https://yumuuv.com/case-studies</li>
-          <li>Wellable. (2025). <em>Workplace Wellness ROI Resources</em>. https://www.wellable.co/resources</li>
-          <li>Reward Gateway. (2022, Mar 22). <em>Acquires MoveSpring</em>. https://www.businesswire.com/news/home/20220322005255/en/Reward-Gateway-Acquires-MoveSpring</li>
-          <li>GoJoe. (2025). <em>Platform & Case Studies</em>. https://www.gojoe.com/us</li>
-          <li>Vantage Fit. (2025). <em>Corporate Wellness KPI Dashboard</em>. https://www.vantagefit.io</li>
-          <li>IncentFit. (2025). <em>Incentives ROI Resources</em>. https://www.incentfit.com/wellness-word</li>
-          <li>Forma. (2025). <em>Life Benefits ROI Calculator</em>. https://www.joinforma.com/life-benefits-roi-calculator</li>
-          <li>UnitedHealthcare. (2025). <em>Member Rewards/Motion</em>. https://www.uhc.com/member-resources</li>
-          <li>Burnalong. (2025). <em>On-Demand Wellness</em>. https://www.burnalong.com</li>
-          <li>Compt. (2025). <em>LSA Platform</em>. https://www.compt.io/resources</li>
-          <li>Benepass. (2025). <em>LSA Resources</em>. https://www.getbenepass.com</li>
-          <li>Espresa. (2025). <em>LSA Plus</em>. https://www.espresa.com/product/lsa-plus</li>
-          <li>JOON. (2025). <em>Card-Connected LSA</em>. https://joon.io</li>
-          <li>Ambetter Health. (2025). <em>My Health Pays</em>. https://www.ambetterhealth.com/programs-savings</li>
-          <li>Aetna Better Health. (2025). <em>Healthy Behaviors Incentives</em>. https://www.aetnabetterhealth.com</li>
+          <li>Business Group on Health & Fidelity. (2023). Employer-Sponsored Health and Well-being Survey.</li>
+          <li>International Foundation of Employee Benefit Plans (IFEBP). (2023). Workplace Wellness Trends Survey.</li>
+          <li>Validation Institute. (2025). Personify Health Validation Certifications with $100,000 Credibility Guarantee.</li>
+          <li>RAND Europe. (2018). Incentives and Physical Activity: Assessment of Vitality's Active Rewards with Apple Watch Benefit. (RR-2870).</li>
+          <li>Business Wire. (2019). The Total Economic Impact of Insperity's HR360 Solution.</li>
+          <li>TriNet. (2025). Does Offering a Wellness Stipend Really Incentivize Potential Employees?</li>
+          <li>Rippling. (2025). REST API Documentation and Integration Catalog.</li>
+          <li>WebMD Health Services. (2025). Health and Wellbeing Solutions Platform.</li>
+          <li>Wellhub. (2025). Return on Wellness Investment Study.</li>
+          <li>Humana. (2025). Go365 Wellness and Rewards Program: Multi-year internal outcomes analysis.</li>
+          <li>G&A Partners. (2025). Employee Programs and Wellness Initiatives.</li>
+          <li>ADP. (2025). API Central and Marketplace Integration Documentation.</li>
+          <li>Paychex. (2025). Employee Financial Wellness Programs Complete Guide.</li>
+          <li>Justworks. (2025). Partner API Launch Announcement and Documentation.</li>
+          <li>YuMuuv. (2025). Corporate Wellness Case Studies and ROI Analysis Resources.</li>
+          <li>Wellable. (2025). Workplace Wellness ROI Calculator and Measurement Resources.</li>
+          <li>Business Wire. (2022). Reward Gateway Acquires MoveSpring.</li>
+          <li>GoJoe. (2025). Employee Wellness Platform and Case Studies.</li>
+          <li>Vantage Fit. (2025). Corporate Wellness Platform KPI and Analytics Dashboard.</li>
+          <li>IncentFit. (2025). Wellness Incentives ROI Calculation Resources.</li>
+          <li>Forma. (2025). Life Benefits ROI Calculator and Value Assessment Research.</li>
+          <li>UnitedHealthcare. (2025). Motion Program and Member Rewards Overview.</li>
+          <li>Vensure. (2025). Employee Benefits Marketplace Overview.</li>
+          <li>Engage PEO. (2025). Attorney-Led HR Consulting Model.</li>
+          <li>Burnalong. (2025). On-Demand Wellness Content Platform.</li>
+          <li>Compt. (2025). Lifestyle Spending Account Platform and Resources.</li>
+          <li>Benepass. (2025). LSA Administration Platform and ROI Resources.</li>
+          <li>Espresa. (2025). LSA Plus: Lifestyle Spending Accounts, Wellbeing, Recognition, and Community Platform.</li>
+          <li>JOON. (2025). Card-Connected Lifestyle Spending Account Platform.</li>
+          <li>Ambetter Health. (2025). My Health Pays Rewards Program.</li>
+          <li>Aetna Better Health. (2025). Healthy Behaviors Incentive Programs.</li>
+          <li>CoAdvantage. (2025). Solutions and Benefits Administration.</li>
+          <li>National Association of Professional Employer Organizations (NAPEO). (2024). Industry Statistics and Footprint Analysis.</li>
         </ol>
       `;
       reportModalBody.innerHTML = reportHTML;
