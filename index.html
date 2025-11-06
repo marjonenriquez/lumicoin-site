@@ -13,7 +13,30 @@
   <link rel="stylesheet" href="/style.css">
 
   <style>
-    /* Hero */
+    /* ---------- HEADER / NAV (DESKTOP ALIGNMENT) ---------- */
+    @media (min-width: 769px) {
+      .site-header .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .logo-link img {
+        height: 40px;
+        display: block;
+      }
+      .main-nav {
+        margin-left: auto;
+      }
+      .main-nav ul {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        justify-content: flex-end; /* Right-align nav items as a group */
+      }
+    }
+
+    /* ---------- HERO SECTION WITH NAKED IMAGE ---------- */
     .hero-section {
       padding: clamp(70px, 10vw, 130px) 0 clamp(90px, 12vw, 150px);
       text-align: center;
@@ -36,6 +59,27 @@
       0% { opacity: 0.5; transform: scale(1) rotate(-0.5deg); }
       100% { opacity: 0.75; transform: scale(1.06) rotate(0.8deg); }
     }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* happypeople.png directly above H1, no white card container */
+    .happy-people-image {
+      max-width: 640px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto clamp(28px, 4vw, 36px);
+      display: block;
+      box-shadow: none;
+      background: transparent;
+      border-radius: 18px; /* optional soft edge, no "card" */
+    }
+
     .hero-section h1 {
       font-size: clamp(2.8rem, 7vw, 4.2rem);
       margin-bottom: var(--spacing-lg);
@@ -58,7 +102,7 @@
       line-height: 1.6;
     }
     .hero-cta-buttons {
-      margin-top: var(--spacing-2xl);
+      margin-top: var(--spacing-xl);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -83,24 +127,21 @@
       transform: translateY(-2px);
     }
 
-    /* Happy People Image Section */
-    .happy-people-section {
-      padding: clamp(60px, 10vw, 100px) 0;
-      text-align: center;
-      background: var(--white);
-      border-top: 1px solid var(--light-gray);
+    @media (min-width: 769px) {
+      .hero-cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--spacing-xl);
+      }
     }
-    .happy-people-image {
-      max-width: 600px;
-      width: 90%;
-      height: auto;
-      margin: 0 auto;
-      display: block;
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-soft);
+    @media (max-width: 768px) {
+      .hero-cta-buttons .btn { min-width: 90%; font-size: 1rem; }
+      .hero-section h1 { padding: 0 12px; }
+      .hero-section .subtitle { padding: 0 16px; }
+      .happy-people-image { max-width: 100%; }
     }
 
-    /* Index Feature Section */
+    /* ---------- INDEX SECTION ---------- */
     .index-section {
       background: var(--white);
       text-align: center;
@@ -211,7 +252,7 @@
       font-size: 0.95rem;
     }
 
-    /* Ecosystem Section */
+    /* ---------- ECOSYSTEM SECTION ---------- */
     .ecosystem-section {
       background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%);
       padding: clamp(90px, 12vw, 130px) 0;
@@ -233,10 +274,11 @@
       font-size: clamp(2.3rem, 5.5vw, 3rem);
       margin: 0 0 var(--spacing-lg);
     }
+    /* extra breathing room so cards don't crowd the copy */
     .ecosystem-lead {
       text-align: center;
       max-width: 68ch;
-      margin: 0 auto var(--spacing-3xl);
+      margin: 0 auto calc(var(--spacing-3xl) + 20px);
       font-size: clamp(1.125rem, 3vw, 1.3rem);
       line-height: 1.65;
       color: var(--text-primary);
@@ -299,7 +341,7 @@
     }
     .card-link:hover { color: var(--accent-primary-dark); }
 
-    /* Button sheen */
+    /* ---------- BUTTON SHEEN ---------- */
     .btn { position: relative; overflow: hidden; }
     .btn::before {
       content: "";
@@ -311,38 +353,16 @@
     }
     .btn:hover::before { left: 100%; }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero-cta-buttons .btn { min-width: 90%; font-size: 1rem; }
-      .index-content { text-align: center; }
-      .happy-people-image { max-width: 100%; }
-    }
-    @media (min-width: 769px) {
-      .hero-cta-buttons {
-        flex-direction: row;
-        justify-content: center;
-        gap: var(--spacing-xl);
-      }
-    }
-
-    /* Entrance Animations */
-    .hero-section, .happy-people-section, .index-section, .ecosystem-section {
+    /* ---------- ENTRANCE ANIMATIONS ---------- */
+    .hero-section,
+    .index-section,
+    .ecosystem-section {
       animation: fadeInUp 0.9s ease-out;
     }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .ecosystem-card { animation: fadeInUp 0.7s ease-out both; }
-    .ecosystem-grid .ecosystem-card:nth-child(1) { animation-delay: 0.1s; }
-    .ecosystem-grid .ecosystem-card:nth-child(2) { animation-delay: 0.2s; }
-    .ecosystem-grid .ecosystem-card:nth-child(3) { animation-delay: 0.3s; }
-    .lumistars-item { animation: fadeInUp 0.6s ease-out both; }
-    .lumistars-list .lumistars-item:nth-child(1) { animation-delay: 0.1s; }
-    .lumistars-list .lumistars-item:nth-child(2) { animation-delay: 0.15s; }
-    .lumistars-list .lumistars-item:nth-child(3) { animation-delay: 0.2s; }
-    .lumistars-list .lumistars-item:nth-child(4) { animation-delay: 0.25s; }
-    .lumistars-list .lumistars-item:nth-child(5) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
@@ -352,11 +372,13 @@
       <a href="/" class="logo-link">
         <img src="/lumicoin-logo-x.png" alt="LümiCoin Logo">
       </a>
+
       <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+
       <nav class="main-nav" id="mainNav">
         <ul>
           <li><a href="/" class="active">Home</a></li>
@@ -365,15 +387,20 @@
           <li><a href="/support/">Support</a></li>
         </ul>
       </nav>
+
       <div class="nav-overlay"></div>
     </div>
   </header>
 
   <main>
+    <!-- HERO with happypeople.png directly above headline -->
     <section class="hero-section">
-      <div class="container">
+      <div class="container hero-inner">
+        <img src="/happypeople.png" alt="Happy People" class="happy-people-image">
         <h1>The Accountability System for Wellness ROI</h1>
-        <p class="subtitle">LümiCoin is building the financial infrastructure for preventive health. Our ecosystem features the industry-first Wellness ROI Transparency Index, a Health Dividend API for partners, and the BioCapital Dashboard for employers.</p>
+        <p class="subtitle">
+          LümiCoin is building the financial infrastructure for preventive health. Our ecosystem features the industry-first Wellness ROI Transparency Index, a Health Dividend API for partners, and the BioCapital Dashboard for employers.
+        </p>
 
         <div class="hero-cta-buttons">
           <a href="/wellness-roi-transparency-index/" class="btn">Explore The Index</a>
@@ -382,23 +409,27 @@
       </div>
     </section>
 
-    <section class="happy-people-section">
-      <div class="container">
-        <img src="/happypeople.png" alt="Happy People" class="happy-people-image">
-      </div>
-    </section>
+    <!-- No separate happy-people section: Index comes directly after hero -->
 
     <section class="page-section index-section">
       <div class="container">
         <h2>The Wellness ROI Transparency Index</h2>
         <p class="tagline">The First Independent Standard for Wellness Value</p>
-        <p class="lead">In a $34B corporate wellness market, 94% of CFOs can't prove ROI. We're ending the era of unmeasurable spending with the industry's first independent standard for verifying financial impact.</p>
+        <p class="lead">
+          In a $34B corporate wellness market, 94% of CFOs can't prove ROI. We're ending the era of unmeasurable spending with the industry's first independent standard for verifying financial impact.
+        </p>
         
         <div class="index-grid">
           <div class="index-content">
-            <p>The Index grades wellness platforms using our proprietary <strong>LümiStars methodology</strong>—a hierarchy of evidence that separates marketing claims from measurable outcomes.</p>
-            <p>From simple engagement metrics to the new gold standard of <strong>Causal & Auditable ROI</strong>, we provide the transparency that CFOs and benefits leaders have been missing.</p>
-            <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings & Methodology</a>
+            <p>
+              The Index grades wellness platforms using our proprietary
+              <strong>LümiStars methodology</strong>—a hierarchy of evidence that separates marketing claims from measurable outcomes.
+            </p>
+            <p>
+              From simple engagement metrics to the new gold standard of
+              <strong>Causal &amp; Auditable ROI</strong>, we provide the transparency that CFOs and benefits leaders have been missing.
+            </p>
+            <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings &amp; Methodology</a>
           </div>
           
           <div class="index-visual">
@@ -423,7 +454,7 @@
                 </li>
                 <li class="lumistars-item">
                   <div class="stars">★★★★★</div>
-                  <div class="label">Causal & Auditable ROI</div>
+                  <div class="label">Causal &amp; Auditable ROI</div>
                 </li>
               </ul>
             </div>
@@ -435,7 +466,9 @@
     <section id="ecosystem" class="page-section ecosystem-section">
       <div class="container">
         <h2>The LümiCoin Ecosystem</h2>
-        <p class="ecosystem-lead">The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable for employers, partners, and the entire healthcare system.</p>
+        <p class="ecosystem-lead">
+          The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable for employers, partners, and the entire healthcare system.
+        </p>
         
         <div class="ecosystem-grid">
           <div class="ecosystem-card">
@@ -443,8 +476,13 @@
               <div class="card-icon">📈</div>
               <h3>The Dashboard</h3>
             </div>
-            <p>For employers. The BioCapital Dashboard turns workforce health signals into auditable financial insights: activation, predicted retention, fitness mix shifts, and modeled ROI.</p>
-            <a href="https://www.lumicoin.app/employer-dashboard-demo" class="card-link" target="_blank" rel="noopener noreferrer">See the Demo →</a>
+            <p>
+              For employers. The BioCapital Dashboard turns workforce health signals into auditable financial insights:
+              activation, predicted retention, fitness mix shifts, and modeled ROI.
+            </p>
+            <a href="https://www.lumicoin.app/employer-dashboard-demo" class="card-link" target="_blank" rel="noopener noreferrer">
+              See the Demo →
+            </a>
           </div>
 
           <div class="ecosystem-card">
@@ -452,8 +490,13 @@
               <div class="card-icon">⭐</div>
               <h3>The Index</h3>
             </div>
-            <p>Our independent research provides the first public standard for wellness ROI. We bring accountability to a $34B market, empowering data-driven decisions.</p>
-            <a href="/wellness-roi-transparency-index/" class="card-link">Explore the Index →</a>
+            <p>
+              Our independent research provides the first public standard for wellness ROI. We bring accountability to a
+              $34B market, empowering data-driven decisions.
+            </p>
+            <a href="/wellness-roi-transparency-index/" class="card-link">
+              Explore the Index →
+            </a>
           </div>
           
           <div class="ecosystem-card">
@@ -461,8 +504,13 @@
               <div class="card-icon">⚡</div>
               <h3>The API</h3>
             </div>
-            <p>The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal & Auditable ROI—the new gold standard for healthcare value.</p>
-            <a href="mailto:marjon@lumicoin.app" class="card-link">Partner With Us →</a>
+            <p>
+              The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal &amp;
+              Auditable ROI—the new gold standard for healthcare value.
+            </p>
+            <a href="mailto:marjon@lumicoin.app" class="card-link">
+              Partner With Us →
+            </a>
           </div>
         </div>
       </div>
@@ -500,8 +548,13 @@
       navToggle.classList.toggle('is-active');
       if (navOverlay) navOverlay.style.display = open ? 'block' : 'none';
     }
-    navToggle.addEventListener('click', toggleNav);
-    if (navOverlay) navOverlay.addEventListener('click', toggleNav);
+
+    if (navToggle) {
+      navToggle.addEventListener('click', toggleNav);
+    }
+    if (navOverlay) {
+      navOverlay.addEventListener('click', toggleNav);
+    }
 
     // Smooth scroll for in-page anchors
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
