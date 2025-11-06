@@ -144,7 +144,7 @@
 
     /* Index Feature Section */
     .index-section {
-      background: var(--white);
+      background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%); /* CHANGED */
       text-align: center;
       border-top: 1px solid var(--light-gray);
       padding: clamp(70px, 10vw, 110px) 0;
@@ -257,7 +257,7 @@
 
     /* Ecosystem Section */
     .ecosystem-section {
-      background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%);
+      background: transparent; /* CHANGED */
       padding: clamp(80px, 11vw, 120px) 0;
       position: relative;
     }
@@ -277,11 +277,10 @@
       font-size: clamp(2.1rem, 5vw, 2.7rem);
       margin: 0 0 var(--spacing-md);
     }
-    /* --- FIX IS HERE --- */
     p.ecosystem-lead {
       text-align: center;
       max-width: 68ch;
-      margin: 0 auto var(--spacing-2xl); /* Changed to p.ecosystem-lead to override global p:last-of-type */
+      margin: 0 auto var(--spacing-2xl);
       font-size: clamp(1.05rem, 3vw, 1.25rem);
       line-height: 1.65;
       color: var(--text-primary);
