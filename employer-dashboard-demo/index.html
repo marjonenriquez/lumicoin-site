@@ -1,577 +1,1090 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LümiCoin - The Accountability System for Wellness ROI</title>
-  <meta name="description" content="LümiCoin is building the financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, a Health Dividend API, and the BioCapital Dashboard for employers.">
-  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employer Wellness Investment Dashboard — by Lümi</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <!-- Font & Charts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* Header layout */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background-color: rgba(255, 248, 242, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--light-gray);
-    }
-    .site-header .container {
-      display: flex;
-      align-items: center;
-      padding-top: var(--spacing-xs);
-      padding-bottom: var(--spacing-xs);
-      gap: var(--spacing-sm);
-    }
-    .logo-link img {
-      height: 36px;
-      display: block;
-    }
-    .main-nav {
-      margin-left: auto;
-    }
-    .main-nav ul {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      justify-content: flex-end;
+    :root{
+      /* Brand + semantics */
+      --brand:#CB5907;
+      --brand-2:#c24d00;
+      --good:#10B981;
+      --warn:#F59E0B;
+      --bad:#EF4444;
+
+      /* Neutrals */
+      --bg:#FFF8F2;
+      --surface:#FFFFFF;
+      --text:#1A1A1A;
+      --muted:#666;
+      --muted-2:#8B8B8B;
+      --border:#EFE7E0;
+
+      /* Shape + shadow */
+      --radius-lg:16px;
+      --radius-xl:20px;
+      --shadow-sm:0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md:0 6px 18px rgba(0,0,0,0.08);
+      --shadow-lg:0 12px 30px rgba(0,0,0,0.12);
     }
 
-    /* Hero */
-    .hero-section {
-      padding: clamp(20px, 5vw, 35px) 0 clamp(50px, 8vw, 80px);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{
+      font-family:"Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 480px at -10% 8%, #FFF1E7 0%, transparent 55%),
+        radial-gradient(1100px 520px at 92% -8%, #FFE7D3 0%, transparent 60%),
+        var(--bg);
+      min-height:100vh; line-height:1.5; letter-spacing:.1px;
+      padding:2rem 1.25rem; font-size:17px;
     }
-    .hero-section::before {
-      content: "";
-      position: absolute;
-      width: 135%;
-      height: 135%;
-      top: -18%;
-      left: -18%;
-      background: radial-gradient(circle at 50% 30%, var(--accent-peach), transparent 70%);
-      z-index: -1;
-      animation: gentlePulse 10s infinite alternate ease-in-out;
-      opacity: 0.7;
-    }
-    @keyframes gentlePulse {
-      0% { opacity: 0.5; transform: scale(1) rotate(-0.4deg); }
-      100% { opacity: 0.8; transform: scale(1.05) rotate(0.6deg); }
-    }
-    .hero-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .happy-people-image {
-      max-width: 720px;
-      width: 100%;
-      height: auto;
-      margin: -8px auto clamp(16px, 3vw, 24px); /* pulls image slightly closer to nav */
-      display: block;
-      border-radius: 18px;
-      box-shadow: none;
-      background: transparent;
-    }
-    .hero-section h1 {
-      font-size: clamp(2.6rem, 6.5vw, 3.6rem);
-      margin-bottom: var(--spacing-md);
-      max-width: 20ch;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.12;
-      letter-spacing: -0.025em;
-    }
-    .hero-section .subtitle {
-      font-family: 'Inter', sans-serif;
-      font-size: clamp(1.1rem, 3vw, 1.35rem);
-      font-weight: 400;
-      color: var(--text-primary);
-      opacity: 0.9;
-      margin-bottom: var(--spacing-xl);
-      max-width: 56ch;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-    .hero-cta-buttons {
-      margin-top: var(--spacing-lg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--spacing-md);
-    }
-    .hero-cta-buttons .btn {
-      min-width: 260px;
-      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl);
-      font-size: 1.02rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-    .btn.btn-secondary {
-      background: transparent;
-      border: 2px solid var(--accent-primary);
-      color: var(--accent-primary);
-      box-shadow: none;
-    }
-    .btn.btn-secondary:hover {
-      background: var(--accent-peach);
-      box-shadow: var(--shadow-button);
-      transform: translateY(-2px);
-    }
-    @media (min-width: 769px) {
-      .hero-cta-buttons {
-        flex-direction: row;
-        justify-content: center;
-        gap: var(--spacing-xl);
-      }
-    }
-    @media (max-width: 768px) {
-      .hero-section h1 { padding: 0 var(--spacing-sm); }
-      .hero-section .subtitle { padding: 0 var(--spacing-sm); }
-      .hero-cta-buttons .btn { min-width: 90%; }
-    }
+    .container{max-width:1200px;margin:0 auto}
 
-    /* Index Feature Section */
-    .index-section {
-      background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%);
-      text-align: center;
-      border-top: 1px solid var(--light-gray);
-      padding: clamp(70px, 10vw, 110px) 0;
-      position: relative;
-    }
-    .index-section::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
-      opacity: 0.6;
-    }
-    .index-section h2 {
-      color: var(--accent-primary);
-      font-size: clamp(2.1rem, 5vw, 2.7rem);
-      margin-bottom: var(--spacing-sm);
-    }
-    .index-section .tagline {
-      font-size: clamp(1.15rem, 3.3vw, 1.4rem);
-      font-weight: 500;
-      color: var(--text-primary);
-      margin: 0 auto var(--spacing-md); /* FIX: This centers the block */
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    .index-section .lead {
-      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
-      max-width: 62ch;
-      margin: 0 auto var(--spacing-xl);
-      color: var(--text-primary);
-      line-height: 1.65;
-    }
-    .index-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--spacing-xl);
-      align-items: flex-start;
-      margin-top: var(--spacing-lg);
-    }
-    @media (min-width: 992px) {
-      .index-grid {
-        grid-template-columns: 1.2fr 1fr;
-        gap: var(--spacing-2xl);
-        text-align: left; 
-      }
-    }
-    .index-content p {
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: var(--spacing-md);
-    }
-    .index-visual {
-      background: var(--bg-base); /* FIX: Changed to flesh color */
-      border: 1px solid var(--light-gray);
-      border-radius: var(--border-radius-lg);
-      padding: var(--spacing-lg);
-      box-shadow: var(--shadow-soft);
-    }
-    .lumistars-graphic h4 {
-      text-align: center;
-      font-size: 0.98rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-secondary);
-      margin: 0 0 var(--spacing-md);
-    }
-    .lumistars-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-sm);
-    }
-    .lumistars-item {
-      display: flex;
-      gap: var(--spacing-md);
-      align-items: center;
-      background: var(--white);
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-radius: var(--border-radius-sm);
-      border: 1px solid var(--light-gray);
-      transition: var(--transition-smooth);
-    }
-    .lumistars-item:hover {
-      border-color: rgba(203, 89, 7, 0.3);
-      transform: translateX(3px);
-    }
-    .lumistars-item .stars {
-      width: 96px;
-      letter-spacing: 0.12em;
-      font-size: 1.1rem;
-      color: var(--accent-primary);
-      flex-shrink: 0;
-    }
-    .lumistars-item .stars .empty {
-      color: #e5e7eb;
-      opacity: 0.8;
-    }
-    .lumistars-item .label {
-      font-weight: 600;
-      color: var(--text-primary);
-      font-size: 0.92rem;
-    }
+    /* Header */
+    .main-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;gap:1rem}
+    .header-left{display:flex;gap:.5rem;align-items:flex-start;flex-direction:column}
+    h1{font-size:clamp(1.9rem,2.8vw,2.4rem);font-weight:800;color:var(--brand);letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:.95rem}
+    .sync{display:inline-flex;align-items:center;gap:.5rem;margin-top:.25rem;padding:.25rem .6rem;font-size:.85rem;color:var(--muted);background:rgba(255,255,255,0.8);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow-sm)}
+    .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(#34D399,#059669);box-shadow:0 0 0 2px rgba(16,185,129,0.15);animation:pulse 1.6s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.86);opacity:.78}}
 
-    /* Ecosystem Section */
-    .ecosystem-section {
-      background: transparent;
-      padding: clamp(80px, 11vw, 120px) 0;
-      position: relative;
-    }
-    .ecosystem-section::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
-      opacity: 0.5;
-    }
-    .ecosystem-section h2 {
-      text-align: center;
-      color: var(--accent-primary);
-      font-size: clamp(2.1rem, 5vw, 2.7rem);
-      margin: 0 0 var(--spacing-md);
-    }
-    p.ecosystem-lead {
-      text-align: center;
-      max-width: 68ch;
-      margin: 0 auto var(--spacing-2xl);
-      font-size: clamp(1.05rem, 3vw, 1.25rem);
-      line-height: 1.65;
-      color: var(--text-primary);
-    }
-    .ecosystem-grid {
-      display: grid;
-      gap: var(--spacing-lg);
-      grid-template-columns: 1fr;
-    }
-    @media (min-width: 992px) {
-      .ecosystem-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .ecosystem-card {
-      background: var(--white);
-      border: 1px solid var(--light-gray);
-      border-radius: var(--border-radius-lg);
-      padding: var(--spacing-lg);
-      transition: var(--transition-smooth);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    }
-    .ecosystem-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
-      border-color: rgba(203, 89, 7, 0.22);
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: var(--spacing-sm);
-      margin-bottom: var(--spacing-sm);
-    }
-    .card-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--border-radius-md);
-      background: var(--accent-peach);
-      color: var(--accent-primary);
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-    .ecosystem-card h3 {
-      margin: 0;
-      color: var(--text-primary);
-      font-size: 1.2rem;
-    }
-    .ecosystem-card p {
-      margin: 0 0 var(--spacing-md);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      font-size: 0.98rem;
-    }
-    .card-link {
-      font-weight: 600;
-      display: inline-block;
-      transition: var(--transition-smooth);
-      font-size: 0.95rem;
-    }
-    .card-link:hover {
-      color: var(--accent-primary-dark);
-    }
+    /* Right header controls */
+    .controls{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+    .period{display:flex;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px;box-shadow:var(--shadow-sm)}
+    .period button{padding:.5rem 1rem;border-radius:999px;border:0;background:transparent;font-weight:600;color:#4a4a4a;cursor:pointer}
+    .period button.active{background:linear-gradient(180deg,#FCEFE4,#FFE6D2);box-shadow:inset 0 0 0 1px #F3D8C6;color:#0f0f0f}
+    .btn{border:1px solid var(--border);background:#fff;border-radius:999px;padding:.5rem .9rem;font-weight:600;cursor:pointer;box-shadow:var(--shadow-sm)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(180deg,#FDE6D2,#FFD9BA);border-color:#F3D8C6}
+    .btn.success{background:linear-gradient(180deg,#E7F8F1,#CFF2E5);border-color:#BFEAD9}
 
-    /* Button sheen */
-    .btn {
-      position: relative;
-      overflow: hidden;
-    }
-    .btn::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-      transition: left 0.6s ease;
-    }
-    .btn:hover::before {
-      left: 100%;
-    }
+    /* Role tabs */
+    .tabs{position:relative;display:flex;gap:0;background:#fff;border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow-sm);padding:4px}
+    .tab{padding:.6rem 1.35rem;cursor:pointer;font-weight:700;color:#4a4a4a;border-radius:999px;user-select:none}
+    .tab.active{color:#000}
+    .tab-ind{position:absolute;inset:4px auto 4px 4px;width:0;border-radius:999px;background:linear-gradient(180deg,#FCEFE4,#FFE6D2);box-shadow:inset 0 0 0 1px #F3D8C6, var(--shadow-sm);transition:transform .25s cubic-bezier(.2,.8,.2,1), width .25s cubic-bezier(.2,.8,.2,1)}
 
-    /* Animations */
-    .hero-section,
-    .index-section,
-    .ecosystem-section {
-      animation: fadeInUp 0.8s ease-out;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(26px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Highlights (3 cards) */
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin:.75rem 0 1.5rem}
+    .highlight{flex:1 1 260px;min-width:260px;background:linear-gradient(180deg,#fff,#FFF5EB);border:1px solid var(--border);border-radius:18px;padding:1rem 1.1rem;box-shadow:var(--shadow-md);cursor:pointer}
+    .highlight:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:rgba(203,89,7,0.22)}
+    .h-label{font-size:.95rem;color:#444}
+    .h-value{font-size:2rem;font-weight:800;letter-spacing:-.02em;color:var(--brand);margin:.1rem 0 .2rem}
+    .h-value.good{color:var(--good)} .h-value.warn{color:var(--warn)} .h-sub{font-size:.85rem;color:#777}
+
+    /* Content grid */
+    .content{display:none;animation:fadeIn .28s ease forwards}
+    .content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .grid{display:grid;gap:1.25rem;grid-template-columns:repeat(12,1fr)}
+    .grid>.card{grid-column:span 6}
+    @media (max-width:1024px){.grid>.card{grid-column:span 12}}
+
+    /* Card */
+    .card{position:relative;isolation:isolate;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.05) blur(2px);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.15rem;box-shadow:var(--shadow-md);display:flex;flex-direction:column;gap:.3rem;cursor:pointer}
+    .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(203,89,7,0.22)}
+    .card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+    .card-title{font-size:1.1rem;font-weight:700;color:#141414}
+    .info{position:relative;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;background:#F4F4F4;color:#555;font-size:.8rem;font-weight:700;border:1px solid #EAEAEA}
+    .info::before{content:"?"}
+    .tooltip{position:absolute;top:calc(100% + .5rem);right:0;z-index:100;width:min(340px,80vw);background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-lg);border-radius:12px;padding:.9rem;color:#1a1a1a;font-size:.9rem;line-height:1.55;opacity:0;transform:translateY(-4px);pointer-events:none}
+    .info:hover .tooltip{opacity:1;transform:translateY(0)}
+    .metric-label{font-size:.9rem;color:var(--muted);margin:.15rem 0 .35rem;font-style:italic}
+    .hero{font-size:clamp(2rem,3.4vw,2.5rem);font-weight:800;text-align:center;margin:.2rem 0 .1rem;letter-spacing:.2px;color:transparent;background:linear-gradient(180deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text}
+    .hero.good{background:linear-gradient(180deg,var(--good),#059669);-webkit-background-clip:text;background-clip:text}
+    .hero.warn{background:linear-gradient(180deg,var(--warn),#C2410C);-webkit-background-clip:text;background-clip:text}
+    .hero.bad{background:linear-gradient(180deg,var(--bad),#B91C1C);-webkit-background-clip:text;background-clip:text}
+    .confidence{display:inline-block;margin-left:.5rem;padding:.28rem .6rem;border-radius:999px;background:#FEF3C7;color:#92400E;font-size:.75rem;font-weight:700;vertical-align:middle}
+    .chart{height:230px;margin-top:.5rem;position:relative;overflow:hidden}
+    .stats{display:grid;grid-template-columns:1fr auto;gap:.45rem .7rem;align-items:center;margin:.6rem 0 .2rem;font-size:.95rem}
+    .stat{display:contents}
+    .stat-label{color:#383838;font-weight:500}
+    .stat-value{font-weight:700;color:var(--brand)} .stat-value.good{color:var(--good)} .stat-value.warn{color:var(--warn)} .stat-value.bad{color:var(--bad)}
+    .callout{margin-top:.6rem;padding:.65rem .8rem;background:linear-gradient(180deg,#FFFAF2,#FFF3E4);border:1px solid #FFE1C6;border-radius:12px;font-size:.92rem;color:#5a4d43}
+    .deviation{margin-top:auto;padding-top:.7rem;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted-2);text-align:center}
+
+    /* Lone card filter mode (when a highlight routes to a specific card) */
+    .back-btn{display:none;margin:.6rem 0 1rem;font-weight:700;color:var(--brand);text-decoration:none;background:rgba(255,255,255,.8);border:1px solid var(--border);padding:.5rem 1rem;border-radius:999px;box-shadow:var(--shadow-sm)}
+    .container.is-filtered .tabs,
+    .container.is-filtered .highlights{opacity:0;pointer-events:none;max-height:0;margin:0}
+    .container.is-filtered .content{display:none !important}
+    .container.is-filtered .content.is-lone{display:block !important}
+    .container.is-filtered .card{display:none}
+    .container.is-filtered .card.lone{display:flex;grid-column:span 12}
+    .container.is-filtered .back-btn{display:inline-flex}
+
+    /* Drawer / Modal */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(2px);display:none;z-index:400}
+    .drawer{position:fixed;top:0;right:0;width:min(520px,100%);height:100%;background:#fff;border-left:1px solid var(--border);box-shadow:var(--shadow-lg);transform:translateX(100%);transition:transform .25s ease;z-index:401;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .drawer-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .drawer-body{padding:1rem 1.25rem;overflow:auto}
+    .drawer h3{font-size:1.15rem}
+    .field{display:flex;flex-direction:column;margin:.65rem 0}
+    .field label{font-weight:700;font-size:.95rem;margin-bottom:.25rem}
+    .field input{border:1px solid var(--border);border-radius:10px;padding:.55rem .7rem;font-size:1rem}
+    .drawer-actions{margin-top:.8rem;display:flex;gap:.5rem}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:450}
+    .modal-card{width:min(920px,92vw);max-height:86vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);padding:1rem 1.1rem}
+    .modal-grid{display:grid;gap:1rem;grid-template-columns:repeat(12,1fr)}
+    .modal-grid>.box{grid-column:span 6;background:#fff;border:1px solid var(--border);border-radius:12px;padding:.9rem}
+    .chips{display:flex;gap:.4rem;flex-wrap:wrap;margin:.4rem 0}
+    .chip{padding:.32rem .55rem;border:1px solid var(--border);border-radius:999px;font-size:.8rem;background:#fff}
+    .chip.good{background:#E7F8F1;border-color:#CFEFE3}
+    .modal table{width:100%;border-collapse:collapse;font-size:.92rem}
+    .modal th,.modal td{border-bottom:1px solid #eee;padding:.5rem .4rem;text-align:left}
+    .modal .actions{display:flex;gap:.5rem;margin-top:.5rem}
+    .muted{color:#777}
+
+    /* Footer fineprint */
+    .fine{margin-top:1.25rem;color:#757575;font-size:.83rem}
+
+    @media (max-width:768px){
+      body{padding:1.2rem .9rem}
+      .main-header{flex-direction:column;align-items:flex-start;gap:1rem}
+      .tabs,.period{width:100%}
+      .grid{gap:1rem}
+      .card{padding:1rem}
+      .chart{height:200px}
+      .modal-grid>.box{grid-column:span 12}
     }
   </style>
 </head>
 <body>
+  <div class="container" id="app">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-left">
+        <h1>Employer Wellness Investment Dashboard</h1>
+        <div class="sub">Unified, role-aware view… one source of financial truth.</div>
+        <div class="sync"><span class="dot"></span> Last sync from Partner App • 2 hrs ago • 47 of 100 active</div>
+      </div>
+      <div class="controls">
+        <div class="period" id="periodBar">
+          <button class="active" data-period="YTD">YTD</button>
+          <button data-period="QTD">QTD</button>
+          <button data-period="MTD">MTD</button>
+          <button data-period="TTM">TTM</button>
+        </div>
+        <button class="btn" id="btnExportCSV">📊 Export CSV</button>
+        <button class="btn" id="btnExportPDF">📄 Board PDF</button>
+        <button class="btn primary" id="btnAssumptions">⚙️ Assumptions</button>
+        <div class="tabs" id="roleTabs">
+          <div class="tab active" data-lens="ceo">CEO</div>
+          <div class="tab" data-lens="cfo">CFO</div>
+          <div class="tab" data-lens="chro">CHRO</div>
+          <div class="tab-ind" id="tabInd"></div>
+        </div>
+      </div>
+    </header>
 
-  <header class="site-header">
-    <div class="container">
-      <a href="/" class="logo-link">
-        <img src="/lumicoin-logo-x.png" alt="LümiCoin Logo">
-      </a>
-
-      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-      <nav class="main-nav" id="mainNav">
-        <ul>
-          <li><a href="/" class="active">Home</a></li>
-          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
-          <li><a href="/manifesto/">Manifesto</a></li>
-          <li><a href="/support/">Support</a></li>
-        </ul>
-      </nav>
-
-      <div class="nav-overlay"></div>
+    <!-- Highlights -->
+    <a href="#" class="back-btn" id="backBtn">← Back to dashboard</a>
+    <div class="highlights" id="highlights">
+      <div class="highlight" data-route="#cfo" data-card="roi-card">
+        <div class="h-label">Gross ROI (annualized)</div>
+        <div class="h-value good" id="hlROI">2.8×</div>
+        <div class="h-sub" id="hlROI_sub">+$48.0K net on $26.4K spend</div>
+      </div>
+      <div class="highlight" data-route="#chro" data-card="activation-card">
+        <div class="h-label">Activation rate</div>
+        <div class="h-value warn" id="hlAct">47%</div>
+        <div class="h-sub" id="hlAct_sub">3 more people → High confidence</div>
+      </div>
+      <div class="highlight" data-route="#chro" data-card="social-card">
+        <div class="h-label">Total social impact (pledged)</div>
+        <div class="h-value good" id="hlESG">$12,000</div>
+        <div class="h-sub" id="hlESG_sub">$1,000 per QALY • excluded from ROI</div>
+      </div>
     </div>
-  </header>
 
-  <main>
-    <section class="hero-section">
-      <div class="container hero-inner">
-        <img src="/happypeople.png" alt="Happy People" class="happy-people-image">
-        <h1>The Accountability System for Wellness ROI</h1>
-        <p class="subtitle">
-          LümiCoin is building the financial infrastructure for preventive health. Our ecosystem features the industry-first Wellness ROI Transparency Index, a Health Dividend API for partners, and the BioCapital Dashboard for employers.
-        </p>
-        <div class="hero-cta-buttons">
-          <a href="/wellness-roi-transparency-index/" class="btn">Explore The Index</a>
-          <a href="#ecosystem" class="btn btn-secondary">How It Works</a>
+    <!-- CEO VIEW -->
+    <div id="ceo" class="content active">
+      <div class="grid">
+        <!-- CEO 1 -->
+        <div class="card" data-drill="ceo-asset">
+          <div class="card-header">
+            <div class="card-title">Verified Health Asset Value ($)</div>
+            <div class="info" title="Definition"><div class="tooltip"><strong>What is this?</strong> QALY-linked actuarial value mapped from CRF (VO₂max), activity, and recovery trends. Long-horizon signal of workforce health capital.</div></div>
+          </div>
+          <div class="metric-label">QALYs × $/QALY (long-term actuarial)</div>
+          <div class="hero good" id="ceoAsset">$1.20M</div>
+          <div class="chart"><canvas id="ceoAssetChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">QALYs (YTD)</span><span class="stat-value good" id="ceoQalys">12.0</span></div>
+            <div class="stat"><span class="stat-label">$ per QALY</span><span class="stat-value" id="ceoQalysValue">$100,000</span></div>
+          </div>
+          <div class="callout">Directional, not cash this year. CFO ROI counts <em>hard</em> (claims) + <em>soft</em> (productivity) only.</div>
+          <div class="deviation">−3.0 QALY below annual stretch goal (15)</div>
+        </div>
+
+        <!-- CEO 2 -->
+        <div class="card" data-drill="ceo-variability">
+          <div class="card-header">
+            <div class="card-title">Variability Heatmap (HRV & Sleep)</div>
+            <div class="info"><div class="tooltip"><strong>Read it:</strong> Green = stable (good). Red = volatile (watch). Volatility precedes burnout/illness.</div></div>
+          </div>
+          <div class="metric-label">Team-level volatility index (normalized 0–100)</div>
+          <div class="chart" style="height:auto">
+            <div id="heatmap" style="display:grid;grid-template-columns:80px repeat(7,1fr);gap:6px"></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Teams flagged</span><span class="stat-value warn">2 (Sales, Ops)</span></div>
+            <div class="stat"><span class="stat-label">Overall trend</span><span class="stat-value good">Improving</span></div>
+          </div>
+          <div class="callout"><strong>Action:</strong> Sales sleep timing hygiene nudges to lift stability.</div>
+          <div class="deviation">Company volatility is <strong>+10%</strong> above target</div>
+        </div>
+
+        <!-- CEO 3 -->
+        <div class="card" data-drill="ceo-absenteeism">
+          <div class="card-header">
+            <div class="card-title">Absenteeism Forecast</div>
+            <div class="info"><div class="tooltip"><strong>Model:</strong> CRF/activity/recovery → expected days lost; compared to industry baseline.</div></div>
+          </div>
+          <div class="metric-label">Expected days lost / employee / quarter</div>
+          <div class="hero good">Low risk</div>
+          <div class="chart"><canvas id="ceoAbsChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Expected</span><span class="stat-value good">4.8 / emp / qtr</span></div>
+            <div class="stat"><span class="stat-label">vs baseline</span><span class="stat-value good">−16%</span></div>
+          </div>
+          <div class="callout">~$38K/quarter productivity preserved.</div>
+          <div class="deviation">Actual absenteeism is <strong>3%</strong> better than forecast</div>
+        </div>
+
+        <!-- CEO 4 -->
+        <div class="card" data-drill="ceo-recovery">
+          <div class="card-header">
+            <div class="card-title">Recovery Consistency Score</div>
+            <div class="info"><div class="tooltip"><strong>Rule:</strong> <45 min nightly variance supports cognition/mood/immune function.</div></div>
+          </div>
+          <div class="metric-label">Sleep timing variance & duration stability</div>
+          <div class="hero warn">76 / 100</div>
+          <div class="chart"><canvas id="ceoRecChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Pattern stability</span><span class="stat-value warn">82%</span></div>
+            <div class="stat"><span class="stat-label">Avg duration</span><span class="stat-value">7.2 hrs</span></div>
+          </div>
+          <div class="callout"><strong>Move to 85:</strong> Quick lever for presenteeism gains.</div>
+          <div class="deviation"><strong>+6 pts</strong> above tech industry average (70)</div>
         </div>
       </div>
-    </section>
-
-    <section class="page-section index-section">
-      <div class="container">
-        <h2>The Wellness ROI Transparency Index</h2>
-        <p class="tagline">The First Independent Standard for Wellness Value</p>
-        <p class="lead">
-          In a $34B corporate wellness market, 94% of CFOs can't prove ROI. We're ending the era of unmeasurable spending with the industry's first independent standard for verifying financial impact.
-        </p>
-        <div class="index-grid">
-          <div class="index-content">
-            <p>
-              The Index grades wellness platforms using our proprietary
-              <strong>LümiStars methodology</strong>—a hierarchy of evidence that separates marketing claims from measurable outcomes.
-            </p>
-            <p>
-              From simple engagement metrics to the new gold standard of
-              <strong>Causal &amp; Auditable ROI</strong>, we provide the transparency that CFOs and benefits leaders have been missing.
-            </p>
-            <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings &amp; Methodology</a>
-          </div>
-          <div class="index-visual">
-            <div class="lumistars-graphic">
-              <h4>The LümiStars Hierarchy</h4>
-              <ul class="lumistars-list">
-                <li class="lumistars-item">
-                  <div class="stars">★<span class="empty">★★★★</span></div>
-                  <div class="label">Engagement</div>
-                </li>
-                <li class="lumistars-item">
-                  <div class="stars">★★<span class="empty">★★★</span></div>
-                  <div class="label">Behavioral</div>
-                </li>
-                <li class="lumistars-item">
-                  <div class="stars">★★★<span class="empty">★★</span></div>
-                  <div class="label">Modeled ROI</div>
-                </li>
-                <li class="lumistars-item">
-                  <div class="stars">★★★★<span class="empty">★</span></div>
-                  <div class="label">Validated ROI</div>
-                </li>
-                <li class="lumistars-item">
-                  <div class="stars">★★★★★</div>
-                  <div class="label">Causal &amp; Auditable ROI</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="ecosystem" class="page-section ecosystem-section">
-      <div class="container">
-        <h2>The LümiCoin Ecosystem</h2>
-        <p class="ecosystem-lead">
-          The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable for employers, partners, and the entire healthcare system.
-        </p>
-        <div class="ecosystem-grid">
-          <div class="ecosystem-card">
-            <div class="card-header">
-              <div class="card-icon">📈</div>
-              <h3>The Dashboard</h3>
-            </div>
-            <p>
-              For employers. The BioCapital Dashboard turns workforce health signals into auditable financial insights:
-              activation, predicted retention, fitness mix shifts, and modeled ROI.
-            </p>
-            <a href="https://www.lumicoin.app/employer-dashboard-demo" class="card-link" target="_blank" rel="noopener noreferrer">
-              See the Demo →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <div class="card-header">
-              <div class="card-icon">⭐</div>
-              <h3>The Index</h3>
-            </div>
-            <p>
-              Our independent research provides the first public standard for wellness ROI. We bring accountability to a
-              $34B market, empowering data-driven decisions.
-            </p>
-            <a href="/wellness-roi-transparency-index/" class="card-link">
-              Explore the Index →
-            </a>
-          </div>
-          <div class="ecosystem-card">
-            <div class="card-header">
-              <div class="card-icon">⚡</div>
-              <h3>The API</h3>
-            </div>
-            <p>
-              The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal &amp;
-              Auditable ROI—the new gold standard for healthcare value.
-            </p>
-            <a href="mailto:marjon@lumicoin.app" class="card-link">
-              Partner With Us →
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
-          <li><a href="/manifesto/">Manifesto</a></li>
-          <li><a href="/support/">Support</a></li>
-          <li><a href="/terms/">Terms</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
-        </ul>
-      </nav>
-      <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
     </div>
-  </footer>
+
+    <!-- CFO VIEW -->
+    <div id="cfo" class="content">
+      <div class="grid">
+        <!-- CFO 1 ROI -->
+        <div class="card" id="roi-card" data-drill="cfo-roi">
+          <div class="card-header">
+            <div class="card-title">Wellness Program ROI (hard + soft, ESG excluded)</div>
+            <div class="info"><div class="tooltip"><strong>Math:</strong> ROI = (Claims avoided + Productivity gains) ÷ Program cost. ESG pledges tracked separately.</div></div>
+          </div>
+          <div class="metric-label">Avoided costs + productivity gains vs program cost</div>
+          <div class="hero good"><span id="cfoROIMultiple">2.8</span>× <span class="confidence" id="confBadge">Moderate</span></div>
+          <div class="chart"><canvas id="cfoRoiBars"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Annual program cost</span><span class="stat-value" id="cfoCost">$26,400</span></div>
+            <div class="stat"><span class="stat-label">Verified savings</span><span class="stat-value good" id="cfoSavings">$74,448</span></div>
+            <div class="stat"><span class="stat-label">Net benefit</span><span class="stat-value good" id="cfoNet">+ $48,048</span></div>
+          </div>
+          <div class="callout" id="cfoConfidenceMsg"><strong>Path to High:</strong> +3 activations (50%) unlocks high-confidence projections.</div>
+          <div class="deviation">Tracking <strong>ahead</strong> of initial model by ~7%</div>
+        </div>
+
+        <!-- CFO 2 Productivity -->
+        <div class="card" data-drill="cfo-prod">
+          <div class="card-header">
+            <div class="card-title">Avoided Cost — Productivity Loss</div>
+            <div class="info"><div class="tooltip"><strong>Why it matters:</strong> Presenteeism often costs more than absenteeism; we model saved impaired days × loaded wage/day.</div></div>
+          </div>
+          <div class="metric-label">Preserved productive days (annualized)</div>
+          <div class="hero" id="cfoProdHero">$40,608</div>
+          <div class="chart"><canvas id="cfoProdChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Days saved / active</span><span class="stat-value" id="cfoDaysSaved">3.0</span></div>
+            <div class="stat"><span class="stat-label">Loaded wage / day</span><span class="stat-value" id="cfoWage">$288</span></div>
+          </div>
+          <div class="callout"><strong>What-if:</strong> +1 day saved → +$13.6K/yr.</div>
+          <div class="deviation">8% short of $44K target</div>
+        </div>
+
+        <!-- CFO 3 Claims -->
+        <div class="card" data-drill="cfo-claims">
+          <div class="card-header">
+            <div class="card-title">Projected Medical Cost Savings</div>
+            <div class="info"><div class="tooltip"><strong>Basis:</strong> Activation-weighted CRF improves risk mix; we apply a conservative claims reduction curve.</div></div>
+          </div>
+          <div class="metric-label">Risk reduction from CRF distribution shift</div>
+          <div class="hero good" id="cfoClaimsHero">$33,840</div>
+          <div class="chart"><canvas id="cfoClaimsChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Baseline claims</span><span class="stat-value" id="cfoClaimsBase">$900,000</span></div>
+            <div class="stat"><span class="stat-label">Reduction %</span><span class="stat-value good" id="cfoClaimsPct">3.76%</span></div>
+          </div>
+          <div class="callout"><strong>Cohort effect:</strong> Low-fitness share down → fewer high-cost events.</div>
+          <div class="deviation">−0.2 pp vs modeled curve</div>
+        </div>
+
+        <!-- CFO 4 Spend Efficiency -->
+        <div class="card" data-drill="cfo-spend">
+          <div class="card-header">
+            <div class="card-title">Spend Efficiency & Unit Economics</div>
+            <div class="info"><div class="tooltip"><strong>Definition:</strong> Health value per dollar; plus cost per active employee.</div></div>
+          </div>
+          <div class="metric-label">Budget allocation → measurable value</div>
+          <div class="hero good" id="cfoEfficiency">High</div>
+          <div class="chart"><canvas id="cfoSpendChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Cost / active</span><span class="stat-value" id="cfoCostActive">$561 / yr</span></div>
+            <div class="stat"><span class="stat-label">Value / active</span><span class="stat-value good" id="cfoValueActive">$1,585 / yr</span></div>
+          </div>
+          <div class="callout"><strong>Reallocate:</strong> Shift 8% from low-yield to fitness nudges.</div>
+          <div class="deviation">3 pts shy of 95% efficiency target</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHRO VIEW -->
+    <div id="chro" class="content">
+      <div class="grid">
+        <!-- CHRO 1 Social -->
+        <div class="card" id="social-card" data-drill="chro-esg">
+          <div class="card-header">
+            <div class="card-title">Social Impact Generated (ESG)</div>
+            <div class="info"><div class="tooltip"><strong>Note:</strong> Pledge per QALY to SDG-aligned causes. Transparent, auditable; excluded from ROI.</div></div>
+          </div>
+          <div class="metric-label">Donations triggered by verified QALYs</div>
+          <div class="hero good" id="chroESG">$12,000</div>
+          <div class="chart"><canvas id="chroESGChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">QALYs (YTD)</span><span class="stat-value good" id="chroQ">12.0</span></div>
+            <div class="stat"><span class="stat-label">Pledge per QALY</span><span class="stat-value" id="chroP">$1,000</span></div>
+          </div>
+          <div class="callout">~12 life-changing interventions funded.</div>
+          <div class="deviation">On track for $15K annual pledge</div>
+        </div>
+
+        <!-- CHRO 2 Activation -->
+        <div class="card" id="activation-card" data-drill="chro-activation">
+          <div class="card-header">
+            <div class="card-title">Employee Activation (privacy-safe)</div>
+            <div class="info"><div class="tooltip"><strong>Privacy:</strong> Aggregated & anonymized; n≥5 cohort minimum.</div></div>
+          </div>
+          <div class="metric-label">% employees syncing wearables or phone</div>
+          <div class="hero warn"><span id="chroAct">47%</span> <span class="confidence">Moderate</span></div>
+          <div class="chart"><canvas id="chroActChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Wearables</span><span class="stat-value" id="chroWear">28%</span></div>
+            <div class="stat"><span class="stat-label">Mobile-only</span><span class="stat-value" id="chroMobile">19%</span></div>
+          </div>
+          <div class="callout"><strong>Nudge:</strong> +3 people → High confidence.</div>
+          <div class="deviation">3% below 50% threshold</div>
+        </div>
+
+        <!-- CHRO 3 Retention -->
+        <div class="card" data-drill="chro-retention">
+          <div class="card-header">
+            <div class="card-title">Retention Risk Forecast</div>
+            <div class="info"><div class="tooltip"><strong>Leading indicators:</strong> Autonomic balance + rest patterns + engagement.</div></div>
+          </div>
+          <div class="metric-label">Turnover risk (lower is better)</div>
+          <div class="hero good">Low risk</div>
+          <div class="chart"><canvas id="chroRetChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">High-risk employees</span><span class="stat-value good">8 (8%)</span></div>
+            <div class="stat"><span class="stat-label">Predicted turnover</span><span class="stat-value good">7% vs 12%</span></div>
+          </div>
+          <div class="callout">~$470K hiring/training costs avoided (annualized).</div>
+          <div class="deviation">1 pp below 8% target</div>
+        </div>
+
+        <!-- CHRO 4 Fitness mix -->
+        <div class="card" data-drill="chro-fitness">
+          <div class="card-header">
+            <div class="card-title">Fitness Distribution Shift (VO₂max)</div>
+            <div class="info"><div class="tooltip"><strong>Population effect:</strong> Moving from “Low” to “Average+” fitness reduces absence & chronic risk.</div></div>
+          </div>
+          <div class="metric-label">Workforce CRF mix</div>
+          <div class="hero good">Improving</div>
+          <div class="chart"><canvas id="chroFitChart"></canvas></div>
+          <div class="stats">
+            <div class="stat"><span class="stat-label">Low fitness</span><span class="stat-value good">18% (↓ from 30%)</span></div>
+            <div class="stat"><span class="stat-label">High fitness</span><span class="stat-value good">28% (↑ from 22%)</span></div>
+          </div>
+          <div class="callout">Adds ~$96K absenteeism savings YoY.</div>
+          <div class="deviation">2% below low-fitness cap (20%)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fineprint -->
+    <div class="fine">
+      Definitions: ROI excludes ESG pledges; confidence = data coverage, activation, cohort n≥5. All values derive from (1) wearable-native metrics and (2) manual financial inputs; no ERP sync in MVP. Privacy thresholds enforced.
+    </div>
+  </div>
+
+  <!-- Assumptions Drawer -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-header">
+      <h3>Assumptions / Inputs (MVP v1)</h3>
+      <button class="btn" id="closeDrawer">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="field"><label>Employees</label><input type="number" id="inEmployees" value="100" min="10"></div>
+      <div class="field"><label>Activation %</label><input type="number" id="inActivation" value="47" min="0" max="100"></div>
+      <div class="field"><label>Platform PEPM ($)</label><input type="number" id="inPlatform" value="16" min="0" step="1"></div>
+      <div class="field"><label>Verification PEPM ($)</label><input type="number" id="inVerify" value="6" min="0" step="1"></div>
+      <div class="field"><label>Baseline claims (annual, $)</label><input type="number" id="inClaimsBase" value="900000" step="1000"></div>
+      <div class="field"><label>Max claims reduction @100% activation</label><input type="number" id="inClaimsMaxPct" value="8" min="0" max="30" step="0.5"></div>
+      <div class="field"><label>Days saved / active employee / year</label><input type="number" id="inDaysSaved" value="3" min="0" step="0.5"></div>
+      <div class="field"><label>Loaded wage / day ($)</label><input type="number" id="inWageDay" value="288" min="0" step="1"></div>
+      <div class="field"><label>$ per QALY (actuarial)</label><input type="number" id="inQalyValue" value="100000" step="1000"></div>
+      <div class="field"><label>Pledge per QALY ($, ESG)</label><input type="number" id="inPledge" value="1000" step="100"></div>
+      <div class="field"><label>Discount rate % (NPV/IRR chips)</label><input type="number" id="inDisc" value="8" step="0.25"></div>
+      <div class="drawer-actions">
+        <button class="btn success" id="applyInputs">Apply</button>
+        <button class="btn" id="resetInputs">Reset defaults</button>
+      </div>
+      <div class="muted" style="margin-top:.6rem">Only these inputs + synced health data drive all numbers. No P&L integrations in MVP.</div>
+    </div>
+  </aside>
+
+  <!-- Drilldown Modal -->
+  <div class="modal" id="modal">
+    <div class="overlay" id="modalOverlay" style="display:block;background:transparent"></div>
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem">
+        <h3 id="modalTitle">Detail</h3>
+        <div class="actions">
+          <button class="btn" id="modalCsv">Export table CSV</button>
+          <button class="btn" id="modalClose">Close</button>
+        </div>
+      </div>
+      <div id="modalBody">
+        <!-- injected drilldown content -->
+      </div>
+    </div>
+  </div>
 
   <script>
-    // Set current year in footer
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    // ---------- CHART GLOBALS ----------
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+    Chart.defaults.color = '#5D5D5D';
+    Chart.defaults.elements.line.borderWidth = 2;
+    Chart.defaults.elements.point.radius = 0;
+    Chart.defaults.plugins.legend.display = false;
+    Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.92)';
+    Chart.defaults.plugins.tooltip.padding = 10;
+    Chart.defaults.plugins.tooltip.cornerRadius = 8;
 
-    // Mobile navigation toggle
-    const navToggle  = document.querySelector('.nav-toggle');
-    const mainNav    = document.getElementById('mainNav');
-    const navOverlay = document.querySelector('.nav-overlay');
+    // ---------- STATE ----------
+    const s = {
+      period: 'YTD',
+      inputs: {
+        employees: 100,
+        activation: 47,             // %
+        pepmPlatform: 16,           // $
+        pepmVerify: 6,              // $
+        claimsBase: 900000,         // $
+        claimsMaxPct: 8,            // % at 100% activation
+        daysSavedPerActive: 3.0,    // days/year
+        wagePerDay: 288,            // $
+        qalyValue: 100000,          // $
+        pledgePerQaly: 1000,        // $
+        discRatePct: 8              // %
+      },
+      derived: { } // computed below
+    };
 
-    function toggleNav() {
-      const open = mainNav.classList.toggle('is-open');
-      if (navToggle) {
-        navToggle.setAttribute('aria-expanded', open);
-        navToggle.classList.toggle('is-active');
+    // period multipliers for annualized -> view
+    const periodFactor = { YTD: 0.92, QTD: 0.25, MTD: 1/12, TTM: 1.00 };
+
+    // ---------- COMPUTE MODEL ----------
+    function compute(){
+      const i = s.inputs;
+      const active = Math.round(i.employees * (i.activation/100));
+      const programCost = i.employees * (i.pepmPlatform + i.pepmVerify) * 12;
+
+      // Claims reduction modeled as linear to activation up to claimsMaxPct
+      const claimsReductionPct = (i.activation/100) * (i.claimsMaxPct/100); // e.g., 3.76%
+      const claimsSavings = i.claimsBase * claimsReductionPct;
+
+      // Productivity: saved impaired days × wage/day × active employees
+      const prodSavings = active * i.daysSavedPerActive * i.wagePerDay;
+
+      const verifiedSavings = claimsSavings + prodSavings;
+      const netBenefit = verifiedSavings - programCost;
+      const roiMultiple = programCost > 0 ? (verifiedSavings / programCost) : 0;
+      const paybackMonths = verifiedSavings > 0 ? (programCost / (verifiedSavings/12)) : Infinity;
+
+      // QALYs (simple proportional model tied to activation for demo) => scale so 47% → ~12.0
+      const qalyYTD = (i.activation * 0.255); // 47 * .255 = 11.985 ≈ 12
+      const qalyValue = qalyYTD * i.qalyValue;
+      const pledge = qalyYTD * i.pledgePerQaly;
+
+      // Confidence threshold at 50% activation
+      const confidence = (i.activation >= 50) ? 'High' : 'Moderate';
+      const toHigh = (i.activation >= 50) ? 0 : Math.max(0, Math.ceil(i.employees*0.5) - active);
+
+      // Period adjustments (display only)
+      const f = periodFactor[s.period] ?? 1;
+      s.derived = {
+        active, programCost, claimsSavings, prodSavings, verifiedSavings, netBenefit, roiMultiple, paybackMonths,
+        claimsReductionPct, qalyYTD, qalyValue, pledge, confidence, toHigh,
+        disp: {
+          programCost: programCost * f,
+          claimsSavings: claimsSavings * f,
+          prodSavings: prodSavings * f,
+          verifiedSavings: verifiedSavings * f,
+          netBenefit: netBenefit * f,
+          pledge: pledge * f,
+          qalyYTD: qalyYTD * f, // for visuals
+          paybackMonths // unchanged (structural)
+        }
+      };
+    }
+
+    // ---------- HELPERS ----------
+    const fmt = {
+      money: v => (v<0?'-':'')+'$'+Math.abs(v).toLocaleString(undefined,{maximumFractionDigits:0}),
+      money1: v => (v<0?'-':'')+'$'+Math.abs(v).toLocaleString(undefined,{maximumFractionDigits:1}),
+      num1: v => Number(v).toLocaleString(undefined,{maximumFractionDigits:1}),
+      pct1: v => Number(v).toLocaleString(undefined,{maximumFractionDigits:1})+'%'
+    };
+
+    function setText(id, text){ const el=document.getElementById(id); if(el) el.textContent=text; }
+
+    // ---------- UI BINDINGS ----------
+    const roleTabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.content');
+    const tabInd = document.getElementById('tabInd');
+    const highlights = document.getElementById('highlights');
+    const backBtn = document.getElementById('backBtn');
+    const container = document.querySelector('.container');
+
+    function positionIndicator(el){
+      const tabsWrap = document.getElementById('roleTabs');
+      const r = tabsWrap.getBoundingClientRect();
+      const e = el.getBoundingClientRect();
+      const left = e.left - r.left + tabsWrap.scrollLeft;
+      tabInd.style.width = `${e.width}px`;
+      tabInd.style.transform = `translateX(${left}px)`;
+    }
+
+    roleTabs.forEach(t=>{
+      t.addEventListener('click',()=>{
+        container.classList.remove('is-filtered');
+        contents.forEach(c=>c.classList.remove('active'));
+        document.getElementById(t.dataset.lens).classList.add('active');
+        roleTabs.forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        positionIndicator(t);
+      })
+    });
+    window.addEventListener('load',()=>positionIndicator(document.querySelector('.tab.active')));
+    window.addEventListener('resize',()=>positionIndicator(document.querySelector('.tab.active')));
+
+    // highlight routing to lone card
+    highlights.querySelectorAll('.highlight').forEach(h=>{
+      h.addEventListener('click',()=>{
+        const route = h.getAttribute('data-route') || '#cfo';
+        const cardId = h.getAttribute('data-card') || '';
+        contents.forEach(c=>c.classList.remove('active'));
+        document.querySelector(route).classList.add('is-lone');
+        document.querySelectorAll('.card').forEach(c=>c.classList.remove('lone'));
+        if(cardId){
+          const card = document.getElementById(cardId);
+          if(card){ card.classList.add('lone'); }
+        }
+        container.classList.add('is-filtered');
+      })
+    });
+    backBtn.addEventListener('click',(e)=>{e.preventDefault();container.classList.remove('is-filtered');contents.forEach(c=>c.classList.remove('is-lone'));document.querySelector('.tab.active').click();});
+
+    // Period selector
+    document.querySelectorAll('#periodBar button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        document.querySelectorAll('#periodBar button').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        s.period = b.dataset.period;
+        compute(); updateUI();
+      })
+    });
+
+    // Assumptions drawer
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('overlay');
+    document.getElementById('btnAssumptions').onclick=()=>{overlay.style.display='block';drawer.classList.add('open');};
+    document.getElementById('closeDrawer').onclick=()=>{overlay.style.display='none';drawer.classList.remove('open');};
+    overlay.onclick=()=>{overlay.style.display='none';drawer.classList.remove('open');};
+
+    // Inputs apply/reset
+    const defInputs = JSON.parse(JSON.stringify(s.inputs));
+    document.getElementById('applyInputs').onclick=()=>{
+      s.inputs.employees = +document.getElementById('inEmployees').value;
+      s.inputs.activation = +document.getElementById('inActivation').value;
+      s.inputs.pepmPlatform = +document.getElementById('inPlatform').value;
+      s.inputs.pepmVerify = +document.getElementById('inVerify').value;
+      s.inputs.claimsBase = +document.getElementById('inClaimsBase').value;
+      s.inputs.claimsMaxPct = +document.getElementById('inClaimsMaxPct').value;
+      s.inputs.daysSavedPerActive = +document.getElementById('inDaysSaved').value;
+      s.inputs.wagePerDay = +document.getElementById('inWageDay').value;
+      s.inputs.qalyValue = +document.getElementById('inQalyValue').value;
+      s.inputs.pledgePerQaly = +document.getElementById('inPledge').value;
+      s.inputs.discRatePct = +document.getElementById('inDisc').value;
+      compute(); updateUI();
+    };
+    document.getElementById('resetInputs').onclick=()=>{
+      Object.assign(s.inputs, defInputs);
+      ['inEmployees','inActivation','inPlatform','inVerify','inClaimsBase','inClaimsMaxPct','inDaysSaved','inWageDay','inQalyValue','inPledge','inDisc']
+        .forEach(id=> document.getElementById(id).value = defInputs[
+          id.replace('in','').replace('Employees','employees')
+            .replace('Activation','activation').replace('Platform','pepmPlatform')
+            .replace('Verify','pepmVerify').replace('ClaimsBase','claimsBase')
+            .replace('ClaimsMaxPct','claimsMaxPct').replace('DaysSaved','daysSavedPerActive')
+            .replace('WageDay','wagePerDay').replace('QalyValue','qalyValue')
+            .replace('Pledge','pledgePerQaly').replace('Disc','discRatePct')
+        ]);
+      compute(); updateUI();
+    };
+
+    // Export buttons
+    document.getElementById('btnExportCSV').onclick=()=>exportLedgerCSV();
+    document.getElementById('btnExportPDF').onclick=()=>window.print();
+
+    // ---------- SIMPLE LEDGER (demo records) ----------
+    function buildLedgerRows(n=8){
+      const rows=[];
+      const teams=['Sales','Ops','Eng','CX','Marketing','G&A'];
+      for(let k=0;k<n;k++){
+        const q = (Math.random()*0.35+0.05); // 0.05–0.4 QALY
+        const val = q * s.inputs.qalyValue;
+        const id = 'PoHC-'+Math.random().toString(36).slice(2,8)+'…';
+        rows.push({
+          date: new Date(Date.now()-k*86400000*3).toISOString().slice(0,10),
+          id, source: 'Dept: '+teams[k%teams.length],
+          metric: (k%2? 'VO₂max ↑':'Sleep consistency ↑'),
+          qaly: q, value: val, status:'✅ Verified'
+        });
       }
-      if (navOverlay) {
-        navOverlay.style.display = open ? 'block' : 'none';
-      }
+      return rows;
+    }
+    let ledgerRows = buildLedgerRows();
+
+    function exportLedgerCSV(){
+      const headers = ['Date','Verification ID','Source','Metric','ΔQALYs','Value ($)','Status'];
+      const lines = [headers.join(',')].concat(ledgerRows.map(r=>[
+        r.date, r.id, `"${r.source}"`, `"${r.metric}"`, r.qaly.toFixed(3), Math.round(r.value), r.status
+      ].join(',')));
+      const blob = new Blob([lines.join('\n')], {type:'text/csv'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='verification_ledger.csv'; a.click();
     }
 
-    if (navToggle) {
-      navToggle.addEventListener('click', toggleNav);
-    }
-    if (navOverlay) {
-      navOverlay.addEventListener('click', toggleNav);
-    }
+    // ---------- DRILLDOWN MODAL ----------
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+    document.getElementById('modalClose').onclick=()=>modal.style.display='none';
+    document.getElementById('modalOverlay').onclick=()=>modal.style.display='none';
+    document.getElementById('modalCsv').onclick=()=>exportLedgerCSV();
 
-    // Smooth scroll for in-page anchors
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
+    // attach drill opens
+    document.querySelectorAll('.card').forEach(card=>{
+      card.addEventListener('click',()=>{
+        const key = card.getAttribute('data-drill');
+        if(!key) return;
+        openDrill(key);
       });
     });
-  </script>
 
+    function openDrill(key){
+      const d = s.derived, i = s.inputs;
+      modal.style.display='flex';
+      modalBody.innerHTML='';
+      switch(key){
+
+        case 'cfo-roi': {
+          modalTitle.textContent='ROI Drilldown — Waterfall, Budget vs Actual, NPV/IRR';
+          const wrap=document.createElement('div');
+          wrap.className='modal-grid';
+
+          // Waterfall box
+          const b1=document.createElement('div'); b1.className='box';
+          b1.innerHTML = `
+            <h4>Waterfall</h4>
+            <div style="height:220px"><canvas id="wf"></canvas></div>
+            <div class="chips">
+              <span class="chip">Payback: ${d.paybackMonths===Infinity?'—':fmt.num1(d.paybackMonths)+' mo'}</span>
+              <span class="chip">NPV (3y @ ${i.discRatePct}%): ${fmt.money(calcNPV3y(d.verifiedSavings, d.programCost, i.discRatePct))}</span>
+              <span class="chip good">Multiple: ${fmt.num1(d.verifiedSavings / d.programCost)}×</span>
+            </div>
+          `;
+          wrap.appendChild(b1);
+
+          // Table box
+          const b2=document.createElement('div'); b2.className='box';
+          b2.innerHTML=`
+            <h4>Budget vs Actual (annualized)</h4>
+            <table>
+              <thead><tr><th>Line</th><th>Budget</th><th>Actual</th><th>Variance</th></tr></thead>
+              <tbody>
+                <tr><td>Program cost</td><td>${fmt.money(d.disp.programCost)}</td><td>${fmt.money(d.disp.programCost)}</td><td>$0</td></tr>
+                <tr><td>Claims avoided</td><td class="muted">Model</td><td>${fmt.money(d.disp.claimsSavings)}</td><td class="muted">n/a</td></tr>
+                <tr><td>Productivity gains</td><td class="muted">Model</td><td>${fmt.money(d.disp.prodSavings)}</td><td class="muted">n/a</td></tr>
+                <tr><td><strong>Net benefit</strong></td><td class="muted">—</td><td><strong>${fmt.money(d.disp.netBenefit)}</strong></td><td class="muted">—</td></tr>
+              </tbody>
+            </table>
+            <div class="muted" style="margin-top:.4rem">Note: Budget for savings not fixed; models project savings from coverage & trends.</div>
+          `;
+          wrap.appendChild(b2);
+
+          // Ledger box
+          const b3=document.createElement('div'); b3.className='box'; b3.style.gridColumn='span 12';
+          b3.innerHTML = `<h4>Verification Ledger (sample)</h4>`;
+          const tbl=document.createElement('table');
+          const thead=document.createElement('thead'); thead.innerHTML='<tr><th>Date</th><th>Verification ID</th><th>Source</th><th>Metric</th><th>ΔQALYs</th><th>Value ($)</th><th>Status</th></tr>';
+          const tbody=document.createElement('tbody');
+          ledgerRows.forEach(r=>{
+            const tr=document.createElement('tr');
+            tr.innerHTML = `<td>${r.date}</td><td>${r.id}</td><td>${r.source}</td><td>${r.metric}</td><td>${r.qaly.toFixed(3)}</td><td>${Math.round(r.value).toLocaleString()}</td><td>${r.status}</td>`;
+            tbody.appendChild(tr);
+          });
+          tbl.appendChild(thead); tbl.appendChild(tbody);
+          b3.appendChild(tbl);
+
+          modalBody.appendChild(wrap);
+
+          // Waterfall chart
+          new Chart(document.getElementById('wf'), {
+            type:'bar',
+            data:{labels:['Program cost','Claims avoided','Productivity','Net'],
+              datasets:[{data:[-d.disp.programCost, d.disp.claimsSavings, d.disp.prodSavings, d.disp.netBenefit],
+                backgroundColor:['#EF4444','#10B981','#10B981', d.disp.netBenefit>=0?'#10B981':'#EF4444']}]},
+            options:{responsive:true,maintainAspectRatio:false,
+              scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}}}}
+          });
+          break;
+        }
+
+        case 'cfo-prod': {
+          modalTitle.textContent='Productivity — Detail & What-if';
+          modalBody.innerHTML = `
+            <div class="chips">
+              <span class="chip">Active employees: ${s.derived.active}</span>
+              <span class="chip">Days saved / active: ${fmt.num1(s.inputs.daysSavedPerActive)}</span>
+              <span class="chip">Wage/day: ${fmt.money(s.inputs.wagePerDay)}</span>
+            </div>
+            <div style="height:240px"><canvas id="prodStack"></canvas></div>
+            <div class="muted" style="margin-top:.5rem">Tip: +0.5 day saved → ${fmt.money1(s.derived.active * 0.5 * s.inputs.wagePerDay)} / yr</div>
+          `;
+          new Chart(document.getElementById('prodStack'),{
+            type:'bar',
+            data:{labels:['Q1','Q2','Q3','Q4'],datasets:[{data:Array(4).fill(s.derived.disp.prodSavings/4), backgroundColor:'#10B981'}]},
+            options:{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}}}}
+          });
+          break;
+        }
+
+        case 'cfo-claims': {
+          modalTitle.textContent='Claims — Projection Curve';
+          modalBody.innerHTML = `
+            <div class="chips">
+              <span class="chip">Baseline: ${fmt.money(s.inputs.claimsBase)}</span>
+              <span class="chip">Reduction: ${fmt.pct1(s.derived.claimsReductionPct*100)}</span>
+              <span class="chip good">Savings: ${fmt.money(s.derived.disp.claimsSavings)}</span>
+            </div>
+            <div style="height:240px"><canvas id="claimsLine"></canvas></div>
+            <div class="muted" style="margin-top:.5rem">Reduction scales with activation up to ${s.inputs.claimsMaxPct}% max.</div>
+          `;
+          const pts=[0, .25, .5, .75, 1].map(x=> s.inputs.claimsBase*(1 - x*s.inputs.claimsMaxPct/100));
+          new Chart(document.getElementById('claimsLine'),{
+            type:'line',
+            data:{labels:['0%','25%','50%','75%','100%'],datasets:[{data:pts,borderColor:'#10B981',backgroundColor:'rgba(16,185,129,.12)',fill:true,tension:.35}]},
+            options:{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(0,0,0,.06)'}}}}
+          });
+          break;
+        }
+
+        case 'cfo-spend': {
+          modalTitle.textContent='Spend Efficiency — Unit Economics';
+          modalBody.innerHTML = `
+            <table>
+              <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Cost / employee / year</td><td>${fmt.money((s.inputs.pepmPlatform+s.inputs.pepmVerify)*12)}</td></tr>
+                <tr><td>Cost / active / year</td><td>${fmt.money(s.derived.disp.programCost / s.derived.active)}</td></tr>
+                <tr><td>Value / active / year</td><td>${fmt.money(s.derived.disp.verifiedSavings / s.derived.active)}</td></tr>
+              </tbody>
+            </table>
+            <div class="muted" style="margin-top:.5rem">Reallocate low-yield budget to high-impact nudges to lift efficiency.</div>
+          `;
+          break;
+        }
+
+        case 'chro-esg': {
+          modalTitle.textContent='ESG — Donations Ledger';
+          const tbl = document.createElement('table');
+          tbl.innerHTML = `<thead><tr><th>Date</th><th>Verification</th><th>QALYs</th><th>Pledge ($)</th><th>Status</th></tr></thead>`;
+          const tb = document.createElement('tbody');
+          ledgerRows.slice(0,10).forEach(r=>{
+            const tr=document.createElement('tr');
+            tr.innerHTML=`<td>${r.date}</td><td>${r.id}</td><td>${r.qaly.toFixed(3)}</td><td>${fmt.money(r.qaly*s.inputs.pledgePerQaly)}</td><td>${r.status}</td>`;
+            tb.appendChild(tr);
+          });
+          tbl.appendChild(tb);
+          modalBody.appendChild(tbl);
+          break;
+        }
+
+        case 'chro-activation': {
+          modalTitle.textContent='Activation — Cohort Breakdown';
+          modalBody.innerHTML = `
+            <table>
+              <thead><tr><th>Cohort</th><th>n</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Sales</td><td>12</td><td>${badgeCohort(12)}</td></tr>
+                <tr><td>Ops</td><td>9</td><td>${badgeCohort(9)}</td></tr>
+                <tr><td>Eng</td><td>24</td><td>${badgeCohort(24)}</td></tr>
+                <tr><td>CX</td><td>7</td><td>${badgeCohort(7)}</td></tr>
+                <tr><td>Marketing</td><td>2</td><td>${badgeCohort(2)}</td></tr>
+                <tr><td>G&A</td><td>6</td><td>${badgeCohort(6)}</td></tr>
+              </tbody>
+            </table>
+            <div class="muted" style="margin-top:.5rem">Cohorts with n&lt;5 are locked for privacy.</div>
+          `;
+          break;
+        }
+
+        case 'chro-retention': {
+          modalTitle.textContent='Retention — Drivers';
+          modalBody.innerHTML = `
+            <div style="height:240px"><canvas id="retDrivers"></canvas></div>
+            <div class="muted" style="margin-top:.5rem">Drivers combine HRV balance, sleep regularity, and engagement cadence.</div>
+          `;
+          new Chart(document.getElementById('retDrivers'),{
+            type:'bar',
+            data:{labels:['HRV','Sleep','Engagement'],datasets:[{data:[46,32,22],backgroundColor:['#10B981','#F59E0B','#CB5907']}]},
+            options:{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}}}}
+          });
+          break;
+        }
+
+        case 'chro-fitness': {
+          modalTitle.textContent='Fitness Mix — Shift Over Time';
+          modalBody.innerHTML = `<div style="height:240px"><canvas id="fitArea"></canvas></div>`;
+          new Chart(document.getElementById('fitArea'),{
+            type:'line',
+            data:{labels:['Q1','Q2','Q3','Q4'],datasets:[
+              {label:'Low', data:[30,26,22,18], borderColor:'#EF4444', backgroundColor:'rgba(239,68,68,.12)', fill:true, tension:.35},
+              {label:'High', data:[22,24,26,28], borderColor:'#10B981', backgroundColor:'rgba(16,185,129,.12)', fill:true, tension:.35}
+            ]},
+            options:{responsive:true,maintainAspectRatio:false}
+          });
+          break;
+        }
+
+        case 'ceo-asset': {
+          modalTitle.textContent='Health Asset — Composition';
+          modalBody.innerHTML = `
+            <table>
+              <thead><tr><th>Component</th><th>QALYs</th><th>Value ($)</th></tr></thead>
+              <tbody>
+                <tr><td>CRF (VO₂max)</td><td>${(s.derived.disp.qalyYTD*0.45).toFixed(2)}</td><td>${fmt.money(s.derived.disp.qalyYTD*0.45*s.inputs.qalyValue)}</td></tr>
+                <tr><td>Activity</td><td>${(s.derived.disp.qalyYTD*0.35).toFixed(2)}</td><td>${fmt.money(s.derived.disp.qalyYTD*0.35*s.inputs.qalyValue)}</td></tr>
+                <tr><td>Recovery</td><td>${(s.derived.disp.qalyYTD*0.20).toFixed(2)}</td><td>${fmt.money(s.derived.disp.qalyYTD*0.20*s.inputs.qalyValue)}</td></tr>
+                <tr><td><strong>Total</strong></td><td><strong>${s.derived.disp.qalyYTD.toFixed(2)}</strong></td><td><strong>${fmt.money(s.derived.disp.qalyYTD*s.inputs.qalyValue)}</strong></td></tr>
+              </tbody>
+            </table>
+          `;
+          break;
+        }
+
+        case 'ceo-variability': {
+          modalTitle.textContent='Variability — Cell-level Detail';
+          modalBody.innerHTML = `<div class="muted">Hover the dashboard heatmap for cohort tooltips. Locked where n&lt;5.</div>`;
+          break;
+        }
+
+        case 'ceo-absenteeism': {
+          modalTitle.textContent='Absenteeism — Forecast Inputs';
+          modalBody.innerHTML = `
+            <table>
+              <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Baseline days / emp / qtr</td><td>5.7</td></tr>
+                <tr><td>Model delta from CRF/activity</td><td>−16%</td></tr>
+                <tr><td>Projected</td><td>4.8</td></tr>
+              </tbody>
+            </table>`;
+          break;
+        }
+
+        case 'ceo-recovery': {
+          modalTitle.textContent='Recovery Consistency — Distribution';
+          modalBody.innerHTML = `<div style="height:240px"><canvas id="recHist"></canvas></div>`;
+          new Chart(document.getElementById('recHist'),{
+            type:'bar',
+            data:{labels:['60-65','65-70','70-75','75-80','80-85','85-90'],datasets:[{data:[6,12,22,28,20,12],backgroundColor:'#F59E0B'}]},
+            options:{responsive:true,maintainAspectRatio:false}
+          });
+          break;
+        }
+
+        default: {
+          modalTitle.textContent='Details';
+          modalBody.textContent='—';
+        }
+      }
+    }
+    function badgeCohort(n){ return n>=5 ? '✅ Unlocked' : '🔒 Locked'; }
+
+    function calcNPV3y(annualBenefit, upfrontCost, discPct){
+      const r = discPct/100;
+      const cf1 = annualBenefit, cf2=annualBenefit, cf3=annualBenefit;
+      return -upfrontCost + cf1/(1+r) + cf2/Math.pow(1+r,2) + cf3/Math.pow(1+r,3);
+    }
+
+    // ---------- CHART HELP ----------
+    function mkChart(id, type, labels, data, colorKey='brand'){
+      const el=document.getElementById(id); if(!el) return;
+      const colors = {
+        brand:{border:'#CB5907', fill:'rgba(203,89,7,.12)'},
+        good:{border:'#10B981', fill:'rgba(16,185,129,.12)'},
+        warn:{border:'#F59E0B', fill:'rgba(245,158,11,.12)'},
+        bad:{border:'#EF4444', fill:'rgba(239,68,68,.12)'}
+      };
+      const c = colors[colorKey] || colors.brand;
+      return new Chart(el,{
+        type, data:{labels, datasets:[{data, borderColor:c.border, backgroundColor:(type==='line'? c.fill : data.map(()=>c.border)), fill:(type==='line'), tension:.35}]},
+        options:{responsive:true,maintainAspectRatio:false,
+          scales:(type==='doughnut'||type==='pie')?{}:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.06)'}}}}
+      });
+    }
+
+    // ---------- HEATMAP (simple) ----------
+    function colorFor(v){
+      const h = 140 - (122 * (v/100)); const l = 92 - (22 * (v/100));
+      return `hsl(${h}, 65%, ${l}%)`;
+    }
+    function buildHeatmap(){
+      const root=document.getElementById('heatmap'); if(!root) return;
+      root.innerHTML='';
+      const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const teams=['Sales','Ops','Eng','CX','Marketing','G&A'];
+      // header
+      root.appendChild(Object.assign(document.createElement('div'),{textContent:''}));
+      days.forEach(d=>{const x=document.createElement('div');x.textContent=d; x.style.cssText='font-size:.8rem;color:#444;text-align:center'; root.appendChild(x);});
+      // rows
+      const act = {Sales:12, Ops:9, Eng:24, CX:7, Marketing:2, 'G&A':6};
+      teams.forEach((t,i)=>{
+        const th=document.createElement('div'); th.textContent=t; th.style.cssText='font-size:.85rem;color:#444;display:flex;align-items:center;padding-left:.25rem'; root.appendChild(th);
+        const n = act[t] ?? 0;
+        for(let j=0;j<7;j++){
+          const cell=document.createElement('div');
+          cell.style.cssText='position:relative;height:32px;border-radius:8px;border:1px solid #F1E9E2;box-shadow:var(--shadow-sm);background:#faf7f3;cursor:pointer';
+          if(n<5){ cell.style.backgroundImage='repeating-linear-gradient(-45deg,#F0EBE6,#F0EBE6 4px,#F8F5F2 4px,#F8F5F2 8px)'; cell.title=`Locked (n=${n}<5)`; }
+          else { const val = 25+Math.round(Math.random()*65); cell.style.background=colorFor(val); cell.title=`${t} • ${days[j]} — Volatility: ${val}`; }
+          root.appendChild(cell);
+        }
+      });
+    }
+
+    // ---------- INIT CHARTS & UI ----------
+    let charts={};
+    function initCharts(){
+      charts.ceoAsset = mkChart('ceoAssetChart','bar',['Q1','Q2','Q3','Q4'],[2.5,3.0,3.3,3.2],'good');
+      charts.ceoAbs   = mkChart('ceoAbsChart','line',['Q1','Q2','Q3','Q4'],[5.6,5.2,4.9,4.8],'good');
+      charts.ceoRec   = mkChart('ceoRecChart','line',['W1','W2','W3','W4'],[72,74,76,76],'warn');
+
+      charts.cfoRoi   = mkChart('cfoRoiBars','bar',['Cost','Claims','Productivity','Net'],[-1,1,1,1],'brand');
+      charts.cfoProd  = mkChart('cfoProdChart','bar',['Q1','Q2','Q3','Q4'],[1,1,1,1],'brand');
+      charts.cfoClaims= mkChart('cfoClaimsChart','line',['Q1','Q2','Q3','Q4'],[1,1,1,1],'good');
+      charts.cfoSpend = mkChart('cfoSpendChart','line',['Jan','Feb','Mar','Apr'],[87,89,91,92],'good');
+
+      charts.chroESG  = mkChart('chroESGChart','bar',['Q1','Q2','Q3','Q4'],[2.5,3.0,3.3,3.2],'good');
+      // activation doughnut
+      new Chart(document.getElementById('chroActChart'),{
+        type:'doughnut',
+        data:{labels:['Wearables','Mobile-only','Not active'],datasets:[{data:[28,19,53],backgroundColor:['#10B981','#CB5907','#F1E5DB'],borderColor:'#fff',borderWidth:2,hoverOffset:6}]},
+        options:{responsive:true,maintainAspectRatio:false,cutout:'58%',plugins:{legend:{display:false}}}
+      });
+      charts.chroRet  = mkChart('chroRetChart','line',['Q1','Q2','Q3','Q4'],[12,10,8,7],'good');
+      charts.chroFit  = mkChart('chroFitChart','bar',['Low','Medium','High'],[18,54,28],'good');
+    }
+
+    function updateUI(){
+      const d=s.derived, i=s.inputs;
+
+      // Highlights
+      setText('hlROI', fmt.num1(d.verifiedSavings/d.programCost)+'×');
+      setText('hlROI_sub', (d.disp.netBenefit>=0?'+':'')+fmt.money(d.disp.netBenefit)+' net on '+fmt.money(d.disp.programCost)+' spend');
+      setText('hlAct', i.activation+'%');
+      setText('hlAct_sub', d.toHigh>0? `${d.toHigh} more people → High confidence` : 'High confidence unlocked');
+      setText('hlESG', fmt.money(d.disp.pledge));
+
+      // CEO
+      setText('ceoQalys', d.disp.qalyYTD.toFixed(1));
+      setText('ceoQalysValue', fmt.money(i.qalyValue));
+      setText('ceoAsset', fmt.money(d.disp.qalyYTD*i.qalyValue));
+
+      // CFO
+      setText('cfoROIMultiple', fmt.num1(d.verifiedSavings/d.programCost));
+      setText('cfoCost', fmt.money(d.disp.programCost));
+      setText('cfoSavings', fmt.money(d.disp.verifiedSavings));
+      setText('cfoNet', (d.disp.netBenefit>=0?'+ ':'− ')+fmt.money(Math.abs(d.disp.netBenefit)));
+      document.getElementById('confBadge').textContent = d.confidence;
+      document.getElementById('cfoConfidenceMsg').innerHTML = d.toHigh>0
+        ? `<strong>Path to High:</strong> +${d.toHigh} activations (50%) unlocks high-confidence projections.`
+        : `<strong>Status:</strong> High confidence — sample size & coverage sufficient.`;
+
+      setText('cfoProdHero', fmt.money(d.disp.prodSavings));
+      setText('cfoDaysSaved', i.daysSavedPerActive.toFixed(1));
+      setText('cfoWage', fmt.money(i.wagePerDay));
+
+      setText('cfoClaimsHero', fmt.money(d.disp.claimsSavings));
+      setText('cfoClaimsBase', fmt.money(i.claimsBase));
+      setText('cfoClaimsPct', fmt.pct1(d.claimsReductionPct*100));
+
+      setText('cfoCostActive', fmt.money(d.disp.programCost / Math.max(1,d.active)));
+      setText('cfoValueActive', fmt.money(d.disp.verifiedSavings / Math.max(1,d.active)));
+
+      // CHRO
+      setText('chroESG', fmt.money(d.disp.pledge));
+      setText('chroQ', d.disp.qalyYTD.toFixed(1));
+      setText('chroP', fmt.money(i.pledgePerQaly));
+      setText('chroAct', i.activation+'%');
+
+      // Charts update
+      charts.cfoRoi.data.datasets[0].data = [-d.disp.programCost, d.disp.claimsSavings, d.disp.prodSavings, d.disp.netBenefit];
+      charts.cfoRoi.update();
+
+      charts.cfoProd.data.datasets[0].data = [d.disp.prodSavings/4, d.disp.prodSavings/4, d.disp.prodSavings/4, d.disp.prodSavings/4];
+      charts.cfoProd.update();
+
+      charts.cfoClaims.data.datasets[0].data = [i.claimsBase*(1-0.25*i.claimsMaxPct/100), i.claimsBase*(1-0.5*i.claimsMaxPct/100), i.claimsBase*(1-0.75*i.claimsMaxPct/100), i.claimsBase*(1-1*i.claimsMaxPct/100)];
+      charts.cfoClaims.update();
+
+      charts.chroESG.data.datasets[0].data = [d.disp.pledge*0.2, d.disp.pledge*0.25, d.disp.pledge*0.28, d.disp.pledge*0.27].map(v=>Math.max(0,v));
+      charts.chroESG.update();
+    }
+
+    // ---------- BOOT ----------
+    compute();
+    initCharts();
+    buildHeatmap();
+    updateUI();
+  </script>
 </body>
 </html>
