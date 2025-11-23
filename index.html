@@ -3,574 +3,568 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HealthEqual AI | The Future-Ready Accountability System</title>
-  <meta name="description" content="HealthEqual AI is the financial infrastructure for preventive health. Features the Wellness ROI Transparency Index and Health Dividend API.">
+  <title>HealthEqual AI - The Future-Ready Accountability System for Wellness ROI</title>
+  <meta name="description" content="HealthEqual AI is the world's future-ready financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, a Health Dividend API, and the HealthEqual Dashboard for employers.">
   <link rel="icon" href="/lumicoin-logo.png" type="image/png">
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
   <style>
-    /* --- CSS Variables & Tokens --- */
-    :root {
-      /* Palette - Warm Minimalist */
-      --bg-body: #FFFCF9;       /* Very warm off-white */
-      --bg-surface: #FFFFFF;    /* Pure white for cards */
-      --bg-glass: rgba(255, 252, 249, 0.85);
-      
-      --text-primary: #1F1A17;
-      --text-secondary: #635852;
-      --text-tertiary: #9C928C;
-
-      /* Brand Accents */
-      --accent-primary: #CB5907;      /* Burnt Orange */
-      --accent-glow: rgba(203, 89, 7, 0.15); 
-      --accent-highlight: #FFF0E6;
-      
-      /* Spacing & Layout */
-      --container-width: 1140px;
-      --radius-lg: 24px;
-      --radius-md: 16px;
-      --radius-sm: 8px;
-      
-      /* Elevation */
-      --shadow-sm: 0 2px 8px rgba(31, 26, 23, 0.04);
-      --shadow-md: 0 12px 32px rgba(31, 26, 23, 0.06);
-      --shadow-lg: 0 20px 60px rgba(203, 89, 7, 0.08);
-      
-      /* Animation */
-      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* --- Global Reset --- */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html { scroll-behavior: smooth; }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-body);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Space Grotesk', sans-serif;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-    }
-
-    a { text-decoration: none; color: inherit; transition: color 0.2s; }
-    ul { list-style: none; }
-    img { max-width: 100%; display: block; }
-
-    /* --- Layout Utilities --- */
-    .container {
-      max-width: var(--container-width);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px 28px;
-      font-weight: 600;
-      font-size: 1rem;
-      border-radius: var(--radius-md);
-      transition: all 0.4s var(--ease-out-expo);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--text-primary);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .btn-primary:hover {
-      background: var(--accent-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(203, 89, 7, 0.25);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.1);
-      color: var(--text-primary);
-    }
-    .btn-secondary:hover {
-      background: var(--bg-surface);
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
-    }
-
-    /* --- Header --- */
+    /* Header layout */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: var(--bg-glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,0,0,0.03);
-      padding: 16px 0;
+      background-color: rgba(255, 248, 242, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
     }
-
     .site-header .container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      padding-top: var(--spacing-xs);
+      padding-bottom: var(--spacing-xs);
+      gap: var(--spacing-sm);
+    }
+    .logo-link img {
+      height: 42px;
+      display: block;
+    }
+    .main-nav {
+      margin-left: auto;
+    }
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      justify-content: flex-end;
     }
 
-    .logo-link img { height: 36px; width: auto; }
-
-    .main-nav ul { display: flex; gap: 32px; }
-    .main-nav a {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      position: relative;
-    }
-    .main-nav a:hover, .main-nav a.active { color: var(--accent-primary); }
-    .main-nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -4px; left: 0; width: 0; height: 1.5px;
-      background: var(--accent-primary);
-      transition: width 0.3s var(--ease-out-expo);
-    }
-    .main-nav a:hover::after { width: 100%; }
-
-    /* Mobile Nav Toggle */
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
-    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-primary); transition: 0.3s; }
-
-    /* --- Hero Section --- */
+    /* Hero */
     .hero-section {
-      padding: 100px 0 80px;
-      position: relative;
+      padding: clamp(20px, 5vw, 35px) 0 clamp(50px, 8vw, 80px);
       text-align: center;
+      position: relative;
       overflow: hidden;
     }
-
-    /* Subtle ambient background glow */
     .hero-section::before {
-      content: '';
+      content: "";
       position: absolute;
-      top: -20%; left: 50%;
-      transform: translateX(-50%);
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, var(--accent-glow) 0%, rgba(255,255,255,0) 70%);
+      width: 135%;
+      height: 135%;
+      top: -18%;
+      left: -18%;
+      background: radial-gradient(circle at 50% 30%, var(--accent-peach), transparent 70%);
       z-index: -1;
-      animation: breathe 8s infinite alternate ease-in-out;
+      animation: gentlePulse 10s infinite alternate ease-in-out;
+      opacity: 0.7;
     }
-    @keyframes breathe { 0% { opacity: 0.5; scale: 0.9; } 100% { opacity: 1; scale: 1.1; } }
-
-    .hero-image-wrapper {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 40px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      background: #fff; /* Fallback */
-      padding: 8px; /* Frame effect */
-      transform: rotate(-1deg);
-      transition: transform 0.6s var(--ease-out-expo);
+    @keyframes gentlePulse {
+      0% { opacity: 0.5; transform: scale(1) rotate(-0.4deg); }
+      100% { opacity: 0.8; transform: scale(1.05) rotate(0.6deg); }
     }
-    .hero-image-wrapper:hover { transform: rotate(0deg) scale(1.02); }
-    
-    .hero-image {
-      border-radius: 16px;
-      max-width: 600px;
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .happy-people-image {
+      max-width: 720px;
       width: 100%;
       height: auto;
+      margin: -8px auto clamp(16px, 3vw, 24px); /* pulls image slightly closer to nav */
+      display: block;
+      border-radius: 18px;
+      box-shadow: none;
+      background: transparent;
     }
-
     .hero-section h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      font-weight: 600;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, var(--text-primary) 30%, #555 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.03em;
+      font-size: clamp(2.6rem, 6.5vw, 3.6rem);
+      margin-bottom: var(--spacing-md);
+      max-width: 20ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
     }
-
     .hero-section .subtitle {
-      font-size: clamp(1.1rem, 2.5vw, 1.25rem);
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto 40px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* --- Index Section (Split Layout) --- */
-    .index-section {
-      padding: 100px 0;
-      background: linear-gradient(to bottom, var(--bg-body), #fff);
-    }
-    
-    .split-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-    }
-
-    .text-block h2 {
-      font-size: 2.5rem;
-      margin-bottom: 16px;
-      color: var(--accent-primary);
-    }
-    .text-block .lead {
-      font-size: 1.15rem;
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      font-weight: 400;
       color: var(--text-primary);
-      margin-bottom: 24px;
-      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: var(--spacing-xl);
+      max-width: 56ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
-    .text-block p {
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-      max-width: 45ch;
-    }
-
-    /* The Index "Widget" Visualization */
-    .index-widget {
-      background: var(--bg-surface);
-      border: 1px solid rgba(0,0,0,0.04);
-      padding: 40px;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      position: relative;
-    }
-    .index-widget::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: var(--radius-lg);
-      padding: 1px;
-      background: linear-gradient(180deg, rgba(203,89,7,0.2), transparent);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .widget-header h4 {
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      color: var(--text-tertiary);
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .rating-row {
+    .hero-cta-buttons {
+      margin-top: var(--spacing-lg);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      margin-bottom: 8px;
-      border-radius: 12px;
-      background: var(--bg-body);
-      transition: 0.3s;
+      gap: var(--spacing-md);
     }
-    .rating-row:last-child {
-      background: var(--accent-highlight);
-      border: 1px solid rgba(203, 89, 7, 0.1);
-    }
-    .rating-row:last-child .label {
-      color: var(--accent-primary);
-      font-weight: 700;
-    }
-    
-    .stars { color: #E0E0E0; font-size: 1.1rem; letter-spacing: 2px; }
-    .stars .filled { color: var(--accent-primary); }
-    .label { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
-
-    /* --- Ecosystem Section --- */
-    .ecosystem-section {
-      padding: 100px 0;
-      text-align: center;
-    }
-    .ecosystem-section h2 { font-size: 2.5rem; margin-bottom: 16px; }
-    .ecosystem-section .lead-p {
-      max-width: 700px;
-      margin: 0 auto 60px;
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-    }
-
-    .eco-card {
-      background: var(--bg-surface);
-      padding: 32px;
-      border-radius: var(--radius-lg);
-      text-align: left;
-      border: 1px solid rgba(0,0,0,0.05);
-      transition: all 0.4s var(--ease-out-expo);
-      position: relative;
-    }
-    .eco-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(203,89,7,0.2);
-    }
-
-    .icon-box {
-      width: 48px; height: 48px;
-      background: var(--accent-highlight);
-      color: var(--accent-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      font-size: 1.25rem;
-      margin-bottom: 24px;
-    }
-
-    .eco-card h3 { font-size: 1.25rem; margin-bottom: 12px; }
-    .eco-card p { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.7; }
-    
-    .card-link {
-      font-size: 0.9rem;
+    .hero-cta-buttons .btn {
+      min-width: 260px;
+      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl);
+      font-size: 1.02rem;
       font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .btn.btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent-primary);
       color: var(--accent-primary);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      box-shadow: none;
     }
-    .card-link:hover { gap: 8px; } /* Slight move arrow animation */
-
-    /* --- Footer --- */
-    .site-footer {
-      padding: 60px 0;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      text-align: center;
-      background: #fff;
+    .btn.btn-secondary:hover {
+      background: var(--accent-peach);
+      box-shadow: var(--shadow-button);
+      transform: translateY(-2px);
     }
-    .footer-nav {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-    }
-    .footer-nav a { font-size: 0.9rem; color: var(--text-secondary); }
-    .footer-nav a:hover { color: var(--accent-primary); }
-    .copyright { color: var(--text-tertiary); font-size: 0.85rem; }
-
-    /* --- Responsive --- */
-    @media (max-width: 900px) {
-      .split-layout { grid-template-columns: 1fr; gap: 48px; text-align: center; }
-      .text-block p { margin-left: auto; margin-right: auto; }
-      .grid-3 { grid-template-columns: 1fr; }
-      .hero-section h1 { font-size: 2.5rem; }
-    }
-
-    @media (max-width: 768px) {
-      .main-nav { 
-        position: fixed; top: 70px; left: 0; right: 0; 
-        background: #fff; border-bottom: 1px solid #eee;
-        padding: 24px;
-        transform: translateY(-150%); transition: transform 0.3s ease;
+    @media (min-width: 769px) {
+      .hero-cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--spacing-xl);
       }
-      .main-nav.open { transform: translateY(0); }
-      .main-nav ul { flex-direction: column; align-items: center; gap: 16px; }
-      .nav-toggle { display: flex; }
-      .container { padding: 0 20px; }
+    }
+    @media (max-width: 768px) {
+      .hero-section h1 { padding: 0 var(--spacing-sm); }
+      .hero-section .subtitle { padding: 0 var(--spacing-sm); }
+      .hero-cta-buttons .btn { min-width: 90%; }
+    }
+
+    /* Index Feature Section */
+    .index-section {
+      background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%);
+      text-align: center;
+      border-top: 1px solid var(--light-gray);
+      padding: clamp(70px, 10vw, 110px) 0;
+      position: relative;
+    }
+    .index-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+      opacity: 0.6;
+    }
+    .index-section h2 {
+      color: var(--accent-primary);
+      font-size: clamp(2.1rem, 5vw, 2.7rem);
+      margin-bottom: var(--spacing-sm);
+    }
+    .index-section .tagline {
+      font-size: clamp(1.15rem, 3.3vw, 1.4rem);
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-md);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .index-section .lead {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      max-width: 62ch;
+      margin: 0 auto var(--spacing-xl);
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+      align-items: flex-start;
+      margin-top: var(--spacing-lg);
+    }
+    @media (min-width: 992px) {
+      .index-grid {
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--spacing-2xl);
+        text-align: left; /* FIX: Moved alignment rule here */
+      }
+    }
+    .index-content p {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: var(--spacing-md);
+    }
+    .index-visual {
+      background: var(--bg-base); /* FIX: Changed to flesh color */
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-soft);
+    }
+    .lumistars-graphic h4 {
+      text-align: center;
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin: 0 0 var(--spacing-md);
+    }
+    .lumistars-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    .lumistars-item {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+      background: var(--white);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--light-gray);
+      transition: var(--transition-smooth);
+    }
+    .lumistars-item:hover {
+      border-color: rgba(203, 89, 7, 0.3);
+      transform: translateX(3px);
+    }
+    .lumistars-item .stars {
+      width: 96px;
+      letter-spacing: 0.12em;
+      font-size: 1.1rem;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+    .lumistars-item .stars .empty {
+      color: #e5e7eb;
+      opacity: 0.8;
+    }
+    .lumistars-item .label {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.92rem;
+    }
+
+    /* Ecosystem Section */
+    .ecosystem-section {
+      background: transparent;
+      padding: clamp(80px, 11vw, 120px) 0;
+      position: relative;
+    }
+    .ecosystem-section::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+      opacity: 0.5;
+    }
+    .ecosystem-section h2 {
+      text-align: center;
+      color: var(--accent-primary);
+      font-size: clamp(2.1rem, 5vw, 2.7rem);
+      margin: 0 0 var(--spacing-md);
+    }
+    p.ecosystem-lead {
+      text-align: center;
+      max-width: 68ch;
+      margin: 0 auto var(--spacing-2xl);
+      font-size: clamp(1.05rem, 3vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--text-primary);
+    }
+    .ecosystem-grid {
+      display: grid;
+      gap: var(--spacing-lg);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 992px) {
+      .ecosystem-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .ecosystem-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      transition: var(--transition-smooth);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+    .ecosystem-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+      border-color: rgba(203, 89, 7, 0.22);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-sm);
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius-md);
+      background: var(--accent-peach);
+      color: var(--accent-primary);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .ecosystem-card h3 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+    }
+    .ecosystem-card p {
+      margin: 0 0 var(--spacing-md);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+    .card-link {
+      font-weight: 600;
+      display: inline-block;
+      transition: var(--transition-smooth);
+      font-size: 0.95rem;
+    }
+    .card-link:hover {
+      color: var(--accent-primary-dark);
+    }
+
+    /* Button sheen */
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    /* Animations */
+    .hero-section,
+    .index-section,
+    .ecosystem-section {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <!-- Assuming logo is roughly 150x40 -->
-        <img src="/healthequal-logo-x.png" alt="HealthEqual AI">
+        <img src="/healthequal-logo-x.png" alt="HealthEqual Logo">
       </a>
+code
+Code
+<button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
 
-      <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.main-nav').classList.toggle('open')">
-        <span></span><span></span><span></span>
-      </button>
+  <nav class="main-nav" id="mainNav">
+    <ul>
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
+      <li><a href="/manifesto/">Manifesto</a></li>
+      <li><a href="/support/">Support</a></li>
+    </ul>
+  </nav>
 
-      <nav class="main-nav">
+  <div class="nav-overlay"></div>
+</div>
+  </header>
+  <main>
+    <section class="hero-section">
+      <div class="container hero-inner">
+        <img src="/happypeople.png" alt="Happy People" class="happy-people-image">
+        <h1>What Is Your Health Worth?</h1>
+        <p class="subtitle">
+          HealthEqual AI is the future-ready financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, a Health Dividend API, and the HealthEqual Dashboard for employers.        </p>
+        <div class="hero-cta-buttons">
+          <a href="/wellness-roi-transparency-index/" class="btn">Explore The Index</a>
+          <a href="#ecosystem" class="btn btn-secondary">How It Works</a>
+        </div>
+      </div>
+    </section>
+code
+Code
+<section class="page-section index-section">
+  <div class="container">
+    <h2>The Wellness ROI Transparency Index</h2>
+    <p class="lead">
+      In a $34B corporate wellness market, 94% of CFOs can't prove ROI. We're ending the era of unmeasurable spending with the industry's first independent standard for verifying financial impact.
+    </p>
+    <div class="index-grid">
+      <div class="index-content">
+        <p>
+          The Index grades wellness platforms using our proprietary
+          <strong>LümiStars methodology</strong>—a hierarchy of evidence that separates marketing claims from measurable outcomes.
+        </p>
+        <p>
+          From simple engagement metrics to the new gold standard of
+          <strong>Causal &amp; Auditable ROI</strong>, we provide the transparency that CFOs and benefits leaders have been missing.
+        </p>
+        <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings &amp; Methodology</a>
+      </div>
+      <div class="index-visual">
+        <div class="lumistars-graphic">
+          <h4>The LümiStars Hierarchy</h4>
+          <ul class="lumistars-list">
+            <li class="lumistars-item">
+              <div class="stars">★<span class="empty">★★★★</span></div>
+              <div class="label">Engagement</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★<span class="empty">★★★</span></div>
+              <div class="label">Behavioral</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★<span class="empty">★★</span></div>
+              <div class="label">Modeled ROI</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★★<span class="empty">★</span></div>
+              <div class="label">Validated ROI</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★★★</div>
+              <div class="label">Causal &amp; Auditable ROI</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem" class="page-section ecosystem-section">
+  <div class="container">
+    <h2>The HealthEqual Ecosystem</h2>
+    <p class="ecosystem-lead">
+      The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable for employers, partners, and the entire healthcare system.
+    </p>
+    <div class="ecosystem-grid">
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <h3>The Dashboard</h3>
+        </div>
+        <p>
+          For employers. The BioCapital Dashboard turns workforce health signals into auditable financial insights:
+          activation, predicted retention, fitness mix shifts, and modeled ROI.
+        </p>
+        <a href="https://www.healthequal.ai/employer-dashboard-demo" class="card-link" target="_blank" rel="noopener noreferrer">
+          See the Demo →
+        </a>
+      </div>
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">⭐</div>
+          <h3>The Index</h3>
+        </div>
+        <p>
+          Our independent research provides the first public standard for wellness ROI. We bring accountability to a
+          $34B market, empowering data-driven decisions.
+        </p>
+        <a href="/wellness-roi-transparency-index/" class="card-link">
+          Explore the Index →
+        </a>
+      </div>
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <h3>The API</h3>
+        </div>
+        <p>
+          The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal &amp;
+          Auditable ROI—the new gold standard for healthcare value.
+        </p>
+        <a href="mailto:marjon@healthequal.ai" class="card-link">
+          Partner With Us →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <nav>
         <ul>
-          <li><a href="/" class="active">Home</a></li>
+          <li><a href="/">Home</a></li>
           <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
           <li><a href="/manifesto/">Manifesto</a></li>
           <li><a href="/support/">Support</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
-    </div>
-  </header>
-
-  <main>
-    <!-- Hero -->
-    <section class="hero-section">
-      <div class="container">
-        
-        <div class="hero-image-wrapper">
-          <img src="/happypeople.png" alt="Healthy, happy employees" class="hero-image">
-        </div>
-
-        <h1>What Is Your Health Worth?</h1>
-        <p class="subtitle">
-          HealthEqual AI is the future-ready financial infrastructure for preventive health. 
-          Auditable ROI. Verifiable Impact. Total Transparency.
-        </p>
-        
-        <div class="hero-actions">
-          <a href="/wellness-roi-transparency-index/" class="btn btn-primary">Explore The Index</a>
-          <a href="#ecosystem" class="btn btn-secondary">How It Works</a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- The Index Feature -->
-    <section class="index-section">
-      <div class="container">
-        <div class="split-layout">
-          
-          <div class="text-block">
-            <h2>The Transparency Index</h2>
-            <p class="lead">Stop guessing. Start auditing.</p>
-            <p>
-              In a $34B corporate wellness market, 94% of CFOs can't prove ROI. 
-              We are ending the era of unmeasurable spending with the industry's first 
-              independent standard for verifying financial impact.
-            </p>
-            <a href="/wellness-roi-transparency-index/" class="btn btn-secondary">View Rankings & Methodology</a>
-          </div>
-
-          <div class="index-visual">
-            <div class="index-widget">
-              <div class="widget-header">
-                <h4>The LümiStars Hierarchy</h4>
-              </div>
-              
-              <!-- Stacked Ratings -->
-              <div class="rating-row">
-                <div class="stars"><span class="filled">★</span>☆☆☆☆</div>
-                <div class="label">Engagement</div>
-              </div>
-              <div class="rating-row">
-                <div class="stars"><span class="filled">★★</span>☆☆☆</div>
-                <div class="label">Behavioral Change</div>
-              </div>
-              <div class="rating-row">
-                <div class="stars"><span class="filled">★★★</span>☆☆</div>
-                <div class="label">Modeled ROI</div>
-              </div>
-              <div class="rating-row">
-                <div class="stars"><span class="filled">★★★★</span>☆</div>
-                <div class="label">Validated ROI</div>
-              </div>
-              <div class="rating-row">
-                <div class="stars"><span class="filled">★★★★★</span></div>
-                <div class="label">Causal & Auditable</div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Ecosystem -->
-    <section id="ecosystem" class="ecosystem-section">
-      <div class="container">
-        <h2>The HealthEqual Ecosystem</h2>
-        <p class="lead-p">
-          The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable.
-        </p>
-        
-        <div class="grid-3">
-          
-          <article class="eco-card">
-            <div class="icon-box">📈</div>
-            <h3>The Dashboard</h3>
-            <p>
-              For employers. Turn workforce health signals into auditable financial insights: 
-              activation, predicted retention, and fitness mix shifts.
-            </p>
-            <a href="https://www.healthequal.ai/employer-dashboard-demo" target="_blank" class="card-link">View Demo →</a>
-          </article>
-
-          <article class="eco-card">
-            <div class="icon-box">⭐</div>
-            <h3>The Index</h3>
-            <p>
-              Our independent research provides the first public standard for wellness ROI. 
-              We bring accountability to the market.
-            </p>
-            <a href="/wellness-roi-transparency-index/" class="card-link">See Rankings →</a>
-          </article>
-
-          <article class="eco-card">
-            <div class="icon-box">⚡</div>
-            <h3>The API</h3>
-            <p>
-              The financial rails for prevention. Our Health Dividend API enables platforms to 
-              offer Causal & Auditable ROI natively.
-            </p>
-            <a href="mailto:marjon@healthequal.ai" class="card-link">Partner With Us →</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <nav class="footer-nav">
-        <a href="/">Home</a>
-        <a href="/wellness-roi-transparency-index/">The Index</a>
-        <a href="/manifesto/">Manifesto</a>
-        <a href="/support/">Support</a>
-        <a href="/terms/">Terms</a>
-        <a href="/privacy/">Privacy</a>
-      </nav>
-      <p class="copyright">© <span id="year">2025</span> HealthEqual, Inc. All rights reserved.</p>
+      <p>© <span id="currentYear">2025</span> HealthEqual, Inc. All rights reserved.</p>
     </div>
   </footer>
-
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Smooth scroll fix for anchor links
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Mobile navigation toggle
+    const navToggle  = document.querySelector('.nav-toggle');
+    const mainNav    = document.getElementById('mainNav');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function toggleNav() {
+      const open = mainNav.classList.toggle('is-open');
+      if (navToggle) {
+        navToggle.setAttribute('aria-expanded', open);
+        navToggle.classList.toggle('is-active');
+      }
+      if (navOverlay) {
+        navOverlay.style.display = open ? 'block' : 'none';
+      }
+    }
+
+    if (navToggle) {
+      navToggle.addEventListener('click', toggleNav);
+    }
+    if (navOverlay) {
+      navOverlay.addEventListener('click', toggleNav);
+    }
+
+    // Smooth scroll for in-page anchors
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+        target.scrollIntoView({ behavior: 'smooth' });
       });
     });
   </script>
-
 </body>
 </html>
