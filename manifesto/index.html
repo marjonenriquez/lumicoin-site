@@ -3,146 +3,593 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The LümiCoin Manifesto</title>
-  <meta name="description" content="Discover the vision behind LümiCoin: Proof of Care. Power to You.">
-  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
+  <title>Manifesto | HealthEqual AI</title>
+  <meta name="description" content="Human Health in the Era of Exponential Risk. The HealthEqual AI Manifesto.">
+  <link rel="icon" href="/healthequal-logo-x.png" type="image/png">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       1. CORE VARIABLES (Unified & Softened)
+       ========================================= */
+    :root {
+      /* Spacing */
+      --base-unit: 8px;
+      --spacing-xs: 8px;
+      --spacing-sm: 16px;
+      --spacing-md: 24px;
+      --spacing-lg: 32px;
+      --spacing-xl: 40px;
+      --spacing-2xl: 56px;
+      --spacing-3xl: 80px;
+
+      /* Colors */
+      --bg-base: #FFF8F2;       /* Cream Background */
+      --bg-surface: #FFFFFF;    /* White Surface */
+      
+      /* UPDATED: Softer Text Colors */
+      --text-primary: #2D2D2D;  /* Softened Charcoal (was #1A1A1A) */
+      --text-secondary: #556172;/* Cool Gray for body text */
+      --text-muted: #889099;    /* Lighter gray for meta details */
+      
+      --accent-primary: #CB5907;
+      --accent-primary-light: #F28341;
+      --accent-primary-dark: #A94700;
+      --accent-peach: rgba(255, 197, 150, .15);
+      
+      --risk-color: #EF4444;
+      --light-gray: rgba(0, 0, 0, .06);
+      
+      /* UI */
+      --border-radius-lg: 16px;
+      --border-radius-md: 12px;
+      --border-radius-sm: 8px;
+      
+      --shadow-soft: 0 4px 12px rgba(45, 45, 45, 0.04), 0 12px 32px rgba(45, 45, 45, 0.03);
+      --shadow-orb: 0 20px 50px rgba(203, 89, 7, 0.1), 0 0 0 1px rgba(203, 89, 7, 0.08);
+      
+      --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+      --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.15);
+    }
+
+    /* =========================================
+       2. RESET & BASE
+       ========================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.75rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    /* Texture Overlay */
+    .texture {
+      position: fixed; inset: 0; pointer-events: none; z-index: 50;
+      opacity: 0.35;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    /* =========================================
+       3. HEADER (100% Consistent with Homepage)
+       ========================================= */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(255, 248, 242, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      padding-top: var(--spacing-xs);
+      padding-bottom: var(--spacing-xs);
+      gap: var(--spacing-sm);
+    }
+    .logo-link img {
+      height: 42px;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .logo-link:hover img { transform: scale(1.02); }
+
+    .main-nav { margin-left: auto; }
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      justify-content: flex-end;
+      list-style: none;
+    }
+    .main-nav a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--border-radius-sm);
+      transition: all 0.2s ease;
+    }
+    .main-nav a:hover {
+      color: var(--accent-primary);
+      background-color: var(--accent-peach);
+    }
+    .main-nav a.active {
+      color: var(--accent-primary-dark);
+      background-color: var(--accent-peach);
+      font-weight: 600;
+    }
+
+    /* Mobile Nav Toggle */
+    .nav-toggle {
+      display: none; margin-left: auto;
+      background: none; border: none; cursor: pointer; padding: var(--spacing-xs);
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px;
+      background-color: var(--accent-primary);
+      margin: 5px 0; border-radius: 1px;
+    }
+    .nav-overlay { display: none; }
+
+    /* =========================================
+       4. CINEMATIC HERO
+       ========================================= */
+    .hero-section {
+      position: relative;
+      padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 10vh, 100px);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+      width: 100vw; height: 100vh;
+      background: radial-gradient(circle, var(--accent-peach) 0%, transparent 60%);
+      opacity: 0.7;
+      z-index: -1;
+      animation: breathe 8s infinite alternate ease-in-out;
+    }
+    @keyframes breathe { 0% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(1.1); } }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; background: #fff; border: 1px solid rgba(203, 89, 7, 0.2);
+      border-radius: 100px; color: var(--accent-primary);
+      font-size: 0.75rem; font-weight: 600;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(203, 89, 7, 0.05);
+      animation: fadeUp 0.8s ease-out forwards;
+    }
+    .hero-badge::before { content:''; width:6px; height:6px; background:var(--accent-primary); border-radius:50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{ opacity:1;} 50%{ opacity:0.5;} }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      margin-bottom: 24px;
+      line-height: 1.05;
+      animation: fadeUp 0.8s 0.1s ease-out forwards; opacity: 0;
+    }
+    .hero-title .highlight { color: var(--accent-primary); }
+
+    .hero-subtitle {
+      font-size: clamp(1.15rem, 3vw, 1.35rem);
+      color: var(--text-secondary);
+      max-width: 58ch; margin: 0 auto 40px;
+      font-weight: 400;
+      animation: fadeUp 0.8s 0.2s ease-out forwards; opacity: 0;
+    }
+
+    .scroll-mouse {
+      width: 24px; height: 36px; border: 2px solid var(--accent-primary);
+      border-radius: 12px; position: relative; margin: 0 auto;
+      opacity: 0; animation: fadeUp 0.8s 0.4s ease-out forwards;
+    }
+    .scroll-wheel {
+      width: 2px; height: 6px; background: var(--accent-primary);
+      position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      animation: wheelDrop 2s infinite;
+    }
+    @keyframes wheelDrop { 0% { top: 6px; opacity: 1; } 100% { top: 16px; opacity: 0; } }
+
+    /* =========================================
+       5. SCROLLYTELLING ENGINE
+       ========================================= */
+    .manifesto-engine {
+      position: relative;
+      padding-bottom: 150px;
+    }
+
+    .split-layout {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px;
+      max-width: 1100px; margin: 0 auto; padding: 0 var(--spacing-md);
+    }
+
+    /* --- LEFT: Sticky Visual --- */
+    .visual-col {
+      position: sticky; top: 120px; height: calc(100vh - 120px);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .orb-stage {
+      width: 320px; height: 320px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Ring */
+    .orb-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px solid rgba(203, 89, 7, 0.1);
+      background: #fff;
+      box-shadow: var(--shadow-orb);
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    /* Radar Sweep */
+    .orb-radar {
+      position: absolute; inset: 20px; border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent 0deg, var(--accent-primary) 30deg, transparent 31deg);
+      opacity: 0.1;
+      animation: spin 4s linear infinite;
+      transition: background 0.5s ease;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Core */
+    .orb-core {
+      position: relative; z-index: 2;
+      width: 180px; height: 180px;
+      background: #fff; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: transform 0.3s var(--ease-elastic);
+    }
+
+    .orb-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 700; line-height: 1;
+      color: var(--accent-primary);
+      transition: color 0.3s;
+    }
+    .orb-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-secondary); margin-top: 4px;
+    }
+
+    /* STATES */
+    [data-state="risk"] .orb-radar {
+      background: conic-gradient(from 0deg, transparent 0deg, var(--risk-color) 45deg, transparent 46deg);
+      opacity: 0.15; animation-duration: 1.5s;
+    }
+    [data-state="risk"] .orb-value { color: var(--risk-color); }
+    [data-state="risk"] .orb-ring { border-color: rgba(239,68,68,0.15); box-shadow: 0 20px 50px rgba(239,68,68,0.1); }
+
+    [data-state="solution"] .orb-radar {
+      background: conic-gradient(from 0deg, transparent 0deg, var(--accent-primary) 120deg, transparent 121deg);
+      opacity: 0.1; animation-duration: 6s;
+    }
+    [data-state="solution"] .orb-value { color: var(--accent-primary); }
+
+    /* --- RIGHT: Scrolling Content --- */
+    .content-col {
+      padding: 10vh 0; display: flex; flex-direction: column; gap: 45vh;
+    }
+
+    .chapter {
+      opacity: 0.25; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      padding-right: 5%;
+    }
+    .chapter.active { opacity: 1; transform: translateY(0); }
+
+    .chapter-meta {
+      display: block; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--text-muted);
+      margin-bottom: 12px; letter-spacing: 0.05em;
+    }
+
+    .chapter h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 20px; color: var(--text-primary);
+    }
+
+    .chapter p {
+      font-size: 1.1rem; color: var(--text-secondary);
+      margin-bottom: 24px; line-height: 1.7;
+    }
+
+    /* Info Cards */
+    .info-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-left: 3px solid var(--accent-primary);
+      padding: 24px; border-radius: 0 12px 12px 0;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s ease;
+    }
+    .info-card:hover { transform: translateX(5px); }
+    
+    .info-card.risk { border-left-color: var(--risk-color); background: #FEF2F2; }
+    .info-card.solution { background: #FFF; }
+
+    .info-list li {
+      list-style: none; margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+      font-size: 0.95rem; color: var(--text-primary);
+    }
+    .info-card.risk li::before { content: '⚠'; color: var(--risk-color); }
+    .info-card.solution li::before { content: '✓'; color: var(--accent-primary); font-weight: 700; }
+
+    /* Closing Statement */
+    .closing {
+      padding: 40px; background: #fff;
+      border: 1px solid rgba(203,89,7,0.15); border-radius: 20px;
+      text-align: center; box-shadow: 0 10px 40px rgba(203,89,7,0.05);
+    }
+    .closing h2 { color: var(--accent-primary); font-size: 2rem; margin-bottom: 16px; }
+    .closing p { color: var(--text-primary); font-weight: 500; }
+
+    /* =========================================
+       6. FOOTER (Exact match)
+       ========================================= */
+    .site-footer {
+      text-align: center;
+      padding: var(--spacing-xl) var(--spacing-md) var(--spacing-2xl);
+      border-top: 1px solid var(--light-gray);
+      background: #fff;
+    }
+    .footer-logo { height: 32px; opacity: 0.8; margin-bottom: 20px; transition: opacity 0.2s; }
+    .footer-logo:hover { opacity: 1; }
+    
+    .footer-nav {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 24px;
+      margin-bottom: 24px;
+    }
+    .footer-nav a {
+      color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: var(--accent-primary); }
+    .copyright { font-size: 0.85rem; color: var(--text-secondary); opacity: 0.7; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .split-layout { grid-template-columns: 1fr; gap: 40px; }
+      .visual-col { position: relative; top: 0; height: auto; padding: 40px 0; margin-bottom: 40px; }
+      .content-col { padding: 0; gap: 100px; }
+      .orb-stage { width: 260px; height: 260px; }
+      .orb-core { width: 150px; height: 150px; }
+      .orb-value { font-size: 2.5rem; }
+      
+      .nav-toggle { display: block; }
+      .main-nav {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--bg-base); padding: 20px; border-bottom: 1px solid var(--light-gray);
+      }
+      .main-nav.is-open { display: block; }
+      .main-nav ul { flex-direction: column; align-items: flex-start; }
+      .main-nav a { padding: 10px 0; width: 100%; display: block; }
+    }
+  </style>
 </head>
 <body>
 
+  <div class="texture"></div>
+
+  <!-- HEADER -->
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo-link">
-        <img src="/lumicoin-logo.png" alt="LümiCoin Logo">
-        <span class="logo-text">LümiCoin</span>
+        <img src="/healthequal-logo-x.png" alt="HealthEqual Logo">
       </a>
-      <button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
       </button>
+
       <nav class="main-nav" id="mainNav">
         <ul>
           <li><a href="/">Home</a></li>
+          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
           <li><a href="/manifesto/" class="active">Manifesto</a></li>
           <li><a href="/support/">Support</a></li>
-          <li><a href="/terms/">Terms</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
         </ul>
       </nav>
-      <div class="nav-overlay"></div>
     </div>
   </header>
 
   <main>
-    <section class="page-section">
-      <div class="container-narrow manifesto-page-content">
-        <h1 class="page-title">The LümiCoin Manifesto</h1>
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="hero-bg"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="badge-pill">Manifesto 2025</div>
+          <h1 class="hero-title">
+            Human Health in the Era of<br>
+            <span class="highlight">Exponential Risk</span>
+          </h1>
+          <p class="hero-subtitle">
+            The world is dominoes now. One shock triggers ten more. But the biggest untracked domino isn't in supply chains. <strong>It lives inside people.</strong>
+          </p>
+          <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+        </div>
+      </div>
+    </section>
 
-        <div class="manifesto-section">
-          <p class="pain">For the ones trying quietly, every day.</p>
-          <p class="solution">You hydrate.<br>You move.<br>You rest instead of overwork.<br>You try—even when no one’s watching.<br>Even when the system doesn’t care back.</p>
+    <!-- ENGINE -->
+    <section class="manifesto-engine">
+      <div class="split-layout">
+        
+        <!-- STICKY ORB -->
+        <div class="visual-col">
+          <div class="orb-stage" id="orb" data-state="risk">
+            <div class="orb-ring"></div>
+            <div class="orb-radar"></div>
+            <div class="orb-core">
+              <div class="orb-value" id="orbValue">RISK</div>
+              <div class="orb-label" id="orbLabel">Detection Mode</div>
+            </div>
+          </div>
         </div>
 
-        <h3 class="manifesto-highlight">And what do you get?</h3>
-        <div class="manifesto-section">
-          <p class="pain">A green ring.<br>A silent chart.<br>An app that cheers while you're burning out.</p>
-          <p class="pain">Meanwhile…<br>No doctor sees your effort.<br>No system credits your prevention.<br>No insurer lowers your premium.<br>No one tells you: this matters.</p>
-        </div>
+        <!-- CONTENT -->
+        <div class="content-col">
+          
+          <!-- Chapter 1 -->
+          <article class="chapter" data-state="risk">
+            <span class="chapter-meta">01 — THE SIGNAL</span>
+            <h2>The Blind Spot That Breaks Companies.</h2>
+            <p>Moody's calls it Exponential Risk. A cyberattack becomes a fuel crisis. A storm becomes a shortage. One weak link becomes a global headache.</p>
+            <p>But inside your company, <strong>human health</strong> is the chain reaction no one is tracking.</p>
+            
+            <div class="info-card risk">
+              <ul class="info-list">
+                <li>Poor Sleep → Burnout &amp; Mistakes</li>
+                <li>Falling Fitness → Chronic Disease Claims</li>
+                <li>Depression → Presenteeism &amp; Turnover</li>
+              </ul>
+            </div>
+          </article>
 
-        <h3 class="manifesto-highlight">The problem isn’t you.<br>It’s the system.</h3>
-        <div class="manifesto-section">
-          <p class="solution">Self‑care is hard enough already.<br>But when its value is invisible—<br>unmeasured by health systems,<br>unrewarded by markets,<br>unfelt by you—<br>of course it’s hard to keep going.</p>
-          <p class="solution">That’s not laziness.<br>That’s rational burnout.</p>
-        </div>
+          <!-- Chapter 2 -->
+          <article class="chapter" data-state="risk">
+            <span class="chapter-meta">02 — THE FAILURE</span>
+            <h2>Old Dashboards Can't See the Cascade.</h2>
+            <p>Steps. Engagement. Claims. Turnover. Each lives in its own silo. No connections. No causality. No proof.</p>
+            <p>That is why CFOs don't trust the numbers, budgets get cut, and prevention keeps losing to more urgent fires.</p>
+          </article>
 
-        <h3 class="manifesto-highlight">So we built LümiCoin to change that.</h3>
-        <div class="manifesto-section">
-          <p class="solution">What if care had a currency?</p>
-          <p class="solution">You’ve been paying into your health account. Now, we give you the receipt.</p>
-          <p class="solution">Every night you sleep.<br>Every glass of water.<br>Every step you take.</p>
-          <p class="solution">It all earns you LümiCoins—<br>a new behavioral health currency backed by:<br>Real science (QALYs)<br>Real impact (clean water for others)<br>Real meaning (your health, your legacy)</p>
-          <p class="solution">No logging. No perfection. Just care.<br>For the first time, your care counts.</p>
-        </div>
+          <!-- Chapter 3 -->
+          <article class="chapter" data-state="solution">
+            <span class="chapter-meta" style="color:var(--accent-primary)">03 — THE ENGINE</span>
+            <h2>HealthEqual AI: The Verification Layer.</h2>
+            <p>We aren't a wellness app. We are the independent verification engine for biological risk.</p>
+            <p>We measure <strong>Biological Capital</strong> (VO₂max, stress, sleep) and translate it into <strong>QALYs</strong>—the universal health-economic unit used by global health systems.</p>
+          </article>
 
-        <h3 class="manifesto-highlight">From one body to the world.</h3>
-        <div class="manifesto-section">
-          <p class="solution">Every 200 Coins you earn funds a day of clean water for someone else who profoundly needs it.</p>
-          <p class="solution">Your daily actions ripple outward—proof that taking care of yourself can literally take care of someone else.</p>
-          <p class="solution">This isn’t a wellness gimmick.<br>It’s a moral economy of care.</p>
-        </div>
+          <!-- Chapter 4 -->
+          <article class="chapter" data-state="solution">
+            <span class="chapter-meta" style="color:var(--accent-primary)">04 — THE PROMISE</span>
+            <h2>Auditable Proof of Health.</h2>
+            <p>We turn soft wellness data into auditable financial intelligence: neutral Proof-of-Health Certificates.</p>
+            <div class="info-card solution">
+              <ul class="info-list">
+                <li><strong>Employers:</strong> See exactly what you bought.</li>
+                <li><strong>Vendors:</strong> Earn independent trust.</li>
+                <li><strong>People:</strong> Your health becomes a visible asset.</li>
+              </ul>
+            </div>
+          </article>
 
-        <h3 class="manifesto-highlight">And someday, your doctor will care too.</h3>
-        <div class="manifesto-section">
-          <p class="solution">LümiCoins don’t just feel good—<br>they’re pegged to QALYs, the math health economists and insurers use to value care.</p>
-          <p class="solution">Today, those numbers live in models.<br>Tomorrow, they live in your pocket.</p>
-          <p class="solution">Coins = clinical‑grade proof that prevention is already happening—powered by you, every single day.</p>
-          <p class="solution">We’re building the bridge.<br>You’re laying the first bricks.</p>
-        </div>
+          <!-- Closing -->
+          <article class="chapter" data-state="solution">
+            <div class="closing">
+              <h2>See it. Price it. Prevent the cascade.</h2>
+              <p>HealthEqual AI is here to make Biological Capital visible.</p>
+            </div>
+          </article>
 
-        <h3 class="manifesto-highlight">This isn’t a wellness app. This is infrastructure.</h3>
-        <div class="manifesto-section">
-          <p class="solution">LümiCoin is a new operating system for prevention—built for:</p>
-          <p class="solution" style="margin-top:var(--spacing-md);">💡 The burnout generation who still gives a damn<br>📱 The digital natives tired of fake points and broken loops<br>🌍 The quietly rebellious who know health is personal, political, and worth more than confetti</p>
-          <p class="solution" style="margin-top:var(--spacing-md);">You don’t need another dashboard.<br>You need proof—that what you do matters. That it adds up.</p>
-        </div>
-
-        <h3 class="manifesto-highlight">Proof of Care. Power to You.</h3>
-        <div class="manifesto-section">
-          <p class="solution">LümiCoin is for anyone who’s ever asked:</p>
-          <p class="pain" style="font-style:italic; margin-top:var(--spacing-md);">“Why doesn’t anyone see how hard I’m trying?”<br>“Why doesn’t this count for something?”<br>“Why does my doctor ignore what my iPhone already knows?”</p>
-          <p class="solution" style="font-weight:600; margin-top:var(--spacing-md);">Now they do.<br>Now it does.<br>Now you’re seen.</p>
-          <p class="solution" style="font-weight:600; margin-top:var(--spacing-md);">For the first time in wellness history,<br>your self‑care earns something real.<br>There’s a point to your points.<br>There’s value in your effort.<br>There’s power in your care.</p>
-        </div>
-
-        <div class="manifesto-closing">
-          <p>Welcome to this generation’s defining health movement.</p>
-          <p>Welcome to a world where prevention finally pays off.</p>
-          <p>Welcome to the first Proof‑of‑Care currency.</p>
-          <p class="final-welcome">Welcome to LümiCoin.</p>
         </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container">
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/manifesto/">Manifesto</a></li>
-          <li><a href="/support/">Support</a></li>
-          <li><a href="/terms/">Terms</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
-        </ul>
+      <img src="/healthequal-logo-x.png" alt="HealthEqual Logo" class="footer-logo">
+      <nav class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/wellness-roi-transparency-index/">The Index</a>
+        <a href="/manifesto/">Manifesto</a>
+        <a href="/support/">Support</a>
+        <a href="/terms/">Terms</a>
+        <a href="/privacy/">Privacy</a>
       </nav>
-      <p>© <span id="currentYear">2025</span> LümiCoin. All rights reserved.</p>
+      <p class="copyright">© <span id="year">2025</span> HealthEqual, Inc. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-    const navToggle = document.querySelector('.nav-toggle');
-    const mainNav = document.getElementById('mainNav');
-    const navOverlay = document.querySelector('.nav-overlay');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-    function toggleNav() {
-      const isOpen = mainNav.classList.contains('is-open');
-      mainNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', !isOpen);
-      navToggle.classList.toggle('is-active');
-      if (navOverlay) navOverlay.style.display = isOpen ? 'none' : 'block';
-    }
+      // Mobile Nav
+      const navToggle = document.querySelector('.nav-toggle');
+      const mainNav = document.getElementById('mainNav');
+      navToggle.addEventListener('click', () => {
+        mainNav.classList.toggle('is-open');
+      });
 
-    navToggle.addEventListener('click', toggleNav);
-    if (navOverlay) {
-      navOverlay.addEventListener('click', toggleNav);
-    }
+      // Scrollytelling
+      const orb = document.getElementById('orb');
+      const orbValue = document.getElementById('orbValue');
+      const orbLabel = document.getElementById('orbLabel');
+      const chapters = document.querySelectorAll('.chapter');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            const state = entry.target.getAttribute('data-state');
+            orb.setAttribute('data-state', state);
+
+            if (state === 'risk') {
+              orbValue.innerText = 'RISK';
+              orbLabel.innerText = 'Detection Mode';
+              orbLabel.style.color = 'var(--risk-color)';
+            } else {
+              orbValue.innerText = 'QALY';
+              orbLabel.innerText = 'Verification Mode';
+              orbLabel.style.color = 'var(--accent-primary)';
+            }
+          } else {
+            entry.target.classList.remove('active');
+          }
+        });
+      }, { rootMargin: '-40% 0px -40% 0px' });
+
+      chapters.forEach(c => observer.observe(c));
+    });
   </script>
 </body>
 </html>
