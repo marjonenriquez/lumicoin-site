@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Power Equation — First-Principles Derivation Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@300;400;500;600&family=Crimson+Pro:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,600;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#03050d;--bg2:#070b18;--bg3:#0c1020;
+  --surface:rgba(255,255,255,0.03);--surface2:rgba(255,255,255,0.055);
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#dde0f0;--dim:#636683;--dimmer:#3a3d56;
+  --t1:#00d4ff;--t1b:rgba(0,212,255,0.12);
+  --t2:#ffd700;--t2b:rgba(255,215,0,0.12);
+  --t3:#00ff88;--t3b:rgba(0,255,136,0.12);
+  --t4:#ff6b35;--t4b:rgba(255,107,53,0.12);
+  --t5:#c77dff;--t5b:rgba(199,125,255,0.12);
+  --t6:#ff2d87;--t6b:rgba(255,45,135,0.12);
+  --t7:#00e5cc;--t7b:rgba(0,229,204,0.12);
+  --sci:#f5c842;--scib:rgba(245,200,66,0.1);
+  --law:#6ab8ff;--lawb:rgba(106,184,255,0.1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+
+/* STARFIELD */
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(1px 1px at 15% 22%,rgba(255,255,255,.35) 0%,transparent 100%),
+  radial-gradient(1px 1px at 47% 8%,rgba(255,255,255,.25) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 78% 35%,rgba(255,255,255,.3) 0%,transparent 100%),
+  radial-gradient(1px 1px at 92% 65%,rgba(255,255,255,.2) 0%,transparent 100%),
+  radial-gradient(1px 1px at 33% 80%,rgba(255,255,255,.25) 0%,transparent 100%),
+  radial-gradient(1px 1px at 62% 55%,rgba(255,255,255,.15) 0%,transparent 100%),
+  radial-gradient(1px 1px at 8% 60%,rgba(255,255,255,.2) 0%,transparent 100%),
+  radial-gradient(1.5px 1.5px at 55% 92%,rgba(255,255,255,.3) 0%,transparent 100%);
+  pointer-events:none;z-index:0}
+
+/* ===== HEADER ===== */
+header{position:relative;z-index:10;padding:52px 40px 36px;text-align:center;border-bottom:1px solid var(--border)}
+header::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:320px;height:1px;background:linear-gradient(90deg,transparent,var(--t4),var(--t6),var(--t1),transparent)}
+.title-eyebrow{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:10px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,44px);font-weight:700;letter-spacing:-.01em;color:#fff;margin-bottom:6px}
+h1 em{font-style:italic;color:var(--t6)}
+.subtitle{font-family:'Crimson Pro',serif;font-style:italic;font-size:17px;color:var(--dim);margin-bottom:28px}
+
+/* EQUATION DISPLAY in header */
+.lpe-equation{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 0;margin:0 auto;max-width:900px;padding:20px 24px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;font-family:'Fira Code',monospace;font-size:clamp(11px,1.6vw,15px);line-height:2.2}
+.eq-plus,.eq-eq{color:var(--dim);padding:0 6px;font-size:1.1em}
+.eq-term{padding:4px 10px;border-radius:6px;cursor:pointer;transition:all .25s;font-weight:500;border:1px solid transparent;user-select:none}
+.eq-term:hover,.eq-term.active{border-color:currentColor;filter:brightness(1.3)}
+.eq-term[data-t="1"]{color:var(--t1);background:var(--t1b)}
+.eq-term[data-t="2"]{color:var(--t2);background:var(--t2b)}
+.eq-term[data-t="3"]{color:var(--t3);background:var(--t3b)}
+.eq-term[data-t="4"]{color:var(--t4);background:var(--t4b)}
+.eq-term[data-t="5"]{color:var(--t5);background:var(--t5b)}
+.eq-term[data-t="6"]{color:var(--t6);background:var(--t6b)}
+.eq-term[data-t="7"]{color:var(--t7);background:var(--t7b)}
+.eq-label{font-size:.7em;display:block;opacity:.7;letter-spacing:.04em;margin-top:2px}
+.eq-term.active{filter:brightness(1.3) drop-shadow(0 0 8px currentColor)}
+
+/* ===== TABS ===== */
+.tabs{position:sticky;top:0;z-index:50;display:flex;justify-content:center;gap:0;background:rgba(3,5,13,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px}
+.tab-btn{font-family:'Fira Code',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:14px 28px;background:none;border:none;color:var(--dim);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:#fff;border-bottom-color:var(--t6)}
+
+/* ===== PANELS ===== */
+.tab-panel{display:none;min-height:60vh}
+.tab-panel.active{display:block}
+
+/* ===== EQUATION EXPLORER ===== */
+#panel-explorer{padding:36px 24px}
+
+.term-cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;max-width:1100px;margin:0 auto 36px}
+.term-card{padding:16px 18px;border-radius:10px;cursor:pointer;border:1px solid var(--border);background:var(--surface);transition:all .22s}
+.term-card:hover,.term-card.active{border-color:currentColor;background:color-mix(in srgb,currentColor 8%,transparent)}
+.term-card[data-tc="1"]{color:var(--t1)}
+.term-card[data-tc="2"]{color:var(--t2)}
+.term-card[data-tc="3"]{color:var(--t3)}
+.term-card[data-tc="4"]{color:var(--t4)}
+.term-card[data-tc="5"]{color:var(--t5)}
+.term-card[data-tc="6"]{color:var(--t6)}
+.term-card[data-tc="7"]{color:var(--t7)}
+.tc-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tc-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700}
+.tc-name{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.tc-side{font-family:'Fira Code',monospace;font-size:9px;opacity:.5;margin-bottom:4px;text-transform:uppercase;letter-spacing:.1em}
+.tc-eq{font-family:'Fira Code',monospace;font-size:12px;color:var(--text);opacity:.9;line-height:1.5}
+
+/* DETAIL PANEL */
+.detail-panel{max-width:1100px;margin:0 auto;animation:slideup .3s ease}
+@keyframes slideup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.dp-header{padding:28px 0 20px;display:flex;align-items:flex-start;gap:20px;border-bottom:1px solid var(--border);margin-bottom:28px}
+.dp-num{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;line-height:1;min-width:60px}
+.dp-title-block{}
+.dp-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;margin-bottom:4px}
+.dp-tagline{font-style:italic;color:var(--dim);font-size:16px}
+.dp-eq-box{display:inline-block;margin-top:10px;padding:8px 14px;background:var(--surface2);border-radius:8px;font-family:'Fira Code',monospace;font-size:14px}
+
+.dp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:700px){.dp-grid{grid-template-columns:1fr}}
+
+.dp-section{margin-bottom:28px}
+.dp-section-title{font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.dp-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* PHYSICS LAW CARDS */
+.law-cards{display:flex;flex-direction:column;gap:10px}
+.law-card{padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--law);border-radius:8px}
+.law-card-top{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.law-name{font-family:'Fira Code',monospace;font-size:12px;font-weight:500;color:var(--law)}
+.law-ref{font-family:'Fira Code',monospace;font-size:10px;color:var(--dim)}
+.law-eq{font-family:'Fira Code',monospace;font-size:12px;color:var(--text);margin-bottom:5px;padding:5px 8px;background:rgba(0,0,0,.3);border-radius:4px}
+.law-desc{font-size:15px;color:var(--dim);line-height:1.5}
+.law-card.gold{border-left-color:var(--sci)}
+.law-card.gold .law-name{color:var(--sci)}
+
+/* SYMBOL TABLE */
+.sym-table{width:100%;border-collapse:collapse;font-size:14px}
+.sym-table th{text-align:left;padding:8px 10px;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border)}
+.sym-table td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.sym-table td:first-child{font-family:'Fira Code',monospace;font-size:14px;font-weight:500}
+.sym-table td:nth-child(3){font-family:'Fira Code',monospace;font-size:12px;color:var(--dim)}
+.sym-table tr:last-child td{border-bottom:none}
+.sym-note{font-size:13px;font-style:italic;color:var(--dim);margin-top:2px}
+
+/* NUMBERS PANEL */
+.num-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:12px}
+.num-organism{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.num-table{width:100%;border-collapse:collapse;font-size:14px}
+.num-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.num-table td:last-child{font-family:'Fira Code',monospace;font-size:13px;color:var(--t3);text-align:right}
+.num-table tr:last-child td{border-bottom:none;font-weight:600}
+.key-insight{margin-top:14px;padding:12px 16px;background:rgba(255,255,255,.04);border-left:3px solid currentColor;border-radius:0 8px 8px 0;font-style:italic;font-size:16px;line-height:1.5}
+
+/* ===== DERIVATION NETWORK ===== */
+#panel-network{padding:24px}
+.network-wrap{max-width:1200px;margin:0 auto}
+.network-intro{text-align:center;margin-bottom:28px;color:var(--dim);font-style:italic}
+.network-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-bottom:24px}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:'Fira Code',monospace;font-size:11px;color:var(--dim)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+svg.network{width:100%;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:visible}
+.net-node{cursor:pointer;transition:opacity .2s}
+.net-node rect,.net-node .bg-rect{transition:all .2s}
+.net-node:hover rect,.net-node:hover .bg-rect{filter:brightness(1.4)}
+.net-line{transition:opacity .2s,stroke-width .2s}
+.net-line.dim{opacity:.08}
+.net-line.hi{opacity:1;stroke-width:2.5}
+.net-node.dim{opacity:.2}
+.net-node.hi{opacity:1}
+.net-node rect.dim{opacity:.2}
+.net-label{font-family:'Fira Code',monospace;pointer-events:none;dominant-baseline:middle}
+.net-tip{position:fixed;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:13px;max-width:260px;pointer-events:none;display:none;z-index:100;line-height:1.5}
+.net-tip strong{font-family:'Fira Code',monospace;display:block;margin-bottom:3px}
+
+/* ===== SYMBOL REFERENCE ===== */
+#panel-symbols{padding:36px 24px}
+.sym-ref-wrap{max-width:1000px;margin:0 auto}
+.full-sym-table{width:100%;border-collapse:collapse;font-size:14px}
+.full-sym-table th{text-align:left;padding:10px 12px;font-family:'Fira Code',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);background:var(--surface);border-bottom:2px solid var(--border)}
+.full-sym-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.full-sym-table td:first-child{font-family:'Fira Code',monospace;font-size:14px;font-weight:500}
+.full-sym-table td:nth-child(3){font-family:'Fira Code',monospace;font-size:12px;color:var(--dim)}
+.full-sym-table tr:hover td{background:var(--surface)}
+.sym-term-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-family:'Fira Code',monospace;font-size:10px;font-weight:600}
+
+/* ===== HISTORY SECTION ===== */
+.history-section{padding:40px 24px;border-top:1px solid var(--border)}
+.history-wrap{max-width:1100px;margin:0 auto}
+.history-title{font-family:'Playfair Display',serif;font-size:22px;text-align:center;margin-bottom:8px;color:var(--text)}
+.history-sub{text-align:center;color:var(--dim);font-style:italic;margin-bottom:32px}
+.timeline{display:flex;flex-direction:column;gap:0;position:relative}
+.timeline::before{content:'';position:absolute;left:90px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--border),var(--border),transparent)}
+.tl-item{display:grid;grid-template-columns:90px 1fr;gap:20px;padding:16px 0;position:relative}
+.tl-year{font-family:'Fira Code',monospace;font-size:13px;font-weight:600;color:var(--sci);text-align:right;padding-top:3px}
+.tl-dot{position:absolute;left:84px;top:22px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--sci);z-index:1}
+.tl-content{}
+.tl-scientist{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.tl-insight{color:var(--dim);font-size:15px;line-height:1.5}
+.tl-eq{font-family:'Fira Code',monospace;font-size:12px;color:var(--law);margin-top:5px;padding:4px 8px;background:var(--surface);border-radius:4px;display:inline-block}
+.tl-connects{margin-top:5px;font-size:13px;color:var(--dimmer)}
+.tl-badge{display:inline-block;width:18px;height:18px;border-radius:50%;font-family:'Fira Code',monospace;font-size:9px;font-weight:700;text-align:center;line-height:18px;margin-right:3px}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:28px;border-top:1px solid var(--border);color:var(--dimmer);font-size:13px;font-family:'Fira Code',monospace;letter-spacing:.04em}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  header{padding:32px 16px 24px}
+  .lpe-equation{font-size:10px;gap:2px 0}
+  .tabs{padding:0 8px}
+  .tab-btn{padding:12px 14px;font-size:11px}
+  #panel-explorer,#panel-network,#panel-symbols{padding:20px 12px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="title-eyebrow">First-Principles Derivation Map · v4.0 · 2026</div>
+  <h1>The <em>Life Power Equation</em></h1>
+  <div class="subtitle">How every symbol becomes a term — anchored in physics, chemistry, and biology</div>
+
+  <div class="lpe-equation">
+    <span class="eq-term" data-t="1" onclick="selectTerm(1)">
+      η<sub>r</sub>(t)·nFJ<sub>e</sub>·ΔE<sub>iv</sub>
+      <span class="eq-label">① Redox</span>
+    </span>
+    <span class="eq-plus">+</span>
+    <span class="eq-term" data-t="2" onclick="selectTerm(2)">
+      η<sub>γ</sub>·hν·Φ<sub>γ</sub>
+      <span class="eq-label">② Photons</span>
+    </span>
+    <span class="eq-plus">+</span>
+    <span class="eq-term" data-t="3" onclick="selectTerm(3)">
+      Σ μ̃<sub>i</sub>J<sub>i</sub><sup>net</sup>
+      <span class="eq-label">③ Matter</span>
+    </span>
+    <span class="eq-eq">=</span>
+    <span class="eq-term" data-t="4" onclick="selectTerm(4)">
+      T·σ̇<sub>maint</sub>
+      <span class="eq-label">④ Entropy Tax</span>
+    </span>
+    <span class="eq-plus">+</span>
+    <span class="eq-term" data-t="5" onclick="selectTerm(5)">
+      dG<sub>struct</sub>/dt
+      <span class="eq-label">⑤ Growth</span>
+    </span>
+    <span class="eq-plus">+</span>
+    <span class="eq-term" data-t="6" onclick="selectTerm(6)">
+      Ṅ·⟨Q<sub>copy</sub>⟩
+      <span class="eq-label">⑥ Replication</span>
+    </span>
+    <span class="eq-plus">+</span>
+    <span class="eq-term" data-t="7" onclick="selectTerm(7)">
+      P<sub>export</sub>
+      <span class="eq-label">⑦ Export</span>
+    </span>
+  </div>
+</header>
+
+<!-- TABS -->
+<nav class="tabs">
+  <button class="tab-btn active" onclick="showTab('explorer',this)">⊛ Equation Explorer</button>
+  <button class="tab-btn" onclick="showTab('network',this)">⊙ Derivation Network</button>
+  <button class="tab-btn" onclick="showTab('symbols',this)">≈ Symbol Reference</button>
+</nav>
+
+<!-- EQUATION EXPLORER -->
+<div id="panel-explorer" class="tab-panel active">
+  <div class="term-cards-grid" id="term-cards"></div>
+  <div id="detail-area"></div>
+</div>
+
+<!-- DERIVATION NETWORK -->
+<div id="panel-network" class="tab-panel">
+  <div class="network-wrap">
+    <p class="network-intro">Hover over any node to trace its derivation path. Each LPE term is the convergence point of multiple physical laws.</p>
+    <div class="network-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--sci)"></div>Scientist / Source</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--law)"></div>Physics Law / Result</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--t6)"></div>LPE Input Term</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--t4)"></div>LPE Output Term</div>
+    </div>
+    <svg class="network" id="net-svg" viewBox="0 0 1160 820" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="net-tip" id="net-tip"></div>
+  </div>
+</div>
+
+<!-- SYMBOL REFERENCE -->
+<div id="panel-symbols" class="tab-panel">
+  <div class="sym-ref-wrap">
+    <h2 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;color:#fff">Complete Symbol Table</h2>
+    <p style="color:var(--dim);font-style:italic;margin-bottom:28px">Every symbol in the LPE — units, measurement method, and which term it belongs to</p>
+    <table class="full-sym-table" id="sym-table"></table>
+  </div>
+</div>
+
+<!-- HISTORY SECTION (always visible at bottom) -->
+<section class="history-section">
+  <div class="history-wrap">
+    <h2 class="history-title">Seven Steps to the Definition</h2>
+    <p class="history-sub">The thermodynamic view of life was not discovered at once</p>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<footer>Life Power Equation · Enriquez (2026) · All terms in Watts · Zero fitted parameters</footer>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+
+const TERMS = [
+  {
+    id:1, num:'①', name:'Redox / Chemosynthesis',
+    color:'var(--t1)', colorHex:'#00d4ff', side:'INPUT',
+    eq:'η<sub>r</sub>(t)·nFJ<sub>e</sub>·ΔE<sub>iv</sub>',
+    eqPlain:'ηᵣ(t)·nFJₑ·ΔEᵢᵥ',
+    tagline:'P = IV applied to a living organism — respiration is a controlled electrical circuit',
+    keyInsight:'You are a 72-ampere biological circuit running at 1.1 volts. Electrons flow from glucose to O₂; the voltage drop drives ATP synthase like a turbine.',
+    whyNeeded:'Every living cell exploits the reduction of an electron acceptor (O₂, SO₄²⁻, CO₂) by an electron donor. This is the universal power source for all chemo­trophic life — the electrical channel that cannot be replaced by matter flow.',
+    nonFungible:'Electric charge (U(1)_EM symmetry) is conserved independently of baryon number. You cannot pay an electron deficit with extra carbon atoms. This forces a dedicated power channel.',
+    laws:[
+      {name:'Gibbs–Redox Bridge', ref:'Gibbs 1875 / S1', eq:'ΔG = −nFΔE', desc:'Free energy released in a redox reaction equals the number of electrons (n) × Faraday constant (F) × voltage drop. This turns a chemistry problem into an electrical engineering problem.'},
+      {name:'Nernst Equation', ref:'Nernst 1889 / S2', eq:'ΔE_iv = ΔE°′ − (RT/nF)·ln Q', desc:'Textbook standard-state potentials must be corrected for in-vivo concentrations. The Nernst correction shifts aerobic ΔE by −0.05 to −0.15 V — a ~10–15% effect that matters for quantitative predictions.'},
+      {name:"Mitchell's Proton-Motive Force", ref:'Mitchell 1961, Nobel 1978 / S4', eq:'Δp = Δψ − 2.303RT/F·ΔpH ≈ −180 mV', desc:'The electrochemical proton gradient across the inner mitochondrial membrane is the universal biological battery. ATP synthase spins at ~100 rev/s, producing ~3 ATP per rotation.'},
+      {name:'Marcus Electron Transfer', ref:'Marcus 1956, Nobel 1992 / S7', eq:'k_ET ∝ exp[−(ΔG+λ)²/4λk_BT]', desc:'Rate peaks at ΔG = −λ. At |ΔG| > λ (inverted region), rate paradoxically decreases — a built-in kinetic governor preventing thermal runaway in respiratory chains.'},
+    ],
+    symbols:[
+      {sym:'η_r(t)', meaning:'Mitochondrial coupling efficiency', units:'dimensionless (~0.65–0.95)', measure:'Oligomycin titration in isolated mitochondria', note:'Declines with ROS damage → mechanistic account of aging'},
+      {sym:'n', meaning:'Electrons transferred per reaction', units:'dimensionless', measure:'Stoichiometry of redox half-reaction', note:'e.g., n=4 for O₂ + 4H⁺ + 4e⁻ → 2H₂O'},
+      {sym:'F', meaning:'Faraday constant', units:'96,485 C mol⁻¹', measure:'Physical constant', note:''},
+      {sym:'J_e', meaning:'Electron flux through respiratory chains', units:'mol e⁻ s⁻¹', measure:'Respirometry: V̇O₂ × 4/22.4 mol/L', note:''},
+      {sym:'ΔE_iv', meaning:'In-vivo redox potential difference (Nernst-corrected)', units:'V', measure:'Metabolite concentrations + Nernst equation', note:'~1.1 V for aerobic respiration'},
+    ],
+    numbers:{
+      organism:'Resting Human (70 kg)',
+      steps:[
+        ['O₂ consumption','0.25 L/min = 1.86 × 10⁻⁴ mol/s','—'],
+        ['Electron flux (n=4)','4 × 1.86×10⁻⁴','7.44×10⁻⁴ mol e⁻/s'],
+        ['Biological current (nFJ_e)','96,485 × 7.44×10⁻⁴','71.8 A'],
+        ['Voltage (ΔE_iv, Nernst-corrected)','Aerobic','~1.1 V'],
+        ['Predicted power','71.8 A × 1.1 V × η_r≈0.95','~84 W'],
+        ['Measured BMR (calorimetry)','','84 W ✓'],
+        ['Entropy production','84 W ÷ 310 K','0.27 W K⁻¹'],
+      ]
+    }
+  },
+  {
+    id:2, num:'②', name:'Photosynthesis',
+    color:'var(--t2)', colorHex:'#ffd700', side:'INPUT',
+    eq:'η<sub>γ</sub>·hν·Φ<sub>γ</sub>',
+    eqPlain:'η_γ·hν·Φ_γ',
+    tagline:'Light and chemistry are two routes to the same universal battery — the proton-motive force',
+    keyInsight:'Photosynthesis and respiration are not fundamentally different power sources. Both charge the same Mitchellian battery. Sunlight simply provides the electron pressure that glucose provides for heterotrophs.',
+    whyNeeded:'Plants, algae, and cyanobacteria must absorb photons to drive electrons uphill (against the redox gradient). This is physically distinct from chemotrophic electron flow — absorbed photon flux cannot be expressed as electron flux × voltage.',
+    nonFungible:'Photons carry angular momentum and energy quanta (hν). Their interaction with chlorophyll is governed by quantum electrodynamics — not reducible to electron-transfer kinetics alone. Set to zero for all heterotrophs.',
+    laws:[
+      {name:"Planck's Energy Quantum", ref:'Planck 1900', eq:'E_photon = hν', desc:"Each photon carries exactly hν joules. For red light (680 nm), this is ~2.9×10⁻¹⁹ J. Chlorophyll absorbs this and uses the excitation energy to drive charge separation."},
+      {name:"Mitchell's PMF (same battery)", ref:'Mitchell 1961, Nobel 1978 / S4', eq:'Δp = Δψ − 2.303RT/F·ΔpH', desc:'Photosystem II and I ultimately pump protons to build the same Δp that Complex I–IV build in respiration. Both routes charge the same battery, confirming the universality of the PMF.'},
+      {name:'Quantum Yield Limit', ref:'Emerson 1958', eq:'η_γ ≈ 0.10–0.35 (10–35%)', desc:'Due to energy losses in charge separation and the requirement for 8–10 photons per CO₂ fixed, photosynthetic quantum yield is intrinsically limited. Photoinhibition further degrades η_γ under high light.'},
+    ],
+    symbols:[
+      {sym:'η_γ', meaning:'Photosynthetic quantum yield', units:'dimensionless (~0.10–0.35)', measure:'Gas exchange + light flux measurements', note:'Degraded by photoinhibition at high irradiance'},
+      {sym:'h', meaning:"Planck's constant", units:'6.626×10⁻³⁴ J·s', measure:'Physical constant', note:''},
+      {sym:'ν', meaning:'Photon frequency', units:'Hz (s⁻¹)', measure:'Spectrophotometry', note:'hν ≈ 3.6×10⁻¹⁹ J for red light (680 nm)'},
+      {sym:'Φ_γ', meaning:'Absorbed photon flux', units:'photons s⁻¹', measure:'Quantum sensor + absorptance measurement', note:''},
+    ],
+    numbers:{
+      organism:'Spinach leaf at full sunlight',
+      steps:[
+        ['Irradiance','2000 µmol photons m⁻² s⁻¹','—'],
+        ['Energy per photon (red, 680 nm)','hν','~2.9×10⁻¹⁹ J'],
+        ['Absorbed flux Φ_γ','~2×10⁻³ mol/s per m² leaf','~1.2×10²¹ photons/s·m²'],
+        ['P_photo at η_γ = 0.25','0.25 × 2.9×10⁻¹⁹ × 1.2×10²¹','~87 W m⁻²'],
+        ['vs. gross respiration of leaf','~8 W m⁻²','~10× surplus ✓'],
+      ]
+    }
+  },
+  {
+    id:3, num:'③', name:'Matter / Nutrition',
+    color:'var(--t3)', colorHex:'#00ff88', side:'INPUT',
+    eq:'Σ μ̃<sub>i</sub>J<sub>i</sub><sup>net</sup>',
+    eqPlain:'Σ μ̃ᵢ Jᵢⁿᵉᵗ',
+    tagline:'Atoms carry three kinds of energy simultaneously — chemical, concentration, and electrical',
+    keyInsight:'Electron flow powers the cell but cannot build it. You need carbon, nitrogen, phosphorus, and sulfur atoms to construct DNA, proteins, and membranes. Matter flux is the material input; it is non-fungible with power input because baryon number is independently conserved.',
+    whyNeeded:'The genome and proteome are physical objects — polymer chains with specific atomic compositions. No amount of electron flux can substitute for the atoms that form these structures. This is why starvation and anoxia are completely different failure modes.',
+    nonFungible:'Baryon number (protons + neutrons in atoms) is conserved under a different symmetry than electric charge. An organism cannot build proteins from electron flux alone — it needs the actual atoms, weighted by their electrochemical potential.',
+    laws:[
+      {name:'Electrochemical Potential', ref:'Gibbs 1875 / Planck 1890 / S3', eq:'μ̃_i = μ°_i + RT·ln(a_i) + z_i·F·ψ', desc:'The full thermodynamic driving force for any species i has three additive components: (1) intrinsic chemical stability, (2) concentration/mixing term, (3) electrical work for charged species. All three matter in biology.'},
+      {name:'Open-System Gibbs', ref:'Gibbs 1875 / S5 (origin of dG/dt = Σμ̃J)', eq:'dG/dt = Σ_i μ̃_i · J_i^net', desc:'For an open system at constant T, P, the rate of free-energy change equals the sum over all species of their electrochemical potential times their net molar flux. Exact — no approximations.'},
+      {name:"Onsager's Reciprocal Relations", ref:'Onsager 1931, Nobel 1968', eq:'L_ij = L_ji (cross-coupling)', desc:'Irreversible fluxes of matter can drive each other. Ion gradients drive solute uptake; concentration gradients drive electrical currents. The mathematical scaffold for multi-species open systems.'},
+    ],
+    symbols:[
+      {sym:'μ̃_i', meaning:'Electrochemical potential of species i', units:'J mol⁻¹', measure:'Activity measurements + membrane potential', note:'Three-component sum: μ° + RT·ln(a) + zFψ'},
+      {sym:'μ°_i', meaning:'Standard-state chemical potential', units:'J mol⁻¹', measure:'Calorimetry / thermochemical tables', note:'Intrinsic bond energy of species i'},
+      {sym:'RT·ln(a_i)', meaning:'Concentration (mixing) term', units:'J mol⁻¹', measure:'Activity from concentration + activity coefficient', note:'Activity a ≈ concentration at dilute conditions'},
+      {sym:'z_i·F·ψ', meaning:'Electrical term for charged species', units:'J mol⁻¹', measure:'Membrane potential by patch-clamp or indicator dyes', note:'z = charge number; ψ = local electrostatic potential'},
+      {sym:'J_i^net', meaning:'Net molar flux of species i (positive = import)', units:'mol s⁻¹', measure:'Isotope tracers (¹³C, ¹⁵N) + MS; transporter kinetics', note:'Net = import − export'},
+    ],
+    numbers:{
+      organism:'E. coli importing glucose (per cell)',
+      steps:[
+        ['Glucose uptake rate','~1.5×10⁻¹⁸ mol/s','—'],
+        ['μ̃_glucose (mostly μ°)','~2.8 MJ/mol (combustion)','—'],
+        ['P_matter from glucose alone','1.5×10⁻¹⁸ × 2.8×10⁶','~4.2×10⁻¹² W'],
+        ['vs. cell maintenance','~10⁻¹² W','—'],
+        ['N/P/S also imported','essential for biomass','no substitute for C chain ✓'],
+      ]
+    }
+  },
+  {
+    id:4, num:'④', name:'Entropy Tax',
+    color:'var(--t4)', colorHex:'#ff6b35', side:'OUTPUT',
+    eq:'T·σ̇<sub>maint</sub>',
+    eqPlain:'T·σ̇_maint',
+    tagline:'The mandatory power destroyed by irreversible internal processes — the arrow of time written into the budget',
+    keyInsight:'At resting steady state with no growth or export, the entire input power becomes this term. Calorimetry and respirometry give identical results because they measure the same identity from opposite sides: P_in = Tσ̇.',
+    whyNeeded:'The Second Law forbids any macroscopic process from running at zero entropy production. Every irreversible step — protein folding/unfolding, ion pumping against leaks, DNA repair — permanently converts free energy to heat. This term cannot reach zero while T > 0.',
+    nonFungible:'Death is not "too much damage." Death is when η_r(t)·P_in < Tσ̇_min. The maintenance floor is strictly positive — set by condensed-matter physics (proton tunneling through membranes, Boltzmann-distributed unfolding), not by biological choices.',
+    laws:[
+      {name:'Gouy–Stodola Theorem', ref:'Gouy 1889 / Stodola 1910 / S6', eq:'Ẇ_lost = T·σ̇', desc:"For any irreversible process at temperature T, the rate of free energy permanently destroyed equals T times the entropy production rate. This is an exact identity from the 1st and 2nd Laws — not an approximation. It's why calorimetry and respirometry agree precisely at rest."},
+      {name:'Prigogine Entropy Balance', ref:'Prigogine 1977, Nobel 1977 / S5', eq:'σ̇_maint = Σ_k J_k·A_k ≥ 0', desc:'Every irreversible internal process k contributes additively to entropy production, with flux J_k and thermodynamic affinity A_k. At steady state, the organism exports entropy to the environment faster than it produces it internally — it does not "decrease entropy" but accelerates the universal increase.'},
+      {name:'Thermodynamic Uncertainty Relation', ref:'Barato–Seifert 2015 / S12', eq:'Var(J)/⟨J⟩² ≥ 2k_B/σ̇', desc:'To halve the relative noise of any maintained biological current (heartbeat timing, spindle position, ion homeostasis), entropy production must increase at least 4-fold. Precision is thermodynamically purchased, never free.'},
+      {name:'Proton Membrane Leak', ref:'Brand et al. 2000 / S-M4', eq:'P_leak = g_H·(Δp)²', desc:'The Born energy barrier for protons crossing the hydrophobic membrane core (ε≈2.5 vs. water ε≈80) is large but not infinite. Quantum tunneling and Born-limited conductance guarantee a nonzero proton leak at any T>0 — constituting 15–25% of resting mitochondrial O₂ consumption.'},
+    ],
+    symbols:[
+      {sym:'T', meaning:'Absolute temperature', units:'K (~310 K for mammals)', measure:'Calibrated thermometer', note:''},
+      {sym:'σ̇_maint', meaning:'Internal entropy production rate from maintenance', units:'W K⁻¹ = J K⁻¹ s⁻¹', measure:'Calorimetry ÷ T; or respirometry at rest', note:''},
+      {sym:'T·σ̇_maint', meaning:'Maintenance dissipation power', units:'W', measure:'Direct calorimetry; indirect: V̇O₂ × 20.1 kJ/L', note:'Equals P_in at resting steady state'},
+      {sym:'J_k', meaning:'Thermodynamic flux of irreversible process k', units:'mol s⁻¹, A, m³s⁻¹ (varies)', measure:'Patch-clamp (ions), respirometry (O₂), isotopes', note:''},
+      {sym:'A_k', meaning:'Thermodynamic affinity of process k', units:'J mol⁻¹', measure:'Gibbs free energy of reaction in vivo', note:''},
+    ],
+    numbers:{
+      organism:'Resting Human (70 kg) — Steady-State Identity',
+      steps:[
+        ['P_in from respiration','84 W','—'],
+        ['dG_struct/dt (adult)','≈ 0 W','—'],
+        ['Ṅ⟨Q_copy⟩ (somatic)','negligible','—'],
+        ['P_export (at rest)','≈ 0 W','—'],
+        ['∴ T·σ̇_maint = P_in','84 W ÷ 310 K = 0.27 W/K','84 W ✓'],
+        ['Protein turnover alone','~8 W','~10% of BMR'],
+        ['Proton leak alone','~12–18 W','~15–22% of BMR'],
+      ]
+    }
+  },
+  {
+    id:5, num:'⑤', name:'Growth',
+    color:'var(--t5)', colorHex:'#c77dff', side:'OUTPUT',
+    eq:'dG<sub>struct</sub>/dt',
+    eqPlain:'dG_struct/dt',
+    tagline:'The rate at which free energy is locked inside the boundary as covalent macromolecular structure',
+    keyInsight:'This is the only LPE term that can be negative — during starvation, the organism liquidates its own structure (proteins, glycogen, fat) to pay the entropy tax when P_in falls short.',
+    whyNeeded:'Growing organisms and dividing bacteria must store free energy in new biomass — new proteins, membranes, DNA (outside the replication event). This stored free energy is physically distinct from heat: it can later be recovered as useful work.',
+    nonFungible:'Gibbs free energy is a state function. The stored chemical bond energy of retained biomass is independent of the path taken to build it, and orthogonal to the entropy produced along the way. ~8% of ATP invested in protein synthesis is stored as structural free energy; ~92% becomes maintenance heat.',
+    laws:[
+      {name:'Open-System Gibbs Free Energy', ref:'Gibbs 1875 / S-G1', eq:'G_struct = Σ_i n_i·μ_i^struct', desc:'The free energy stored in structural components at constant T, P equals the sum over all structural molecules of their molar amounts times their chemical potentials. G is a state function — it depends only on what is currently inside the boundary.'},
+      {name:'Battley–Popovic Biomass Thermodynamics', ref:'Battley 1998 / Popovic 2019 / S-G2', eq:'ε_biomass ≈ 22 kJ/g DW ≈ 540 kJ/C-mol', desc:'Combustion calorimetry of 32+ species spanning all domains of life gives near-universal biomass energy density. This ~5% variation across all life reflects conserved macromolecular bond energies (C–H, C–C, C–N). This is a measured physical constant, not a fitted parameter.'},
+      {name:'Aerobic Growth Efficiency', ref:'Heijnen & van Dijken 1992', eq:'η_growth ≈ 0.40–0.65 (aerobic)', desc:'The fraction of consumed substrate stored as new biomass. For mammalian cells, ~0.20–0.35. The remainder (35–80%) becomes maintenance heat. A perfectly reversible synthesis would produce an unstable product — irreversibility is the commitment device.'},
+    ],
+    symbols:[
+      {sym:'dG_struct/dt', meaning:'Rate of free-energy storage in new biomass', units:'W (J s⁻¹)', measure:'Bomb calorimetry of freeze-dried biomass; dM_dry/dt × ε_biomass', note:'>0 growing, ≈0 adult steady state, <0 starvation'},
+      {sym:'G_struct', meaning:'Stored structural Gibbs free energy', units:'J', measure:'Combustion enthalpy of dry biomass', note:'State function — path-independent'},
+      {sym:'ε_biomass', meaning:'Specific free energy of biomass', units:'~22 kJ g⁻¹ DW', measure:'Bomb calorimetry (Battley 1998)', note:'Near-universal across all life forms'},
+      {sym:'μ_i^struct', meaning:'Chemical potential of macromolecule i in situ', units:'J mol⁻¹', measure:'Biochemical thermodynamic tables', note:''},
+    ],
+    numbers:{
+      organism:'E. coli dividing every 30 min (log phase)',
+      steps:[
+        ['Growth rate μ','1 doubling/30 min = 3.9×10⁻⁴ s⁻¹','—'],
+        ['Dry mass per cell','~3×10⁻¹³ g','—'],
+        ['dM_dry/dt','μ × M = 1.2×10⁻¹⁶ g/s','—'],
+        ['dG_struct/dt','1.2×10⁻¹⁶ × 22×10³','~2.6×10⁻¹² W per cell'],
+        ['vs. P_in per cell','~3×10⁻¹² W','~87% goes to Tσ̇'],
+        ['Starvation reversal','dG/dt goes negative','structural autophagy ✓'],
+      ]
+    }
+  },
+  {
+    id:6, num:'⑥', name:'Replication',
+    color:'var(--t6)', colorHex:'#ff2d87', side:'OUTPUT',
+    eq:'Ṅ·⟨Q<sub>copy</sub>⟩',
+    eqPlain:'Ṅ·⟨Q_copy⟩',
+    tagline:'The only term that does not appear in flames, whirlpools, or crystals — what makes life a lineage, not just a machine',
+    keyInsight:'Three physical laws fuse into a single logarithm: Crooks (irreversibility of forward synthesis), Landauer (cost of error correction), and Eigen (required accuracy set by genome length). They fire simultaneously at the active site of every DNA polymerase on Earth.',
+    whyNeeded:'A burning candle dissipates power. A whirlpool persists. Neither copies a self-describing blueprint. Only a living lineage pays to replicate its own template faster than spontaneous decay erases it. This is what distinguishes a living individual from a living lineage — and lineages are the only things evolution can act on.',
+    nonFungible:'The master bound ⟨Q_copy⟩ ≥ L·k_BT·ln(g·p_raw·L/δ) has no analogue in any non-biological dissipative system. The L·ln(L) scaling predicts the exact number of proofreading layers required for each genome size — confirmed across 7 model organisms with zero fitted parameters.',
+    laws:[
+      {name:'Crooks Fluctuation Theorem (England 2013)', ref:'Crooks 1999 / England 2013 / S8', eq:'β⟨Q_copy⟩ ≥ ln(g/δ) − ΔS_int + I_ext', desc:'Any process more likely to go forward than backward must dissipate heat in proportion to how much it favors the forward direction. Copying faster than you decay forces irreversible heat dissipation. Copying at rate g against spontaneous decay at rate δ demands minimum heat ln(g/δ)/β per event.'},
+      {name:"Landauer's Erasure Principle", ref:'Landauer 1961 / S10', eq:'Q_erase ≥ k_BT·ln 2 ≈ 2.87×10⁻²¹ J (310 K)', desc:'Every proofreading event — detecting and replacing a mismatched nucleotide — is a physical bit erasure. Each erasure must dissipate at least k_BT·ln 2. For the human genome: Landauer minimum ~10⁻¹¹ J per replication; actual biological cost ~10⁻⁸ J (≈1,000× above floor — that premium purchases per-base error rate ~10⁻⁹).'},
+      {name:"Eigen's Error Threshold", ref:'Eigen 1971 / S9', eq:'L·μ_final ≤ 1 → μ_final ≤ 1/L', desc:"For a genome of length L to transmit heritable information intact, the per-base error rate must satisfy μ < 1/L. Exceed this threshold and genomes blur into random sequence within generations — Eigen's 'error catastrophe.' This is a constraint, not a cost — it tells Landauer how hard to work."},
+      {name:'Master Bound (all three fused)', ref:'Appendix R — this work', eq:'⟨Q_copy⟩ ≥ L·k_BT·ln(g·p_raw·L/δ)', desc:'Crooks and Landauer are additive (separate enzyme steps), and their logarithms combine via ln(A)+ln(B)=ln(AB). Eigen sets p_raw·L as the discrimination factor. The result is one equation: construction cost + fidelity cost, minimum heat per genome copy.'},
+    ],
+    symbols:[
+      {sym:'Ṅ', meaning:'Successful replication events per second (copies)', units:'s⁻¹', measure:'Doubling time measurement; BrdU/EdU labeling + flow cytometry', note:''},
+      {sym:'⟨Q_copy⟩', meaning:'Mean heat dissipated per successful genome copy', units:'J copy⁻¹', measure:'ATP budget × ΔG_ATP; direct microcalorimetry', note:'Lower-bounded by master inequality'},
+      {sym:'L', meaning:'Genome length', units:'base pairs', measure:'DNA sequencing; NCBI databases', note:'L·ln(L) scaling → determines # proofreading layers'},
+      {sym:'g', meaning:'Polymerization rate', units:'bases s⁻¹', measure:'Single-molecule FRET; bulk incorporation kinetics', note:'~1,000 bp/s (bacteria); ~50–100 bp/s (eukaryotes)'},
+      {sym:'δ', meaning:'Spontaneous template decay / depolymerization rate', units:'s⁻¹', measure:'Strand-melting kinetics; real-time PCR melt curves', note:'g/δ ≈ 10³–10⁵ in vivo'},
+      {sym:'p_raw', meaning:'Raw polymerase error rate (before proofreading)', units:'errors base⁻¹ (~10⁻⁵)', measure:'Exonuclease-deficient mutant fidelity assays', note:'Universal across all DNA polymerases — set by geometry'},
+      {sym:'g', meaning:'Replication rate [s⁻¹] in Crooks bound', units:'s⁻¹', measure:'Doubling time', note:''},
+      {sym:'β', meaning:'Inverse thermal energy 1/k_BT', units:'J⁻¹', measure:'Physical constant at given T', note:''},
+    ],
+    numbers:{
+      organism:'Organisms across 7 genome sizes (zero fitted parameters)',
+      steps:[
+        ['Poliovirus L=7,500 nt','p_raw·L = 0.75 < 1 → fidelity cost = 0','No exonuclease needed ✓'],
+        ['Phage T4 L=1.7×10⁵','Q_min = 3.5×10⁻¹⁵ J, n=1 layer','Pol exonuclease only ✓'],
+        ['E. coli L=4.6×10⁶','Q_min = 2.5×10⁻¹³ J, n=1 layer','Pol III exo + MutHLS ✓'],
+        ['S. cerevisiae L=1.2×10⁷','Q_min = 5.8×10⁻¹³ J, n=2 layers','Pol δ/ε + MMR ✓'],
+        ['Human L=6.4×10⁹','Q_min = 4.7×10⁻¹⁰ J, n=3 layers','Pol δ/ε + MMR + BER ✓'],
+        ['Overhead factor','~10³ across all species','Universal coupling efficiency ✓'],
+      ]
+    }
+  },
+  {
+    id:7, num:'⑦', name:'Export / Work',
+    color:'var(--t7)', colorHex:'#00e5cc', side:'OUTPUT',
+    eq:'P<sub>export</sub>',
+    eqPlain:'P_export',
+    tagline:'The only LPE term controllable by behavior — the power that crosses the system boundary as organized work',
+    keyInsight:'The Fenn Effect (1923) proved that external work triggers additional ATP expenditure proportional to the work done. If Export were merely redirected maintenance heat, no extra energy would appear — confirming it is an independent additive term.',
+    whyNeeded:'Living organisms do useful work on the external world: locomotion, cardiac pumping, neural signaling, bioluminescence, secreted enzymes. This term is identically zero at true rest and rises during activity. It is the interface between the organism and its environment.',
+    nonFungible:'Boundary crossing is a binary test — energy either exits as organized work or it stays inside and becomes maintenance heat. At the whole-organism boundary, cardiac work circulates blood internally (→ maintenance); only work crossing the skin surface counts as export.',
+    laws:[
+      {name:'Classical Mechanical Power', ref:'Newton / classical mechanics / S-E1', eq:'P_mech = Σ_m F_m·v_m [W = N·m/s]', desc:'Every mode of export is ultimately force times velocity. Locomotion: drag force × speed. Cardiac output: pressure × flow rate (ΔP·Q [Pa·m³/s = W]). Electrical discharge: voltage × current.'},
+      {name:'Fenn Effect — Empirical Additivity', ref:'Fenn 1923 / S-E2', eq:'ΔE_total = W_external + Q_isometric', desc:"When muscle shortens against a load, it liberates additional heat above the isometric baseline — proportional to the work done. This empirically proves Export is an independent additive term, not a reallocation. Fenn's 1923 paper is the experimental backbone of Term ⑦."},
+      {name:'Stokes Drag — Universal Lower Bound', ref:'Stokes 1851 / S-E3', eq:'P_swim,min = 6πηrv²', desc:'The irreducible minimum export power for any organism of radius r swimming at speed v through viscosity η. Zero biological assumptions — pure fluid mechanics. Any locomoting organism must spend at least this much as Export.'},
+      {name:'TUR Applied to Export Precision', ref:'Barato–Seifert 2015 / S12', eq:'Var(F)/⟨F⟩² ≥ 2k_B/σ̇', desc:'To produce more precise mechanical work — e.g., tighter motor stepping, less variable cardiac output — entropy production must increase at least as the TUR demands. A ~25% muscle efficiency is not biological waste; it is the TUR-imposed minimum irreversibility of rapid reversible cross-bridge cycling.'},
+    ],
+    symbols:[
+      {sym:'P_export', meaning:'Total exported organized power', units:'W', measure:'Ergometer; force plate; optical trap; electrodes', note:'≈ 0 at rest; 5–25% of P_in during activity'},
+      {sym:'F_m', meaning:'Export force for mode m', units:'N', measure:'Force transducer; pressure sensor', note:''},
+      {sym:'v_m', meaning:'Velocity for mode m', units:'m s⁻¹', measure:'Motion capture; Doppler ultrasound', note:''},
+      {sym:'I_n', meaning:'Electrical export current for channel n', units:'A', measure:'Electrode recording', note:'e.g., electric eel discharge'},
+      {sym:'Δψ_n', meaning:'Electrical potential for channel n', units:'V', measure:'Voltmeter', note:''},
+      {sym:'μ̃_j·J_j^out', meaning:'Chemical power exported (secreted enzymes, venom)', units:'W', measure:'LC-MS of efflux × chemical potential', note:''},
+    ],
+    numbers:{
+      organism:'Human cyclist at 150 W mechanical output',
+      steps:[
+        ['P_export (ergometer)','150 W','—'],
+        ['Mechanical efficiency (~25%)','150/0.25','requires ~600 W total P_in'],
+        ['V̇O₂ respirometry','~1.8 L/min','~603 W ✓'],
+        ['T·σ̇_maint (Ca²⁺ cycling + cross-bridge heat)','600 − 150 W','~450 W → body heat'],
+        ['dG_struct/dt (acute exercise)','≈ 0','no net anabolism ✓'],
+        ['Stokes minimum (running, r≈0.4m, v=3 m/s)','6π×1.8×10⁻⁵×0.4×9','<0.01 W (air drag << muscle cost)'],
+      ]
+    }
+  }
+];
+
+const HISTORY = [
+  {year:1875, sci:'J.W. Gibbs', insight:'Free energy G and electrochemical potential μ̃ — the thermodynamic scaffold for open systems', eq:'ΔG = −nFΔE; μ̃ = μ° + RT·ln a + zFψ', terms:[1,3,5], nobel:''},
+  {year:1886, sci:'L. Boltzmann', insight:'Life competes for entropy gradients — sunlight→Earth→infrared is the flux that life exploits', eq:'Life as gradient-exploiting structure', terms:[4], nobel:''},
+  {year:1889, sci:'W. Nernst / Gouy–Stodola', insight:'In-vivo redox potential correction; free energy loss identity Ẇ = Tσ̇', eq:'ΔE_iv = ΔE°′ − RT/nF·ln Q; Ẇ_lost = T·σ̇', terms:[1,4], nobel:''},
+  {year:1931, sci:'L. Onsager', insight:'Reciprocal relations for coupled irreversible fluxes — mathematical scaffold for open biological systems', eq:'L_ij = L_ji', terms:[3,4], nobel:'Nobel 1968'},
+  {year:1944, sci:'E. Schrödinger', insight:'"Life feeds on negative entropy to compensate internal decay" — correctly predicted DNA as the information carrier', eq:'Life imports order; exports entropy', terms:[4,6], nobel:''},
+  {year:1956, sci:'R.A. Marcus', insight:'Electron transfer kinetics — rate peaks at ΔG=−λ; the inverted region prevents thermal runaway', eq:'k_ET ∝ exp[−(ΔG+λ)²/4λk_BT]', terms:[1,4], nobel:'Nobel 1992'},
+  {year:1961, sci:'P. Mitchell', insight:'Proton-motive force across membranes is the universal energy transducer — every organism uses this trick', eq:'Δp = Δψ − 2.303RT/F·ΔpH ≈ −180 mV', terms:[1,2], nobel:'Nobel 1978'},
+  {year:1961, sci:'R. Landauer', insight:'Erasing one bit dissipates ≥ k_BT·ln 2 as heat — information is physical; copying has an irreducible thermodynamic floor', eq:'Q_erase ≥ k_BT·ln 2', terms:[6], nobel:''},
+  {year:1971, sci:'M. Eigen', insight:'Error threshold L·μ ≤ 1 — genome length limits replication fidelity; proofreading became physically mandatory', eq:'L_max = s/μ_mut', terms:[6], nobel:'Nobel 1967'},
+  {year:1977, sci:'I. Prigogine', insight:'Dissipative structures: order arises from far-from-equilibrium flux, maintained BY entropy flow, not despite it', eq:'σ̇ = Σ J_k A_k ≥ 0', terms:[4,5], nobel:'Nobel 1977'},
+  {year:1999, sci:'G. Crooks / J. England (2013)', insight:'Self-replication has a minimum heat cost set by growth rate relative to decay rate — physics cannot be negotiated around', eq:'β⟨Q_copy⟩ ≥ ln(g/δ) − ΔS_int + I_ext', terms:[6], nobel:''},
+  {year:2015, sci:'A.C. Barato & U. Seifert', insight:'Thermodynamic Uncertainty Relation — halving relative noise in any biological current costs at least 4× the entropy production', eq:'Var(J)/⟨J⟩² ≥ 2k_B/σ̇', terms:[4,7], nobel:''},
+];
+
+const ALL_SYMBOLS = [
+  {sym:'η_r(t)', meaning:'Mitochondrial coupling efficiency (time-dependent)', units:'dimensionless', measure:'Oligomycin titration', term:1},
+  {sym:'n', meaning:'Electrons transferred per redox reaction', units:'dimensionless', measure:'Reaction stoichiometry', term:1},
+  {sym:'F', meaning:'Faraday constant', units:'96,485 C mol⁻¹', measure:'Physical constant', term:1},
+  {sym:'J_e', meaning:'Electron flux through respiratory chains', units:'mol e⁻ s⁻¹', measure:'Respirometry', term:1},
+  {sym:'ΔE_iv', meaning:'In-vivo redox potential (Nernst-corrected)', units:'V', measure:'Metabolite conc. + Nernst equation', term:1},
+  {sym:'η_γ', meaning:'Photosynthetic quantum yield', units:'dimensionless', measure:'Gas exchange + light sensor', term:2},
+  {sym:'h', meaning:"Planck's constant", units:'6.626×10⁻³⁴ J·s', measure:'Physical constant', term:2},
+  {sym:'ν', meaning:'Photon frequency', units:'s⁻¹', measure:'Spectrophotometry', term:2},
+  {sym:'Φ_γ', meaning:'Absorbed photon flux', units:'photons s⁻¹', measure:'Quantum sensor + absorptance', term:2},
+  {sym:'μ̃_i', meaning:'Electrochemical potential of species i', units:'J mol⁻¹', measure:'Activity + membrane potential', term:3},
+  {sym:'μ°_i', meaning:'Standard chemical potential', units:'J mol⁻¹', measure:'Thermochemical tables', term:3},
+  {sym:'a_i', meaning:'Thermodynamic activity of species i', units:'dimensionless', measure:'Concentration × activity coefficient', term:3},
+  {sym:'z_i', meaning:'Charge number of species i', units:'dimensionless', measure:'Chemical identity', term:3},
+  {sym:'ψ', meaning:'Local electrostatic potential', units:'V', measure:'Patch-clamp; indicator dyes', term:3},
+  {sym:'J_i^net', meaning:'Net molar flux of species i', units:'mol s⁻¹', measure:'Isotope tracers + MS', term:3},
+  {sym:'T', meaning:'Absolute temperature', units:'K', measure:'Thermometer (~310 K mammals)', term:4},
+  {sym:'σ̇_maint', meaning:'Internal entropy production rate', units:'W K⁻¹', measure:'Calorimetry ÷ T', term:4},
+  {sym:'J_k', meaning:'Flux of irreversible process k', units:'varies', measure:'Patch-clamp, respirometry', term:4},
+  {sym:'A_k', meaning:'Thermodynamic affinity of process k', units:'J mol⁻¹', measure:'ΔG of reaction in vivo', term:4},
+  {sym:'G_struct', meaning:'Stored structural Gibbs free energy', units:'J', measure:'Bomb calorimetry of dry biomass', term:5},
+  {sym:'ε_biomass', meaning:'Specific free energy of biomass', units:'~22 kJ g⁻¹ DW', measure:'Battley 1998 (32 species)', term:5},
+  {sym:'Ṅ', meaning:'Genome copy rate', units:'copies s⁻¹', measure:'BrdU/EdU labeling + flow cytometry', term:6},
+  {sym:'⟨Q_copy⟩', meaning:'Mean heat per successful genome copy', units:'J copy⁻¹', measure:'ATP budget × ΔG_ATP', term:6},
+  {sym:'L', meaning:'Genome length in base pairs', units:'bp', measure:'DNA sequencing; NCBI databases', term:6},
+  {sym:'g', meaning:'Polymerization rate', units:'bases s⁻¹', measure:'Single-molecule FRET', term:6},
+  {sym:'δ', meaning:'Template spontaneous decay rate', units:'s⁻¹', measure:'Strand-melting kinetics', term:6},
+  {sym:'p_raw', meaning:'Raw polymerase error rate before proofreading', units:'errors base⁻¹', measure:'Exo⁻ mutant assays', term:6},
+  {sym:'k_B', meaning:'Boltzmann constant', units:'1.38×10⁻²³ J K⁻¹', measure:'Physical constant', term:6},
+  {sym:'P_export', meaning:'Exported organized power', units:'W', measure:'Ergometer; force plate; electrodes', term:7},
+  {sym:'F_m', meaning:'Export force for mode m', units:'N', measure:'Force transducer', term:7},
+  {sym:'v_m', meaning:'Velocity for mode m', units:'m s⁻¹', measure:'Motion capture', term:7},
+];
+
+// ============================================================
+// NETWORK DATA
+// ============================================================
+
+const NET_FOUNDATIONS = [
+  {id:'gibbs', label:'Gibbs 1875', sublabel:'ΔG=−nFΔE; dG=Σμ̃J', y:55},
+  {id:'nernst', label:'Nernst 1889', sublabel:'ΔE_iv = ΔE°′ − RT/nF·lnQ', y:115},
+  {id:'gouy', label:'Gouy–Stodola 1889', sublabel:'Ẇ_lost = T·σ̇', y:175},
+  {id:'boltzmann', label:'Boltzmann 1886', sublabel:'Life exploits entropy gradients', y:235},
+  {id:'onsager', label:'Onsager 1931 ★', sublabel:'Reciprocal relations L_ij=L_ji', y:295},
+  {id:'schrodinger', label:'Schrödinger 1944', sublabel:'Life feeds on negative entropy', y:355},
+  {id:'marcus', label:'Marcus 1956 ★', sublabel:'k_ET ∝ exp[−(ΔG+λ)²/4λk_BT]', y:415},
+  {id:'mitchell', label:'Mitchell 1961 ★', sublabel:'Δp = Δψ − 2.303RT/F·ΔpH', y:475},
+  {id:'landauer', label:'Landauer 1961', sublabel:'Q_erase ≥ k_BT·ln 2', y:535},
+  {id:'eigen', label:'Eigen 1971 ★', sublabel:'L·μ_final ≤ 1', y:595},
+  {id:'prigogine', label:'Prigogine 1977 ★', sublabel:'σ̇ = Σ J_k A_k ≥ 0', y:655},
+  {id:'stdmodel', label:'Standard Model', sublabel:'U(1)_EM ⊗ baryon number', y:715},
+  {id:'crooks', label:'Crooks / England 1999/2013', sublabel:'β⟨Q_copy⟩ ≥ ln(g/δ)−ΔS_int', y:775},
+  {id:'barato', label:'Barato–Seifert 2015', sublabel:'Var(J)/⟨J⟩² ≥ 2k_B/σ̇', y:835},
+];
+
+const NET_TERMS = [
+  {id:'t1', num:'①', name:'Redox', color:'#00d4ff', y:95},
+  {id:'t2', num:'②', name:'Photons', color:'#ffd700', y:195},
+  {id:'t3', num:'③', name:'Matter', color:'#00ff88', y:295},
+  {id:'t4', num:'④', name:'Entropy Tax', color:'#ff6b35', y:415},
+  {id:'t5', num:'⑤', name:'Growth', color:'#c77dff', y:535},
+  {id:'t6', num:'⑥', name:'Replication', color:'#ff2d87', y:655},
+  {id:'t7', num:'⑦', name:'Export', color:'#00e5cc', y:755},
+];
+
+const NET_CONNECTIONS = [
+  {from:'gibbs',to:'t1'},{from:'gibbs',to:'t3'},{from:'gibbs',to:'t5'},
+  {from:'nernst',to:'t1'},
+  {from:'gouy',to:'t4'},{from:'gouy',to:'t5'},{from:'gouy',to:'t7'},
+  {from:'boltzmann',to:'t4'},
+  {from:'onsager',to:'t3'},{from:'onsager',to:'t4'},
+  {from:'schrodinger',to:'t4'},{from:'schrodinger',to:'t6'},
+  {from:'marcus',to:'t1'},{from:'marcus',to:'t4'},
+  {from:'mitchell',to:'t1'},{from:'mitchell',to:'t2'},
+  {from:'landauer',to:'t6'},
+  {from:'eigen',to:'t6'},
+  {from:'prigogine',to:'t4'},{from:'prigogine',to:'t5'},
+  {from:'stdmodel',to:'t1'},{from:'stdmodel',to:'t2'},{from:'stdmodel',to:'t3'},
+  {from:'crooks',to:'t6'},
+  {from:'barato',to:'t4'},{from:'barato',to:'t7'},
+];
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+let activeTermId = null;
+
+function selectTerm(id) {
+  activeTermId = id;
+  // Highlight equation spans
+  document.querySelectorAll('.eq-term').forEach(el=>{
+    el.classList.toggle('active', +el.dataset.t === id);
+  });
+  // Highlight term cards
+  document.querySelectorAll('.term-card').forEach(el=>{
+    el.classList.toggle('active', +el.dataset.tc === id);
+  });
+  // Render detail panel
+  renderDetail(id);
+  // Scroll to detail
+  setTimeout(()=>{
+    const dp = document.getElementById('detail-area');
+    if(dp) dp.scrollIntoView({behavior:'smooth', block:'nearest'});
+  },100);
+}
+
+function renderTermCards() {
+  const grid = document.getElementById('term-cards');
+  grid.innerHTML = TERMS.map(t => `
+    <div class="term-card" data-tc="${t.id}" onclick="selectTerm(${t.id})">
+      <div class="tc-side">${t.side}</div>
+      <div class="tc-header">
+        <span class="tc-num">${t.num}</span>
+        <span class="tc-name">${t.name}</span>
+      </div>
+      <div class="tc-eq">${t.eq}</div>
+    </div>
+  `).join('');
+}
+
+function renderDetail(id) {
+  const t = TERMS.find(x=>x.id===id);
+  if(!t) return;
+  const color = t.colorHex;
+
+  const lawsHtml = t.laws.map(l=>`
+    <div class="law-card">
+      <div class="law-card-top">
+        <span class="law-name">${l.name}</span>
+        <span class="law-ref">[${l.ref}]</span>
+      </div>
+      <div class="law-eq">${l.eq}</div>
+      <div class="law-desc">${l.desc}</div>
+    </div>
+  `).join('');
+
+  const symbolsHtml = `
+    <table class="sym-table">
+      <thead><tr><th>Symbol</th><th>Meaning</th><th>Units</th><th>How to Measure</th></tr></thead>
+      <tbody>
+        ${t.symbols.map(s=>`
+          <tr>
+            <td style="color:${color}">${s.sym}</td>
+            <td>${s.meaning}${s.note?`<div class="sym-note">${s.note}</div>`:''}</td>
+            <td>${s.units}</td>
+            <td>${s.measure}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+
+  const numSteps = t.numbers.steps.map(([label,calc,result])=>`
+    <tr>
+      <td>${label}</td>
+      <td>${calc}</td>
+      <td>${result}</td>
+    </tr>
+  `).join('');
+
+  const html = `
+    <div class="detail-panel">
+      <div class="dp-header">
+        <div class="dp-num" style="color:${color}">${t.num}</div>
+        <div class="dp-title-block">
+          <div class="dp-title" style="color:${color}">${t.name}</div>
+          <div class="dp-tagline">${t.tagline}</div>
+          <div class="dp-eq-box" style="color:${color}">${t.eq}</div>
+        </div>
+      </div>
+
+      <div class="dp-section">
+        <div class="dp-section-title" style="color:${color}">Core Physical Insight</div>
+        <p style="color:var(--text);line-height:1.75;margin-bottom:10px">${t.keyInsight}</p>
+        <div class="key-insight" style="color:${color};border-color:${color}">${t.whyNeeded}</div>
+        <div style="margin-top:10px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:8px;font-size:14px;color:var(--dim)"><strong style="color:${color};font-family:'Fira Code',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase">Non-Fungibility:</strong> ${t.nonFungible}</div>
+      </div>
+
+      <div class="dp-grid">
+        <div>
+          <div class="dp-section">
+            <div class="dp-section-title" style="color:${color}">Physics / Chemistry Foundations</div>
+            <div class="law-cards">${lawsHtml}</div>
+          </div>
+        </div>
+        <div>
+          <div class="dp-section">
+            <div class="dp-section-title" style="color:${color}">Symbols & Units</div>
+            ${symbolsHtml}
+          </div>
+          <div class="dp-section">
+            <div class="dp-section-title" style="color:${color}">Worked Numbers</div>
+            <div class="num-box">
+              <div class="num-organism">${t.numbers.organism}</div>
+              <table class="num-table">
+                <tbody>${numSteps}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('detail-area').innerHTML = html;
+}
+
+// ============================================================
+// SYMBOL TABLE
+// ============================================================
+function renderSymbolTable() {
+  const colors = {1:'#00d4ff',2:'#ffd700',3:'#00ff88',4:'#ff6b35',5:'#c77dff',6:'#ff2d87',7:'#00e5cc'};
+  const nums = {1:'①',2:'②',3:'③',4:'④',5:'⑤',6:'⑥',7:'⑦'};
+  const names = {1:'Redox',2:'Photons',3:'Matter',4:'Entropy',5:'Growth',6:'Replication',7:'Export'};
+  const table = document.getElementById('sym-table');
+  table.innerHTML = `
+    <thead><tr>
+      <th>Symbol</th>
+      <th>Meaning</th>
+      <th>Units</th>
+      <th>Measurement Method</th>
+      <th>Term</th>
+    </tr></thead>
+    <tbody>
+      ${ALL_SYMBOLS.map(s=>`
+        <tr>
+          <td style="color:${colors[s.term]}">${s.sym}</td>
+          <td>${s.meaning}</td>
+          <td>${s.units}</td>
+          <td>${s.measure}</td>
+          <td><span class="sym-term-badge" style="background:${colors[s.term]}22;color:${colors[s.term]};border:1px solid ${colors[s.term]}44">${nums[s.term]} ${names[s.term]}</span></td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+}
+
+// ============================================================
+// HISTORY TIMELINE
+// ============================================================
+function renderTimeline() {
+  const colors = {1:'#00d4ff',2:'#ffd700',3:'#00ff88',4:'#ff6b35',5:'#c77dff',6:'#ff2d87',7:'#00e5cc'};
+  const nums = {1:'①',2:'②',3:'③',4:'④',5:'⑤',6:'⑥',7:'⑦'};
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = HISTORY.map(h=>`
+    <div class="tl-item">
+      <div class="tl-year">${h.year}</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-scientist">${h.sci}${h.nobel?` <span style="font-family:'Fira Code',monospace;font-size:11px;color:var(--sci)">[${h.nobel}]</span>`:''}</div>
+        <div class="tl-insight">${h.insight}</div>
+        <div class="tl-eq">${h.eq}</div>
+        <div class="tl-connects">Feeds into: ${h.terms.map(t=>`<span class="tl-badge" style="background:${colors[t]}22;color:${colors[t]};border:1px solid ${colors[t]}44">${nums[t]}</span>`).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// NETWORK SVG
+// ============================================================
+function buildNetwork() {
+  const svg = document.getElementById('net-svg');
+  const tip = document.getElementById('net-tip');
+  const W = 1160, FX = 20, FW = 295, TX = 860, TW = 280, MH = 880;
+
+  // Compute foundation node center x
+  const fcx = FX + FW/2;
+  const tcx = TX + TW/2;
+
+  let edgesHtml = '';
+  NET_CONNECTIONS.forEach((c,i)=>{
+    const f = NET_FOUNDATIONS.find(x=>x.id===c.from);
+    const t = NET_TERMS.find(x=>x.id===c.to);
+    const x0 = FX+FW, y0 = f.y+20;
+    const x1 = TX, y1 = t.y+38;
+    const cx1 = x0+160, cy1 = y0;
+    const cx2 = x1-160, cy2 = y1;
+    const col = t.color;
+    edgesHtml += `<path class="net-line" data-from="${c.from}" data-to="${c.to}" 
+      d="M${x0},${y0} C${cx1},${cy1} ${cx2},${cy2} ${x1},${y1}" 
+      stroke="${col}" stroke-width="1.4" fill="none" stroke-opacity="0.3"/>`;
+  });
+
+  let foundationsHtml = '';
+  NET_FOUNDATIONS.forEach(f=>{
+    foundationsHtml += `
+      <g class="net-node" data-fid="${f.id}" transform="translate(${FX},${f.y-20})">
+        <rect class="bg-rect" x="0" y="0" width="${FW}" height="44" rx="6" fill="rgba(245,200,66,0.07)" stroke="rgba(245,200,66,0.22)" stroke-width="1"/>
+        <text class="net-label" x="10" y="16" fill="#f5c842" font-size="11" font-weight="500">${f.label}</text>
+        <text class="net-label" x="10" y="32" fill="#a0987e" font-size="9.5">${f.sublabel}</text>
+      </g>`;
+  });
+
+  let termsHtml = '';
+  NET_TERMS.forEach(t=>{
+    termsHtml += `
+      <g class="net-node" data-tid="${t.id}" transform="translate(${TX},${t.y-20})" style="cursor:pointer" onclick="selectTermFromNetwork(${t.id.replace('t','')})">
+        <rect class="bg-rect" x="0" y="0" width="${TW}" height="78" rx="8" fill="${t.color}14" stroke="${t.color}44" stroke-width="1.5"/>
+        <text class="net-label" x="14" y="24" fill="${t.color}" font-size="22" font-weight="700" font-family="Georgia,serif">${t.num}</text>
+        <text class="net-label" x="44" y="22" fill="${t.color}" font-size="12.5" font-weight="600">${t.name}</text>
+        <text class="net-label" x="14" y="50" fill="rgba(255,255,255,0.6)" font-size="10">${TERMS.find(x=>x.id===+t.id.replace('t','')).eqPlain}</text>
+        <text class="net-label" x="14" y="68" fill="${t.color}88" font-size="9">${TERMS.find(x=>x.id===+t.id.replace('t','')).side}</text>
+      </g>`;
+  });
+
+  // Labels
+  const headerHtml = `
+    <text x="${FX+FW/2}" y="22" fill="#f5c84288" font-family="monospace" font-size="10" letter-spacing="2" text-anchor="middle" text-transform="uppercase">PHYSICS FOUNDATIONS</text>
+    <text x="${TX+TW/2}" y="22" fill="rgba(255,255,255,0.3)" font-family="monospace" font-size="10" letter-spacing="2" text-anchor="middle">LPE TERMS</text>
+    <line x1="${FX}" y1="30" x2="${FX+FW}" y2="30" stroke="rgba(245,200,66,0.15)" stroke-width="1"/>
+    <line x1="${TX}" y1="30" x2="${TX+TW}" y2="30" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  `;
+
+  svg.setAttribute('viewBox', `0 0 ${TX+TW+20} ${MH}`);
+  svg.innerHTML = headerHtml + edgesHtml + foundationsHtml + termsHtml;
+
+  // Hover interactions
+  svg.addEventListener('mousemove', e => {
+    const rect = svg.getBoundingClientRect();
+    tip.style.left = (e.clientX + 14)+'px';
+    tip.style.top = (e.clientY - 10)+'px';
+  });
+
+  svg.querySelectorAll('.net-node[data-tid]').forEach(node => {
+    node.addEventListener('mouseenter', () => {
+      const tid = node.dataset.tid;
+      const t = NET_TERMS.find(x=>x.id===tid);
+      const connected = NET_CONNECTIONS.filter(c=>c.to===tid).map(c=>c.from);
+      // Dim all
+      svg.querySelectorAll('.net-node').forEach(n=>n.classList.add('dim'));
+      svg.querySelectorAll('.net-line').forEach(l=>l.classList.add('dim'));
+      // Highlight this term and connected foundations
+      node.classList.remove('dim');
+      connected.forEach(fid=>{
+        svg.querySelector(`.net-node[data-fid="${fid}"]`)?.classList.remove('dim');
+        svg.querySelector(`.net-line[data-from="${fid}"][data-to="${tid}"]`)?.classList.add('hi');
+        svg.querySelector(`.net-line[data-from="${fid}"][data-to="${tid}"]`)?.classList.remove('dim');
+      });
+      const term = TERMS.find(x=>x.id===+tid.replace('t',''));
+      tip.innerHTML = `<strong style="color:${t.color}">${t.num} ${t.name}</strong>${term.tagline}`;
+      tip.style.display='block';
+    });
+    node.addEventListener('mouseleave', ()=>{
+      svg.querySelectorAll('.net-node').forEach(n=>{n.classList.remove('dim');n.classList.remove('hi')});
+      svg.querySelectorAll('.net-line').forEach(l=>{l.classList.remove('dim');l.classList.remove('hi')});
+      tip.style.display='none';
+    });
+  });
+
+  svg.querySelectorAll('.net-node[data-fid]').forEach(node => {
+    node.addEventListener('mouseenter', () => {
+      const fid = node.dataset.fid;
+      const f = NET_FOUNDATIONS.find(x=>x.id===fid);
+      const connected = NET_CONNECTIONS.filter(c=>c.from===fid).map(c=>c.to);
+      svg.querySelectorAll('.net-node').forEach(n=>n.classList.add('dim'));
+      svg.querySelectorAll('.net-line').forEach(l=>l.classList.add('dim'));
+      node.classList.remove('dim');
+      connected.forEach(tid=>{
+        svg.querySelector(`.net-node[data-tid="${tid}"]`)?.classList.remove('dim');
+        svg.querySelector(`.net-line[data-from="${fid}"][data-to="${tid}"]`)?.classList.add('hi');
+        svg.querySelector(`.net-line[data-from="${fid}"][data-to="${tid}"]`)?.classList.remove('dim');
+      });
+      const connTermNames = connected.map(tid=>{
+        const t = NET_TERMS.find(x=>x.id===tid);
+        return `<span style="color:${t.color}">${t.num}</span>`;
+      }).join(' ');
+      tip.innerHTML = `<strong style="color:var(--sci)">${f.label}</strong><em style="color:var(--dim);display:block;margin:2px 0 4px">${f.sublabel}</em>Feeds into: ${connTermNames}`;
+      tip.style.display='block';
+    });
+    node.addEventListener('mouseleave', ()=>{
+      svg.querySelectorAll('.net-node').forEach(n=>{n.classList.remove('dim');n.classList.remove('hi')});
+      svg.querySelectorAll('.net-line').forEach(l=>{l.classList.remove('dim');l.classList.remove('hi')});
+      tip.style.display='none';
+    });
+  });
+}
+
+function selectTermFromNetwork(id) {
+  showTab('explorer', document.querySelector('.tab-btn'));
+  document.querySelectorAll('.tab-btn')[0].classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i>0)b.classList.remove('active')});
+  setTimeout(()=>selectTerm(id), 50);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderTermCards();
+  renderSymbolTable();
+  renderTimeline();
+  buildNetwork();
+  // Auto-select first term
+  selectTerm(1);
+});
+</script>
+</body>
+</html>
