@@ -62,7 +62,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 * { scrollbar-width: thin; scrollbar-color: var(--border-focus) transparent; }
 
 /* ============================================================
-   LAYERED ARCHITECTURE
+   LAYERED ARCHITECTURE & BACKGROUND TEXTURE
    ============================================================ */
 #canvas-container {
   position: fixed;
@@ -70,7 +70,14 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
   width: 100vw;
   height: 100vh;
   z-index: 1;
-  background: radial-gradient(circle at center, #13131c 0%, #030305 80%);
+  background-color: #030305;
+  /* Classy, minimalist architectural grid + depth vignette */
+  background-image: 
+    radial-gradient(circle at center, rgba(19, 19, 28, 0.8) 0%, rgba(3, 3, 5, 1) 100%),
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  background-position: center center;
   cursor: grab;
 }
 #canvas-container:active { cursor: grabbing; }
@@ -843,6 +850,8 @@ function init3D() {
   camera.position.set(0, 0, 48); 
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+  // Set accurate color space mapping to prevent washed-out colors
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
@@ -852,19 +861,17 @@ function init3D() {
   controls.autoRotate = true; controls.autoRotateSpeed = 0.6;
   controls.enablePan = false; controls.minDistance = 15; controls.maxDistance = 120;        
 
-  // Adjusted Lighting: Lowered intensities to prevent washout and deepen shadows for rich colors
-  scene.add(new THREE.AmbientLight(0xffffff, 0.85)); 
-  const dirLight = new THREE.DirectionalLight(0xffffff, 2.0); dirLight.position.set(15, 20, 15); scene.add(dirLight);
-  const backLight = new THREE.DirectionalLight(0x88aaff, 1.2); backLight.position.set(-15, -15, -15); scene.add(backLight);
+  // Lowered ambient light from 0.85 -> 0.5 to stop washing out base colors, adding deep contrast
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5)); 
+  const dirLight = new THREE.DirectionalLight(0xffffff, 2.5); dirLight.position.set(15, 20, 15); scene.add(dirLight);
+  const backLight = new THREE.DirectionalLight(0x88aaff, 0.8); backLight.position.set(-15, -15, -15); scene.add(backLight);
 
   const geo = new THREE.SphereGeometry(0.40, 16, 16); 
   
-  // Adjusted Material: 25% less glossy, low roughness (0.1) restores vibrant saturated base colors
-  const mat = new THREE.MeshPhysicalMaterial({ 
-    roughness: 0.1, 
-    metalness: 0.1, 
-    clearcoat: 0.5, 
-    clearcoatRoughness: 0.15,
+  // Standard Material guarantees deep saturated colors without the physical clearcoat "milk"
+  const mat = new THREE.MeshStandardMaterial({ 
+    roughness: 0.2, 
+    metalness: 0.1
   });
   
   instancedMesh = new THREE.InstancedMesh(geo, mat, NUM_PARTICLES);
@@ -956,7 +963,9 @@ function update3DTargetStates() {
   layerOrder.forEach(org => {
     if (!quotas[org]) return;
     const count = quotas[org];
-    const colorStr = PALETTE[org]?.color || "#ffffff";
+    
+    // OVERRIDE: Keep UI Cytosol text readable (light gray), but make 3D Cytosol particles dark slate so they recede.
+    const colorStr = org === "Cytosol" ? "#2d3340" : (PALETTE[org]?.color || "#ffffff");
     
     for (let i = 0; i < count; i++) {
       if (idx >= NUM_PARTICLES) break; 
