@@ -3,1130 +3,562 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- Basic SEO -->
-  <title>The Human Organelle Atlas | HealthEqual Research</title>
-  <meta name="description" content="An open-source visual atlas of human organelle proportions across major cell types, built to help students, researchers, and curious minds explore how cellular space is allocated across mitochondria, nucleus, ER, Golgi, cytosol, lipid droplets, granules, and other organelles.">
-  <meta name="author" content="Marjon Enriquez">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#030305">
-  
-  <link rel="canonical" href="https://healthequal.ai/research/organelle-atlas/">
-  
-  <!-- OpenGraph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://healthequal.ai/research/organelle-atlas/">
-  <meta property="og:title" content="The Human Organelle Atlas">
-  <meta property="og:description" content="An open-source visual atlas of human organelle proportions across major cell types, built for students, researchers, and curious minds.">
-  <meta property="og:site_name" content="HealthEqual Research">
-  <meta property="og:image" content="https://healthequal.ai/research/organelle-atlas/preview.png">
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The Human Organelle Atlas">
-  <meta name="twitter:description" content="Explore organelle proportions across human cell types in an open-source visual atlas.">
-  <meta name="twitter:image" content="https://healthequal.ai/research/organelle-atlas/preview.png">
-  
-  <!-- JSON-LD Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Dataset",
-    "name": "The Human Organelle Atlas",
-    "description": "An open-source visual atlas of human organelle proportions across major cell types.",
-    "url": "https://healthequal.ai/research/organelle-atlas/",
-    "creator": {
-      "@type": "Person",
-      "name": "Marjon Enriquez",
-      "email": "mailto:marjonenriquez@gmail.com"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "HealthEqual"
-    },
-    "keywords": [
-      "human organelle atlas",
-      "cell biology",
-      "organelle proportions",
-      "mitochondria",
-      "nucleus",
-      "endoplasmic reticulum",
-      "systems bioenergetics",
-      "cellular aging",
-      "cellular architecture"
-    ],
-    "license": "https://creativecommons.org/licenses/by/4.0/"
-  }
-  </script>
-
-  <!-- Premium Typography -->
+  <title>HealthEqual AI - The Future-Ready Accountability System for Wellness ROI</title>
+  <meta name="description" content="HealthEqual AI is the world's future-ready financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, a Health Dividend API, and the HealthEqual Dashboard for employers.">
+  <link rel="icon" href="/lumicoin-logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Header layout */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(255, 248, 242, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      padding-top: var(--spacing-xs);
+      padding-bottom: var(--spacing-xs);
+      gap: var(--spacing-sm);
+    }
+    .logo-link img {
+      height: 42px;
+      display: block;
+    }
+    .main-nav {
+      margin-left: auto;
+    }
+    .main-nav ul {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      justify-content: flex-end;
+    }
 
-  <!-- Three.js & GSAP -->
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    /* Hero */
+    .hero-section {
+      padding: clamp(20px, 5vw, 35px) 0 clamp(50px, 8vw, 80px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      width: 135%;
+      height: 135%;
+      top: -18%;
+      left: -18%;
+      background: radial-gradient(circle at 50% 30%, var(--accent-peach), transparent 70%);
+      z-index: -1;
+      animation: gentlePulse 10s infinite alternate ease-in-out;
+      opacity: 0.7;
+    }
+    @keyframes gentlePulse {
+      0% { opacity: 0.5; transform: scale(1) rotate(-0.4deg); }
+      100% { opacity: 0.8; transform: scale(1.05) rotate(0.6deg); }
+    }
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .happy-people-image {
+      max-width: 720px;
+      width: 100%;
+      height: auto;
+      margin: -8px auto clamp(16px, 3vw, 24px); /* pulls image slightly closer to nav */
+      display: block;
+      border-radius: 18px;
+      box-shadow: none;
+      background: transparent;
+    }
+    .hero-section h1 {
+      font-size: clamp(2.6rem, 6.5vw, 3.6rem);
+      margin-bottom: var(--spacing-md);
+      max-width: 20ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+    }
+    .hero-section .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      font-weight: 400;
+      color: var(--text-primary);
+      opacity: 0.9;
+      margin-bottom: var(--spacing-xl);
+      max-width: 56ch;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+    .hero-cta-buttons {
+      margin-top: var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+    .hero-cta-buttons .btn {
+      min-width: 260px;
+      padding: calc(var(--spacing-sm) + 2px) var(--spacing-xl);
+      font-size: 1.02rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    .btn.btn-secondary {
+      background: transparent;
+      border: 2px solid var(--accent-primary);
+      color: var(--accent-primary);
+      box-shadow: none;
+    }
+    .btn.btn-secondary:hover {
+      background: var(--accent-peach);
+      box-shadow: var(--shadow-button);
+      transform: translateY(-2px);
+    }
+    @media (min-width: 769px) {
+      .hero-cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: var(--spacing-xl);
       }
     }
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    @media (max-width: 768px) {
+      .hero-section h1 { padding: 0 var(--spacing-sm); }
+      .hero-section .subtitle { padding: 0 var(--spacing-sm); }
+      .hero-cta-buttons .btn { min-width: 90%; }
+    }
 
-<style>
-/* ============================================================
-   DESIGN TOKENS & RESET
-   ============================================================ */
-:root {
-  --bg-app:        #030305;
-  --bg-panel:      #0b0d14; 
-  --bg-card:       rgba(24, 26, 35, 0.6); 
-  --border-light:  rgba(255, 255, 255, 0.1);
-  --border-focus:  rgba(255, 255, 255, 0.25);
-  
-  --text-main:     #f8fafc;
-  --text-muted:    #94a3b8;
-  --text-dim:      #475569;
-  
-  --accent:        #fbbf24;
-  --danger:        #ef4444;
-  
-  --font-sans:     'Inter', -apple-system, sans-serif;
-  --font-mono:     'JetBrains Mono', monospace;
-}
+    /* Index Feature Section */
+    .index-section {
+      background: linear-gradient(135deg, var(--surface-subtle) 0%, var(--white) 100%);
+      text-align: center;
+      border-top: 1px solid var(--light-gray);
+      padding: clamp(70px, 10vw, 110px) 0;
+      position: relative;
+    }
+    .index-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+      opacity: 0.6;
+    }
+    .index-section h2 {
+      color: var(--accent-primary);
+      font-size: clamp(2.1rem, 5vw, 2.7rem);
+      margin-bottom: var(--spacing-sm);
+    }
+    .index-section .tagline {
+      font-size: clamp(1.15rem, 3.3vw, 1.4rem);
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-md);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .index-section .lead {
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      max-width: 62ch;
+      margin: 0 auto var(--spacing-xl);
+      color: var(--text-primary);
+      line-height: 1.65;
+    }
+    .index-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+      align-items: flex-start;
+      margin-top: var(--spacing-lg);
+    }
+    @media (min-width: 992px) {
+      .index-grid {
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--spacing-2xl);
+        text-align: left; /* FIX: Moved alignment rule here */
+      }
+    }
+    .index-content p {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: var(--spacing-md);
+    }
+    .index-visual {
+      background: var(--bg-base); /* FIX: Changed to flesh color */
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-soft);
+    }
+    .lumistars-graphic h4 {
+      text-align: center;
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin: 0 0 var(--spacing-md);
+    }
+    .lumistars-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    .lumistars-item {
+      display: flex;
+      gap: var(--spacing-md);
+      align-items: center;
+      background: var(--white);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--light-gray);
+      transition: var(--transition-smooth);
+    }
+    .lumistars-item:hover {
+      border-color: rgba(203, 89, 7, 0.3);
+      transform: translateX(3px);
+    }
+    .lumistars-item .stars {
+      width: 96px;
+      letter-spacing: 0.12em;
+      font-size: 1.1rem;
+      color: var(--accent-primary);
+      flex-shrink: 0;
+    }
+    .lumistars-item .stars .empty {
+      color: #e5e7eb;
+      opacity: 0.8;
+    }
+    .lumistars-item .label {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.92rem;
+    }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { 
-  width: 100vw; 
-  height: 100vh; 
-  overflow: hidden; 
-  background: var(--bg-app); 
-  color: var(--text-main); 
-  font-family: var(--font-sans); 
-  -webkit-font-smoothing: antialiased; 
-  -moz-osx-font-smoothing: grayscale;
-}
-button { font-family: inherit; border: none; background: none; cursor: pointer; color: inherit; outline: none; }
+    /* Ecosystem Section */
+    .ecosystem-section {
+      background: transparent;
+      padding: clamp(80px, 11vw, 120px) 0;
+      position: relative;
+    }
+    .ecosystem-section::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary-light), transparent);
+      opacity: 0.5;
+    }
+    .ecosystem-section h2 {
+      text-align: center;
+      color: var(--accent-primary);
+      font-size: clamp(2.1rem, 5vw, 2.7rem);
+      margin: 0 0 var(--spacing-md);
+    }
+    p.ecosystem-lead {
+      text-align: center;
+      max-width: 68ch;
+      margin: 0 auto var(--spacing-2xl);
+      font-size: clamp(1.05rem, 3vw, 1.25rem);
+      line-height: 1.65;
+      color: var(--text-primary);
+    }
+    .ecosystem-grid {
+      display: grid;
+      gap: var(--spacing-lg);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 992px) {
+      .ecosystem-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .ecosystem-card {
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: var(--border-radius-lg);
+      padding: var(--spacing-lg);
+      transition: var(--transition-smooth);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+    .ecosystem-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+      border-color: rgba(203, 89, 7, 0.22);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-sm);
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--border-radius-md);
+      background: var(--accent-peach);
+      color: var(--accent-primary);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .ecosystem-card h3 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+    }
+    .ecosystem-card p {
+      margin: 0 0 var(--spacing-md);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+    .card-link {
+      font-weight: 600;
+      display: inline-block;
+      transition: var(--transition-smooth);
+      font-size: 0.95rem;
+    }
+    .card-link:hover {
+      color: var(--accent-primary-dark);
+    }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-focus); border-radius: 4px; }
-* { scrollbar-width: thin; scrollbar-color: var(--border-focus) transparent; }
+    /* Button sheen */
+    .btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: left 0.6s ease;
+    }
+    .btn:hover::before {
+      left: 100%;
+    }
 
-/* ============================================================
-   LAYERED ARCHITECTURE & BACKGROUND TEXTURE
-   ============================================================ */
-#canvas-container {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  background-color: #030305;
-  /* Classy, minimalist architectural grid + depth vignette */
-  background-image: 
-    radial-gradient(circle at center, rgba(19, 19, 28, 0.8) 0%, rgba(3, 3, 5, 1) 100%),
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 100% 100%, 32px 32px, 32px 32px;
-  background-position: center center;
-  cursor: grab;
-}
-#canvas-container:active { cursor: grabbing; }
-
-#app {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none; 
-}
-
-/* ============================================================
-   SIDEBARS (Flex Layout for Fixed Headers/Footers)
-   ============================================================ */
-.sidebar {
-  width: 360px;
-  min-width: 360px;
-  height: 100vh;
-  flex-shrink: 0;
-  background: var(--bg-panel);
-  display: flex;
-  flex-direction: column;
-  pointer-events: auto; 
-  box-shadow: 0 0 50px rgba(0,0,0,0.8);
-  transition: margin 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  border-right: 1px solid var(--border-light);
-}
-#right-panel { border-left: 1px solid var(--border-light); border-right: none; }
-
-#left-panel.collapsed { margin-left: -360px; }
-#right-panel.collapsed { margin-right: -360px; }
-
-.panel-header {
-  padding: 24px 24px 12px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.panel-footer {
-  padding: 16px 24px 24px;
-  flex-shrink: 0;
-}
-
-.scrollable-area {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 24px;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* ============================================================
-   FLOATING UI COMPONENTS (Center Panel)
-   ============================================================ */
-#center-panel { flex: 1; position: relative; pointer-events: none; }
-
-.toggle-btn {
-  position: absolute;
-  top: 24px;
-  pointer-events: auto; 
-  width: 40px; height: 40px;
-  background: #11131a;
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-main);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.toggle-btn:hover { border-color: var(--border-focus); transform: scale(1.05); background: #1a1d26; }
-.toggle-btn svg { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-
-#toggle-left-btn { left: 24px; }
-#toggle-right-btn { right: 24px; }
-
-#left-panel.collapsed ~ #center-panel #toggle-left-btn svg { transform: rotate(180deg); }
-#right-panel.collapsed ~ #center-panel #toggle-right-btn svg { transform: rotate(180deg); }
-
-.view-hints {
-  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-  font-family: var(--font-mono); font-size: 10px; color: var(--text-main);
-  letter-spacing: 0.15em; pointer-events: none; background: rgba(0,0,0,0.8);
-  padding: 10px 20px; border-radius: 24px; border: 1px solid var(--border-light);
-  display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-}
-.pulse { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite ease-in-out; }
-@keyframes blink { 0%,100%{opacity:1; box-shadow: 0 0 8px var(--accent);} 50%{opacity:0.3; box-shadow: 0 0 0 transparent;} }
-
-/* ============================================================
-   LEFT PANEL UI (Navigation)
-   ============================================================ */
-.brand h1 { font-size: 30px; font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 0px;}
-.brand h1 span { color: var(--accent); font-weight: 400;}
-.brand p { font-size: 12px; color: #cbd5e1; margin-top: 4px; line-height: 1.4; }
-
-/* Dynamic Definition Box */
-.org-def-box {
-  display: none; /* Flex when active */
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.03);
-  border-left: 3px solid transparent; 
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-  margin-top: 4px;
-}
-
-/* Search Bar */
-.search-box {
-  display: flex; align-items: center; gap: 8px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border-light);
-  padding: 8px 12px; border-radius: 8px; transition: border 0.2s;
-  margin-top: 4px;
-}
-.search-box:focus-within { border-color: var(--accent); background: rgba(255,255,255,0.08); }
-.search-box svg { color: var(--text-muted); width: 14px; height: 14px; }
-.search-box input { background: none; border: none; outline: none; color: var(--text-main); font-family: var(--font-sans); font-size: 12px; width: 100%; }
-.search-box input::placeholder { color: var(--text-dim); }
-
-.cell-list { display: flex; flex-direction: column; gap: 6px; padding-bottom: 24px; }
-.cell-btn {
-  position: relative; overflow: hidden; z-index: 1;
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border-light);
-  background: var(--bg-card); text-align: left; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  flex-shrink: 0;
-}
-.cell-btn::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: var(--fill-pct, 0%); background: var(--color, transparent); opacity: 0.12; z-index: -1;
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
-}
-.cell-btn:hover { border-color: var(--border-focus); transform: translateY(-1px); }
-.cell-btn.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px rgba(251,191,36,0.1); }
-.cell-btn.active::before { opacity: 0.2; }
-
-.cell-btn-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-.cell-btn .name { font-size: 13px; font-weight: 500; color: var(--text-main); transition: color 0.3s; }
-.cell-btn.active .name { color: var(--accent); }
-.cell-btn .tissue { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.cell-btn .sort-val {
-  font-family: var(--font-mono); font-size: 9.5px; color: var(--color, var(--text-main));
-  background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); white-space: nowrap;
-}
-
-.action-buttons { display: flex; gap: 10px; }
-.btn-action {
-  flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border-light);
-  font-size: 11px; font-weight: 500; color: var(--text-main); background: var(--bg-card);
-  transition: all 0.2s; text-align: center;
-}
-.btn-action:hover { background: rgba(40,40,55,0.9); border-color: var(--border-focus); }
-
-/* ============================================================
-   RIGHT PANEL UI (Dashboard)
-   ============================================================ */
-.dash-header h2 { font-size: 30px; font-weight: 300; margin-bottom: 4px; letter-spacing: -0.02em;}
-.dash-header .tissue { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.dash-header p { font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-top: 12px;}
-
-.rulers { display: flex; background: var(--bg-card); border-radius: 10px; padding: 4px; border: 1px solid var(--border-light); }
-.ruler-btn {
-  flex: 1; padding: 10px 4px; border-radius: 8px; text-align: center;
-  transition: all 0.2s; display: flex; flex-direction: column; gap: 4px;
-}
-.ruler-btn:hover { background: rgba(255,255,255,0.06); }
-.ruler-btn.active { background: rgba(255,255,255,0.12); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-.ruler-btn .sym { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.2s;}
-.ruler-btn .sub { font-size: 9px; color: var(--text-dim); text-transform: uppercase; font-weight: 600; letter-spacing: 0.08em; transition: color 0.2s;}
-.ruler-btn.active .sym { color: var(--text-main); }
-.ruler-btn.active .sub { color: var(--accent); }
-
-.zero-sum-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-main); margin-bottom: 8px; display: flex; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.05em; }
-.bar-track { height: 8px; border-radius: 4px; display: flex; overflow: hidden; background: rgba(0,0,0,0.8); box-shadow: inset 0 1px 3px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.05); }
-.bar-seg { height: 100%; transition: flex 1s cubic-bezier(0.16, 1, 0.3, 1); border-right: 1px solid rgba(0,0,0,0.8); }
-
-.org-list { display: flex; flex-direction: column; gap: 8px; padding-bottom: 24px; margin-top: 8px;}
-.org-card {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; border-radius: 10px; border: 1px solid var(--border-light);
-  background: var(--bg-card); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-  position: relative; overflow: hidden; cursor: pointer; flex-shrink: 0;
-}
-.org-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--color); transition: width 0.3s ease; }
-.org-card:hover { border-color: var(--color); background: rgba(30, 30, 42, 0.9); transform: translateX(-4px); }
-.org-card:hover::before { width: 6px; box-shadow: 0 0 15px var(--color); }
-
-.org-card.sort-active {
-  border-color: var(--color); background: rgba(30, 30, 42, 0.95); transform: translateX(-6px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
-}
-.org-card.sort-active::before { width: 8px; box-shadow: 0 0 20px var(--color); }
-
-.org-info .name { font-size: 13px; font-weight: 500; color: var(--text-main); }
-.org-info .note { font-size: 11px; color: var(--text-muted); margin-top: 4px; max-width: 160px; line-height: 1.4; }
-.org-data { text-align: right; }
-.org-data .val { font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--color); }
-.org-data .unit { font-family: var(--font-mono); font-size: 9.5px; color: var(--text-dim); display: block; margin-top: 2px; }
-
-/* ============================================================
-   MODALS
-   ============================================================ */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 100;
-  display: none; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.85); 
-  opacity: 0; transition: opacity 0.3s; pointer-events: auto; 
-}
-.modal-overlay.open { display: flex; opacity: 1; }
-
-.modal-box {
-  background: #0f1016; border: 1px solid var(--border-focus); border-radius: 20px;
-  width: 100%; max-width: 680px; max-height: 85vh; 
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; 
-  transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.8);
-}
-.modal-overlay.open .modal-box { transform: scale(1); }
-
-.modal-header-locked { padding: 40px 40px 20px; flex-shrink: 0; position: relative; border-bottom: 1px solid var(--border-light); }
-.modal-body-scrollable { padding: 24px 40px 40px; flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; gap: 12px; }
-
-.btn-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--text-muted); transition: all 0.2s; z-index: 10; }
-.btn-close:hover { background: var(--border-focus); color: var(--text-main); }
-
-.modal-box h2 { font-size: 28px; font-weight: 600; margin: 0; letter-spacing: -0.02em;}
-.modal-box .sub { font-size: 14px; color: var(--text-muted); line-height: 1.5;}
-
-.law-card { padding: 18px; border: 1px solid var(--border-light); border-radius: 12px; background: rgba(255,255,255,0.03); }
-.law-card h3 { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: var(--accent); }
-.law-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
-
-/* Citations System */
-.sort-badges { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
-.sort-badges .badge {
-  background: rgba(255,255,255,0.05); border: 1px solid var(--border-light);
-  padding: 6px 14px; border-radius: 20px; font-size: 11px; color: var(--text-muted);
-  cursor: pointer; transition: all 0.2s; font-weight: 500;
-}
-.sort-badges .badge:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
-.sort-badges .badge.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600;}
-
-.citation-item {
-  font-size: 13px; color: var(--text-muted); line-height: 1.5;
-  padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-light);
-  transition: border-color 0.2s;
-}
-.citation-item:hover { border-color: rgba(255,255,255,0.2); }
-.citation-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;}
-.citation-tags span { font-size: 10px; background: rgba(255,255,255,0.08); padding: 3px 8px; border-radius: 6px; font-family: var(--font-mono); color: var(--text-main); }
-</style>
+    /* Animations */
+    .hero-section,
+    .index-section,
+    .ecosystem-section {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo-link">
+        <img src="/healthequal-logo-x.png" alt="HealthEqual Logo">
+      </a>
 
-<!-- LAYER 1: Fullscreen 3D Canvas -->
-<div id="canvas-container"></div>
+<button class="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
 
-<!-- LAYER 2: UI Overlay -->
-<div id="app">
+  <nav class="main-nav" id="mainNav">
+    <ul>
+      <li><a href="/" class="active">Home</a></li>
+      <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
+    </ul>
+  </nav>
 
-  <!-- LEFT PANEL: Navigation -->
-  <aside id="left-panel" class="sidebar">
-    <div class="panel-header brand">
-      <h1>Human<br><span>Organelle Atlas</span></h1>
-      <p>A mathematically constrained visualizer mapping 1,000 distinct particles per cell bounded budget.</p>
-      
-      <!-- Search Bar -->
-      <div class="search-box">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <input type="text" id="search-input" placeholder="Search cells or tissues..." oninput="filterCells(this.value)">
-      </div>
-
-      <!-- Dynamic Definition Box -->
-      <div id="organelle-def-box" class="org-def-box"></div>
-    </div>
-
-    <!-- Scrollable Region -->
-    <div class="scrollable-area cell-list" id="cell-list">
-      <!-- Injected via JS -->
-    </div>
-
-    <div class="panel-footer action-buttons">
-      <button class="btn-action" onclick="openModal('about-modal')">About The Atlas</button>
-      <button class="btn-action" onclick="openModal('citations-modal')">Citations</button>
-    </div>
-  </aside>
-
-  <!-- CENTER PANEL: Floating Controls -->
-  <main id="center-panel">
-    <button id="toggle-left-btn" class="toggle-btn" onclick="togglePanel('left-panel')" aria-label="Toggle Left Menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-    </button>
-    <button id="toggle-right-btn" class="toggle-btn" onclick="togglePanel('right-panel')" aria-label="Toggle Right Dashboard">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-    </button>
-
-    <div class="view-hints">
-      <div class="pulse"></div>
-      DRAG TO ROTATE &nbsp;•&nbsp; SCROLL TO ZOOM &nbsp;•&nbsp; CLICK CARDS TO SORT
-    </div>
-  </main>
-
-  <!-- RIGHT PANEL: Data Dashboard -->
-  <aside id="right-panel" class="sidebar">
-    <div class="panel-header">
-      <div class="dash-header">
-        <h2 id="cell-name">Cell Name</h2>
-        <div class="tissue" id="cell-tissue">Tissue Type</div>
-        <p id="cell-desc">Description</p>
-      </div>
-
-      <div class="rulers" id="ruler-wrap"></div>
-
-      <div class="zero-sum">
-        <div class="zero-sum-label"><span>Space Budget</span> <span>100% Volume</span></div>
-        <div class="bar-track" id="stacked-bar"></div>
-      </div>
-    </div>
-
-    <!-- Scrollable Region -->
-    <div class="scrollable-area org-list" id="org-list">
-      <!-- Injected via JS -->
-    </div>
-  </aside>
-
+  <div class="nav-overlay"></div>
 </div>
+  </header>
+  <main>
+    <section class="hero-section">
+      <div class="container hero-inner">
+        <img src="/happypeople.png" alt="Happy People" class="happy-people-image">
+        <h1>What Is Your Health Worth?</h1>
+        <p class="subtitle">
+          HealthEqual AI is the future-ready financial infrastructure for preventive health. Our ecosystem features the Wellness ROI Transparency Index, a Health Dividend API, and the HealthEqual Dashboard for employers.        </p>
+        <div class="hero-cta-buttons">
+          <a href="/wellness-roi-transparency-index/" class="btn">Explore The Index</a>
+          <a href="#ecosystem" class="btn btn-secondary">How It Works</a>
+        </div>
+      </div>
+    </section>
 
-<!-- MODALS -->
-<div class="modal-overlay" id="about-modal">
-  <div class="modal-box">
-    <div class="modal-header-locked">
-      <button class="btn-close" onclick="closeModal('about-modal')">✕</button>
-      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
-        <h2>About The Atlas</h2>
-        <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent); background: rgba(251,191,36,0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(251,191,36,0.3);">v1.2</span>
-      </div>
-      <p class="sub" style="margin-bottom: 0;">Translating biological measurements into a computable map of cellular space.</p>
-    </div>
-    
-    <div class="modal-body-scrollable">
-      <div class="law-card">
-        <h3>What is it?</h3>
-        <p>A living, mathematically constrained visualizer mapped from stereology and FIB-SEM volumetrics. Every cell in this atlas contains precisely 1,000 distinct particles representing 100% of a given cell's volume budget. The atlas turns biological measurements into a computable, comparative map of cellular space across tissue architectures.</p>
-      </div>
-      
-      <div class="law-card">
-        <h3>Who is it for?</h3>
-        <p>Built for students learning cell biology, researchers tracking physical pathology, and curious minds looking to visually decode how cellular identity dictates the physical layout of organelle real estate.</p>
-      </div>
-      
-      <div class="law-card">
-        <h3>The Origin</h3>
-        <p>My name is Marjon Enriquez — a systems bioenergetics researcher who first put this together to see proportions of mitochondria across cell types based on the most recent evidence. Then I expanded it to the nucleus. Then I thought, why not expand it to all organelles! Hence this atlas.</p>
-        <p style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
-          marjonenriquez@gmail.com<br>
-          Brooklyn, NY, USA
+<section class="page-section index-section">
+  <div class="container">
+    <h2>The Wellness ROI Transparency Index</h2>
+    <p class="lead">
+      In a $34B corporate wellness market, 94% of CFOs can't prove ROI. We're ending the era of unmeasurable spending with the industry's first independent standard for verifying financial impact.
+    </p>
+    <div class="index-grid">
+      <div class="index-content">
+        <p>
+          The Index grades wellness platforms using our proprietary
+          <strong>LümiStars methodology</strong>—a hierarchy of evidence that separates marketing claims from measurable outcomes.
         </p>
+        <p>
+          From simple engagement metrics to the new gold standard of
+          <strong>Causal &amp; Auditable ROI</strong>, we provide the transparency that CFOs and benefits leaders have been missing.
+        </p>
+        <a href="/wellness-roi-transparency-index/" class="btn">View Full Rankings &amp; Methodology</a>
+      </div>
+      <div class="index-visual">
+        <div class="lumistars-graphic">
+          <h4>The LümiStars Hierarchy</h4>
+          <ul class="lumistars-list">
+            <li class="lumistars-item">
+              <div class="stars">★<span class="empty">★★★★</span></div>
+              <div class="label">Engagement</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★<span class="empty">★★★</span></div>
+              <div class="label">Behavioral</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★<span class="empty">★★</span></div>
+              <div class="label">Modeled ROI</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★★<span class="empty">★</span></div>
+              <div class="label">Validated ROI</div>
+            </li>
+            <li class="lumistars-item">
+              <div class="stars">★★★★★</div>
+              <div class="label">Causal &amp; Auditable ROI</div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<div class="modal-overlay" id="citations-modal">
-  <div class="modal-box">
-    <div class="modal-header-locked">
-      <button class="btn-close" onclick="closeModal('citations-modal')">✕</button>
-      <h2>Evidence & Citations</h2>
-      <p class="sub" style="margin-bottom: 0;">Stereology-anchored • First-principles complete • Cross-verified</p>
-      
-      <div class="sort-badges">
-        <button class="badge active" id="sort-date" onclick="sortCitations('date')">Publication Date</button>
-        <button class="badge" id="sort-cell" onclick="sortCitations('cell')">Cell Type</button>
-        <button class="badge" id="sort-org" onclick="sortCitations('organelle')">Organelle</button>
+<section id="ecosystem" class="page-section ecosystem-section">
+  <div class="container">
+    <h2>The HealthEqual Ecosystem</h2>
+    <p class="ecosystem-lead">
+      The current system profits from sickness. We're building the infrastructure to make health a compensated asset—visible, verifiable, and valuable for employers, partners, and the entire healthcare system.
+    </p>
+    <div class="ecosystem-grid">
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <h3>The Dashboard</h3>
+        </div>
+        <p>
+          For employers. The BioCapital Dashboard turns workforce health signals into auditable financial insights:
+          activation, predicted retention, fitness mix shifts, and modeled ROI.
+        </p>
+        <a href="https://www.healthequal.ai/employer-dashboard-demo" class="card-link" target="_blank" rel="noopener noreferrer">
+          See the Demo →
+        </a>
+      </div>
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">⭐</div>
+          <h3>The Index</h3>
+        </div>
+        <p>
+          Our independent research provides the first public standard for wellness ROI. We bring accountability to a
+          $34B market, empowering data-driven decisions.
+        </p>
+        <a href="/wellness-roi-transparency-index/" class="card-link">
+          Explore the Index →
+        </a>
+      </div>
+      <div class="ecosystem-card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <h3>The API</h3>
+        </div>
+        <p>
+          The financial rails for prevention. Our Health Dividend API enables any platform to offer Causal &amp;
+          Auditable ROI—the new gold standard for healthcare value.
+        </p>
+        <a href="mailto:marjon@healthequal.ai" class="card-link">
+          Partner With Us →
+        </a>
       </div>
     </div>
-
-    <div class="modal-body-scrollable" id="citations-list"></div>
   </div>
-</div>
+</section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/wellness-roi-transparency-index/">The Index</a></li>
+          <li><a href="/terms/">Terms</a></li>
+          <li><a href="/privacy/">Privacy</a></li>
+        </ul>
+      </nav>
+      <p>© <span id="currentYear">2025</span> HealthEqual, Inc. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-<!-- Main Application Script -->
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    // Mobile navigation toggle
+    const navToggle  = document.querySelector('.nav-toggle');
+    const mainNav    = document.getElementById('mainNav');
+    const navOverlay = document.querySelector('.nav-overlay');
 
-/* ============================================================
-   1. DATA & PALETTE
-   ============================================================ */
-const PALETTE = {
-  "Mitochondria":          { color: "#ef4444" },
-  "Myofibrils":            { color: "#f97316" },
-  "Nucleus":               { color: "#3b82f6" },
-  "Rough ER":              { color: "#a855f7" },
-  "Smooth ER / SR":        { color: "#10b981" },
-  "Golgi":                 { color: "#06b6d4" },
-  "Lipid Droplets":        { color: "#eab308" },
-  "Lysosomes / Granules":  { color: "#f43f5e" },
-  "Tubulovesicles":        { color: "#2dd4bf" },
-  "Cytosol":               { color: "#64748b" },
-  "Zymogen Granules":      { color: "#d946ef" },
-  "Lamellar Bodies":       { color: "#38bdf8" },
-  "Insulin Granules":      { color: "#facc15" },
-  "Weibel-Palade Bodies":  { color: "#fb7185" },
-  "Melanosomes":           { color: "#1e293b" },
-  "Peroxisomes":           { color: "#84cc16" },
-  "Caveolae":              { color: "#9ca3af" },
-  "Brush Border":          { color: "#c084fc" },
-  "Ruffled Border":        { color: "#c084fc" }, 
-  "Glycogen":              { color: "#fca5a5" },
-  "Phagolysosomes":        { color: "#be123c" },
-  "Secretory Lysosomes":   { color: "#e11d48" }, 
-  "α-Granules":            { color: "#fb923c" },
-  "Dense Granules":        { color: "#d1d5db" }, 
-  "Neutrophil Granules":   { color: "#818cf8" },
-  "Cortical Granules":     { color: "#f472b6" },
-  "T-tubules":             { color: "#34d399" },
-};
-
-const ORGANELLE_DEFS = {
-  "Mitochondria": "The primary oxidative power plant. Generates ATP via OXPHOS and acts as a central metabolic and apoptotic hub.",
-  "Myofibrils": "The contractile machinery of muscle cells, consisting of repeating sarcomeres made of actin and myosin filaments.",
-  "Nucleus": "The genomic command center. Stores genetic material and orchestrates transcription. Density varies heavily by chromatin compaction.",
-  "Rough ER": "Studded with ribosomes. The primary site for synthesis and folding of secreted and integral membrane proteins.",
-  "Smooth ER / SR": "A tubular network involved in lipid synthesis, detoxification (CYP450), and rapid calcium cycling (as SR in muscle).",
-  "Golgi": "The central sorting station. Modifies (glycosylates) and packages macromolecules for secretion or organelle delivery.",
-  "Lipid Droplets": "Storage organelles for neutral lipids (triglycerides). Represent stored chemical potential and can expand massively.",
-  "Lysosomes / Granules": "The degradative centers containing acid hydrolases. Also includes specialized secretory granules in certain cells.",
-  "Tubulovesicles": "A specialized membrane reservoir in parietal cells housing H+/K+-ATPase pumps, ready to mobilize for acid secretion.",
-  "Cytosol": "The aqueous intracellular fluid packed with soluble enzymes, facilitating metabolite diffusion and transit.",
-  "Zymogen Granules": "Specialized secretory vesicles in exocrine cells (like the pancreas) storing digestive pro-enzymes.",
-  "Lamellar Bodies": "Lysosome-related organelles in lung pneumocytes that store and secrete pulmonary surfactant.",
-  "Insulin Granules": "Dense-core vesicles in pancreatic β-cells storing insulin for glucose-stimulated exocytosis.",
-  "Weibel-Palade Bodies": "Endothelial-specific storage granules containing von Willebrand Factor for rapid hemostatic response.",
-  "Melanosomes": "Pigment-synthesizing and storing organelles in melanocytes, providing UV protection.",
-  "Peroxisomes": "Oxidative organelles specialized in breaking down very-long-chain fatty acids and detoxifying reactive oxygen species.",
-  "Caveolae": "Flask-shaped plasma membrane invaginations essential for mechanosensing and macromolecule transcytosis.",
-  "Brush Border": "Dense arrays of apical microvilli that massively expand surface area for nutrient absorption.",
-  "Ruffled Border": "Extensively folded membrane domain in osteoclasts acting as a giant externalized lysosome for bone resorption.",
-  "Glycogen": "A branched polymer of glucose serving as a dense, rapidly mobilizable energy storage inclusion.",
-  "Phagolysosomes": "Vesicles formed by the fusion of a phagosome with a lysosome to degrade internalized material (e.g., in RPE).",
-  "Secretory Lysosomes": "Dual-function organelles that both degrade internal cargo and undergo regulated exocytosis (e.g., in osteoclasts).",
-  "α-Granules": "The dominant platelet granule containing coagulation factors and growth proteins.",
-  "Dense Granules": "Platelet granules storing small molecules (ADP, serotonin, calcium) to amplify aggregation.",
-  "Neutrophil Granules": "A diverse pool of antimicrobial and proteolytic granules deployed during immune response.",
-  "Cortical Granules": "Secretory vesicles in oocytes that alter the zona pellucida upon fertilization to prevent polyspermy.",
-  "T-tubules": "Deep invaginations of the plasma membrane in muscle cells ensuring rapid, uniform action potential propagation.",
-};
-
-const layerOrder = Object.keys(PALETTE); 
-
-// ALL vvs carefully balanced to sum exactly to 100.0 to prevent crashing the 1,000 particle limit loop
-const ATLAS = {
-  "Hepatocyte": { tissue: "Liver Parenchyma", desc: "The metabolic generalist. Handles detoxification, secretion, and glucose buffering simultaneously.", organelles: { "Cytosol": { vv:44.5, kg_kg:0.440, kg_m3:465, count:"—", note:"Aqueous transit space" }, "Mitochondria": { vv:19, kg_kg:0.200, kg_m3:209, count:"1,500", note:"High metabolic capacity" }, "Rough ER": { vv:13, kg_kg:0.140, kg_m3:143, count:"—", note:"Albumin synthesis" }, "Nucleus": { vv:9, kg_kg:0.090, kg_m3:108, count:"1–2", note:"Euchromatic genome" }, "Smooth ER / SR": { vv:9, kg_kg:0.090, kg_m3:97, count:"—", note:"Detoxification" }, "Glycogen": { vv:2, kg_kg:0.020, kg_m3:20, count:"—", note:"Fed state buffer" }, "Golgi": { vv:1.5, kg_kg:0.018, kg_m3:16, count:"1", note:"Lipoprotein assembly" }, "Peroxisomes": { vv:1, kg_kg:0.012, kg_m3:12, count:"400", note:"VLCFA oxidation" }, "Lysosomes / Granules": { vv:1, kg_kg:0.013, kg_m3:12, count:"300", note:"Housekeeping autophagy" } } },
-  "Cardiomyocyte": { tissue: "Myocardium", desc: "Continuous power plant. Entire physical budget is consumed by force generation and oxidative energy.", organelles: { "Myofibrils": { vv:50, kg_kg:0.530, kg_m3:540, count:"—", note:"Contractile lattice" }, "Mitochondria": { vv:34, kg_kg:0.340, kg_m3:374, count:"6,000", note:"PCr/CK shuttle driven" }, "Smooth ER / SR": { vv:5.5, kg_kg:0.060, kg_m3:59, count:"—", note:"Rapid Ca²⁺ cycling" }, "Cytosol": { vv:4, kg_kg:0.040, kg_m3:40, count:"—", note:"Severely constrained" }, "Nucleus": { vv:3, kg_kg:0.030, kg_m3:36, count:"1", note:"Compressed centrally" }, "T-tubules": { vv:1.5, kg_kg:0.015, kg_m3:16, count:"—", note:"Action potential conduit" }, "Lysosomes / Granules": { vv:1, kg_kg:0.010, kg_m3:11, count:"—", note:"PINK1/Parkin mitophagy" }, "Lipid Droplets": { vv:1, kg_kg:0.009, kg_m3:9, count:"—", note:"Lipotoxic limit near 9 kg/m³" } } },
-  "White Adipocyte": { tissue: "Adipose Tissue", desc: "The single-organelle monopoly. One massive unilocular lipid droplet claims ~90% of the space.", organelles: { "Lipid Droplets": { vv:90, kg_kg:0.780, kg_m3:810, count:"1", note:"Pure stored fuel (ρ=0.90)" }, "Cytosol": { vv:7, kg_kg:0.175, kg_m3:70, count:"—", note:"Thin cortical shell" }, "Mitochondria": { vv:1.5, kg_kg:0.015, kg_m3:16, count:"100", note:"Cortical rim positioning" }, "Rough ER": { vv:1, kg_kg:0.010, kg_m3:11, count:"—", note:"Adipokine output" }, "Nucleus": { vv:0.5, kg_kg:0.010, kg_m3:6, count:"1", note:"Peripheral crescent" } } },
-  "Brown Adipocyte": { tissue: "Brown Adipose", desc: "Thermogenic opposite. Only tissue where mitochondria and multilocular lipids reach equimolar density.", organelles: { "Lipid Droplets": { vv:40, kg_kg:0.350, kg_m3:360, count:"Many", note:"Multilocular to maximize surface area" }, "Mitochondria": { vv:32.5, kg_kg:0.350, kg_m3:357, count:"Thousands", note:"UCP1 uncoupled heat generation" }, "Cytosol": { vv:20, kg_kg:0.200, kg_m3:200, count:"—", note:"Active transit" }, "Nucleus": { vv:7.5, kg_kg:0.100, kg_m3:82, count:"1", note:"Central active genome" } } },
-  "Parietal Cell": { tissue: "Gastric Gland", desc: "Steepest sustained ion gradient in biology (10⁶:1). Resting tubulovesicles invert into canaliculi.", organelles: { "Mitochondria": { vv:32.5, kg_kg:0.350, kg_m3:357, count:"Many", note:"Powers H⁺/K⁺-ATPase" }, "Tubulovesicles": { vv:25, kg_kg:0.270, kg_m3:270, count:"—", note:"Resting H⁺ pump reservoir" }, "Cytosol": { vv:25, kg_kg:0.200, kg_m3:250, count:"—", note:"Signaling space" }, "Nucleus": { vv:6.5, kg_kg:0.070, kg_m3:78, count:"1", note:"Central genome" }, "Rough ER": { vv:4, kg_kg:0.040, kg_m3:44, count:"—", note:"Intrinsic factor synthesis" }, "Lysosomes / Granules": { vv:4, kg_kg:0.040, kg_m3:44, count:"—", note:"Housekeeping" }, "Golgi": { vv:3, kg_kg:0.030, kg_m3:33, count:"1", note:"Glycoprotein processing" } } },
-  "Acinar Cell": { tissue: "Exocrine Pancreas", desc: "Palade's model secretory cell. Has the highest tissue-level rough ER density in the solid body.", organelles: { "Rough ER": { vv:30, kg_kg:0.300, kg_m3:330, count:"—", note:"Highest tissue-level density (271 kg/m³)" }, "Zymogen Granules": { vv:25, kg_kg:0.250, kg_m3:287, count:"1,000", note:"10x depletion on CCK stimulation" }, "Cytosol": { vv:18.5, kg_kg:0.180, kg_m3:185, count:"—", note:"Trafficking corridor" }, "Mitochondria": { vv:11.5, kg_kg:0.120, kg_m3:126, count:"1,500", note:"Powers heavy secretion" }, "Golgi": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"1 stack", note:"Condensing vacuoles out" }, "Nucleus": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"1", note:"Basal, active nucleolus" } } },
-  "Pancreatic β-Cell": { tissue: "Islets of Langerhans", desc: "Metabolic sensor. Mitochondria act as ATP/ADP transducers to trigger insulin exocytosis.", organelles: { "Cytosol": { vv:45, kg_kg:0.430, kg_m3:450, count:"—", note:"Metabolic diffusion" }, "Nucleus": { vv:15, kg_kg:0.150, kg_m3:165, count:"1", note:"PDX1-driven transcription" }, "Insulin Granules": { vv:15, kg_kg:0.150, kg_m3:180, count:"10,000+", note:"Only ~1-2% released per pulse" }, "Mitochondria": { vv:11.5, kg_kg:0.120, kg_m3:126, count:"Thousands", note:"Coupling device for secretion" }, "Rough ER": { vv:10, kg_kg:0.100, kg_m3:110, count:"—", note:"High UPR vulnerability" }, "Golgi": { vv:3.5, kg_kg:0.040, kg_m3:38, count:"1", note:"PC1/3 proinsulin cleavage" } } },
-  "Proximal Tubule Cell": { tissue: "Kidney Cortex", desc: "Transport machine. Near-zero glycolytic capacity, making it exceptionally vulnerable to hypoxia.", organelles: { "Cytosol": { vv:47, kg_kg:0.450, kg_m3:470, count:"—", note:"Signaling/transit" }, "Mitochondria": { vv:30, kg_kg:0.310, kg_m3:330, count:"2,500", note:"Basolateral packed; exclusively OXPHOS" }, "Brush Border": { vv:7, kg_kg:0.070, kg_m3:75, count:"—", note:"Lost in AKI (dedifferentiation)" }, "Nucleus": { vv:6.5, kg_kg:0.070, kg_m3:78, count:"1", note:"Central genome" }, "Rough ER": { vv:4, kg_kg:0.040, kg_m3:44, count:"—", note:"Protein processing" }, "Lysosomes / Granules": { vv:3.5, kg_kg:0.040, kg_m3:38, count:"400", note:"Degrades apical reabsorption" }, "Peroxisomes": { vv:2, kg_kg:0.020, kg_m3:24, count:"300", note:"High FA oxidation" } } },
-  "Enterocyte": { tissue: "Small Intestine", desc: "Absorptive columnar cell utilizing Na⁺-driven co-transport and handling chylomicron assembly.", organelles: { "Cytosol": { vv:50.5, kg_kg:0.480, kg_m3:505, count:"—", note:"Intracellular fluid" }, "Mitochondria": { vv:12.5, kg_kg:0.130, kg_m3:137, count:"Hundreds", note:"Basolateral transport support" }, "Rough ER": { vv:10, kg_kg:0.100, kg_m3:110, count:"—", note:"Brush border enzyme supply" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"1", note:"Basal position" }, "Brush Border": { vv:8, kg_kg:0.080, kg_m3:88, count:"3,000", note:"Apical microvilli surface" }, "Golgi": { vv:6.5, kg_kg:0.060, kg_m3:71, count:"1", note:"Chylomicron packaging" }, "Lipid Droplets": { vv:2.5, kg_kg:0.020, kg_m3:22, count:"—", note:"Transient during fat meal" } } },
-  "Alveolar Type II Pneumocyte": { tissue: "Lung Epithelium", desc: "Synthesizes and secretes pulmonary surfactant, packed tightly into lamellar bodies.", organelles: { "Cytosol": { vv:37, kg_kg:0.350, kg_m3:370, count:"—", note:"General transit space" }, "Lamellar Bodies": { vv:25, kg_kg:0.250, kg_m3:270, count:"150", note:"Secretory LROs for surfactant" }, "Rough ER": { vv:11.5, kg_kg:0.120, kg_m3:126, count:"—", note:"SP-B/C synthesis" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"1", note:"Euchromatic" }, "Mitochondria": { vv:10, kg_kg:0.100, kg_m3:110, count:"300", note:"Supports heavy synthesis" }, "Golgi": { vv:6.5, kg_kg:0.060, kg_m3:71, count:"—", note:"Processing to MVBs" } } },
-  "Adrenocortical Cell": { tissue: "Adrenal Cortex", desc: "Steroidogenic factory. Extreme smooth ER cooperates obligatorily with mitochondria for CYP cleavage.", organelles: { "Cytosol": { vv:37.5, kg_kg:0.350, kg_m3:375, count:"—", note:"Transit space" }, "Mitochondria": { vv:20, kg_kg:0.200, kg_m3:220, count:"Hundreds", note:"CYP11A1 embedded" }, "Smooth ER / SR": { vv:17.5, kg_kg:0.180, kg_m3:189, count:"—", note:"Highest sER density" }, "Lipid Droplets": { vv:15, kg_kg:0.130, kg_m3:135, count:"Many", note:"Cholesterol ester reserve" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"1", note:"Transcription" } } },
-  "Plasma Cell": { tissue: "Bone Marrow", desc: "Antibody factory producing ~2,000 molecules/second. Rough ER massively dominates the cytoplasm.", organelles: { "Rough ER": { vv:40, kg_kg:0.420, kg_m3:440, count:"—", note:"BiP chaperone saturation limits" }, "Nucleus": { vv:27.5, kg_kg:0.290, kg_m3:297, count:"1", note:"Clock-face heterochromatin" }, "Golgi": { vv:15, kg_kg:0.160, kg_m3:165, count:"1 massive", note:"Glycosylates immunoglobulins" }, "Cytosol": { vv:13, kg_kg:0.120, kg_m3:130, count:"—", note:"Constrained" }, "Mitochondria": { vv:4.5, kg_kg:0.045, kg_m3:49, count:"500", note:"Sacrificed for ER space" } } },
-  "Naive T Cell": { tissue: "Lymph Nodes / Blood", desc: "Circulating surveillance. A compressed genome surrounded by an extremely thin metabolic shell.", organelles: { "Nucleus": { vv:60, kg_kg:0.750, kg_m3:810, count:"1", note:"Massively condensed genome" }, "Cytosol": { vv:37, kg_kg:0.200, kg_m3:370, count:"—", note:"Thin rim" }, "Mitochondria": { vv:3, kg_kg:0.030, kg_m3:33, count:"Few", note:"Quiescent, glycolytic" } } },
-  "Vascular Endothelial Cell": { tissue: "Blood Vessels", desc: "Rapid-response vascular alarm cell. Endothelial Warburg effect dominant.", organelles: { "Cytosol": { vv:40.5, kg_kg:0.390, kg_m3:405, count:"—", note:"Extremely thin layer" }, "Nucleus": { vv:25, kg_kg:0.250, kg_m3:275, count:"1", note:"Bulges centrally" }, "Mitochondria": { vv:11.5, kg_kg:0.110, kg_m3:126, count:"400", note:"Mainly ROS & signaling" }, "Rough ER": { vv:10, kg_kg:0.100, kg_m3:110, count:"—", note:"VWF synthesis" }, "Caveolae": { vv:7.5, kg_kg:0.070, kg_m3:75, count:"10,000", note:"Macromolecule transcytosis" }, "Weibel-Palade Bodies": { vv:3.5, kg_kg:0.030, kg_m3:38, count:"30", note:"Unique VWF/P-selectin storage" }, "Lysosomes / Granules": { vv:2, kg_kg:0.020, kg_m3:22, count:"—", note:"Housekeeping" } } },
-  "Epidermal Melanocyte": { tissue: "Skin", desc: "Dedicated to synthesizing UV-blocking melanin and transporting it up into the keratinocyte layer.", organelles: { "Cytosol": { vv:39, kg_kg:0.370, kg_m3:390, count:"—", note:"Dendritic corridors" }, "Melanosomes": { vv:22.5, kg_kg:0.240, kg_m3:250, count:"Thousands", note:"4-stage maturation LROs" }, "Rough ER": { vv:12.5, kg_kg:0.120, kg_m3:137, count:"—", note:"Tyrosinase / PMEL supply" }, "Nucleus": { vv:12.5, kg_kg:0.120, kg_m3:137, count:"1", note:"MITF master regulated" }, "Mitochondria": { vv:11.5, kg_kg:0.110, kg_m3:126, count:"400", note:"Powers synthesis and transport" }, "Lysosomes / Granules": { vv:2, kg_kg:0.020, kg_m3:22, count:"—", note:"Distinct from LROs" } } },
-  "Osteoclast": { tissue: "Bone", desc: "Mammalian mineral dissolver. Large multinucleate syncytium operating a giant externalized lysosome.", organelles: { "Cytosol": { vv:37.5, kg_kg:0.360, kg_m3:375, count:"—", note:"Giant volume syncytium" }, "Secretory Lysosomes": { vv:22.5, kg_kg:0.230, kg_m3:247, count:"Many", note:"Cathepsin K loaded" }, "Mitochondria": { vv:15, kg_kg:0.150, kg_m3:165, count:"Hundreds", note:"Powers H⁺-ATPase" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"10-20", note:"Monocyte fusion result" }, "Ruffled Border": { vv:10, kg_kg:0.100, kg_m3:110, count:"—", note:"Externalized lysosome face" }, "Rough ER": { vv:5, kg_kg:0.050, kg_m3:55, count:"—", note:"Moderate synthesis" } } },
-  "Platelet": { tissue: "Bloodstream", desc: "Anucleate responder packed with coagulant and growth-factor releasing granules.", organelles: { "Cytosol": { vv:68.5, kg_kg:0.670, kg_m3:719, count:"—", note:"Contains actin-myosin" }, "α-Granules": { vv:15, kg_kg:0.150, kg_m3:165, count:"60", note:"VWF, Fibrinogen, PDGF" }, "Smooth ER / SR": { vv:12, kg_kg:0.120, kg_m3:130, count:"—", note:"DTS (Ca²⁺) & OCS (transport)" }, "Mitochondria": { vv:3, kg_kg:0.030, kg_m3:33, count:"3", note:"Apoptotic & ATP source" }, "Dense Granules": { vv:1.5, kg_kg:0.015, kg_m3:16, count:"5", note:"ADP, Serotonin, Ca²⁺" } } },
-  "Neutrophil": { tissue: "Bloodstream", desc: "Glycolytic first-responder. High granule load, lobed nucleus allows squeezing through capillaries.", organelles: { "Cytosol": { vv:60, kg_kg:0.580, kg_m3:630, count:"—", note:"Glycolytic space" }, "Nucleus": { vv:25, kg_kg:0.330, kg_m3:322, count:"1 lobed", note:"Lobed heterochromatin" }, "Neutrophil Granules": { vv:12.5, kg_kg:0.130, kg_m3:137, count:"350", note:"Azurophilic, specific, etc" }, "Mitochondria": { vv:2.5, kg_kg:0.025, kg_m3:27, count:"100", note:"Mainly ROS + apoptosis" } } },
-  "Retinal Pigment Epithelium": { tissue: "Retina", desc: "Phagocytoses ~30,000 shed outer segment discs per cell per day. Core driver of AMD pathophysiology.", organelles: { "Cytosol": { vv:39.5, kg_kg:0.380, kg_m3:415, count:"—", note:"Highly stressed fluid" }, "Phagolysosomes": { vv:20, kg_kg:0.200, kg_m3:220, count:"Many", note:"Continuous high load" }, "Mitochondria": { vv:12.5, kg_kg:0.130, kg_m3:137, count:"Hundreds", note:"Visual cycle + phagocytosis" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"1", note:"Highly active" }, "Melanosomes": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"—", note:"UV & oxidative shielding" }, "Rough ER": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"—", note:"RPE65 synthesis" }, "Lipid Droplets": { vv:3, kg_kg:0.020, kg_m3:27, count:"—", note:"Drusen precursors" } } },
-  "Cone Photoreceptor (Ellipsoid)": { tissue: "Retina", desc: "The highest local mitochondrial packing density of any named mammalian compartment.", organelles: { "Mitochondria": { vv:80, kg_kg:0.800, kg_m3:880, count:"Thousands", note:"Sub-OXPHOS/microlensing/Ca²⁺" }, "Cytosol": { vv:20, kg_kg:0.200, kg_m3:210, count:"—", note:"Minimal interstitial space" } } },
-  "Skeletal Muscle Type I": { tissue: "Skeletal Muscle", desc: "Endurance oxidative fiber. Yields myofibril space for mitochondria to resist fatigue.", organelles: { "Myofibrils": { vv:67.5, kg_kg:0.690, kg_m3:729, count:"—", note:"Oxidative slow-twitch" }, "Cytosol": { vv:12.1, kg_kg:0.120, kg_m3:127, count:"—", note:"Lattice transit" }, "Mitochondria": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"Thousands", note:"Doubles w/ training" }, "Smooth ER / SR": { vv:6.5, kg_kg:0.070, kg_m3:70, count:"—", note:"Slower Ca²⁺ cycling" }, "Glycogen": { vv:3, kg_kg:0.030, kg_m3:31, count:"—", note:"Endurance fuel" }, "Lipid Droplets": { vv:2, kg_kg:0.015, kg_m3:18, count:"—", note:"IMCL - Athlete's paradox" }, "Nucleus": { vv:1, kg_kg:0.010, kg_m3:11, count:"Syncytial", note:"Peripheral domains" }, "T-tubules": { vv:0.4, kg_kg:0.005, kg_m3:4, count:"—", note:"Z-disc alignment" } } },
-  "Skeletal Muscle Type IIx": { tissue: "Skeletal Muscle", desc: "Explosive glycolytic power fiber. Highest cellular and tissue packing density of myofibrils.", organelles: { "Myofibrils": { vv:80, kg_kg:0.840, kg_m3:864, count:"—", note:"Maximum contractile protein" }, "Smooth ER / SR": { vv:10, kg_kg:0.110, kg_m3:108, count:"—", note:"Fast SERCA1 Ca²⁺ cycling" }, "Cytosol": { vv:4, kg_kg:0.040, kg_m3:42, count:"—", note:"Highly constricted" }, "Glycogen": { vv:3, kg_kg:0.030, kg_m3:31, count:"—", note:"Primary sprint fuel" }, "Mitochondria": { vv:2, kg_kg:0.020, kg_m3:22, count:"Scattered", note:"Mito space yielded" }, "Nucleus": { vv:1, kg_kg:0.010, kg_m3:11, count:"Syncytial", note:"Peripheral domains" } } },
-  "Cortical Neuron": { tissue: "Brain Cortex (Layer V)", desc: "Geometry dictates architecture. Soma values shown. Axon length creates massive transport demand.", organelles: { "Cytosol": { vv:38.5, kg_kg:0.368, kg_m3:385, count:"—", note:"Vast transport corridors" }, "Nucleus": { vv:28, kg_kg:0.280, kg_m3:308, count:"1", note:"High transcription rate" }, "Rough ER": { vv:15, kg_kg:0.160, kg_m3:165, count:"—", note:"Nissl bodies (soma only)" }, "Mitochondria": { vv:10, kg_kg:0.100, kg_m3:110, count:"250", note:"Stationed near synapses" }, "Smooth ER / SR": { vv:3.5, kg_kg:0.040, kg_m3:38, count:"—", note:"Continuous axonal tube" }, "Lysosomes / Granules": { vv:3, kg_kg:0.030, kg_m3:33, count:"200", note:"Accumulates lipofuscin" }, "Golgi": { vv:2, kg_kg:0.022, kg_m3:22, count:"1", note:"Dendritic outposts" } } },
-  "Oligodendrocyte": { tissue: "CNS White Matter", desc: "Synthesizes extreme lipid volumes for ~50 myelin sheaths. Myelin is 70% lipid dry mass.", organelles: { "Cytosol": { vv:42.5, kg_kg:0.410, kg_m3:446, count:"—", note:"Fluid space" }, "Rough ER": { vv:20, kg_kg:0.210, kg_m3:220, count:"—", note:"Myelin protein synthesis" }, "Smooth ER / SR": { vv:12.5, kg_kg:0.130, kg_m3:135, count:"—", note:"Galactolipid synthesis" }, "Nucleus": { vv:10, kg_kg:0.100, kg_m3:110, count:"1", note:"Regulatory genome" }, "Golgi": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"—", note:"MBP / PLP trafficking" }, "Mitochondria": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"Many", note:"Active myelination drive" } } },
-  "Mature Oocyte": { tissue: "Ovary", desc: "Developmental stockpile. Must contain enough mitochondria to power fertilization and early cleavage.", organelles: { "Cytosol": { vv:71, kg_kg:0.700, kg_m3:745, count:"—", note:"Giant volume (~1M µm³)" }, "Mitochondria": { vv:12.5, kg_kg:0.130, kg_m3:137, count:"300,000", note:"Largest human stockpile" }, "Smooth ER / SR": { vv:7.5, kg_kg:0.080, kg_m3:81, count:"—", note:"Cortical Ca²⁺ waves" }, "Nucleus": { vv:7.5, kg_kg:0.080, kg_m3:82, count:"1", note:"Arrested at metaphase II" }, "Cortical Granules": { vv:1.5, kg_kg:0.015, kg_m3:16, count:"8,000", note:"Zona pellucida block" } } },
-  "Erythrocyte (RBC)": { tissue: "Bloodstream", desc: "Deliberate functional emptiness. Organelles are selectively eliminated to prevent O₂ consumption.", organelles: { "Cytosol": { vv:100, kg_kg:1.000, kg_m3:1050, count:"—", note:"Pure Hemoglobin Solution (149 g/L)" } } }
-};
-
-const RULERS = {
-  vv:    { sym:"Vᵥ",    sub:"Volume",  unit:"%" },
-  kg_m3: { sym:"δ",     sub:"Density", unit:"kg/m³" },
-  kg_kg: { sym:"Mass",  sub:"kg/kg",   unit:"kg/kg" },
-  count: { sym:"#",     sub:"Count",   unit:"/cell" },
-};
-
-let activeCell = "Hepatocyte";
-let ruler = "vv";
-let hoveredOrganelle = null;
-let activeSortOrganelle = null; 
-let searchTerm = ""; 
-
-/* ============================================================
-   2. DOM & UI LOGIC 
-   ============================================================ */
-function initUI() {
-  buildCellList();
-  buildRulerControls();
-  updateDashboard();
-}
-
-window.filterCells = (val) => {
-  searchTerm = val.toLowerCase();
-  buildCellList();
-};
-
-window.openModal = id => document.getElementById(id).classList.add('open');
-window.closeModal = id => document.getElementById(id).classList.remove('open');
-
-let leftOpen = true; let rightOpen = true;
-window.togglePanel = id => {
-  document.getElementById(id).classList.toggle('collapsed');
-  if (id === 'left-panel') leftOpen = !leftOpen;
-  if (id === 'right-panel') rightOpen = !rightOpen;
-  const wLeft = leftOpen ? 360 : 0;
-  const wRight = rightOpen ? 360 : 0;
-  const targetOffset = (wLeft - wRight) / 2;
-  gsap.to('#canvas-container', { x: targetOffset, duration: 0.6, ease: "power3.out" });
-};
-
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-function updateDefinitionBox() {
-  const defBox = document.getElementById('organelle-def-box');
-  if (activeSortOrganelle) {
-    const color = PALETTE[activeSortOrganelle]?.color || '#ffffff';
-    const def = ORGANELLE_DEFS[activeSortOrganelle] || "";
-    defBox.style.display = 'flex';
-    defBox.style.borderLeftColor = color;
-    defBox.innerHTML = `
-      <div style="color:${color}; font-size: 14px; font-weight: 600; letter-spacing: 0.02em;">${activeSortOrganelle}</div>
-      <div style="color: var(--text-muted); font-size: 11px; line-height: 1.5;">${def}</div>
-    `;
-  } else {
-    defBox.style.display = 'none';
-  }
-}
-
-function buildCellList() {
-  const el = document.getElementById('cell-list');
-  el.innerHTML = '';
-  
-  let cellKeys = Object.keys(ATLAS).filter(k => 
-    k.toLowerCase().includes(searchTerm) || 
-    ATLAS[k].tissue.toLowerCase().includes(searchTerm)
-  );
-  
-  if (activeSortOrganelle) {
-    cellKeys.sort((a, b) => {
-      const valA = ATLAS[a].organelles[activeSortOrganelle]?.[ruler] || 0;
-      const valB = ATLAS[b].organelles[activeSortOrganelle]?.[ruler] || 0;
-      const numA = typeof valA === 'number' ? valA : 0;
-      const numB = typeof valB === 'number' ? valB : 0;
-      return numB - numA;
-    });
-  } else {
-    cellKeys.sort((a, b) => a.localeCompare(b));
-  }
-
-  if (cellKeys.length === 0) {
-    el.innerHTML = '<div style="color:var(--text-dim); text-align:center; margin-top:20px; font-size:12px;">No matches found</div>';
-    updateDefinitionBox();
-    return;
-  }
-
-  cellKeys.forEach((name) => {
-    const data = ATLAS[name];
-    const btn = document.createElement('button');
-    btn.className = `cell-btn ${name === activeCell ? 'active' : ''}`;
-    btn.onclick = () => { 
-      if(name !== activeCell) { 
-        activeCell = name; 
-        initUI(); 
-        update3DTargetStates(); 
-      } 
-    };
-    
-    let badgeHtml = '';
-    let fillPct = 0;
-    
-    if (activeSortOrganelle) {
-      let val = data.organelles[activeSortOrganelle]?.[ruler];
-      if (val !== undefined) {
-        let valStr = val;
-        
-        if (typeof val === 'number') {
-          valStr = val.toFixed(ruler === 'kg_kg' ? 3 : 1);
-          if (ruler === 'vv') { valStr += '%'; fillPct = Math.min(val, 100); }
-          else if (ruler === 'kg_kg') { fillPct = Math.min(val * 100, 100); }
-          else if (ruler === 'kg_m3') { fillPct = Math.min((val / 880) * 100, 100); }
-        } else if (typeof val === 'string' && ruler === 'count') {
-          let parsed = parseInt(val.replace(/,/g, ''));
-          if (!isNaN(parsed)) fillPct = Math.min((parsed / 10000) * 100, 100); 
-          else if (val.toLowerCase().includes('many') || val.toLowerCase().includes('thousands')) fillPct = 100;
-          else fillPct = 30; 
-        }
-        
-        const color = PALETTE[activeSortOrganelle]?.color || 'var(--text-main)';
-        badgeHtml = `<span class="sort-val" style="--color: ${color}">${valStr}</span>`;
-        btn.style.setProperty('--fill-pct', `${fillPct}%`);
-        btn.style.setProperty('--color', color);
+    function toggleNav() {
+      const open = mainNav.classList.toggle('is-open');
+      if (navToggle) {
+        navToggle.setAttribute('aria-expanded', open);
+        navToggle.classList.toggle('is-active');
+      }
+      if (navOverlay) {
+        navOverlay.style.display = open ? 'block' : 'none';
       }
     }
 
-    btn.innerHTML = `
-      <div class="cell-btn-header">
-        <span class="name">${name}</span>
-        ${badgeHtml}
-      </div>
-      <span class="tissue">${data.tissue}</span>
-    `;
-    el.appendChild(btn);
-  });
-  
-  updateDefinitionBox();
-}
-
-function buildRulerControls() {
-  const el = document.getElementById('ruler-wrap');
-  el.innerHTML = '';
-  Object.entries(RULERS).forEach(([key, cfg]) => {
-    const btn = document.createElement('button');
-    btn.className = `ruler-btn ${key === ruler ? 'active' : ''}`;
-    btn.onclick = () => { ruler = key; buildRulerControls(); buildCellList(); updateDashboard(); };
-    btn.innerHTML = `<span class="sym">${cfg.sym}</span><span class="sub">${cfg.sub}</span>`;
-    el.appendChild(btn);
-  });
-}
-
-function updateDashboard() {
-  const cell = ATLAS[activeCell];
-  document.getElementById('cell-name').textContent = activeCell;
-  document.getElementById('cell-tissue').textContent = cell.tissue;
-  document.getElementById('cell-desc').textContent = cell.desc;
-
-  const bar = document.getElementById('stacked-bar');
-  bar.innerHTML = '';
-  Object.entries(cell.organelles).forEach(([org, stats]) => {
-    if (stats.vv <= 0) return;
-    const seg = document.createElement('div');
-    seg.className = 'bar-seg';
-    seg.style.flex = stats.vv;
-    seg.style.backgroundColor = PALETTE[org]?.color || '#666';
-    bar.appendChild(seg);
-  });
-
-  const list = document.getElementById('org-list');
-  list.innerHTML = '';
-  const entries = Object.entries(cell.organelles).sort((a,b) => b[1].vv - a[1].vv);
-  
-  entries.forEach(([org, stats]) => {
-    const card = document.createElement('div');
-    card.className = `org-card ${activeSortOrganelle === org ? 'sort-active' : ''}`;
-    card.style.setProperty('--color', PALETTE[org]?.color || '#666');
-    
-    let valStr = ruler === 'count' ? (stats.count || '—') : stats[ruler];
-    if (typeof valStr === 'number' && ruler !== 'kg_m3') valStr = valStr.toFixed(ruler==='kg_kg'?3:1);
-    
-    card.innerHTML = `
-      <div class="org-info">
-        <div class="name">${org}</div>
-        <div class="note">${stats.note}</div>
-      </div>
-      <div class="org-data">
-        <div class="val">${valStr}</div>
-        <div class="unit">${RULERS[ruler].unit}</div>
-      </div>
-    `;
-    
-    card.addEventListener('click', () => {
-      if (activeSortOrganelle === org) activeSortOrganelle = null;
-      else activeSortOrganelle = org;
-      buildCellList();
-      updateDashboard();
-    });
-
-    card.addEventListener('pointerenter', () => { hoveredOrganelle = org; });
-    card.addEventListener('pointerleave', () => { hoveredOrganelle = null; });
-    
-    list.appendChild(card);
-  });
-}
-
-/* ============================================================
-   CITATIONS SYSTEM LOGIC
-   ============================================================ */
-const CITATIONS_DATA =[
-  { ref: "Weibel ER, Stäubli W, Gnägi HR, Hess FA. Correlated morphometric and biochemical studies on the liver cell. J Cell Biol. 1969;42(1):68–91.", date: 1969, cell: "Hepatocyte", org: "General" },
-  { ref: "Blouin A, Bolender RP, Weibel ER. Distribution of organelles and membranes between hepatocytes and nonhepatocytes in the rat liver parenchyma. J Cell Biol. 1977;72(2):441–455.", date: 1977, cell: "Hepatocyte", org: "Lysosomes" },
-  { ref: "Eisenberg BR. Quantitative ultrastructure of mammalian skeletal muscle. Handbook of Physiology. 1983.", date: 1983, cell: "Skeletal Muscle", org: "Myofibrils" },
-  { ref: "Nicholls DG, Locke RM. Thermogenic mechanisms in brown fat. Physiol Rev. 1984;64(1):1–64.", date: 1984, cell: "Brown Adipocyte", org: "Mitochondria" },
-  { ref: "Borregaard N, Cowland JB. Granules of the human neutrophilic polymorphonuclear leukocyte. Blood. 1997;89(10):3503–3521.", date: 1997, cell: "Neutrophil", org: "Granules" },
-  { ref: "Weaver TE, Conkright JJ. Function of surfactant proteins B and C. Annu Rev Physiol. 2001;63:555–578.", date: 2001, cell: "Pneumocyte (ATII)", org: "Lamellar Bodies" },
-  { ref: "Cinti S. The adipose organ: morphological perspectives of adipose tissues. Proc Nutr Soc. 2001;60(3):319–328.", date: 2001, cell: "Adipocytes", org: "Lipid Droplets" },
-  { ref: "Geeraets R, et al. Photoreceptor inner segments in monkey and human retina: mitochondrial density and regional variation. Vis Neurosci. 2003;20(1):9–25.", date: 2003, cell: "Photoreceptor", org: "Mitochondria" },
-  { ref: "Zhai XY, et al. Digital three-dimensional reconstruction of the rat proximal tubule. Am J Physiol Renal Physiol. 2003;285(5):F948–F957.", date: 2003, cell: "Proximal Tubule", org: "Mitochondria" },
-  { ref: "Blair P, Flaumenhaft R. Platelet α-granules: basic biology and clinical correlates. Blood Rev. 2009;23(4):177–189.", date: 2009, cell: "Platelet", org: "α-Granules" },
-  { ref: "Forte JG, Zhu L. Apical recycling of the gastric parietal cell H,K-ATPase. Annu Rev Physiol. 2010;72:273–296.", date: 2010, cell: "Parietal Cell", org: "Tubulovesicles" },
-  { ref: "Walther TC, Farese RV Jr. Lipid droplets and cellular lipid metabolism. Annu Rev Biochem. 2012;81:687–714.", date: 2012, cell: "Adipocytes", org: "Lipid Droplets" },
-  { ref: "Miller WL. Steroid hormone synthesis in mitochondria. Mol Cell Endocrinol. 2013;379(1-2):62–73.", date: 2013, cell: "Adrenocortical", org: "Smooth ER" },
-  { ref: "Ron-Harel N, et al. Mitochondrial biogenesis and proteome remodeling promotes one-carbon metabolism for T cell activation. Cell Metab. 2016.", date: 2016, cell: "T Cell", org: "Mitochondria" },
-  { ref: "Sender R, Fuchs S, Milo R. Revised estimates for the number of human and bacteria cells in the body. PLoS Biol. 2016;14(8):e1002533.", date: 2016, cell: "Erythrocyte", org: "Cytosol" },
-  { ref: "Kim K, Guck J. The relative densities of cytoplasm and nuclear compartments are robustly maintained in living cells. Biophys J. 2020;119(10):1948–1962.", date: 2020, cell: "General", org: "Nucleus" },
-  { ref: "Bogan JS. Granular detail of β cell structures for insulin secretion. J Cell Biol. 2021;220(2):e202012082.", date: 2021, cell: "Pancreatic β-Cell", org: "Insulin Granules" },
-  { ref: "Litts KM, et al. The 3D organisation of mitochondria in primate photoreceptors. Sci Rep. 2021;11:18863.", date: 2021, cell: "Photoreceptor", org: "Mitochondria" },
-  { ref: "Hinton A Jr, et al. Mitochondrial structure and function in human heart failure. Circ Res. 2024.", date: 2024, cell: "Cardiomyocyte", org: "Mitochondria" },
-  { ref: "Rhoads SN, et al. Neurons and astrocytes have distinct organelle signatures and responses to stress. Cell Rep. 2025.", date: 2025, cell: "Cortical Neuron", org: "Nucleus" }
-];
-
-let currentSortType = 'date';
-window.sortCitations = (type) => {
-  currentSortType = type;
-  document.querySelectorAll('.sort-badges .badge').forEach(b => b.classList.remove('active'));
-  document.getElementById('sort-' + (type==='organelle'?'org':type)).classList.add('active');
-  renderCitations();
-}
-
-function renderCitations() {
-  const list = document.getElementById('citations-list');
-  list.innerHTML = '';
-  
-  let sorted = [...CITATIONS_DATA];
-  if (currentSortType === 'date') sorted.sort((a,b) => b.date - a.date);
-  else if (currentSortType === 'cell') sorted.sort((a,b) => a.cell.localeCompare(b.cell));
-  else if (currentSortType === 'organelle') sorted.sort((a,b) => a.org.localeCompare(b.org));
-
-  sorted.forEach(cit => {
-    const div = document.createElement('div');
-    div.className = 'citation-item';
-    div.innerHTML = `
-      ${cit.ref}
-      <div class="citation-tags">
-        <span>${cit.date}</span>
-        <span style="color:var(--accent); border:1px solid rgba(251,191,36,0.3);">${cit.cell}</span>
-        <span style="color:#38bdf8; border:1px solid rgba(56,189,248,0.3);">${cit.org}</span>
-      </div>
-    `;
-    list.appendChild(div);
-  });
-}
-
-/* ============================================================
-   3. THREE.JS - OPTIMIZED VOLUMETRIC PHYSICS ENGINE
-   ============================================================ */
-const NUM_PARTICLES = 1000; 
-let scene, camera, renderer, controls, instancedMesh;
-const particlesData =[];
-const dummy = new THREE.Object3D();
-const tempColor = new THREE.Color();
-const colorWhite = new THREE.Color(0xffffff);
-const colorDim = new THREE.Color(0x06060a); 
-
-function init3D() {
-  const container = document.getElementById('canvas-container');
-  scene = new THREE.Scene();
-
-  camera = new THREE.PerspectiveCamera(35, container.clientWidth / container.clientHeight, 0.1, 250);
-  camera.position.set(0, 0, 48); 
-
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-  // Set accurate color space mapping to prevent washed-out colors
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true; controls.dampingFactor = 0.04;     
-  controls.autoRotate = true; controls.autoRotateSpeed = 0.6;
-  controls.enablePan = false; controls.minDistance = 15; controls.maxDistance = 120;        
-
-  // Lowered ambient light from 0.85 -> 0.5 to stop washing out base colors, adding deep contrast
-  scene.add(new THREE.AmbientLight(0xffffff, 0.5)); 
-  const dirLight = new THREE.DirectionalLight(0xffffff, 2.5); dirLight.position.set(15, 20, 15); scene.add(dirLight);
-  const backLight = new THREE.DirectionalLight(0x88aaff, 0.8); backLight.position.set(-15, -15, -15); scene.add(backLight);
-
-  const geo = new THREE.SphereGeometry(0.40, 16, 16); 
-  
-  // Standard Material guarantees deep saturated colors without the physical clearcoat "milk"
-  const mat = new THREE.MeshStandardMaterial({ 
-    roughness: 0.2, 
-    metalness: 0.1
-  });
-  
-  instancedMesh = new THREE.InstancedMesh(geo, mat, NUM_PARTICLES);
-  instancedMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-  scene.add(instancedMesh);
-
-  for (let i = 0; i < NUM_PARTICLES; i++) {
-    particlesData.push({
-      org: "Cytosol", x: 0, y: 0, z: 0, baseScale: 1.0, currentScale: 1.0,
-      baseColor: new THREE.Color("#1e232b"), currentColor: new THREE.Color("#1e232b")
-    });
-    dummy.position.set(0,0,0);
-    dummy.scale.setScalar(0); 
-    dummy.updateMatrix();
-    instancedMesh.setMatrixAt(i, dummy.matrix);
-  }
-
-  window.addEventListener('resize', () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-  });
-
-  update3DTargetStates();
-  requestAnimationFrame(renderLoop);
-}
-
-// Safely computes strict quotas that NEVER exceed 1,000
-function getExactParticleCounts(cellData) {
-  let entries = Object.entries(cellData.organelles);
-  let counts = entries.map(([org, s]) => ({ org, exact: s.vv * 10, floor: Math.floor(s.vv * 10) }));
-  
-  let sumFloor = counts.reduce((sum, c) => sum + c.floor, 0);
-  let remainder = 1000 - sumFloor;
-  
-  counts.sort((a, b) => (b.exact - b.floor) - (a.exact - a.floor));
-  
-  if (remainder > 0) {
-    for(let i=0; i < remainder; i++) { counts[i % counts.length].floor += 1; }
-  } else if (remainder < 0) {
-    for(let i=0; i < Math.abs(remainder); i++) { 
-        if(counts[i % counts.length].floor > 0) counts[i % counts.length].floor -= 1; 
+    if (navToggle) {
+      navToggle.addEventListener('click', toggleNav);
     }
-  }
-  
-  return counts.reduce((acc, c) => { acc[c.org] = c.floor; return acc; }, {});
-}
-
-function randomInSphere(radius, cx=0, cy=0, cz=0) {
-  let x, y, z;
-  do {
-    x = (Math.random() * 2 - 1) * radius;
-    y = (Math.random() * 2 - 1) * radius;
-    z = (Math.random() * 2 - 1) * radius;
-  } while(x*x + y*y + z*z > radius*radius);
-  return new THREE.Vector3(x + cx, y + cy, z + cz);
-}
-
-function update3DTargetStates() {
-  const cellData = ATLAS[activeCell];
-  const quotas = getExactParticleCounts(cellData);
-  const R_CELL = 10.0; 
-  
-  let lipidRadius = 0, lipidCenter = new THREE.Vector3();
-  let nucRadius = 0, nucCenter = new THREE.Vector3();
-  
-  if (activeCell === "White Adipocyte" && quotas["Lipid Droplets"]) {
-    lipidRadius = R_CELL * Math.cbrt(quotas["Lipid Droplets"] / 1000);
-    lipidCenter.set(R_CELL - lipidRadius - 0.1, 0, 0); 
-  } 
-  
-  if (quotas["Nucleus"]) {
-    nucRadius = R_CELL * Math.cbrt(quotas["Nucleus"] / 1000);
-    if (activeCell === "White Adipocyte") {
-       nucCenter.set(-R_CELL + nucRadius + 0.2, 0, 0);
-    } else {
-       nucCenter.set(0, 0, 0); 
+    if (navOverlay) {
+      navOverlay.addEventListener('click', toggleNav);
     }
-  }
 
-  const isInsideExclusion = (p) => {
-    if (lipidRadius > 0 && p.distanceTo(lipidCenter) < lipidRadius) return true;
-    if (nucRadius > 0 && p.distanceTo(nucCenter) < nucRadius) return true;
-    return false;
-  };
-
-  let idx = 0;
-  
-  layerOrder.forEach(org => {
-    if (!quotas[org]) return;
-    const count = quotas[org];
-    
-    // OVERRIDE: Keep UI Cytosol text readable (light gray), but make 3D Cytosol particles dark slate so they recede.
-    const colorStr = org === "Cytosol" ? "#2d3340" : (PALETTE[org]?.color || "#ffffff");
-    
-    for (let i = 0; i < count; i++) {
-      if (idx >= NUM_PARTICLES) break; 
-      
-      const p = particlesData[idx];
-      p.org = org;
-      p.baseColor.set(colorStr);
-      
-      let pos = new THREE.Vector3();
-      
-      if (org === "Lipid Droplets" && activeCell === "White Adipocyte") {
-        pos = randomInSphere(lipidRadius, lipidCenter.x, lipidCenter.y, lipidCenter.z);
-      } 
-      else if (org === "Nucleus") {
-        if (activeCell === "White Adipocyte") {
-          let localP = randomInSphere(nucRadius);
-          localP.x *= 0.4; 
-          pos.copy(localP).add(nucCenter);
-        } else {
-          pos = randomInSphere(nucRadius, nucCenter.x, nucCenter.y, nucCenter.z);
-        }
-      } 
-      else if (activeCell === "Erythrocyte (RBC)") {
-        do {
-          const x = (Math.random() - 0.5) * 2 * R_CELL;
-          const y = (Math.random() - 0.5) * 2 * (R_CELL * 0.3);
-          const z = (Math.random() - 0.5) * 2 * R_CELL;
-          const r2 = (x*x + z*z) / (R_CELL * R_CELL);
-          if (r2 <= 1.0) {
-            const thickness = 0.5 * Math.sqrt(1 - r2) * (0.2 + 0.8 * r2);
-            if (Math.abs(y) <= thickness * R_CELL * 1.5) { pos.set(x, y, z); break; }
-          }
-        } while(true);
-      }
-      else if (org === "Myofibrils" && activeCell === "Cardiomyocyte") {
-        do { pos = randomInSphere(R_CELL); } 
-        while (isInsideExclusion(pos) || Math.sin(pos.y * 3.5) > 0.3); 
-      }
-      else {
-        let attempts = 0;
-        do { pos = randomInSphere(R_CELL); attempts++; } 
-        while (isInsideExclusion(pos) && attempts < 100);
-      }
-
-      gsap.to(p, {
-        x: pos.x, y: pos.y, z: pos.z,
-        duration: 2.0 + Math.random() * 1.0, 
-        ease: "expo.inOut"
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
       });
-      
-      idx++;
-    }
-  });
-}
-
-function renderLoop() {
-  requestAnimationFrame(renderLoop);
-  controls.update();
-  const time = performance.now() * 0.0008;
-
-  for (let i = 0; i < NUM_PARTICLES; i++) {
-    const p = particlesData[i];
-    let targetScale = 1.0;
-
-    if (hoveredOrganelle === null) {
-      targetScale = 1.0;
-      p.currentColor.lerp(p.baseColor, 0.08); 
-    } else {
-      if (p.org === hoveredOrganelle) {
-        targetScale = 1.5; 
-        tempColor.copy(p.baseColor).lerp(colorWhite, 0.25); 
-        p.currentColor.lerp(tempColor, 0.08);
-      } else {
-        targetScale = 0.25;
-        p.currentColor.lerp(colorDim, 0.08);
-      }
-    }
-
-    p.currentScale += (targetScale - p.currentScale) * 0.1;
-
-    const floatX = Math.sin(time + i * 0.11) * 0.15;
-    const floatY = Math.cos(time + i * 0.13) * 0.15;
-    const floatZ = Math.sin(time + i * 0.17) * 0.15;
-
-    dummy.position.set(
-      p.x + (floatX * p.currentScale), 
-      p.y + (floatY * p.currentScale), 
-      p.z + (floatZ * p.currentScale)
-    );
-    dummy.scale.setScalar(p.currentScale);
-    dummy.updateMatrix();
-    
-    instancedMesh.setMatrixAt(i, dummy.matrix);
-    instancedMesh.setColorAt(i, p.currentColor);
-  }
-  
-  instancedMesh.instanceMatrix.needsUpdate = true;
-  instancedMesh.instanceColor.needsUpdate = true;
-  renderer.render(scene, camera);
-}
-
-// Bootstrap Application
-document.addEventListener("DOMContentLoaded", () => {
-    renderCitations();
-    initUI();
-    init3D();
-});
-</script>
+    });
+  </script>
 </body>
 </html>
