@@ -44,7 +44,7 @@
       "@type": "Organization",
       "name": "HealthEqual"
     },
-    "keywords": [
+    "keywords":[
       "human organelle atlas",
       "cell biology",
       "organelle proportions",
@@ -57,6 +57,22 @@
     ],
     "license": "https://creativecommons.org/licenses/by/4.0/"
   }
+  </script>
+
+  <!-- ============================================================
+       GOOGLE ANALYTICS 4
+       Replace BOTH instances of G-XXXXXXXXXX with your Measurement ID - done = G-YM3XXCSTS4
+       ============================================================ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YM3XXCSTS4"></script>
+  <script>
+    window.dataLayer = window.dataLayer ||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YM3XXCSTS4', {
+      page_title: 'Human Organelle Atlas',
+      page_location: window.location.href,
+      send_page_view: true
+    });
   </script>
 
   <!-- Premium Typography -->
@@ -493,7 +509,7 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
         <h3>The Origin</h3>
         <p>My name is Marjon Enriquez — a systems bioenergetics researcher who first put this together to see proportions of mitochondria across cell types based on the most recent evidence. Then I expanded it to the nucleus. Then I thought, why not expand it to all organelles! Hence this atlas.</p>
         <p style="margin-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
-          marjonenriquez@gmail.com<br>
+          <a href="mailto:marjonenriquez@gmail.com" onclick="if(window.trackAtlasEvent) window.trackAtlasEvent('contact_clicked', { contact_type: 'email' });" style="color: var(--text-dim); text-decoration: none;">marjonenriquez@gmail.com</a><br>
           Brooklyn, NY, USA
         </p>
       </div>
@@ -523,6 +539,33 @@ button { font-family: inherit; border: none; background: none; cursor: pointer; 
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   0. GOOGLE ANALYTICS TRACKING HELPERS
+   Safely wraps gtag so it never crashes if blocked.
+   ============================================================ */
+const GA_ENABLED = typeof window.gtag === 'function';
+
+function trackAtlasEvent(eventName, params = {}) {
+  if (!GA_ENABLED) return;
+  try {
+    window.gtag('event', eventName, {
+      page_section: 'human_organelle_atlas',
+      atlas_version: 'v1.2',
+      ...params
+    });
+  } catch(e) {}
+}
+window.trackAtlasEvent = trackAtlasEvent; // Export for inline HTML calls (like email)
+
+// Prevents flooding GA with rapid events (like 3D drags or hovers)
+function trackOncePerSession(key, eventName, params = {}) {
+  const storageKey = `hoa_ga_${key}`;
+  if (sessionStorage.getItem(storageKey)) return;
+  sessionStorage.setItem(storageKey, 'true');
+  trackAtlasEvent(eventName, params);
+}
+
 
 /* ============================================================
    1. DATA & PALETTE
@@ -641,13 +684,36 @@ function initUI() {
   updateDashboard();
 }
 
+let searchTrackTimer = null;
 window.filterCells = (val) => {
   searchTerm = val.toLowerCase();
   buildCellList();
+
+  // Smart Tracking: Only track search after they stop typing (debouncing)
+  clearTimeout(searchTrackTimer);
+  searchTrackTimer = setTimeout(() => {
+    if (searchTerm.length >= 2) {
+      const matchedCellCount = Object.keys(ATLAS).filter(k => 
+        k.toLowerCase().includes(searchTerm) || 
+        ATLAS[k].tissue.toLowerCase().includes(searchTerm)
+      ).length;
+      trackAtlasEvent('atlas_search', {
+        search_length: searchTerm.length,
+        matched_cell_count: matchedCellCount
+      });
+    }
+  }, 800);
 };
 
-window.openModal = id => document.getElementById(id).classList.add('open');
-window.closeModal = id => document.getElementById(id).classList.remove('open');
+window.openModal = id => {
+  document.getElementById(id).classList.add('open');
+  trackAtlasEvent('modal_opened', { modal_name: id });
+};
+
+window.closeModal = id => {
+  document.getElementById(id).classList.remove('open');
+  trackAtlasEvent('modal_closed', { modal_name: id });
+};
 
 let leftOpen = true; let rightOpen = true;
 window.togglePanel = id => {
@@ -658,11 +724,19 @@ window.togglePanel = id => {
   const wRight = rightOpen ? 360 : 0;
   const targetOffset = (wLeft - wRight) / 2;
   gsap.to('#canvas-container', { x: targetOffset, duration: 0.6, ease: "power3.out" });
+
+  trackAtlasEvent('panel_toggled', {
+    panel_name: id,
+    panel_state: id === 'left-panel' ? (leftOpen ? 'open' : 'closed') : (rightOpen ? 'open' : 'closed')
+  });
 };
 
 document.querySelectorAll('.modal-overlay').forEach(overlay => {
   overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.classList.remove('open');
+    if (e.target === overlay) {
+      overlay.classList.remove('open');
+      trackAtlasEvent('modal_closed', { modal_name: overlay.id });
+    }
   });
 });
 
@@ -715,9 +789,17 @@ function buildCellList() {
     btn.className = `cell-btn ${name === activeCell ? 'active' : ''}`;
     btn.onclick = () => { 
       if(name !== activeCell) { 
+        const previousCell = activeCell;
         activeCell = name; 
         initUI(); 
         update3DTargetStates(); 
+        trackAtlasEvent('cell_selected', {
+          cell_name: name,
+          previous_cell_name: previousCell,
+          tissue_name: data.tissue,
+          active_ruler: ruler,
+          active_sort_organelle: activeSortOrganelle || 'none'
+        });
       } 
     };
     
@@ -767,7 +849,19 @@ function buildRulerControls() {
   Object.entries(RULERS).forEach(([key, cfg]) => {
     const btn = document.createElement('button');
     btn.className = `ruler-btn ${key === ruler ? 'active' : ''}`;
-    btn.onclick = () => { ruler = key; buildRulerControls(); buildCellList(); updateDashboard(); };
+    btn.onclick = () => { 
+      const previousRuler = ruler;
+      ruler = key; 
+      buildRulerControls(); 
+      buildCellList(); 
+      updateDashboard(); 
+      trackAtlasEvent('ruler_selected', {
+        ruler_name: key,
+        previous_ruler_name: previousRuler,
+        active_cell: activeCell,
+        active_sort_organelle: activeSortOrganelle || 'none'
+      });
+    };
     btn.innerHTML = `<span class="sym">${cfg.sym}</span><span class="sub">${cfg.sub}</span>`;
     el.appendChild(btn);
   });
@@ -814,13 +908,29 @@ function updateDashboard() {
     `;
     
     card.addEventListener('click', () => {
-      if (activeSortOrganelle === org) activeSortOrganelle = null;
+      const wasActive = activeSortOrganelle === org;
+      if (wasActive) activeSortOrganelle = null;
       else activeSortOrganelle = org;
       buildCellList();
       updateDashboard();
+      
+      trackAtlasEvent('organelle_sort_selected', {
+        organelle_name: org,
+        sort_state: wasActive ? 'cleared' : 'active',
+        active_cell: activeCell,
+        active_ruler: ruler,
+        organelle_volume_percent: stats.vv
+      });
     });
 
-    card.addEventListener('pointerenter', () => { hoveredOrganelle = org; });
+    card.addEventListener('pointerenter', () => { 
+      hoveredOrganelle = org; 
+      trackOncePerSession(`hover_${org}`, 'organelle_hovered', {
+        organelle_name: org,
+        active_cell: activeCell,
+        active_ruler: ruler
+      });
+    });
     card.addEventListener('pointerleave', () => { hoveredOrganelle = null; });
     
     list.appendChild(card);
@@ -859,6 +969,8 @@ window.sortCitations = (type) => {
   document.querySelectorAll('.sort-badges .badge').forEach(b => b.classList.remove('active'));
   document.getElementById('sort-' + (type==='organelle'?'org':type)).classList.add('active');
   renderCitations();
+
+  trackAtlasEvent('citations_sorted', { citation_sort_type: type });
 }
 
 function renderCitations() {
@@ -914,6 +1026,31 @@ function init3D() {
   controls.enableDamping = true; controls.dampingFactor = 0.04;     
   controls.autoRotate = true; controls.autoRotateSpeed = 0.6;
   controls.enablePan = false; controls.minDistance = 15; controls.maxDistance = 120;        
+
+  let lastCameraDistance = camera.position.distanceTo(controls.target);
+
+  controls.addEventListener('start', () => {
+    trackOncePerSession('three_d_started', 'three_d_interaction_started', {
+      active_cell: activeCell,
+      active_ruler: ruler
+    });
+  });
+
+  controls.addEventListener('end', () => {
+    const currentCameraDistance = camera.position.distanceTo(controls.target);
+    const distanceDelta = Math.abs(currentCameraDistance - lastCameraDistance);
+    
+    // Only fire event if they actually zoomed
+    if (distanceDelta > 1) {
+      trackAtlasEvent('three_d_interaction_completed', {
+        active_cell: activeCell,
+        active_ruler: ruler,
+        camera_distance: Math.round(currentCameraDistance),
+        zoom_changed: 'yes'
+      });
+    }
+    lastCameraDistance = currentCameraDistance;
+  });
 
   // Lowered ambient light from 0.85 -> 0.5 to stop washing out base colors, adding deep contrast
   scene.add(new THREE.AmbientLight(0xffffff, 0.5)); 
@@ -1126,6 +1263,13 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCitations();
     initUI();
     init3D();
+    
+    trackAtlasEvent('atlas_loaded', {
+      initial_cell: activeCell,
+      initial_ruler: ruler,
+      cell_count: Object.keys(ATLAS).length,
+      organelle_type_count: Object.keys(PALETTE).length
+    });
 });
 </script>
 </body>
