@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral Codon Atlas — Thermodynamic Periodic Table of Viruses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* Minimalistic, Light, Calm Flesh-Tone Palette */
+  --bg: #FDFBF7; 
+  --bg2: #FFFFFF; 
+  --bg3: #F6F4F0;
+  --panel: #FFFFFF; 
+  --border: #E8E5DF; 
+  --border2: #D8D4CC;
+  
+  /* Recolored Cohesive Theme Palette */
+  --au: #E07A7A; --au-dim: #FCEFEF; --au-glow: rgba(224, 122, 122, 0.15); --au-text: #B23A3A;
+  --gc: #61A89D; --gc-dim: #EDF6F5; --gc-glow: rgba(97, 168, 157, 0.15); --gc-text: #287368;
+  --gold: #C28F3B; --gold-dim: #FBF4E8; --gold-text: #96671A; 
+  --teal: #5C9EAD;
+  
+  /* Text */
+  --text: #2A2827; 
+  --text2: #6A6763; 
+  --text3: #A09D98;
+  
+  /* Typography */
+  --mono: 'IBM Plex Mono', monospace; 
+  --serif: 'Lora', serif; 
+  --sans: 'Inter', sans-serif;
+  
+  /* Spacing & Utilities */
+  --radius: 8px; 
+  --cell-w: 220px; 
+  --transition: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { font-size: 15px; background: var(--bg); color: var(--text); font-family: var(--sans); }
+body { min-height: 100vh; overflow-x: hidden; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ── HEADER ────────────────────────────────────────────────────── */
+header {
+  padding: 2.5rem 3rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
+  background: rgba(253, 251, 247, 0.9);
+  position: sticky; top: 0; z-index: 50; backdrop-filter: blur(16px);
+}
+.header-left h1 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--text); letter-spacing: -0.01em; line-height: 1.2; }
+.header-left h1 em { color: var(--gold-text); font-style: italic; }
+.header-sub {
+  font-family: var(--mono); font-size: 0.75rem; color: var(--text2); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap;
+}
+.header-sub span { display: flex; align-items: center; gap: 0.4rem; font-weight: 500; }
+.dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.dot-au { background: var(--au); } .dot-gc { background: var(--gc); } .dot-gold { background: var(--gold); }
+.gs-btn {
+  font-family: var(--mono); font-size: 0.75rem; color: var(--text2); border: 1px solid var(--border); background: var(--bg2);
+  padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; letter-spacing: 0.05em; white-space: nowrap; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.gs-btn:hover { color: var(--gold-text); border-color: var(--gold); background: var(--gold-dim); transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+
+/* ── MAIN LAYOUT ───────────────────────────────────────────────── */
+main { display: flex; height: calc(100vh - 100px); overflow: hidden; }
+.matrix-pane { flex: 0 0 auto; padding: 2rem 2.5rem 2rem 3rem; overflow-y: auto; min-width: 550px; max-width: calc(var(--cell-w)*2 + 250px + 5rem); }
+.detail-pane { flex: 1 1 auto; border-left: 1px solid var(--border); background: var(--panel); overflow-y: auto; transition: var(--transition); display: flex; flex-direction: column; box-shadow: -4px 0 20px rgba(0,0,0,0.01); }
+
+/* ── LEGEND & HEADERS ────────────────────────────────────────────── */
+.legend { display: flex; gap: 3rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.legend-item { display: flex; flex-direction: column; gap: 0.4rem; }
+.legend-head { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+.legend-label { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; }
+.legend-label.au { color: var(--au-text); } .legend-label.gc { color: var(--gc-text); }
+.legend-desc { font-family: var(--sans); font-size: 0.8rem; color: var(--text2); max-width: 220px; line-height: 1.5; }
+
+.col-headers { display: grid; grid-template-columns: 200px var(--cell-w) var(--cell-w); gap: 6px; margin-bottom: 6px; }
+.col-head { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.6rem 1rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.5rem; font-weight: 500; }
+.col-head.au { background: var(--au-dim); color: var(--au-text); border: 1px solid var(--au); }
+.col-head.gc { background: var(--gc-dim); color: var(--gc-text); border: 1px solid var(--gc); }
+
+/* ── MATRIX GRID ────────────────────────────────────────────────  */
+.matrix { display: flex; flex-direction: column; gap: 6px; padding-bottom: 3rem;}
+.matrix-row { display: grid; grid-template-columns: 200px var(--cell-w) var(--cell-w); gap: 6px; }
+.row-label { display: flex; flex-direction: column; justify-content: center; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg2); cursor: default; }
+.row-class { font-family: var(--mono); font-size: 0.9rem; font-weight: 600; color: var(--gold-text); line-height: 1.2; }
+.row-genome { font-family: var(--mono); font-size: 0.7rem; color: var(--text2); letter-spacing: 0.05em; margin-top: 0.3rem; }
+.row-route { font-family: var(--sans); font-size: 0.75rem; color: var(--text3); margin-top: 0.3rem; line-height: 1.4; }
+
+.cell {
+  border-radius: var(--radius); padding: 0.9rem 1rem; cursor: pointer; transition: var(--transition);
+  border: 1px solid var(--border); position: relative; overflow: hidden; min-height: 95px; display: flex; flex-direction: column; justify-content: space-between; background: var(--bg2);
+}
+.cell::before { content: ''; position: absolute; inset: 0; opacity: 0; transition: var(--transition); z-index: 0; }
+.cell > * { position: relative; z-index: 1; }
+
+.cell.au:hover { border-color: var(--au); box-shadow: 0 4px 12px var(--au-glow); transform: translateY(-2px); z-index: 2;}
+.cell.au.active { border-color: var(--au); background: var(--au-dim); box-shadow: 0 0 0 1px var(--au), 0 8px 20px var(--au-glow); }
+
+.cell.gc:hover { border-color: var(--gc); box-shadow: 0 4px 12px var(--gc-glow); transform: translateY(-2px); z-index: 2;}
+.cell.gc.active { border-color: var(--gc); background: var(--gc-dim); box-shadow: 0 0 0 1px var(--gc), 0 8px 20px var(--gc-glow); }
+
+.cell.empty { background: transparent; border: 1px dashed var(--border2); cursor: default; opacity: 0.6; }
+.cell.empty:hover { transform: none; box-shadow: none; border-color: var(--border2); }
+
+.cell-density { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; display: inline-flex; align-items: center; width: fit-content; font-weight: 600;}
+.au .cell-density { background: var(--au-dim); color: var(--au-text); border: 1px solid rgba(224, 122, 122, 0.3); }
+.gc .cell-density { background: var(--gc-dim); color: var(--gc-text); border: 1px solid rgba(97, 168, 157, 0.3); }
+.cell-viruses { font-family: var(--sans); font-size: 0.8rem; color: var(--text); line-height: 1.5; margin-top: 0.5rem; flex: 1; font-weight: 500;}
+.cell-count { font-family: var(--mono); font-size: 0.7rem; color: var(--text3); margin-top: 0.5rem; }
+
+/* ── DETAIL PANE & CARDS ───────────────────────────────────────── */
+.detail-empty { flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.2rem; padding: 2rem; text-align: center; }
+.detail-empty .icon { font-size: 3rem; opacity: 0.3; color: var(--gold-text);}
+.detail-empty p { font-family: var(--mono); font-size: 0.8rem; color: var(--text3); letter-spacing: 0.05em; line-height: 1.6; }
+
+.detail-header { padding: 2.5rem 3rem 1.5rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255, 255, 255, 0.95); z-index: 5; backdrop-filter: blur(12px);}
+.detail-header h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; color: var(--text); }
+.detail-header .meta { font-family: var(--mono); font-size: 0.7rem; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.8rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 4px; font-size: 0.65rem; letter-spacing: 0.08em; font-weight: 600;}
+.badge.au { background: var(--au-dim); color: var(--au-text); border: 1px solid rgba(224, 122, 122, 0.3); }
+.badge.gc { background: var(--gc-dim); color: var(--gc-text); border: 1px solid rgba(97, 168, 157, 0.3); }
+.badge.neutral { background: var(--bg3); color: var(--text2); border: 1px solid var(--border2); }
+
+.virus-list { padding: 2rem 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; padding-bottom: 4rem;}
+.virus-card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg2); padding: 1.5rem; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+.virus-card:hover { border-color: var(--border2); background: var(--bg2); transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.06);}
+.virus-card.au:hover { border-color: var(--au); }
+.virus-card.gc:hover { border-color: var(--gc); }
+
+.vcard-name { font-family: var(--sans); font-size: 1.05rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+.vcard-family { font-family: var(--mono); font-size: 0.7rem; color: var(--text2); letter-spacing: 0.05em; margin-top: 0.3rem; }
+.vcard-metrics { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.vcard-metric { display: flex; flex-direction: column; gap: 3px; }
+.vcard-metric .mk { font-family: var(--mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;}
+.vcard-metric .mv { font-family: var(--sans); font-size: 0.85rem; font-weight: 500; color: var(--text); }
+.vcard-metric .mv.au { color: var(--au-text); }
+.vcard-metric .mv.gc { color: var(--gc-text); }
+.vcard-metric .mv.gold { color: var(--gold-text); }
+
+.vcard-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.2rem; }
+.tag { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; background: var(--bg3); color: var(--text2); border: 1px solid var(--border); font-weight: 500;}
+.vcard-arrow { position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--border2); opacity: 0; transition: var(--transition); }
+.virus-card:hover .vcard-arrow { opacity: 1; right: 1rem; color: var(--text2);}
+
+/* ── VIRUS MODAL ──────────────────────────────────────────────────── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(20, 18, 16, 0.4); z-index: 100; display: none; align-items: flex-start; justify-content: flex-end; backdrop-filter: blur(8px); }
+.modal-overlay.open { display: flex; }
+.modal { width: min(850px, 100vw); height: 100vh; background: var(--bg2); border-left: 1px solid var(--border); display: flex; flex-direction: column; animation: slideIn 400ms cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; box-shadow: -10px 0 40px rgba(0,0,0,0.08);}
+@keyframes slideIn { from { transform: translateX(80px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.modal-head { padding: 2.5rem 3rem 1.8rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-shrink: 0; background: var(--panel);}
+.modal-head-info { flex: 1; }
+.modal-title { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; color: var(--text); line-height: 1.2; }
+.modal-subtitle { font-family: var(--mono); font-size: 0.75rem; color: var(--text2); letter-spacing: 0.1em; margin-top: 0.6rem; text-transform: uppercase; font-weight: 500;}
+.modal-close { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 36px; height: 36px; border-radius: 6px; cursor: pointer; font-size: 1.2rem; transition: var(--transition); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.modal-close:hover { border-color: var(--border2); color: var(--text); background: var(--border);}
+
+/* Modal Tabs */
+.modal-tabs { display: flex; padding: 0 3rem; border-bottom: 1px solid var(--border); gap: 0; flex-shrink: 0; background: var(--panel); overflow-x: auto; }
+.tab-btn { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 1.2rem 1.2rem; color: var(--text3); border: none; background: none; cursor: pointer; border-bottom: 2px solid transparent; transition: var(--transition); white-space: nowrap; font-weight: 600;}
+.tab-btn.active { color: var(--text); border-bottom-color: var(--text); }
+.tab-btn:hover:not(.active) { color: var(--text2); }
+
+.modal-body { flex: 1; overflow-y: auto; padding: 2.5rem 3rem 5rem; }
+
+/* Data Sections */
+.data-section { margin-bottom: 3rem; }
+.data-section h3 { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); margin-bottom: 1.2rem; font-weight: 600;}
+.data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.data-item { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.2rem; }
+.data-item.full { grid-column: 1 / -1; }
+.data-key { font-family: var(--mono); font-size: 0.65rem; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; font-weight: 600;}
+.data-val { font-family: var(--sans); font-size: 0.9rem; color: var(--text); font-weight: 400; line-height: 1.6; }
+.data-val.au { color: var(--au-text); font-weight: 500;}
+.data-val.gc { color: var(--gc-text); font-weight: 500;}
+.data-val.gold { color: var(--gold-text); font-weight: 500;}
+
+/* ── SEQUENCE VISUALIZER (THE MAIN CHARACTER) ───────────────── */
+.seq-viewer { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 3rem; box-shadow: 0 8px 30px rgba(0,0,0,0.03); }
+.seq-header { display: flex; justify-content: space-between; align-items: center; background: var(--bg3); padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+.seq-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); font-weight: 600;}
+.seq-actions { display: flex; gap: 1.5rem; align-items: center; }
+.seq-actions label { font-family: var(--sans); font-size: 0.8rem; color: var(--text2); display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; font-weight: 500;}
+.seq-actions input[type="checkbox"] { accent-color: var(--text); cursor: pointer; width: 14px; height: 14px;}
+.seq-actions button { background: var(--bg2); border: 1px solid var(--border); color: var(--text2); padding: 0.4rem 1rem; border-radius: 4px; font-family: var(--mono); font-size: 0.7rem; cursor: pointer; transition: 0.2s; letter-spacing: 0.05em; box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+.seq-actions button:hover { border-color: var(--text); color: var(--text); }
+.seq-body { padding: 1.8rem; font-family: var(--mono); font-size: 1rem; line-height: 2.4; color: var(--text); word-wrap: break-word; position: relative; }
+
+/* Codon Translation Styles */
+.codon-wrap { display: inline-flex; flex-direction: column; align-items: center; margin: 0 3px 12px 3px; vertical-align: top; }
+.codon-wrap .bases { padding: 2px 5px; border-radius: 4px; font-weight: 500; letter-spacing: 1.5px; transition: background 0.3s; border-bottom: 2px solid transparent;}
+.codon-wrap.au-biased .bases { background: var(--au-dim); color: var(--au-text); border-bottom-color: var(--au); }
+.codon-wrap.gc-biased .bases { background: var(--gc-dim); color: var(--gc-text); border-bottom-color: var(--gc); }
+.codon-wrap.start-codon .bases { background: var(--gold-dim); color: var(--gold-text); border-bottom-color: var(--gold); }
+.codon-wrap.stop-codon .bases { background: var(--bg3); color: var(--text3); border-bottom-color: var(--border2); text-decoration: line-through; }
+
+.codon-wrap .aa { font-size: 0.8rem; color: var(--text3); margin-top: 6px; font-weight: 700; }
+.codon-wrap.au-biased .aa { color: var(--au-text); }
+.codon-wrap.gc-biased .aa { color: var(--gc-text); }
+.codon-wrap.start-codon .aa { color: var(--gold-text); }
+
+/* Progress Bars & Visuals */
+.bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+.bar-label { font-family: var(--mono); font-size: 0.75rem; color: var(--text2); width: 100px; text-align: right; font-weight: 500;}
+.bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);}
+.bar-fill { height: 100%; border-radius: 4px; transition: width 800ms cubic-bezier(0.16, 1, 0.3, 1); }
+.bar-fill.au { background: var(--au); } .bar-fill.gc { background: var(--gc); } .bar-fill.gold { background: var(--gold); } .bar-fill.teal { background: var(--teal); }
+.bar-val { font-family: var(--mono); font-size: 0.75rem; color: var(--text2); width: 50px; font-weight: 500;}
+
+.risk-indicator { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.2rem; border-radius: var(--radius); font-family: var(--mono); font-size: 0.8rem; font-weight: 600; border: 1px solid; }
+.risk-indicator.high { background: var(--au-dim); color: var(--au-text); border-color: var(--au); }
+.risk-indicator.moderate { background: var(--gold-dim); color: var(--gold-text); border-color: var(--gold); }
+.risk-indicator.low { background: var(--gc-dim); color: var(--gc-text); border-color: var(--gc); }
+.risk-indicator.none { background: var(--bg3); color: var(--text2); border-color: var(--border2); }
+
+.phylo-note { font-family: var(--sans); font-size: 0.9rem; color: var(--text); line-height: 1.7; margin-top: 1.2rem; padding: 1.2rem 1.5rem; border: 1px solid var(--border); border-radius: var(--radius); border-left: 4px solid var(--gold); background: var(--bg);}
+.pathway-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-family: var(--mono); font-size: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 1.2rem;}
+.pathway-chain .arrow { color: var(--border2); font-size: 1rem; }
+.pathway-chain .enzyme { padding: 4px 10px; border-radius: 4px; background: var(--gold-dim); color: var(--gold-text); border: 1px solid var(--gold); font-weight: 500;}
+.pathway-chain .product { padding: 4px 10px; border-radius: 4px; background: var(--gc-dim); color: var(--gc-text); border: 1px solid var(--gc); font-style: italic; font-size: 0.75rem; font-weight: 500;}
+
+/* ── PHYLOGENY TREE ─────────────────────────────────────────── */
+.phylo-tree { font-family: var(--mono); font-size: 0.8rem; color: var(--text2); background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; line-height: 2.4; }
+.phylo-tree .row { display: flex; align-items: center; }
+.phylo-tree .tree-line { color: var(--border2); font-weight: bold; margin-right: 12px; font-size: 0.9rem;}
+.phylo-tree .rank { color: var(--text3); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; width: 70px; display: inline-block;}
+.phylo-tree .taxon { color: var(--text); font-weight: 600; font-size: 0.85rem;}
+
+/* ── CONFIG MODAL ───────────────────────────────────────────── */
+.config-overlay { position: fixed; inset: 0; background: rgba(20, 18, 16, 0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(8px);}
+.config-overlay.open { display: flex; }
+.config-box { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; width: min(520px, 100%); padding: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.1);}
+.config-box h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 0.8rem; color: var(--text); }
+.config-box p { font-family: var(--sans); font-size: 0.9rem; color: var(--text2); line-height: 1.6; margin-bottom: 2rem; }
+.config-input-wrap { margin-bottom: 2rem; }
+.config-input-wrap label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); display: block; margin-bottom: 0.6rem; font-weight: 600;}
+.config-input-wrap input { width: 100%; background: var(--bg); border: 1px solid var(--border2); color: var(--text); font-family: var(--mono); font-size: 0.9rem; padding: 0.8rem 1.2rem; border-radius: var(--radius); outline: none; transition: var(--transition);}
+.config-input-wrap input:focus { border-color: var(--text); box-shadow: 0 0 0 3px rgba(0,0,0,0.05);}
+.config-btns { display: flex; gap: 1rem; justify-content: flex-end; }
+.btn { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; padding: 0.7rem 1.4rem; border-radius: 6px; cursor: pointer; transition: var(--transition); border: 1px solid; font-weight: 500;}
+.btn-cancel { background: transparent; border-color: var(--border2); color: var(--text2); }
+.btn-cancel:hover { border-color: var(--text); color: var(--text); background: var(--bg);}
+.btn-primary { background: var(--text); border-color: var(--text); color: var(--bg2); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+/* ── STATUS BAR ─────────────────────────────────────────────── */
+.status-bar { position: fixed; bottom: 0; left: 0; right: 0; height: 32px; background: var(--bg2); border-top: 1px solid var(--border); display: flex; align-items: center; padding: 0 3rem; gap: 3rem; font-family: var(--mono); font-size: 0.7rem; color: var(--text3); letter-spacing: 0.08em; z-index: 10; font-weight: 500;}
+.status-bar .status-item { display: flex; align-items: center; gap: 0.6rem; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gc); }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────── -->
+<header>
+  <div class="header-left">
+    <h1>Viral Codon <em>Atlas</em></h1>
+    <div class="header-sub">
+      <span><span class="dot dot-au"></span>AU-Rich (AUeF)</span>
+      <span><span class="dot dot-gc"></span>GC-Rich (GCeF)</span>
+      <span><span class="dot dot-gold"></span>Baltimore I–VII</span>
+      <span>EVO-MG · UPF/CRG Barcelona</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:0.8rem;align-items:center;flex-wrap:wrap">
+    <button class="gs-btn" onclick="openConfig()">⚙ Connect Google Sheets</button>
+  </div>
+</header>
+
+<!-- ── MAIN ───────────────────────────────────────────── -->
+<main>
+  <!-- LEFT: Matrix pane -->
+  <div class="matrix-pane">
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-head">Axis 1 (Rows)</span>
+        <span class="legend-label au">Baltimore Classes I–VII</span>
+        <span class="legend-desc">When & where does mRNA appear? Route from genome to ribosome.</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-head">Axis 2 (Columns)</span>
+        <span class="legend-label gc">AU/GC Codon Bias</span>
+        <span class="legend-desc">Which host translation state does the virus need to exploit?</span>
+      </div>
+    </div>
+    <div class="col-headers">
+      <div></div>
+      <div class="col-head au">🔥 AU-Rich <small style="font-size:0.6rem;margin-left:6px;opacity:0.8;font-weight:400">AUeF / mcm⁵U</small></div>
+      <div class="col-head gc">🧬 GC-Rich <small style="font-size:0.6rem;margin-left:6px;opacity:0.8;font-weight:400">GCeF / baseline</small></div>
+    </div>
+    <div class="matrix" id="matrix"></div>
+  </div>
+
+  <!-- RIGHT: Detail pane -->
+  <div class="detail-pane" id="detailPane">
+    <div class="detail-empty" id="detailEmpty">
+      <div class="icon">⬡</div>
+      <p>Select a matrix cell<br>to explore its viruses</p>
+    </div>
+    <div id="detailContent" style="display:none">
+      <div class="detail-header">
+        <div>
+          <h2 id="detailTitle"></h2>
+          <div class="meta" id="detailMeta"></div>
+        </div>
+      </div>
+      <div class="virus-list" id="virusList"></div>
+    </div>
+  </div>
+</main>
+
+<!-- ── VIRUS MODAL ─────────────────────────────────────── -->
+<div class="modal-overlay" id="virusModal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-info">
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-subtitle" id="modalSubtitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeVirusModal()">✕</button>
+    </div>
+    <div class="modal-tabs" id="modalTabs">
+      <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+      <button class="tab-btn" onclick="switchTab('genomics')">Genomics</button>
+      <button class="tab-btn" onclick="switchTab('transcriptomics')">Transcriptomics</button>
+      <button class="tab-btn" onclick="switchTab('proteomics')">Proteomics</button>
+      <button class="tab-btn" onclick="switchTab('metabolomics')">Metabolomics</button>
+      <button class="tab-btn" onclick="switchTab('phylogeny')">Phylogeny</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ── CONFIG MODAL ───────────────────────────────────── -->
+<div class="config-overlay" id="configOverlay" onclick="closeConfigOverlay(event)">
+  <div class="config-box">
+    <h3>Connect Google Sheets Database</h3>
+    <p>The Atlas architecture is built to ingest live, multi-omic CSV data mapped to the 2x7 matrix. <em>(API sync disabled for this standalone prototype demonstration.)</em></p>
+    <div class="config-input-wrap">
+      <label>Google Sheets ID</label>
+      <input type="text" id="sheetsIdInput" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" disabled style="opacity: 0.5; cursor: not-allowed;">
+    </div>
+    <div class="config-btns">
+      <button class="btn btn-cancel" onclick="closeConfig()">Close</button>
+      <button class="btn btn-primary" onclick="alert('Live sync is disabled in this standalone prototype. The app is currently running on the exhaustive embedded dataset.')">Simulate Connection</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATUS BAR ─────────────────────────────────────── -->
+<div class="status-bar">
+  <div class="status-item"><span class="status-dot"></span><span id="dataSource">Embedded Standalone Dataset</span></div>
+  <div class="status-item">Viruses: <strong id="virusCount" style="color:var(--text)">—</strong></div>
+  <div class="status-item">Cells active: <strong id="cellCount" style="color:var(--text)">14 / 14</strong></div>
+  <div class="status-item" style="margin-left:auto">EVO-MG · UPF · CRG · MSCA 2026</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA — Exhaustive content preserved + Representative Sequences
+// ═══════════════════════════════════════════════════════════════
+const BALTIMORE =[
+  { id:'I',   genome:'dsDNA',      route:'Host RNA Pol II, nucleus',              timing:'Chromatin access, splicing, export' },
+  { id:'II',  genome:'ssDNA',      route:'Convert to dsDNA → host Pol II',        timing:'Host DNA synthesis; S-phase' },
+  { id:'III', genome:'dsRNA',      route:'Viral RdRp → extrudes mRNA (sealed core)',timing:'Immune invisibility; compartmentalized' },
+  { id:'IV',  genome:'+ssRNA',     route:'Genome IS mRNA — immediate translation', timing:'Maximum urgency; zero delay' },
+  { id:'V',   genome:'−ssRNA',     route:'Packaged RdRp → transcribes +mRNA',     timing:'Transcription delay; polymerase-first' },
+  { id:'VI',  genome:'+ssRNA-RT',  route:'Reverse transcription → proviral DNA',  timing:'RT mutational bias; integration' },
+  { id:'VII', genome:'dsDNA-RT',   route:'cccDNA → pregenomic RNA → RT',          timing:'Nuclear persistence; dual pressures' },
+];
+
+const CODON_MAP = {
+  "UUU":"F", "UUC":"F", "UUA":"L", "UUG":"L", "CUU":"L", "CUC":"L", "CUA":"L", "CUG":"L",
+  "AUU":"I", "AUC":"I", "AUA":"I", "AUG":"M", "GUU":"V", "GUC":"V", "GUA":"V", "GUG":"V",
+  "UCU":"S", "UCC":"S", "UCA":"S", "UCG":"S", "CCU":"P", "CCC":"P", "CCA":"P", "CCG":"P",
+  "ACU":"T", "ACC":"T", "ACA":"T", "ACG":"T", "GCU":"A", "GCC":"A", "GCA":"A", "GCG":"A",
+  "UAU":"Y", "UAC":"Y", "UAA":"*", "UAG":"*", "CAU":"H", "CAC":"H", "CAA":"Q", "CAG":"Q",
+  "AAU":"N", "AAC":"N", "AAA":"K", "AAG":"K", "GAU":"D", "GAC":"D", "GAA":"E", "GAG":"E",
+  "UGU":"C", "UGC":"C", "UGA":"*", "UGG":"W", "CGU":"R", "CGC":"R", "CGA":"R", "CGG":"R",
+  "AGU":"S", "AGC":"S", "AGA":"R", "AGG":"R", "GGU":"G", "GGC":"G", "GGA":"G", "GGG":"G"
+};
+
+const VIRUSES =[
+  // ─── Class I × AU ───────────────────────────────────────────
+  {
+    id:'poxvirus', name:'Vaccinia / Poxvirus', family:'Poxviridae', baltimore:'I', bias:'AU',
+    density:'RARE', gc_pct:33, tissue:'Skin, mucosa', alkbh8:'Moderate', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Smallpox (historical), Monkeypox',
+    replication_site:'Cytoplasm (unusual for dsDNA)',
+    genome_size_kb:190, cpg_ratio:0.45, codon_pref:'AU-enriched (cytoplasmic constraint)',
+    trna_mod:'mcm⁵U partial', key_enzymes:'ALKBH8 (moderate), ELP complex',
+    translation_strategy:'Cytoplasmic factory; viral-encoded RNA Pol; avoids nuclear import',
+    key_proteins:'A33R (immune evasion), B5R (spread), D1R+D12L (capping)', 
+    host_proteins:'TNFR homologs, complement inhibitors',
+    alpha_kg_impact:'Moderate acute drain', mitochondrial_state:'Partial depolarization',
+    warburg:'Mild shift', ros_level:'Elevated',
+    order:'Chitovirales', superfamily:'Nucleocytoviricota', host_range:'Vertebrates, invertebrates',
+    zoonotic:true, emergence:'Historical pandemic pathogen',
+    note:'Master rule exception: Class I (nuclear) but cytoplasmic replication → AU-rich. Proof that replication compartment overrides Baltimore class.',
+    seq_name: 'DNA Polymerase (E9L) Fragment',
+    dna_seq: 'ATGGATGTTAAAACTGTTATATCCTACTTTAAATCAAAAGCAACTAACACAAATGACTACGTTACGGATTATACAACAAAAGTATCAACT'
+  },
+  // ─── Class I × GC ───────────────────────────────────────────
+  {
+    id:'ebv', name:'Epstein-Barr Virus (EBV)', family:'Herpesviridae', baltimore:'I', bias:'GC',
+    density:'DENSE', gc_pct:59.5, tissue:'B cells, epithelium', alkbh8:'None', vdac1:'State 1',
+    cancer_risk:'high', diseases:'Burkitt lymphoma, nasopharyngeal carcinoma, Hodgkin lymphoma',
+    replication_site:'Nucleus',
+    genome_size_kb:172, cpg_ratio:0.89, codon_pref:'GC-ending (peacetime translation)',
+    trna_mod:'None required', key_enzymes:'Host RNA Pol II, splicing machinery',
+    translation_strategy:'Latent program; EBER non-coding RNAs; EBNA proteins suppress host immune sensing',
+    key_proteins:'LMP1 (NF-κB activator), LMP2A, EBNA2 (MYC inducer), EBNA3A/3C (p53/Rb suppressors)',
+    host_proteins:'BCL-2 (upregulated), CD21 (entry receptor)',
+    alpha_kg_impact:'Chronic drain (decades)', mitochondrial_state:'HK2-docked (State 1)',
+    warburg:'Strong (viral Tax-like proteins)',ros_level:'Low-moderate chronic',
+    order:'Herpesvirales', superfamily:'Heunggongvirae', host_range:'Humans only',
+    zoonotic:false, emergence:'Endemic; 95% adult seroprevalence',
+    note:'The archetypal "embezzler." GC-peacetime translation → long nuclear residence → LMP1 blocks apoptosis → decades of α-KG drain → TET/KDM starvation → B-cell immortalization → cancer.',
+    seq_name: 'EBNA1 Oncogene Fragment',
+    dna_seq: 'ATGTCTGACGAGGGGCCAGGTACAGGACCTGGAAATGGCCCTGGAGACCAGCCTACCGACGCACCGGGGCCCCCGCGGGCGACCGGGCGCAGC'
+  },
+  {
+    id:'hpv', name:'Human Papillomavirus (HPV 16/18)', family:'Papillomaviridae', baltimore:'I', bias:'GC',
+    density:'DENSE', gc_pct:40.5, tissue:'Cervical/anal/oropharyngeal epithelium', alkbh8:'None', vdac1:'State 1',
+    cancer_risk:'high', diseases:'Cervical cancer, head-and-neck SCC, anal cancer',
+    replication_site:'Nucleus',
+    genome_size_kb:7.9, cpg_ratio:0.72, codon_pref:'GC-biased; codon-optimized for keratinocytes',
+    trna_mod:'None required', key_enzymes:'Host RNA Pol II, E2F, CDK complexes',
+    translation_strategy:'Episomal to integrative transition; E6/E7 expressed early; L1/L2 late structural',
+    key_proteins:'E6 (p53 degradation via E6AP), E7 (Rb inactivation), E5 (EGFR signaling)',
+    host_proteins:'p53 (degraded), pRb (sequestered), EGFR (activated)',
+    alpha_kg_impact:'Moderate-chronic', mitochondrial_state:'Warburg-shifted',ros_level:'Moderate',
+    order:'Zuranvirales', superfamily:'Monodnaviria', host_range:'Mucosal/cutaneous humans',
+    zoonotic:false, emergence:'Vaccine-preventable; 2nd highest viral cancer burden',
+    note:'E6 and E7 are the minimal oncogenic kit. E6 destroys p53 (apoptosis gate). E7 liberates E2F (proliferation). Together: cell cannot die, must divide. The epigenetic invoice accumulates.',
+    seq_name: 'E6 Oncogene Fragment',
+    dna_seq: 'ATGCACCAAAAGAGAACTGCAATGTTTCAGGACCCACAGGAGCGACCCAGAAAGTTACCACAGTTATGCACAGAGCTGCAAACAACTATACAT'
+  },
+  {
+    id:'hsv', name:'HSV-1 / HSV-2', family:'Herpesviridae', baltimore:'I', bias:'GC',
+    density:'DENSE', gc_pct:68, tissue:'Neurons, epithelia', alkbh8:'None', vdac1:'Mixed (latency = State 0)',
+    cancer_risk:'low', diseases:'Cold sores, genital herpes, encephalitis',
+    replication_site:'Nucleus (lytic); PNS neurons (latent)',
+    genome_size_kb:153, cpg_ratio:0.95, codon_pref:'GC-rich (highest among herpesviruses)',
+    trna_mod:'None required', key_enzymes:'Viral DNA Pol (UL30), ICP8 ssDNA-binding',
+    translation_strategy:'Immediate early → early → late cascade; ICP0 degrades host restriction factors',
+    key_proteins:'ICP0 (E3 ubiquitin ligase), ICP34.5 (neurovirulence), gD (entry)',
+    host_proteins:'HVEM, nectin-1 (receptors); PML (degraded by ICP0)',
+    alpha_kg_impact:'Minimal (latent); Acute spike (lytic)', mitochondrial_state:'Near-normal (latent)',ros_level:'Low (latent)',
+    order:'Herpesvirales', superfamily:'Heunggongvirae', host_range:'Humans (latent reservoir: neurons)',
+    zoonotic:false, emergence:'Seroprevalence: HSV-1 ~67%, HSV-2 ~11% globally',
+    note:'Near-zero protein output in latency. Cannot cause cancer despite GC-richness because it silences all viral output. The three-gate model: must have active persistence + anti-apoptosis + pro-proliferation simultaneously.',
+    seq_name: 'ICP0 E3 Ligase Fragment',
+    dna_seq: 'ATGGAGCCGCGCCGCCCCGCGGGCCCCGCCCGCCGCCGCCGCCGCCGCGGCCCCGCCCGCGGCCCGCGGCCCCGCCCGCGGCCCCGCCCGCGG'
+  },
+  {
+    id:'cmv', name:'Cytomegalovirus (CMV)', family:'Herpesviridae', baltimore:'I', bias:'GC',
+    density:'DENSE', gc_pct:57.7, tissue:'Monocytes, endothelium, epithelium', alkbh8:'None', vdac1:'State 1',
+    cancer_risk:'moderate', diseases:'CMV disease (immunocompromised), congenital CMV; possible glioblastoma association',
+    replication_site:'Nucleus',
+    genome_size_kb:235, cpg_ratio:0.91, codon_pref:'GC-biased, largest herpesvirus genome',
+    trna_mod:'None', key_enzymes:'UL54 (DNA Pol), UL44 (processivity factor)',
+    translation_strategy:'Complex regulatory cascade; ~200 ORFs; extensive non-coding RNA',
+    key_proteins:'pp65 (immune evasion, NK cell escape), IE1/IE2, UL16 (NKG2D ligand downregulation)',
+    host_proteins:'NKG2D ligands (suppressed), MHC-I (downregulated)',
+    alpha_kg_impact:'Chronic moderate', mitochondrial_state:'Metabolic reprogramming toward Warburg',ros_level:'Low-moderate',
+    order:'Herpesvirales', superfamily:'Heunggongvirae', host_range:'Humans (latent in CD34+ progenitors)',
+    zoonotic:false, emergence:'Seroprevalence >50% globally; opportunistic in immunosuppressed',
+    note:'Most complex herpesvirus genome. Chronic metabolic burden in monocytes/endothelium. Possible oncomodulatory role in glioblastoma under investigation.',
+    seq_name: 'pp65 Matrix Protein Fragment',
+    dna_seq: 'ATGTCGTCGACCGTGTGCAGCCGCCCCGCCGTCAGCCGCACCGCGAGCGCGCCGACCGTGGCGACCGCCGCCGACACCGCGACCGCGACCGCG'
+  },
+  // ─── Class II × AU ──────────────────────────────────────────
+  {
+    id:'parvo_b19', name:'Parvovirus B19', family:'Parvoviridae', baltimore:'II', bias:'AU',
+    density:'MODERATE', gc_pct:44, tissue:'Erythroid progenitors (BM)', alkbh8:'Moderate', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Fifth disease (slapped cheek), aplastic crisis, hydrops fetalis',
+    replication_site:'Nucleus (requires host S-phase)',
+    genome_size_kb:5.6, cpg_ratio:0.61, codon_pref:'AU-enriched within ssDNA constraint',
+    trna_mod:'mcm⁵U partial', key_enzymes:'ALKBH8, ELP complex',
+    translation_strategy:'Requires proliferating erythroid progenitors; NS1 triggers cell death in non-permissive cells',
+    key_proteins:'NS1 (replication + cytotoxicity + transcription activator), VP1/VP2 (capsid)',
+    host_proteins:'Globoside (receptor), α5β1-integrin (co-receptor)',
+    alpha_kg_impact:'Acute (rapid cell death in erythroid)', mitochondrial_state:'Collapse (NS1-induced)',ros_level:'High acute',
+    order:'Hamaparvovirales', superfamily:'Monodnaviria', host_range:'Humans (narrow: erythroid progenitors)',
+    zoonotic:false, emergence:'Common childhood infection; severe in hemolytic anemia, pregnancy',
+    note:'Extreme tissue tropism: only infects erythroid progenitors. Requires S-phase. NS1 is one of the most cytotoxic viral proteins known — the cell dies before cancer can develop.',
+    seq_name: 'NS1 Protein Fragment',
+    dna_seq: 'ATGGAGCTATTTAGAGGGGTGCTTCAAGTTTCTTCTAATGTTCTGGACTGTGCTAACGATAACTTGGTTAAATCCGTTATTATAATGTTAGAG'
+  },
+  // ─── Class II × GC ──────────────────────────────────────────
+  {
+    id:'aav', name:'Adeno-Associated Virus (AAV)', family:'Parvoviridae', baltimore:'II', bias:'GC',
+    density:'MODERATE', gc_pct:53, tissue:'Broad (muscle, liver, CNS — tropism by serotype)', alkbh8:'None', vdac1:'State 0',
+    cancer_risk:'none', diseases:'None naturally (used as gene therapy vector)',
+    replication_site:'Nucleus (requires helper virus)',
+    genome_size_kb:4.7, cpg_ratio:0.78, codon_pref:'GC-moderate; minimal codon pressure',
+    trna_mod:'None', key_enzymes:'Host Pol II (Rep-independent integration)',
+    translation_strategy:'Defective without helper; Rep protein coordinates replication; ITRs for site-specific integration at AAVS1',
+    key_proteins:'Rep68/Rep78 (replication + integration), Cap proteins (VP1/2/3, AAP)',
+    host_proteins:'AAVS1 locus (integration site on chr19)',
+    alpha_kg_impact:'None', mitochondrial_state:'Normal',ros_level:'Normal',
+    order:'Hamaparvovirales', superfamily:'Monodnaviria', host_range:'Broad vertebrate',
+    zoonotic:false, emergence:'Leading gene therapy platform (>100 clinical trials)',
+    note:'Evolutionarily the "cleanest" virus — no metabolic cost to host. Integration at AAVS1 (safe harbor). GCeF compatibility = no tRNA reprogramming needed = stealth persistence.',
+    seq_name: 'Rep68 Integrase Fragment',
+    dna_seq: 'ATGCCGGGGTTTTACGAGATTGTGATTAAGGTCCCCAGCGACCTTGACGGGCATCTGCCCGGCATTTCTGACAGCTTTGTGAACTGGGTGGCC'
+  },
+  // ─── Class III × AU ─────────────────────────────────────────
+  {
+    id:'rotavirus', name:'Rotavirus', family:'Reoviridae', baltimore:'III', bias:'AU',
+    density:'MODERATE', gc_pct:46, tissue:'Small intestinal enterocytes', alkbh8:'Moderate', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Severe childhood gastroenteritis; leading vaccine-preventable diarrheal death',
+    replication_site:'Cytoplasm (sealed triple-layered particles)',
+    genome_size_kb:18.6, cpg_ratio:0.52, codon_pref:'AU-biased; constrained by compartmentalized replication',
+    trna_mod:'mcm⁵U partial; Q-modification pathway active', key_enzymes:'ALKBH8, QTRT1',
+    translation_strategy:'mRNA capped but not polyadenylated; NSP3 hijacks eIF4G from PABP; outcompetes host mRNAs',
+    key_proteins:'VP4 (spike; cleaved to VP5*+VP8*), VP7 (surface glycoprotein), NSP4 (enterotoxin — first viral enterotoxin identified)',
+    host_proteins:'eIF4G (hijacked), integrins (entry co-receptors)',
+    alpha_kg_impact:'Acute moderate (rapid cell turnover)', mitochondrial_state:'Partial collapse',ros_level:'Elevated',
+    order:'Reovirales', superfamily:'Duplornaviricota', host_range:'Humans, most mammals',
+    zoonotic:true, emergence:'Leading cause of childhood diarrhea mortality; Rotarix/RotaTeq vaccines',
+    note:'Sealed capsid core keeps dsRNA hidden from cytoplasmic innate sensors (RIG-I/MDA5). Only capped +strand mRNAs exit. Mechanical solution to immune invisibility.',
+    seq_name: 'NSP4 Enterotoxin Fragment',
+    dna_seq: 'ATGGAAAAGCTTACCGACCTCAACTACACGTTAAGTGCAATCGAAGATGAATTAACGCAAGAAATTACGCAAGTAAATGAAATTATTCGTGAT'
+  },
+  // ─── Class IV × AU ──────────────────────────────────────────
+  {
+    id:'sars2', name:'SARS-CoV-2', family:'Coronaviridae', baltimore:'IV', bias:'AU',
+    density:'VERY DENSE', gc_pct:37.9, tissue:'Airway epithelia, ACE2+ cells, endothelium', alkbh8:'High', vdac1:'State 2',
+    cancer_risk:'none', diseases:'COVID-19, Long COVID, ARDS, multi-organ failure',
+    replication_site:'Cytoplasm (RTC on ER-derived DMVs)',
+    genome_size_kb:29.9, cpg_ratio:0.19, codon_pref:'Strong AU-bias, A/U-ending enriched (AAA,GAA,AGA,CAA)',
+    trna_mod:'mcm⁵U + mcm⁵s²U + Q + I-suppression + m⁵C/f⁵C-suppression (Muscolino 2026)',
+    key_enzymes:'ALKBH8, CTU1/CTU2, QTRT1, ADAT2 (suppressed), ALKBH1 (suppressed)',
+    translation_strategy:'pp1a/pp1ab ribosomal frameshifting; nsp1 shuts off host mRNA translation; nsp16 2′-O-methyl cap mimicry',
+    key_proteins:'Spike (S1/S2; ACE2 binding; furin cleavage), RdRp (nsp12), PLpro (ISG deubiquitylase), 3CLpro (main protease)',
+    host_proteins:'ACE2 (receptor), TMPRSS2 (priming), neuropilin-1 (entry enhancer)',
+    alpha_kg_impact:'Acute high (SAM-primary ALKBH8; α-KG secondary drain)', mitochondrial_state:'Partial collapse → VDAC1 State 2',ros_level:'High (cytokine storm)',
+    order:'Nidovirales', superfamily:'Pisuviricota', host_range:'Bats (reservoir), humans, some mammals',
+    zoonotic:true, emergence:'Pandemic 2019–2023; >7M documented deaths',
+    note:'Most extensively characterized AU-virus re-programmer. Four tRNA modification systems co-opted simultaneously. CpG ratio 0.19 (lowest among +ssRNA viruses) — strongest ZAP/innate immune evasion signal.',
+    seq_name: 'Spike (S) Protein Fragment',
+    dna_seq: 'ATGTTTGTTTTTCTTGTTTTATTGCCACTAGTCTCTAGTCAGTGTGTTAATCTTACAACCAGAACTCAATTACCCCCTGCATACACTAATTCT'
+  },
+  {
+    id:'dengue', name:'Dengue Virus (DENV)', family:'Flaviviridae', baltimore:'IV', bias:'AU',
+    density:'VERY DENSE', gc_pct:46.5, tissue:'Monocytes/macrophages, DCs, endothelium', alkbh8:'High', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Dengue fever, DHF, dengue shock syndrome',
+    replication_site:'Cytoplasm (ER-associated)',
+    genome_size_kb:10.7, cpg_ratio:0.48, codon_pref:'AU-biased; strong A-ending codon enrichment',
+    trna_mod:'mcm⁵U; likely Q pathway', key_enzymes:'ALKBH8, ELP complex, QTRT1',
+    translation_strategy:'Single ORF; cotranslational membrane insertion; NS5 cap methylase; 5′/3′ UTR cyclization for replication',
+    key_proteins:'E (envelope; antibody target), NS1 (complement evasion + endothelial permeability), NS5 (RdRp+MTase)',
+    host_proteins:'DC-SIGN (entry), Fc receptors (ADE), STING (inhibited by NS2B/NS3)',
+    alpha_kg_impact:'Acute high; vascular leak', mitochondrial_state:'State 2 in endothelium',ros_level:'High',
+    order:'Amarillovirales', superfamily:'Pisuviricota', host_range:'Humans, primates; vector: Aedes aegypti',
+    zoonotic:true, emergence:'~400M infections/year; 3.9B at risk; 4 serotypes (ADE risk on reinfection)',
+    note:'NS1 hexamer disrupts endothelial glycocalyx → capillary leak. Antibody-Dependent Enhancement (ADE): IgG from prior serotype facilitates entry via Fc receptor. A unique evolutionary pressure toward antigenic diversity.',
+    seq_name: 'Envelope (E) Gene Fragment',
+    dna_seq: 'ATGCGATGCGTGGGAATAGGCAACAGAGACTTCGTGGAAGGACTGTCAGGAGCTACGTGGGTGGATGTGTACAAGGAAATGCCAGAATTATAC'
+  },
+  {
+    id:'zika', name:'Zika Virus (ZIKV)', family:'Flaviviridae', baltimore:'IV', bias:'AU',
+    density:'VERY DENSE', gc_pct:47, tissue:'Neural progenitors, placenta, testes', alkbh8:'High', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Microcephaly (fetal), Guillain-Barré, sexual transmission',
+    replication_site:'Cytoplasm (ER-associated)',
+    genome_size_kb:10.8, cpg_ratio:0.51, codon_pref:'AU-biased; A-ending enriched',
+    trna_mod:'mcm⁵U + mcm⁵s²U (Díez lab 2025 CRISPR validated)', key_enzymes:'ALKBH8, ELP1, CTU1 (each independently required — Shteinfer 2025)',
+    translation_strategy:'Closely related to DENV; NS4A/NS4B reprogram autophagy; viral capsid sequesters 14-3-3ε',
+    key_proteins:'E protein (DII fusion loop — vaccine target), NS4A (PI3K/Akt; microcephaly mechanism), NS5',
+    host_proteins:'AXL (entry in neural progenitors), Musashi-1 (RNA-binding; translational repression released by ZIKV)',
+    alpha_kg_impact:'Acute; neural progenitor apoptosis', mitochondrial_state:'State 2 → 3 (apoptosis in neurons)',ros_level:'High in CNS',
+    order:'Amarillovirales', superfamily:'Pisuviricota', host_range:'Humans, primates; vector: Aedes aegypti/albopictus',
+    zoonotic:true, emergence:'2015–2016 Americas epidemic; sexual transmission unprecedented for arthropod-borne virus',
+    note:'CRISPR validation (Díez lab 2025): ELP1, ALKBH8, CTU1 knockouts each independently reduce ZIKV by >80%. Three independent genetic proofs of the mcm⁵s²U pathway requirement.',
+    seq_name: 'Envelope (E) Gene Fragment',
+    dna_seq: 'ATGAGGTGCCCATGCTCCAGTGCAATGATGATATGACTCCCAGGATTAGACAGGTGACATTGGCACATGAGTTAGATATAACCAGAGGGTCAG'
+  },
+  {
+    id:'chikv', name:'Chikungunya Virus (CHIKV)', family:'Togaviridae', baltimore:'IV', bias:'AU',
+    density:'VERY DENSE', gc_pct:47.7, tissue:'Fibroblasts, joints, endothelium', alkbh8:'KIAA1456-specific', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Chikungunya fever, chronic polyarthritis',
+    replication_site:'Cytoplasm',
+    genome_size_kb:11.8, cpg_ratio:0.58, codon_pref:'AU-biased; A-ending codon enrichment',
+    trna_mod:'mcm⁵U via KIAA1456 (ALKBH8 paralog — specific precision node)', key_enzymes:'KIAA1456 (Jungfleisch Nat Comms 2022)',
+    translation_strategy:'Subgenomic promoter → structural ORF translated last; nsP2 shuts host transcription; nsP3 hijacks G3BP1/2 (SG dissolution)',
+    key_proteins:'nsP3 (G3BP interactor; SG dissolver), E1/E2 (entry; acid-dependent fusion), Capsid',
+    host_proteins:'G3BP1/G3BP2 (stress granule nucleators — hijacked by nsP3), Mxra8 (entry receptor)',
+    alpha_kg_impact:'Acute moderate-high', mitochondrial_state:'Partial State 2; NSP-mediated VDAC1 interaction',ros_level:'High',
+    order:'Martellivirales', superfamily:'Kitrinoviricota', host_range:'Humans, primates, birds; vector: Aedes species',
+    zoonotic:true, emergence:'Re-emerging; mutation (A226V in E1) expanded to Aedes albopictus; 2024 Italian outbreak',
+    note:'Precision difference from ZIKV/SARS-CoV-2: CHIKV uses KIAA1456 (ALKBH8 paralog), not ALKBH8 itself. Same enzymatic chain, different node. Validates that specific modification sub-step can be targeted for selective antivirals.',
+    seq_name: 'E1 Glycoprotein Fragment',
+    dna_seq: 'ATGTATGTGGATGGAGAGAAGACTCCAGAAACCTCATACATAAATGCACAAGTTATAGAACAATACATGCTAAGCAATGTTAGAATGAGGTGC'
+  },
+  {
+    id:'poliovirus', name:'Poliovirus (PV 1–3)', family:'Picornaviridae', baltimore:'IV', bias:'AU',
+    density:'VERY DENSE', gc_pct:46.7, tissue:'Motor neurons (anterior horn), gut epithelium', alkbh8:'High', vdac1:'State 2→3',
+    cancer_risk:'none', diseases:'Poliomyelitis, acute flaccid paralysis',
+    replication_site:'Cytoplasm',
+    genome_size_kb:7.4, cpg_ratio:0.50, codon_pref:'AU-biased; classic +ssRNA cytoplasmic pattern',
+    trna_mod:'mcm⁵U; likely full U34 pathway', key_enzymes:'ALKBH8, ELP complex',
+    translation_strategy:'IRES-driven (type I) — cap-independent; 2Apro cleaves eIF4G → cap-independent viral translation outcompetes capped host mRNAs',
+    key_proteins:'2Apro (eIF4G cleavage), 3Dpol (RdRp; fidelity target for picornavirus attenuation), VP1 (receptor binding)',
+    host_proteins:'CD155/PVR (poliovirus receptor — now used for oncolytic therapy), eIF4G (cleaved)',
+    alpha_kg_impact:'Acute; motor neuron apoptosis', mitochondrial_state:'State 2→3 (neuronal death)',ros_level:'Very high in neurons',
+    order:'Picornavirales', superfamily:'Pisuviricota', host_range:'Humans only (oral-fecal)',
+    zoonotic:false, emergence:'Near eradication; WPV1 remains in Afghanistan/Pakistan',
+    note:'First virus for which an IRES was discovered. 2Apro cleavage of eIF4G is the canonical mechanism for how +ssRNA viruses globally suppress host cap-dependent translation while their own IRES-driven mRNA is unaffected.',
+    seq_name: 'VP1 Capsid Protein Fragment',
+    dna_seq: 'ATGGGAGCTCAAGTATCATCGCAAACATTACCTGTAACAACTGTTATTAATTTGCCAACTGTAAAATATATTGTGAAGAATACTAATGAACTA'
+  },
+  {
+    id:'hcv', name:'Hepatitis C Virus (HCV)', family:'Flaviviridae', baltimore:'IV', bias:'GC',
+    density:'RARE', gc_pct:57, tissue:'Hepatocytes', alkbh8:'Low', vdac1:'State 1 (chronic)',
+    cancer_risk:'high', diseases:'Chronic hepatitis C, liver cirrhosis, hepatocellular carcinoma',
+    replication_site:'Cytoplasm (ER-associated — unusually GC for +ssRNA)',
+    genome_size_kb:9.6, cpg_ratio:0.65, codon_pref:'GC-biased; all preferred codons GC-ending (hepatocyte-optimized)',
+    trna_mod:'Minimal; hepatocyte baseline sufficient', key_enzymes:'Host ribosomes in GCeF state',
+    translation_strategy:'IRES-driven (type III — most efficient); NS5A blocks PKR → maintains translation; NS3/4A cleaves MAVS',
+    key_proteins:'NS3/4A (protease; MAVS cleavage — innate immune evasion), NS5B (RdRp; DAA target), NS5A (replication membranous web)',
+    host_proteins:'CD81+CLDN1+OCLN+SR-BI (4-receptor entry complex); MAVS (cleaved by NS3/4A)',
+    alpha_kg_impact:'Chronic moderate-high (decades)', mitochondrial_state:'Warburg-shifted hepatocytes; lipid accumulation',ros_level:'Elevated chronic',
+    order:'Amarillovirales', superfamily:'Pisuviricota', host_range:'Humans, chimpanzees',
+    zoonotic:false, emergence:'Cured by DAAs (sofosbuvir era); 58M chronic cases globally',
+    note:'The exception that proves the rule: the only common +ssRNA virus that is GC-rich. Evolves in hepatocytes (metabolically GCeF). Its chronic GC-peacetime strategy is why it causes cancer — same embezzler mechanism as DNA oncoviruses, but encoded in an RNA virus.',
+    seq_name: 'Core Protein Fragment',
+    dna_seq: 'ATGAGCACGAATCCTAAACCTCAAAGAAAAACCAAACGTAACACCAACCGCCGCCCACAGGACGTCAAGTTCCCGGGTGGCGGTCAGATCGTT'
+  },
+  // ─── Class V × AU ───────────────────────────────────────────
+  {
+    id:'influenza', name:'Influenza A Virus (IAV)', family:'Orthomyxoviridae', baltimore:'V', bias:'AU',
+    density:'DENSE', gc_pct:42, tissue:'Airway epithelium, type II pneumocytes', alkbh8:'High', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Seasonal influenza, pandemic influenza, ARDS (severe H5N1/H1N1)',
+    replication_site:'Nucleus (unusual for -ssRNA; segmented)',
+    genome_size_kb:13.6, cpg_ratio:0.55, codon_pref:'AU-biased despite nuclear replication — panhandle RNA structure requirement',
+    trna_mod:'mcm⁵U; DDR-linked tRNA modification', key_enzymes:'ALKBH8, ELP complex',
+    translation_strategy:'Cap-snatching (PA endonuclease steals 5′ caps from host pre-mRNAs); nuclear import of vRNPs; segmented genome enables reassortment',
+    key_proteins:'HA (hemagglutinin; receptor binding; antigenic drift target), NA (neuraminidase; Tamiflu target), PB1-F2 (mitochondrial apoptosis)',
+    host_proteins:'Sialic acid α2,3 (avian) or α2,6 (human) on TMPRSS2+ cells; importin-α (nuclear import)',
+    alpha_kg_impact:'Acute high; STING activation via mtDNA leak', mitochondrial_state:'State 2 (PB1-F2 opens VDAC1)',ros_level:'Very high',
+    order:'Articulavirales', superfamily:'Negarnaviricota', host_range:'Birds, swine, horses, humans; reservoir: aquatic birds',
+    zoonotic:true, emergence:'Annual epidemics; pandemic potential (H5N1 H5N2 ongoing); reassortment engine',
+    note:'PB1-F2 directly inserts into the mitochondrial membrane and promotes VDAC1 State 2 oligomerization. One of the few viral proteins with a documented direct mechanism of mitochondrial permeabilization.',
+    seq_name: 'Hemagglutinin (HA) Fragment',
+    dna_seq: 'ATGGAAACAATATCACTAATAACTATACTACTAGTAGTAACAGCAAGCAATGCAGATAAAATCTGCATCGGCCACCAGTCAACAAACTCCACA'
+  },
+  {
+    id:'ebola', name:'Ebola Virus (EBOV)', family:'Filoviridae', baltimore:'V', bias:'AU',
+    density:'DENSE', gc_pct:40.7, tissue:'Macrophages, DCs, hepatocytes, endothelium', alkbh8:'Very High', vdac1:'State 2→3',
+    cancer_risk:'none', diseases:'Ebola virus disease (EVD), hemorrhagic fever (30–90% CFR)',
+    replication_site:'Cytoplasm',
+    genome_size_kb:19, cpg_ratio:0.47, codon_pref:'Strong AU-bias; one of highest A-ending codon enrichments',
+    trna_mod:'mcm⁵U (extreme); full U34 pathway + Q', key_enzymes:'ALKBH8 (extreme upregulation), ELP1, CTU1, QTRT1',
+    translation_strategy:'VP35 blocks IFN-β production; VP24 blocks STAT1 nuclear import; VP40 suppresses JAK1/TYK2; immune evasion at 4 nodes simultaneously',
+    key_proteins:'GP (glycoprotein — antigenic shield via mucin-like domain; NPC1 receptor in endosome), VP35 (IFN antagonist), VP40 (matrix; budding)',
+    host_proteins:'NPC1 (Niemann-Pick C1 — endosomal receptor; therapeutic target), TIM-1 (entry factor)',
+    alpha_kg_impact:'Catastrophic acute; massive cytokine storm', mitochondrial_state:'State 2→3 (multi-organ death)',ros_level:'Extreme',
+    order:'Mononegavirales', superfamily:'Negarnaviricota', host_range:'Bats (reservoir), great apes, humans',
+    zoonotic:true, emergence:'West Africa 2014–2016 (>11,000 deaths); DRC outbreaks ongoing',
+    note:'Highest mcm⁵U pathway dependency predicted by codon analysis. 4 independent IFN-blocking mechanisms — unique evolutionary pressure from extreme cellular damage that would otherwise trigger immediate innate shutdown.',
+    seq_name: 'Glycoprotein (GP) Fragment',
+    dna_seq: 'ATGGGCGTTACAGGAATATTGCAGTTACCTCGTGATCGATTCAAGAGGACATCATTCTTTCTTTGGGTAATTATCCTTTTCCAAAGAACATTT'
+  },
+  {
+    id:'measles', name:'Measles Virus (MeV)', family:'Paramyxoviridae', baltimore:'V', bias:'AU',
+    density:'DENSE', gc_pct:43.6, tissue:'Lymphocytes, DCs, airway epithelium', alkbh8:'High', vdac1:'State 2',
+    cancer_risk:'none', diseases:'Measles (Morbilli), immune amnesia, SSPE (subacute sclerosing panencephalitis)',
+    replication_site:'Cytoplasm',
+    genome_size_kb:15.9, cpg_ratio:0.60, codon_pref:'AU-biased; "rule of six" genome length constraint',
+    trna_mod:'mcm⁵U; DDR-linked', key_enzymes:'ALKBH8, ELP complex',
+    translation_strategy:'V protein sequesters STAT1/STAT2 (IFN signaling block); N protein "rule of six" encapsidation',
+    key_proteins:'H (hemagglutinin; CD46/SLAM/nectin-4 receptor binding), F (fusion), V (STAT blocker), N',
+    host_proteins:'CD46 (vaccine strain), SLAM/CD150 (wild-type), Nectin-4 (epithelial — exit receptor)',
+    alpha_kg_impact:'Acute; "immune amnesia" depletes memory B cells', mitochondrial_state:'State 2',ros_level:'High',
+    order:'Mononegavirales', superfamily:'Negarnaviricota', host_range:'Humans only; most contagious known pathogen (R₀ 12–18)',
+    zoonotic:false, emergence:'Near-elimination pre-vaccine hesitancy; immune amnesia extends mortality beyond acute disease',
+    note:'Immune amnesia: MeV infects and kills memory lymphocytes, resetting immunological memory to near-newborn state. Mortality extends 2–5 years post-infection from opportunistic infections. Vaccine benefit vastly exceeds any single-disease prevention.',
+    seq_name: 'Hemagglutinin (H) Fragment',
+    dna_seq: 'ATGTCACCACAACGAGACCGGATAAATGCCTTCTACAAAGACAACCCCCATCCTAAGGGAAGTAGGATAGTAATTAACAGAGAACATCTTATG'
+  },
+  // ─── Class VI × AU ──────────────────────────────────────────
+  {
+    id:'hiv', name:'HIV-1', family:'Retroviridae', baltimore:'VI', bias:'AU',
+    density:'DENSE', gc_pct:41.5, tissue:'CD4+ T cells, macrophages, DCs', alkbh8:'Moderate (initial)', vdac1:'State 1 (latent) / State 2 (active)',
+    cancer_risk:'moderate', diseases:'AIDS, AIDS-defining cancers (Kaposi sarcoma, NHL, cervical cancer via HPV co-infection)',
+    replication_site:'Cytoplasm (RT) → Nucleus (integration) → Cytoplasm (assembly)',
+    genome_size_kb:9.7, cpg_ratio:0.42, codon_pref:'AU-biased (RT mutational pressure toward AU; CpG suppression by host APOBEC3G context)',
+    trna_mod:'mcm⁵U (initial); APOBEC3G context forces CpG↓ and AU↑ over evolutionary time',
+    key_enzymes:'Reverse Transcriptase (RT; error-prone; 3×10⁻⁵ per base), Integrase (INSTI target), Protease',
+    translation_strategy:'Rev-dependent nuclear export (RRE-Rev axis); ribosomal frameshifting for Gag-Pol; Tat transactivation of LTR',
+    key_proteins:'gp120/gp41 (entry; CD4+CCR5/CXCR4 binding), Vif (APOBEC3G degrader), Vpu (CD4 downregulation, BST-2 antagonist), Nef (MHC-I downregulation), Tat, Rev',
+    host_proteins:'CD4+CCR5 (R5-tropic) or CD4+CXCR4 (X4-tropic); APOBEC3G (restriction factor; Vif target)',
+    alpha_kg_impact:'Chronic moderate (metabolic T-cell exhaustion); α-KG depletion in CD4+ cells over years', mitochondrial_state:'Gradual State 1 (latency) with episodic State 2 (reactivation)',ros_level:'Moderate chronic; elevated in AIDS',
+    order:'Ortervirales', superfamily:'Pararnaviricota', host_range:'Humans, SIV in primates',
+    zoonotic:true, emergence:'Pandemic since ~1920 (origin); 39M living with HIV; ART controls but does not cure',
+    note:'APOBEC3G creates AU-bias pressure through C→U hypermutation; Vif neutralizes this. An evolutionary arms race between host restriction and viral countermeasure that directly shapes the viral codon landscape over time.',
+    seq_name: 'Gag Polyprotein Fragment',
+    dna_seq: 'ATGGGTGCGAGAGCGTCAGTATTAAGCGGGGGAGAATTAGATCGATGGGAAAAAATTCGGTTAAGGCCAGGGGGAAAGAAAAAATATAAATTA'
+  },
+  // ─── Class VI × GC ──────────────────────────────────────────
+  {
+    id:'htlv1', name:'HTLV-1', family:'Retroviridae', baltimore:'VI', bias:'GC',
+    density:'DENSE', gc_pct:42, tissue:'CD4+ T cells (tropism distinct from HIV)', alkbh8:'Low-Moderate', vdac1:'State 1',
+    cancer_risk:'high', diseases:'Adult T-cell leukemia/lymphoma (ATL), HTLV-1-associated myelopathy',
+    replication_site:'Nucleus (integrates; propages clonally via mitosis)',
+    genome_size_kb:8.5, cpg_ratio:0.61, codon_pref:'AU-biased; spreads primarily by cell-to-cell (not free virus)',
+    trna_mod:'mcm⁵U background; Tax activates NF-κB → Warburg shift', key_enzymes:'Tax (transcriptional activator of NF-κB, CRE)',
+    translation_strategy:'Tax transactivation → NF-κB → constitutive survival; HBZ (antisense) suppresses Tax → immune evasion vs. ATL progression',
+    key_proteins:'Tax (NF-κB activator; PDZ domain interactions; major oncogene), HBZ (bZIP factor; antisense — immunologically invisible), Gag, Env',
+    host_proteins:'GLUT1 (receptor); NF-κB p65/p50 (activated constitutively by Tax)',
+    alpha_kg_impact:'Chronic high via NF-κB Warburg push; Warburg shift → α-KG depletion', mitochondrial_state:'State 1 (HK2-docked; Warburg)',ros_level:'Low-moderate (chronic)',
+    order:'Ortervirales', superfamily:'Pararnaviricota', host_range:'Humans (vertical + sexual + breast milk transmission)',
+    zoonotic:false, emergence:'Endemic in SW Japan, Caribbean, Central Africa; ATL 5–10% lifetime risk after 40yr latency',
+    note:'Tax directly activates NF-κB (the master pro-survival signal) and simultaneously forces a Warburg metabolic shift — two of the three gates to oncogenesis activated by a single viral protein. HBZ (antisense) then silences Tax to evade T-cell killing, leaving the Warburg state running.',
+    seq_name: 'Tax Oncogene Fragment',
+    dna_seq: 'ATGGCCCACCTCCTCCGCCCGCCTCCACCCCCGCCGCCGCCCCTCGCGCCTCCCGCCCCGCTCCCCCAGCCCCAGCCCCAGCCCCGCCCGCGG'
+  },
+  // ─── Class VII × GC ─────────────────────────────────────────
+  {
+    id:'hbv', name:'Hepatitis B Virus (HBV)', family:'Hepadnaviridae', baltimore:'VII', bias:'GC',
+    density:'DENSE', gc_pct:48, tissue:'Hepatocytes', alkbh8:'None', vdac1:'State 1',
+    cancer_risk:'high', diseases:'Chronic hepatitis B, cirrhosis, hepatocellular carcinoma (HCC)',
+    replication_site:'Nucleus (cccDNA) → Cytoplasm (RT in capsids)',
+    genome_size_kb:3.2, cpg_ratio:0.73, codon_pref:'GC-biased; hepatocyte-optimized; overlapping ORFs maximize information density',
+    trna_mod:'None required', key_enzymes:'Host RNA Pol II (pregenomic RNA); HBV Pol (RT+RNaseH)',
+    translation_strategy:'4 overlapping ORFs from 4 promoters; preS1/S2/S envelope from same ORF; HBx is only non-structural non-enzymatic protein — pure regulatory',
+    key_proteins:'HBsAg (surface; vaccine antigen), HBeAg (secreted — immune tolerance marker), HBx (transactivator; SIAH1/2-mediated p53 degradation; mitochondrial localization), Core (nucleocapsid)',
+    host_proteins:'NTCP/SLC10A1 (sodium taurocholate cotransporting polypeptide — hepatocyte-specific entry receptor; discovered 2012)',
+    alpha_kg_impact:'HIGHEST: HBx moves IDH1 to the nucleus next to cccDNA → produces α-KG locally for viral chromatin remodeling while starving host TET/KDM', mitochondrial_state:'State 1 (chronic Warburg; HK2-docked)',ros_level:'Moderate chronic; mtROS from HBx',
+    order:'Blubervirales', superfamily:'Revtraviricota', host_range:'Humans, great apes, woodchuck (WHV model)',
+    zoonotic:false, emergence:'296M chronic carriers; #1 cause of HCC worldwide; HBV vaccines prevent cancer',
+    note:'HBx-IDH1 nuclear localization is the most direct α-KG theft mechanism known in any oncovirus: the virus produces its own α-KG supply at the viral chromatin, in competition with host TET/KDM enzymes using the same substrate at the same nuclear address.',
+    seq_name: 'HBsAg Surface Antigen Fragment',
+    dna_seq: 'ATGGAGAACATCACATCAGGATTCCTAGGACCCCTGCTCGTGTTACAGGCGGGGTTTTTCTTGTTGACAAGAATCCTCACAATACCGCAGAGT'
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let viruses = [...VIRUSES];
+let selectedCell = null;
+let currentVirus = null;
+let sheetsId = localStorage.getItem('sheetsId') || '';
+let currentTab = 'overview';
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+async function init() {
+  if(sheetsId) {
+    await fetchSheetsData();
+  } else {
+    renderMatrix();
+    updateStatus();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GOOGLE SHEETS INTEGRATION
+// ═══════════════════════════════════════════════════════════════
+async function fetchSheetsData(){
+  try{
+    const url = `https://docs.google.com/spreadsheets/d/${sheetsId}/gviz/tq?tqx=out:csv&sheet=viruses`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error('Sheet fetch failed');
+    const csv = await res.text();
+    const parsed = parseCSV(csv);
+    if(parsed.length > 1){
+      const incomingViruses = csvToViruses(parsed);
+      viruses = incomingViruses.map(iv => {
+        const localMatch = VIRUSES.find(v => v.id === iv.id);
+        if(localMatch && !iv.dna_seq) {
+            iv.dna_seq = localMatch.dna_seq;
+            iv.seq_name = localMatch.seq_name;
+        }
+        return iv;
+      });
+      document.getElementById('dataSource').textContent = 'Google Sheets (live)';
+    }
+  }catch(e){
+    console.warn('Sheets fetch failed, using embedded data:', e);
+    document.getElementById('dataSource').textContent = 'Embedded data (Sheets unavailable)';
+  }
+  renderMatrix();
+  updateStatus();
+}
+
+function parseCSV(text){
+  const rows =[];
+  const lines = text.split('\n');
+  for(const line of lines){
+    const row =[];
+    let cur='',inQ=false;
+    for(let i=0;i<line.length;i++){
+      if(line[i]==='"'){inQ=!inQ}
+      else if(line[i]===',' && !inQ){row.push(cur.trim());cur=''}
+      else cur+=line[i];
+    }
+    row.push(cur.trim());
+    rows.push(row);
+  }
+  return rows;
+}
+
+function csvToViruses(rows){
+  const headers = rows[0].map(h=>h.replace(/"/g,'').toLowerCase().replace(/ /g,'_'));
+  return rows.slice(1).filter(r=>r.some(c=>c)).map(row=>{
+    const obj={};
+    headers.forEach((h,i)=>{ obj[h]=(row[i]||'').replace(/"/g,''); });
+    return obj;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER MATRIX
+// ═══════════════════════════════════════════════════════════════
+function renderMatrix(){
+  const matrix = document.getElementById('matrix');
+  matrix.innerHTML = '';
+  BALTIMORE.forEach(cls => {
+    const au = viruses.filter(v => v.baltimore === cls.id && v.bias === 'AU');
+    const gc = viruses.filter(v => v.baltimore === cls.id && v.bias === 'GC');
+    const row = document.createElement('div');
+    row.className = 'matrix-row';
+    row.innerHTML = `
+      <div class="row-label">
+        <span class="row-class">Class ${cls.id}</span>
+        <span class="row-genome">${cls.genome}</span>
+        <span class="row-route">${cls.route.substring(0,45)}${cls.route.length>45?'…':''}</span>
+      </div>
+    `;
+    ['AU','GC'].forEach(bias => {
+      const cellViruses = bias === 'AU' ? au : gc;
+      const cell = document.createElement('div');
+      const key = `${cls.id}-${bias}`;
+      cell.className = `cell ${bias.toLowerCase()} ${cellViruses.length === 0 ? 'empty' : ''}`;
+      cell.dataset.key = key;
+      if(cellViruses.length > 0) {
+        const densityLabel = cellViruses[0]?.density || (cellViruses.length > 3 ? 'DENSE' : 'SPARSE');
+        const names = cellViruses.slice(0,3).map(v => v.name.split(' ')[0] + (v.name.includes('(') ? ` (${v.name.match(/\(([^)]+)\)/)?.[1]||''})` : '')).join(', ');
+        cell.innerHTML = `
+          <div>
+            <span class="cell-density">${densityLabel}</span>
+            <div class="cell-viruses">${names}${cellViruses.length > 3 ? ` +${cellViruses.length-3} more` : ''}</div>
+          </div>
+          <div class="cell-count">${cellViruses.length} virus${cellViruses.length !== 1 ? 'es' : ''}</div>
+        `;
+        cell.addEventListener('click', () => selectCell(cls, bias, cellViruses, key, cell));
+      } else {
+        cell.innerHTML = `<div class="cell-viruses" style="color:var(--text3);font-style:italic;font-size:0.75rem;display:flex;align-items:center;">Thermodynamic Forbidden Zone</div>`;
+      }
+      row.appendChild(cell);
+    });
+    matrix.appendChild(row);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SELECT CELL → SHOW DETAIL
+// ═══════════════════════════════════════════════════════════════
+function selectCell(cls, bias, cellViruses, key, cellEl){
+  document.querySelectorAll('.cell.active').forEach(c => c.classList.remove('active'));
+  cellEl.classList.add('active');
+  selectedCell = key;
+
+  document.getElementById('detailEmpty').style.display = 'none';
+  document.getElementById('detailContent').style.display = 'block';
+
+  const biasLabel = bias === 'AU'
+    ? '<span class="badge au">🔥 AU-Rich · AUeF · mcm⁵U</span>'
+    : '<span class="badge gc">🧬 GC-Rich · GCeF · Baseline tRNA</span>';
+  const title = `Class ${cls.id} × ${bias}-Rich`;
+  document.getElementById('detailTitle').textContent = title;
+  document.getElementById('detailMeta').innerHTML = `
+    ${biasLabel}
+    <span class="badge neutral">Baltimore ${cls.id} · ${cls.genome}</span>
+    <span style="color:var(--text3)">${cls.route}</span>
+  `;
+
+  const list = document.getElementById('virusList');
+  list.innerHTML = '';
+  cellViruses.forEach(v => {
+    const card = document.createElement('div');
+    card.className = `virus-card ${v.bias.toLowerCase()}`;
+    card.innerHTML = `
+      <div class="vcard-name">${v.name}</div>
+      <div class="vcard-family">${v.family} · Baltimore ${v.baltimore}</div>
+      <div class="vcard-metrics">
+        <div class="vcard-metric">
+          <span class="mk">GC%</span>
+          <span class="mv ${v.bias==='AU'?'au':'gc'}">${v.gc_pct || '—'}%</span>
+        </div>
+        <div class="vcard-metric">
+          <span class="mk">Tissue</span>
+          <span class="mv" style="font-size: 0.75rem;">${(v.tissue||'—').split(',')[0]}</span>
+        </div>
+        <div class="vcard-metric">
+          <span class="mk">Cancer</span>
+          <span class="mv ${v.cancer_risk==='high'?'au':v.cancer_risk==='none'?'gc':'gold'}">${v.cancer_risk||'—'}</span>
+        </div>
+      </div>
+      <div class="vcard-tags">
+        ${v.zoonotic ? '<span class="tag">ZOONOTIC</span>' : ''} 
+        ${(v.cancer_risk==='high'||v.cancer_risk==='moderate') ? '<span class="tag">ONCOVIRAL</span>' : ''}
+        ${v.vdac1 ? `<span class="tag">VDAC1 ${v.vdac1.split(' ')[1] || v.vdac1}</span>` : ''}
+      </div>
+      <span class="vcard-arrow">→</span>
+    `;
+    card.addEventListener('click', () => openVirusModal(v));
+    list.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VIRUS MODAL
+// ═══════════════════════════════════════════════════════════════
+function openVirusModal(v){
+  currentVirus = v;
+  currentTab = 'overview';
+  document.getElementById('modalTitle').textContent = v.name;
+  document.getElementById('modalSubtitle').textContent = `${v.family} · Baltimore Class ${v.baltimore} · ${v.bias}-Rich · ${v.replication_site||''}`;
+  
+  updateModalTabs();
+  renderTab('overview', v);
+  document.getElementById('virusModal').classList.add('open');
+}
+
+function closeVirusModal(){
+  document.getElementById('virusModal').classList.remove('open');
+}
+function closeModal(e){
+  if(e.target === document.getElementById('virusModal')) closeVirusModal();
+}
+
+function switchTab(tab){
+  currentTab = tab;
+  updateModalTabs();
+  renderTab(tab, currentVirus);
+}
+
+function updateModalTabs(){
+  const tabs = document.querySelectorAll('.tab-btn');
+  const tabNames =['overview','genomics','transcriptomics','proteomics','metabolomics','phylogeny'];
+  tabs.forEach((t,i) => t.classList.toggle('active', tabNames[i] === currentTab));
+}
+
+function copySeq() {
+  const seqText = document.getElementById('rawSequenceText').innerText;
+  navigator.clipboard.writeText(seqText.replace(/\s+/g, ''));
+  
+  const btn = document.getElementById('copyBtn');
+  btn.innerText = "Copied!";
+  btn.style.color = "var(--text)";
+  btn.style.borderColor = "var(--text)";
+  setTimeout(() => {
+    btn.innerText = "Copy";
+    btn.style.color = "";
+    btn.style.borderColor = "";
+  }, 2000);
+}
+
+// Helper: Convert DNA to RNA
+function dnaToRna(dna) { return dna.replace(/T/g, 'U'); }
+
+// Helper: Translate RNA to Protein
+function translateRna(rna) {
+  let protein = "";
+  for(let i=0; i<rna.length-2; i+=3) {
+    let codon = rna.substring(i, i+3);
+    protein += CODON_MAP[codon] || "?";
+  }
+  return protein;
+}
+
+function toggleTranslation() {
+  const isChecked = document.getElementById('transToggle').checked;
+  const seqBody = document.getElementById('seqBody');
+  const dnaBase = currentVirus.dna_seq || "ATGCGTACGTGCTAGCTAGCTAGC";
+  const rna = dnaToRna(dnaBase);
+  
+  if(!isChecked) {
+    seqBody.innerHTML = `<span id="rawSequenceText" style="letter-spacing: 2.5px;">${rna}</span>`;
+    return;
+  }
+
+  // Build the visualizer
+  let html = `<div id="rawSequenceText" style="display:none;">${rna}</div>`;
+  for(let i=0; i<rna.length-2; i+=3) {
+    let codon = rna.substring(i, i+3);
+    let aa = CODON_MAP[codon] || "?";
+    
+    let biasClass = (codon[2] === 'A' || codon[2] === 'U') ? 'au-biased' : 'gc-biased';
+    if(codon === 'AUG') biasClass = 'start-codon';
+    if(aa === '*') biasClass = 'stop-codon';
+
+    html += `<div class="codon-wrap ${biasClass}">
+               <span class="bases">${codon}</span>
+               <span class="aa">${aa}</span>
+             </div>`;
+  }
+  seqBody.innerHTML = html;
+}
+
+function di(key, val, cls='', full=false){
+  return `<div class="data-item${full?' full':''}">
+    <div class="data-key">${key}</div>
+    <div class="data-val ${cls}">${val||'—'}</div>
+  </div>`;
+}
+
+function bar(label, val, max, cls='au'){
+  const pct = Math.min(100, Math.round((parseFloat(val)||0)/max*100));
+  return `<div class="bar-row">
+    <div class="bar-label">${label}</div>
+    <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
+    <div class="bar-val">${val||'—'}</div>
+  </div>`;
+}
+
+function renderTab(tab, v){
+  const body = document.getElementById('modalBody');
+  let html = '';
+
+  // ── SEQUENCE VISUALIZER COMPONENT ──
+  let seqComponent = '';
+  if (tab === 'genomics' || tab === 'transcriptomics' || tab === 'proteomics') {
+    const seqName = v.seq_name || "Representative Sequence Segment";
+    const dnaBase = v.dna_seq || "ATGCGTACGTGCTAGCTAGCTAGC";
+    let rawSeq = "", seqTitle = "", extraActions = "";
+    
+    if (tab === 'genomics') {
+      seqTitle = `DNA Sequence — ${seqName}`;
+      rawSeq = `<span id="rawSequenceText" style="letter-spacing: 2.5px;">${dnaBase}</span>`;
+    } else if (tab === 'transcriptomics') {
+      seqTitle = `RNA Transcript — ${seqName}`;
+      rawSeq = `<span id="rawSequenceText" style="letter-spacing: 2.5px;">${dnaToRna(dnaBase)}</span>`;
+      extraActions = `<label><input type="checkbox" id="transToggle" onchange="toggleTranslation()"> Show Codons & Translation</label>`;
+    } else if (tab === 'proteomics') {
+      seqTitle = `Protein (Amino Acid) Sequence — ${seqName}`;
+      rawSeq = `<span id="rawSequenceText" style="letter-spacing: 8px; color: var(--gold-text); font-weight: 600; padding-left: 4px;">${translateRna(dnaToRna(dnaBase))}</span>`;
+    }
+
+    seqComponent = `
+      <div class="seq-viewer">
+        <div class="seq-header">
+          <span class="seq-title">${seqTitle}</span>
+          <div class="seq-actions">
+            ${extraActions}
+            <button id="copyBtn" onclick="copySeq()">Copy</button>
+          </div>
+        </div>
+        <div class="seq-body" id="seqBody">${rawSeq}</div>
+      </div>
+    `;
+  }
+
+  // ── TAB CONTENT RENDERING ──
+  if (tab === 'overview') {
+    const riskClass = v.cancer_risk==='high'?'high':v.cancer_risk==='moderate'?'moderate':v.cancer_risk==='low'?'low':'none';
+    html=`
+      <div class="data-section">
+        <h3>Identity</h3>
+        <div class="data-grid">
+          ${di('Genome Type', v.genome||v.baltimore+' ('+['dsDNA','ssDNA','dsRNA','+ssRNA','−ssRNA','+ssRNA-RT','dsDNA-RT'][['I','II','III','IV','V','VI','VII'].indexOf(v.baltimore)]+')')}
+          ${di('Replication Site', v.replication_site)}
+          ${di('Tissue Tropism', v.tissue)}
+          ${di('GC Content', v.gc_pct+'%', v.bias==='AU'?'au':'gc')}
+          ${di('Codon Bias', v.bias='-Rich · '+(v.bias==='AU'?'AUeF':'GCeF')+' state', v.bias==='AU'?'au':'gc')}
+          ${di('VDAC1 State', v.vdac1, 'gold')}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Diseases & Emergence</h3>
+        <div class="data-grid">
+          ${di('Clinical Diseases', v.diseases, '', true)}
+          ${di('Zoonotic', v.zoonotic?'Yes — animal reservoir':'No (human-restricted)')}
+          ${di('Emergence', v.emergence, '', true)}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Oncogenic Risk</h3>
+        <div class="risk-indicator ${riskClass}">
+          ${{high:'⚠ HIGH — Established human oncovirus (WHO Group 1)',moderate:'◈ MODERATE — Possible oncomodulatory role',low:'◇ LOW — Rare or indirect association',none:'✓ NONE — Acute cytopathic; no cancer link'}[riskClass]}
+        </div>
+        ${v.note ? `<div class="phylo-note">${v.note}</div>` : ''}
+      </div>
+    `;
+  } 
+  else if (tab === 'genomics') {
+    html = seqComponent + `
+      <div class="data-section">
+        <h3>Genome Architecture</h3>
+        <div class="data-grid">
+          ${di('Genome Size', v.genome_size_kb?v.genome_size_kb+' kb':'—')}
+          ${di('GC Content', v.gc_pct?v.gc_pct+'%':'—', v.bias==='AU'?'au':'gc')}
+          ${di('CpG Ratio', v.cpg_ratio?v.cpg_ratio+' (obs/exp)':'—', v.cpg_ratio<0.5?'au':'gc')}
+          ${di('Replication Compartment', v.replication_site)}
+          ${di('Codon Preference', v.codon_pref, '', true)}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>GC / AT Composition</h3>
+        ${bar('GC%', v.gc_pct, 70, v.bias==='GC'?'gc':'au')}
+        ${bar('CpG ratio', v.cpg_ratio?Math.round(v.cpg_ratio*100)+'%':0, 100, 'teal')}
+        ${bar('Genome kb', v.genome_size_kb, 250, 'gold')}
+      </div>
+      <div class="data-section">
+        <h3>Evolutionary Context</h3>
+        <div class="data-grid">
+          ${di('Master Rule', v.bias==='AU'&&v.replication_site&&v.replication_site.includes('Cytoplasm')
+            ?'✓ AU-cytoplasmic (consistent)'
+            :v.bias==='AU'&&v.replication_site&&v.replication_site.includes('Nucleus')
+            ?'⚠ AU despite nuclear — exception (see note)'
+            :'✓ GC-nuclear (consistent)', '')}
+          ${di('ALKBH8 Dependency', v.alkbh8, v.alkbh8&&v.alkbh8.toLowerCase().includes('high')?'au':'gc')}
+        </div>
+      </div>
+    `;
+  } 
+  else if (tab === 'transcriptomics') {
+    html = seqComponent + `
+      <div class="data-section">
+        <h3>tRNA Modification Requirements</h3>
+        <div class="data-grid">
+          ${di('tRNA Modification', v.trna_mod, v.trna_mod&&v.trna_mod.includes('mcm⁵')?'au':'gc', true)}
+          ${di('Key Enzymes Required', v.key_enzymes, '', true)}
+          ${di('Host State Needed', v.bias==='AU'?'AUeF (stress-decoder, mcm⁵U unlocked)':'GCeF (peacetime, baseline tRNA pool)', v.bias==='AU'?'au':'gc', true)}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>U34 Modification Pathway</h3>
+        <div class="pathway-chain">
+          <span class="enzyme">ELP1–ELP6</span>
+          <span class="arrow">→</span>
+          <span class="product">ncm⁵U</span>
+          <span class="arrow">→</span>
+          <span class="enzyme">ALKBH8 / KIAA1456</span>
+          <span class="arrow">→</span>
+          <span class="product">mcm⁵U</span>
+          <span class="arrow">→</span>
+          <span class="enzyme">CTU1/CTU2</span>
+          <span class="arrow">→</span>
+          <span class="product">mcm⁵s²U ← active</span>
+        </div>
+        <div class="phylo-note" style="border-left-color: ${v.bias==='AU'?'var(--au)':'var(--gc)'}">
+          ${v.bias==='AU'
+            ?`This virus requires the <strong style="color:var(--au-text)">AUeF state</strong>: host cells must upregulate U34 tRNA modification enzymes (specifically <strong style="color:var(--gold-text)">${v.key_enzymes||'ALKBH8'}</strong>) to decode A-ending codons efficiently. The virus induces DDR/oxidative stress to trigger this modification cascade.`
+            :`This virus uses the <strong style="color:var(--gc-text)">GCeF state</strong>: G/C-ending codons are decoded by the baseline tRNA pool with no special modification required. The virus integrates into host peacetime translation without forcing a tRNA gear change.`
+          }
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Translation Strategy</h3>
+        <div class="data-grid">
+          ${di('Mechanism', v.translation_strategy, '', true)}
+        </div>
+      </div>
+    `;
+  } 
+  else if (tab === 'proteomics') {
+    html = seqComponent + `
+      <div class="data-section">
+        <h3>Key Viral Proteins</h3>
+        <div class="data-grid">
+          ${di('Structural / Functional Proteins', v.key_proteins, '', true)}
+          ${di('Host Protein Interactions', v.host_proteins, '', true)}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Oncogenic Machinery</h3>
+        <div class="data-grid">
+          ${v.cancer_risk==='high'||v.cancer_risk==='moderate'
+            ? di('Oncoproteins', v.key_proteins?.includes('E6')||v.key_proteins?.includes('LMP1')||v.key_proteins?.includes('Tax')||v.key_proteins?.includes('HBx')
+                ? v.key_proteins?.split(',').filter(p=>['E6','E7','LMP1','LMP2','EBNA','Tax','HBZ','HBx','pp65'].some(o=>p.includes(o))).join('; ')
+                : 'See key proteins', '', true)
+            : di('Cancer Risk', 'NONE — acute cytopathic virus; cell dies before oncogenic accumulation', 'gc', true)
+          }
+          ${di('p53 Status', v.host_proteins?.includes('p53')?'DEGRADED / SUPPRESSED':v.key_proteins?.includes('ICP34.5')||v.key_proteins?.includes('NS3')?'Modified by viral protease':'Intact (no direct viral targeting)', '')}
+        </div>
+      </div>
+    `;
+  } 
+  else if (tab === 'metabolomics') {
+    html = `
+      <div class="data-section">
+        <h3>α-Ketoglutarate (α-KG) Impact</h3>
+        <div class="data-grid">
+          ${di('α-KG Effect', v.alpha_kg_impact, v.alpha_kg_impact&&(v.alpha_kg_impact.includes('HIGHEST')||v.alpha_kg_impact.includes('Chronic'))?'au':'gc', true)}
+          ${di('Mitochondrial State', v.mitochondrial_state, 'gold')}
+          ${di('VDAC1 Conformation', v.vdac1, v.vdac1&&v.vdac1.includes('2')?'au':v.vdac1&&v.vdac1.includes('1')?'gc':'gold')}
+          ${di('Warburg Effect', v.warburg)}
+          ${di('ROS Level', v.ros_level, v.ros_level&&v.ros_level.toLowerCase().includes('high')?'au':'gc')}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>The Two Wars (Arsonist vs. Embezzler)</h3>
+        <div class="phylo-note" style="border-left-color:${v.bias==='AU'?'var(--au)':'var(--gc)'}">
+          ${v.bias==='AU'
+            ?`<strong><span style="color:var(--au-text)">🔥 ARSONIST:</span></strong> ${v.name} crashes host mitochondria acutely → VDAC1 State 2 → cytokine storm / cell death within days. ALKBH8/mcm⁵U unlocks A-ending codon translation. α-KG drain is real but short-lived — the cell dies before epigenetic damage compounds. <br><br><em>Cannot cause cancer: burns the building down too fast for the books to be cooked.</em>`
+            :`<strong><span style="color:var(--gc-text)">🕴 EMBEZZLER:</span></strong> ${v.name} integrates into peacetime GCeF translation. No mitochondrial crash. Chronic residence locks VDAC1 State 1 (HK2-docked). TET/KDM enzymes starved of α-KG over years to decades. p53/Rb/NF-κB manipulated. <br><br><em>Cancer accumulates slowly: damage × time × anti-apoptotic block.</em>`
+          }
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Metabolic Levels</h3>
+        ${bar('α-KG drain', v.alpha_kg_impact?.includes('HIGHEST')?'95':v.alpha_kg_impact?.includes('Chronic')?'70':v.alpha_kg_impact?.includes('Acute high')?'85':v.alpha_kg_impact?.includes('Moderate')?'45':'15', 100, v.bias==='AU'?'au':'gc')}
+        ${bar('ROS level', v.ros_level?.includes('Extreme')?'98':v.ros_level?.includes('Very high')?'90':v.ros_level?.includes('High')?'75':v.ros_level?.includes('Moderate')?'45':v.ros_level?.includes('Low')?'20':'10', 100, 'au')}
+        ${bar('Warburg shift', v.warburg?.includes('Strong')||v.warburg?.includes('strong')?'85':v.warburg?.includes('Moderate')||v.warburg?.includes('moderate')?'55':v.warburg?.includes('Mild')||v.warburg?.includes('mild')?'30':'10', 100, 'teal')}
+      </div>
+    `;
+  } 
+  else if (tab === 'phylogeny') {
+    html = `
+      <div class="data-section">
+        <h3>Taxonomic Position</h3>
+        <div class="phylo-tree">
+          <div class="row"><span class="rank">Realm</span><span class="taxon">${v.superfamily?.includes('Pisuviricota')?'Riboviria':v.superfamily?.includes('Heunggongvirae')?'Duplodnaviria':v.superfamily?.includes('Monodnaviria')?'Monodnaviria':v.superfamily?.includes('Pararnaviricota')?'Riboviria':v.superfamily?.includes('Duplornaviricota')?'Riboviria':v.superfamily?.includes('Revtraviricota')?'Riboviria':v.superfamily?.includes('Nucleocytoviricota')?'Varidnaviria':'—'}</span></div>
+          <div class="row" style="padding-left: 1.2rem;"><span class="tree-line">└─</span><span class="rank">Phylum</span><span class="taxon">${v.superfamily||'—'}</span></div>
+          <div class="row" style="padding-left: 2.4rem;"><span class="tree-line">└─</span><span class="rank">Order</span><span class="taxon">${v.order||'—'}</span></div>
+          <div class="row" style="padding-left: 3.6rem;"><span class="tree-line">└─</span><span class="rank">Family</span><span class="taxon">${v.family||'—'}</span></div>
+          <div class="row" style="padding-left: 4.8rem;"><span class="tree-line">└─</span><span class="rank">Virus</span><span class="taxon">${v.name}</span></div>
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Evolutionary Context</h3>
+        <div class="data-grid">
+          ${di('Host Range', v.host_range, '', true)}
+          ${di('Zoonotic', v.zoonotic?'Yes — zoonotic origin or reservoir':'No — obligate human pathogen')}
+          ${di('Baltimore Class', 'Class '+v.baltimore+' ('+['','dsDNA','ssDNA','dsRNA','+ssRNA','−ssRNA','+ssRNA-RT','dsDNA-RT'][parseInt(v.baltimore)||0]+')','gold')}
+          ${di('Emergence', v.emergence, '', true)}
+        </div>
+      </div>
+      <div class="data-section">
+        <h3>Codon Evolution Prediction</h3>
+        <div class="phylo-note">
+          ${v.bias==='AU'
+            ?`<strong>AU-bias evolutionary pressure:</strong> ${v.name}'s cytoplasmic replication with error-prone RdRp drives progressive AU-enrichment over time (CpG suppression by ZAP; mutational bias toward A/U at wobble positions). Longer human circulation → stronger ALKBH8 dependency. Phylogenetic position within ${v.family||'its family'} should reflect adaptation depth.`
+            :v.bias==='GC'&&v.baltimore>='VI'
+            ?`<strong>RT-driven GC maintenance:</strong> Reverse transcriptase bias and integration in GC-rich host chromatin maintain GC content. Nuclear chromatin environment selects against AU-enrichment. Host DNA repair corrects errors toward GC.`
+            :`<strong>Nuclear replication GC pressure:</strong> Host DNA Pol fidelity and chromatin environment maintain GC enrichment. These viruses face selection toward host-compatible codon usage in differentiated, GCeF target cells (${v.tissue}).`
+          }
+        </div>
+      </div>
+    `;
+  }
+  
+  body.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════════════
+function openConfig(){
+  document.getElementById('sheetsIdInput').value = sheetsId;
+  document.getElementById('configOverlay').classList.add('open');
+}
+function closeConfig(){
+  document.getElementById('configOverlay').classList.remove('open');
+}
+function closeConfigOverlay(e){
+  if(e.target===document.getElementById('configOverlay')) closeConfig();
+}
+async function connectSheets(){
+  const id = document.getElementById('sheetsIdInput').value.trim();
+  if(!id){closeConfig();return;}
+  sheetsId = id;
+  localStorage.setItem('sheetsId',id);
+  closeConfig();
+  await fetchSheetsData();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STATUS
+// ═══════════════════════════════════════════════════════════════
+function updateStatus(){
+  document.getElementById('virusCount').textContent = viruses.length;
+  const activeCells = BALTIMORE.reduce((n,cls)=>{
+    return n + (viruses.some(v=>v.baltimore===cls.id&&v.bias==='AU')?1:0)
+             + (viruses.some(v=>v.baltimore===cls.id&&v.bias==='GC')?1:0);
+  },0);
+  document.getElementById('cellCount').textContent = `${activeCells} / 14`;
+}
+
+// keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeVirusModal();
+});
+
+init();
+</script>
+</body>
+</html>
+
